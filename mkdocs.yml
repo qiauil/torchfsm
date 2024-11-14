@@ -1,0 +1,169 @@
+site_name: torchfsm
+site_description: Fourier Spectral Method with PyTorch
+site_author: Qiang Liu
+site_url: https://qiauil.github.io/torchfsm
+
+repo_url: https://github.com/qiauil/torchfsm
+repo_name: qiauil/torchfsm
+edit_uri: ""  # No edit button, as some of our pages are in /docs and some in /examples via symlink, so it's impossible for them all to be accurate
+
+# Custom Homepage Elements
+home_cover_image: assets/pics/main/burgers_example.png # This path starts at your root mkdocs directory.
+home_tagline: "Fourier Spectral Method with PyTorch"
+home_description: |
+  GPU Based | Differentiable | Deep Learning Friendly
+
+# Gradient Color
+home_gradient_hsla: hsla(0deg,47%,55%,1) # Default Green: hsla(160deg,47%,55%,1)
+
+# Custom Homepage Button(s)
+home_button1_name: Install torchfsm                   # Comment this parameter out to remove the button.
+home_button1_url: Folder1/                       # This path starts at your root mkdocs directory.
+home_button1_theme: md-button md-button--primary # Options: "md-button", "md-button md-button--primary"
+home_button1_icon: gear                        # Options: "people", "gear", "image"
+home_button1_blurb: |                            # Short description of this button / section.
+  Install torchfsm
+
+#home_button2_name: Clicky 2   # Comment this parameter out to remove the button.
+#home_button2_url: Folder2/    # This path starts at your root mkdocs directory.
+#home_button2_theme: md-button # Options: "md-button", "md-button md-button--primary"
+#home_button2_icon: gear       # Options: "people", "gear", "image"
+#home_button2_blurb: |         # Short description of this button / section.
+#  This goober navigates to some important thingies located in "/Folder2/index.md"
+
+#home_button3_name: Clicky 3   # Comment this parameter out to remove the button.
+#home_button3_url: Folder3/    # This path starts at your root mkdocs directory.
+#home_button3_theme: md-button # Options: "md-button", "md-button md-button--primary"
+#home_button3_icon: image      # Options: "people", "gear", "image"
+#home_button3_blurb: |         # Short description of this button / section.
+#  This psycho navigates to an interesting table of stuff located in "/Folder3/index.md"
+
+theme:
+    name: material
+    custom_dir: page_overrides
+    features:
+        #- navigation.sections  # Sections are included in the navigation on the left.
+        #- navigation.tabs  # Tabs are included in the navigation on the left.
+        - toc.integrate  # Table of contents is integrated on the left; does not appear separately on the right.
+        - toc.follow
+        #- header.autohide  # header disappears as you scroll
+        - navigation.top
+        - navigation.path
+        - navigation.indexes          # Implied section 'index.md' files
+        - navigation.tabs             # Static upper section tabs (exist)
+        - navigation.tabs.sticky      # Static upper section tabs (stay)
+        - navigation.footer           # Add 'previous' and 'next' buttons in the footer
+        #- navigation.instant          # Keep navigation from reloading # will break the equation rendering
+        - navigation.instant.progress # Display page loading progress-bar ( > 400ms)
+        - search.highlight            # Highlight all occurrences of queried string
+        - search.share                # Search Query can be copied to Clipboard
+        - search.suggest              # Display likeliest completion for the last queried word
+    palette:
+        - scheme: default
+          primary: deep purple
+          accent: amber
+          toggle:
+             icon: material/weather-night
+             name: Switch to dark mode
+        - scheme: slate
+          primary: black
+          accent: amber
+          toggle:
+             icon: material/weather-sunny
+             name: Switch to light mode
+    icon:
+        repo: fontawesome/brands/github  # GitHub logo in top right
+    logo: assets/logo/icon_torchfsm white.png
+    favicon: assets/icon_torchfsm.svg
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/qiauil/torchfsm
+
+
+#strict: true  # Don't allow warnings during the build process
+
+markdown_extensions:
+    - pymdownx.arithmatex:  # Render LaTeX via MathJax
+        generic: true
+    - pymdownx.superfences  # Seems to enable syntax highlighting when used with the Material theme.
+    - pymdownx.details  # Allowing hidden expandable regions denoted by ???
+    - pymdownx.snippets:  # Include one Markdown file into another
+        base_path: docs
+    - admonition
+    - toc:
+        permalink: "¤"  # Adds a clickable permalink to each section heading
+        toc_depth: 4
+    - pymdownx.arithmatex:
+        generic: true
+    - pymdownx.smartsymbols
+    - codehilite
+
+extra_javascript:
+    - https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS_CHTML
+    - https://polyfill.io/v3/polyfill.min.js?features=es6
+    #- https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
+    #- https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS_CHTML-full,Safe
+
+plugins:
+    - search  # default search plugin; needs manually re-enabling when using any other plugins
+    - autorefs  # Cross-links to headings
+    - mkdocs-jupyter:
+        #include_requirejs: true
+        include_source: True
+        ignore_h1_titles: True  
+    - mkdocstrings:
+        handlers:
+            python:
+                options:
+                    inherited_members: true  # Allow looking up inherited methods
+                    show_root_heading: true  # actually display anything at all...
+                    show_root_full_path: true  # display full path
+                    show_if_no_docstring: true
+                    show_signature_annotations: true
+                    separate_signature: true
+                    show_source: true  # don't include source code
+                    members_order: source  # order methods according to their order of definition in the source code, not alphabetical order
+                    heading_level: 4
+                    show_symbol_type_heading: true
+                    docstring_style: google
+
+nav:
+    - 'Home': 'index.md'
+    - 'Theory Introduction': 'theory.ipynb'
+    - 'Basic Usage':
+        - '1. Concepts': 'concepts.ipynb'
+        - '2. Evaluate Derivatives': 
+            - '2.1. Call the Operator': 'call_operator.ipynb'
+            - '2.2. Examples': 'derivative_example.ipynb'
+        - '3. Solve PDEs':
+            - '3.1. Solve Steady PDEs': 'steady_pde.ipynb'
+            - "3.2. Solve Transient PDEs": 'transient_pde.ipynb'
+            - "3.3. PDE Gallery":
+                - "Burgers": 'pdes/burgers.ipynb'
+                - "Korteweg de Vries": 'pdes/korteweg_de_vries.ipynb'
+                - "Kuramoto_Sivashinsky": "pdes/kuramoto_sivashinsky.ipynb"
+            - "3.4. Navier-Stokes Simulation":
+                - "2.3.4.1 Vorticity Based": 'pdes/ns_vorticity.ipynb'
+                - "2.3.4.1 Velocity Based": 'pdes/ns_velocity.ipynb'
+        - 'Cheet Sheet': 'cheetsheet.md'
+    #- 'Advanced Applications':
+    #    - '1. Concepts': 'concepts.ipynb'
+    #- 'Development':
+    #    - '1. Concepts': 'concepts.ipynb' 
+    #- 'API Reference':
+    #    - '1. Concepts': 'concepts.ipynb' 
+    #- '1. Get Started': 
+    #    - '1.1. Quick Start': 'start/start.md'
+    #    - '1.2. Theory Introduction': 'start/theory.md'
+    #- '2. Examples': 
+    #    - '2.1. Toy Example of Muti-task Learning': 'examples/mtl_toy.ipynb'
+    #    - "2.2. Solve Burgers' Equation with PINN": 'examples/pinn_burgers.ipynb'
+    #- '3. API Reference':
+    #    - "3.1. Gradient Operator": 'api/grad_operator.md'
+    #    - "3.2. Momentum Operator": 'api/momentum_operator.md'
+    #    - "3.3. Weight Model": 'api/weight_model.md'
+    #    - "4.4. Length Model": 'api/length_model.md'
+    #    - "4.5. Loss Recorder": 'api/loss_recorder.md'
+    #    - "4.6. Utils": 'api/utils.md'

@@ -1,0 +1,18 @@
+Metadata-Version: 2.1
+Name: torchfsm
+Version: 0.0.1
+Summary: Fourier Spectral Method with PyTorch
+Home-page: https://qiauil.github.io/torchfsm
+Author: Qiang Liu, Felix Köhler, Nils Thuerey
+Author-email: qiangliu.7@outlook.com
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Description-Content-Type: text/markdown
+Requires-Dist: torch>=1.9.0
+Requires-Dist: matplotlib
+Requires-Dist: IPython
+Requires-Dist: vape4d
+Requires-Dist: tqdm
+
+# torchetd

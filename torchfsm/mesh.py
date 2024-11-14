@@ -1,0 +1,435 @@
+import torch
+from typing import Union, Sequence, Optional
+from functools import lru_cache
+from .utils import format_device_dtype,default
+import numpy as np
+
+class MeshGrid:
+    """
+    Generate mesh grid for each dimension.
+    The length of the class is determined by the number of dimension.
+    The attribute x, y, z are the mesh grid for the first three dimension.
+    You can also access the mesh grid for other dimension by indexing the object.
+    E.g., mesh_grid[0] is the mesh grid for the first dimension, equivalent to x.
+    There is no limit for the number of dimension.
+    Assume that the number of points in each dimension is n1, n2, n3, ..., nk, the mesh grid will be of shape (n1,n2,n3,...,nk).
+    While for the attribute x, y, z, the shape will be (n1,), (n2,), (n3,) respectively.
+    
+    Args:
+        mesh_info (Sequence[tuple[float,float,int]]): sequence of tuple (start,end,n_points) for each dimension
+        device: device for the fft frequency
+        dtype: data type for the fft frequency
+
+    Methods:
+        mesh_grid: Generate the mesh grid for all dimensions.
+        bc_mesh_grid: Generate the mesh grid with batch size and channel size.
+    
+    """
+    
+    def __init__(self,
+                 mesh_info:Sequence[tuple[float,float,int]],
+                 device=None,
+                 dtype=None) -> None:
+        self.mesh_info=mesh_info
+        self.meshs=[[] for _ in range(len(mesh_info))]
+        self._dim_names=["x","y","z"]
+        self.device,self.dtype=format_device_dtype(device,dtype)
+        self.n_dim=len(mesh_info)
+    
+    def __len__(self):
+        return len(self.mesh_info)
+    
+    def __getitem__(self,idx:int):
+        if len(self.meshs)<=idx:
+            if idx>2:
+                raise ValueError(f"mesh dim with id{idx} is not defined")
+            else:
+                raise ValueError(f"{self._dim_names[idx]} dim is not defined")
+        if len(self.meshs[idx])==0:
+            self.meshs[idx]=(self.mesh_info[idx][1]-self.mesh_info[idx][0])*torch.arange(0,
+                                                                                         self.mesh_info[idx][2],
+                                                                                         device=self.device,
+                                                                                         dtype=self.dtype)/self.mesh_info[idx][2]
+        return self.meshs[idx]
+    
+    @property
+    def x(self)->torch.Tensor:
+        """
+        Mesh grid for the first dimension
+        """
+        return self[0]
+    
+    @property
+    def y(self)->torch.Tensor:
+        """
+        Mesh grid for the second dimension
+        """
+        return self[1]
+    
+    @property
+    def z(self)->torch.Tensor:
+        """
+        Mesh grid for the third dimension
+        """
+        return self[2]
+
+
+    def mesh_grid(self,numpy=False)->torch.Tensor:
+        """
+        Generate the mesh grid for all dimensions.
+        The shape of the mesh grid will be (n1,n2,n3,...,nk).
+        """
+        if numpy:
+            mesh_grid=np.meshgrid(*[self[i] for i in range(len(self))],indexing='ij')
+        else:
+            mesh_grid=torch.meshgrid(*[self[i] for i in range(len(self))],indexing='ij')
+        if len(mesh_grid) == 1:
+            return mesh_grid[0]
+        return mesh_grid
+
+    def bc_mesh_grid(self,
+                     batch_size:int=1,
+                     n_channels:int=1,
+                     numpy=False)->torch.Tensor:
+        """
+        Generate the mesh grid with batch size and channel size.
+        The shape of the mesh grid will be (batch_size,n_channels,n1,n2,n3,...,nk).
+        """
+        bc_mesh_grid=[]
+        mesh_grid=self.mesh_grid()
+        if not isinstance(mesh_grid,Sequence):
+            mesh_grid=[mesh_grid]
+        for i in range(len(mesh_grid)):
+            bc_mesh_grid.append(
+                mesh_grid[i].reshape(1,1,*mesh_grid[i].shape).repeat(batch_size,n_channels,*[1]*len(mesh_grid[i].shape))
+                )
+        if numpy:
+            mesh_grid=[i.cpu().numpy() for i in bc_mesh_grid]
+        if len(bc_mesh_grid) == 1:
+            return bc_mesh_grid[0]
+        return bc_mesh_grid
+
+    def to(self,device=None,dtype=None):
+        self.__init__(self.mesh_info,device=device,dtype=dtype)
+
+class WaveNumber:
+    """
+    Wave number for each dimension. 
+    The length of the class is determined by the number of dimension.
+    The attribute f_x, f_y, f_z are the fft frequency for the first three dimension.
+    You can also access the fft frequency for other dimension by indexing the object.
+    E.g., wave_number[0] is the fft frequency for the first dimension, equivalent to f_x.
+    There is no limit for the number of dimension.
+    
+    Args:
+        mesh_info (Sequence[tuple[float,float,int]]): sequence of tuple (start,end,n_points) for each dimension
+        device: device for the fft frequency
+        dtype: data type for the fft frequency
+        
+    """
+    
+    def __init__(self,
+                 mesh_info:Sequence[tuple[float,float,int]]=[],
+                 device=None,
+                 dtype=None) -> None:
+        self._dim_names=["x","y","z"]
+        self.mesh_info=mesh_info
+        self.fs=[[] for _ in range(len(mesh_info))]
+        self.device,self.dtype=format_device_dtype(device,dtype)
+
+    def __len__(self):
+        return len(self.mesh_info)
+    
+    def __getitem__(self,idx:int):
+        if len(self.fs)<=idx:
+            if idx>2:
+                raise ValueError(f"fft frequency with id{idx} is not defined")
+            else:
+                raise ValueError(f"{self._dim_names[idx]} fft frequency is not defined")
+        if len(self.fs[idx])==0:
+            self.fs[idx]=torch.fft.fftfreq(self.mesh_info[idx][2],
+                                           (self.mesh_info[idx][1]-self.mesh_info[idx][0])/self.mesh_info[idx][2],
+                                           device=self.device,
+                                           dtype=self.dtype)
+        return self.fs[idx]
+    
+    @property
+    def f_x(self)->torch.Tensor:
+        """
+        Wave number for the first dimension
+        """
+        return self[0]
+    
+    @property
+    def f_y(self)->torch.Tensor:
+        """
+        Wave number for the second dimension
+        """
+        return self[1]
+    
+    @property
+    def f_z(self)->torch.Tensor:
+        """
+        Wave number for the third dimension
+        """
+        return self[2]
+
+    def to(self,device=None,dtype=None):
+        self.__init__(self.mesh_info,device=device,dtype=dtype)
+
+class BroadcastedWaveNumber:
+    """
+    Broadcasted fft frequency for each dimension.
+    The fft frequency is broadcasted to the shape of the value field.
+    For example, if the value field is of shape (batch_size,1,nx,ny,nz), 
+    the fft frequency for the first, second and third dimension will be broadcasted to (1,1,nx,1,1), (1,1,1,ny,1), (1,1,1,1,nz) respectively.
+    The length of the class is determined by the number of dimension.
+    The attribute bf_x, bf_y, bf_z are the broadcasted fft frequency for the first three dimension.
+    You can also access the broadcasted fft frequency for other dimension by indexing the object.
+    E.g., broadcasted_wave_number[0] is the broadcasted fft frequency for the first dimension, equivalent to bf_x.
+    
+    Args:
+        wave_number (WaveNumber): WaveNumber object
+    """
+    
+    def __init__(self,wave_number:WaveNumber) -> None:
+        self.wave_number=wave_number
+        self.bdks=[[] for _ in range(len(self.wave_number))]
+        self._dim_names=self.wave_number._dim_names
+        self.mesh_shape=tuple((i[-1] for i in self.wave_number.mesh_info))
+        self._bf_vector=None
+      
+    def __len__(self):
+        return len(self.wave_number)
+    
+    def __getitem__(self,idx:int)->torch.Tensor:
+        if len(self)<=idx:
+            if idx>2:
+                raise ValueError(f"fft frequency with id{idx} is not defined")
+            else:
+                raise ValueError(f"{self._dim_names[idx]} fft frequency is not defined")
+        if len(self.bdks[idx])==0:
+            shapes=[1]*(len(self.wave_number)+2)
+            shapes[idx+2]=self.wave_number[idx].shape[0]
+            self.bdks[idx]=self.wave_number[idx].reshape(*shapes)
+        return self.bdks[idx]
+    
+    @property
+    def bf_vector(self):
+        if self._bf_vector is None:
+            shapes=(1,1)+self.mesh_shape
+            bks=[]
+            for i in range(len(self)):
+                new_shape=list(shapes)
+                new_shape[i+2]=1
+                bks.append(self[i].repeat(*new_shape))
+            self._bf_vector=torch.cat(bks,dim=1)
+        return self._bf_vector
+    
+    @property
+    def bf_x(self)->torch.Tensor:
+        """
+        Broadcasted fft frequency for the first dimension
+        """
+        return self[0]
+    
+    @property
+    def bf_y(self)->torch.Tensor:
+        """
+        Broadcasted fft frequency for the second dimension
+        """
+        return self[1]
+    
+    @property
+    def bf_z(self)->torch.Tensor:
+        """
+        Broadcasted fft frequency for the third dimension
+        """
+        return self[2]
+
+    def to(self,device=None,dtype=None):
+        self.wave_number.to(device=device,dtype=dtype)
+        self.__init__(self.wave_number)
+
+class FourierMesh():
+    """
+    A class contains the fft frequency information for the Fourier spectral method.
+    
+    Args:
+        mesh (Union[Sequence[tuple[float, float, int]],MeshGrid]): mesh information for the Fourier spectral method
+            it can be a sequence of tuple (start,end,n_points) for each dimension or a MeshGrid object
+        device: device for the fft frequency
+        dtype: data type for the fft frequency
+        
+    Attributes:
+        k (WaveNumber): fft frequency for each dimension
+            It is indexed by the dimension id, e.g., k[0] is the fft frequency for the first dimension
+        bk (BroadcastedWaveNumber): broadcasted fft frequency for each dimension
+            It is indexed by the dimension id, e.g., bk[0] is the broadcasted fft frequency for the first dimension
+        f_x (torch.Tensor): fft frequency for the first dimension
+        f_y (torch.Tensor): fft frequency for the second dimension
+        f_z (torch.Tensor): fft frequency for the third dimension
+        bf_x (torch.Tensor): broadcasted fft frequency for the first dimension
+        bf_y (torch.Tensor): broadcasted fft frequency for the second dimension
+        bf_z (torch.Tensor): broadcasted fft frequency for the third dimension
+        n_dim (int): number of dimension
+        fft_dim (tuple): tuple of the dimension for the fft operation
+        
+    Methods:
+        grad(dim_i:int,order:int)->torch.Tensor: Linear operator for the nth order gradient w.r.t the ith dimension.
+        nabla(order:int)->torch.Tensor: Linear operator for the nth order gradient.
+    """
+    def __init__(self, 
+                 mesh: Union[Sequence[tuple[float, float, int]],MeshGrid], 
+                 device=None, 
+                 dtype=None) -> None:
+        if isinstance(mesh, MeshGrid):
+            self.mesh_info=mesh.mesh_info
+            self.device = default(device, mesh.device)
+            self.dtype = default(dtype, mesh.dtype)
+            self.device,self.dtype=format_device_dtype(self.device,self.dtype)
+        else:
+            self.mesh_info=mesh
+            self.device,self.dtype=format_device_dtype(device,dtype)
+        self.f=WaveNumber(self.mesh_info,device=self.device,dtype=self.dtype)
+        self.bf=BroadcastedWaveNumber(self.f)
+        self.n_dim=len(self.mesh_info)
+        self.fft_dim=tuple(-1*(i+1) for i in range(self.n_dim))
+        self._default_freq_threshold=2/3
+    
+    def set_default_freq_threshold(self,threshold:float):
+        self._default_freq_threshold=threshold
+        self.low_pass_filter.cache_clear()
+    
+    @property
+    def f_x(self)->torch.Tensor:
+        """
+        Wave number for the first dimension
+        """
+        return self.f.f_x
+    
+    @property
+    def f_y(self)->torch.Tensor:
+        """
+        Wave number for the second dimension
+        """
+        return self.f.f_y
+    
+    @property
+    def f_z(self)->torch.Tensor:
+        """
+        Wave number for the third dimension
+        """
+        return self.f.f_z    
+    
+    @property
+    def bf_x(self)->torch.Tensor:
+        """
+        Broadcasted fft frequency for the first dimension
+        """
+        return self.bf.bf_x
+    
+    @property
+    def bf_y(self)->torch.Tensor:
+        """
+        Broadcasted fft frequency for the second dimension
+        """
+        return self.bf.bf_y
+    
+    @property
+    def bf_z(self)->torch.Tensor:
+        """
+        Broadcasted fft frequency for the third dimension
+        """
+        return self.bf.bf_z
+    
+    @property
+    def bf_vector(self)->torch.Tensor:
+        """
+        Broadcasted fft frequency for all dimensions
+        """
+        return self.bf.bf_vector
+
+    @lru_cache()    
+    def grad(self,dim_i:int,order:int)->torch.Tensor:
+        """
+        Linear operator for the nth order gradient w.r.t the ith dimension.
+        """
+        return (2j * torch.pi * self.bf[dim_i])**order
+
+    @lru_cache()   
+    def laplacian(self)->torch.Tensor:
+        """
+        Linear operator for the nth order Laplacian.
+        """
+        return self.nabla(2)
+    
+    @lru_cache()
+    def invert_laplacian(self)->torch.Tensor:
+        """
+        Linear operator for the nth order inverse Laplacian.
+        """
+        lap=self.laplacian()
+        return torch.where(lap == 0, 1.0, 1 / lap)
+    
+    @lru_cache() 
+    def nabla(self,order:int=1)->torch.Tensor:
+        """
+        Linear operator for the nth order gradient.
+        """
+        return sum([self.grad(dim_i,order) for dim_i in range(len(self.bf))])
+
+    @lru_cache()
+    def invert_nabla(self,order:int=1)->torch.Tensor:
+        """
+        Linear operator for the nth order inverse gradient.
+        """
+        nab=self.nabla(order)
+        return torch.where(nab == 0, 1.0, 1 / nab)
+
+    @lru_cache()    
+    def nabla_vector(self,order:int)->torch.Tensor:
+        """
+        Linear operator vector for the nth order gradient.
+        """
+        return (2j * torch.pi*self.bf.bf_vector)**order
+
+    @lru_cache()
+    def low_pass_filter(self,freq_threshold:Optional[float]=None)->torch.Tensor:
+        freq_threshold=default(freq_threshold,self._default_freq_threshold)
+        mask=torch.ones_like(self.nabla().real)
+        for i in range(len(self.bf)):
+            abs_f=self.bf[i].abs()
+            mask*=torch.where(abs_f>abs_f.max()*freq_threshold,0,1)
+        return mask.to(device=self.device,dtype=self.dtype)
+
+    def fft(self,u)->torch.Tensor:
+        """
+        Fast Fourier Transform
+        """
+        return torch.fft.fftn(u,dim=self.fft_dim)
+    
+    def ifft(self,u_fft)->torch.Tensor:
+        """
+        Inverse Fast Fourier Transform
+        """
+        return torch.fft.ifftn(u_fft,dim=self.fft_dim)
+    
+    def to(self,device=None,dtype=None):
+        self.__init__(self.mesh_info,device=device,dtype=dtype)
+        self.grad.cache_clear()
+        self.laplacian.cache_clear()
+        self.invert_laplacian.cache_clear()
+        self.nabla.cache_clear()
+        self.invert_nabla.cache_clear()
+        self.nabla_vector.cache_clear()
+        self.low_pass_filter.cache_clear()
+
+def mesh_shape(
+    mesh: Union[Sequence[tuple[float, float, int]],MeshGrid,FourierMesh],
+    n_batch:int=1,
+    n_channel:int=1,
+):
+    if isinstance(mesh,FourierMesh) or isinstance(mesh,MeshGrid):
+        mesh=mesh.mesh_info
+    return tuple([n_batch,n_channel]+[m[2] for m in mesh])
