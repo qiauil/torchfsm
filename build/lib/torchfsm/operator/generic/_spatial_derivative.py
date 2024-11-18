@@ -39,5 +39,5 @@ class SpatialDerivative(LinearOperator):
     """
     
         
-    def __init__(self,dim_index,order) -> None:
+    def __init__(self,dim_index:int,order:int) -> None:
         super().__init__(_SpatialDerivativeGenerator(dim_index,order))

@@ -6,19 +6,20 @@ import numpy as np
 
 class MeshGrid:
     """
-    Generate mesh grid for each dimension.
-    The length of the class is determined by the number of dimension.
+    An interable class that reprents a mesh grid. 
+    This class is particularly useful for generating the initial condition.
+    The length of the class is the number of mesh dimensions.
     The attribute x, y, z are the mesh grid for the first three dimension.
     You can also access the mesh grid for other dimension by indexing the object.
-    E.g., mesh_grid[0] is the mesh grid for the first dimension, equivalent to x.
+    E.g., `mesh_grid[0]` is the mesh grid for the first dimension, equivalent to x.
     There is no limit for the number of dimension.
-    Assume that the number of points in each dimension is n1, n2, n3, ..., nk, the mesh grid will be of shape (n1,n2,n3,...,nk).
-    While for the attribute x, y, z, the shape will be (n1,), (n2,), (n3,) respectively.
+    Assume that the number of points in each dimension is $n_1, n_2, n_3, \cdots, n_k$, the mesh grid will be of shape $(n_1,n_2,n_3,...,n_k)$.
+    While for the attribute x, y, z, the shape will be $(n_1)$, $(n_2)$, $(n_3)$ respectively.
     
     Args:
         mesh_info (Sequence[tuple[float,float,int]]): sequence of tuple (start,end,n_points) for each dimension
-        device: device for the fft frequency
-        dtype: data type for the fft frequency
+        device: device of the mesh.
+        dtype: data type of the mesh.
 
     Methods:
         mesh_grid: Generate the mesh grid for all dimensions.
@@ -73,11 +74,16 @@ class MeshGrid:
         """
         return self[2]
 
-
     def mesh_grid(self,numpy=False)->torch.Tensor:
         """
         Generate the mesh grid for all dimensions.
         The shape of the mesh grid will be (n1,n2,n3,...,nk).
+
+        Args:
+            numpy (bool): whether to return the mesh grid as numpy array
+
+        Returns:
+            torch.Tensor: mesh grid for all dimensions
         """
         if numpy:
             mesh_grid=np.meshgrid(*[self[i] for i in range(len(self))],indexing='ij')
@@ -94,6 +100,14 @@ class MeshGrid:
         """
         Generate the mesh grid with batch size and channel size.
         The shape of the mesh grid will be (batch_size,n_channels,n1,n2,n3,...,nk).
+
+        Args:
+            batch_size (int): batch size
+            n_channels (int): channel size
+            numpy (bool): whether to return the mesh grid as numpy array
+
+        Returns:
+            torch.Tensor: mesh grid with batch size and channel size
         """
         bc_mesh_grid=[]
         mesh_grid=self.mesh_grid()
@@ -112,9 +126,9 @@ class MeshGrid:
     def to(self,device=None,dtype=None):
         self.__init__(self.mesh_info,device=device,dtype=dtype)
 
-class WaveNumber:
+class FFTFrequency:
     """
-    Wave number for each dimension. 
+    FFT frequency for each dimension. 
     The length of the class is determined by the number of dimension.
     The attribute f_x, f_y, f_z are the fft frequency for the first three dimension.
     You can also access the fft frequency for other dimension by indexing the object.
@@ -156,28 +170,28 @@ class WaveNumber:
     @property
     def f_x(self)->torch.Tensor:
         """
-        Wave number for the first dimension
+        FFT frequency for the first dimension
         """
         return self[0]
     
     @property
     def f_y(self)->torch.Tensor:
         """
-        Wave number for the second dimension
+        FFT frequency for the second dimension
         """
         return self[1]
     
     @property
     def f_z(self)->torch.Tensor:
         """
-        Wave number for the third dimension
+        FFT frequency for the third dimension
         """
         return self[2]
 
     def to(self,device=None,dtype=None):
         self.__init__(self.mesh_info,device=device,dtype=dtype)
 
-class BroadcastedWaveNumber:
+class BroadcastedFFTFrequency:
     """
     Broadcasted fft frequency for each dimension.
     The fft frequency is broadcasted to the shape of the value field.
@@ -189,10 +203,10 @@ class BroadcastedWaveNumber:
     E.g., broadcasted_wave_number[0] is the broadcasted fft frequency for the first dimension, equivalent to bf_x.
     
     Args:
-        wave_number (WaveNumber): WaveNumber object
+        wave_number (FFTFrequency): FFTFrequency object
     """
     
-    def __init__(self,wave_number:WaveNumber) -> None:
+    def __init__(self,wave_number:FFTFrequency) -> None:
         self.wave_number=wave_number
         self.bdks=[[] for _ in range(len(self.wave_number))]
         self._dim_names=self.wave_number._dim_names
@@ -253,7 +267,8 @@ class BroadcastedWaveNumber:
 
 class FourierMesh():
     """
-    A class contains the fft frequency information for the Fourier spectral method.
+    A class contains the fft frequency information and basic deritivate operators for a mesh system.
+    This class is used inside of an Operator class.
     
     Args:
         mesh (Union[Sequence[tuple[float, float, int]],MeshGrid]): mesh information for the Fourier spectral method
@@ -262,9 +277,9 @@ class FourierMesh():
         dtype: data type for the fft frequency
         
     Attributes:
-        k (WaveNumber): fft frequency for each dimension
+        k (FFTFrequency): fft frequency for each dimension
             It is indexed by the dimension id, e.g., k[0] is the fft frequency for the first dimension
-        bk (BroadcastedWaveNumber): broadcasted fft frequency for each dimension
+        bk (BroadcastedFFTFrequency): broadcasted fft frequency for each dimension
             It is indexed by the dimension id, e.g., bk[0] is the broadcasted fft frequency for the first dimension
         f_x (torch.Tensor): fft frequency for the first dimension
         f_y (torch.Tensor): fft frequency for the second dimension
@@ -274,10 +289,12 @@ class FourierMesh():
         bf_z (torch.Tensor): broadcasted fft frequency for the third dimension
         n_dim (int): number of dimension
         fft_dim (tuple): tuple of the dimension for the fft operation
-        
-    Methods:
-        grad(dim_i:int,order:int)->torch.Tensor: Linear operator for the nth order gradient w.r.t the ith dimension.
-        nabla(order:int)->torch.Tensor: Linear operator for the nth order gradient.
+    
+    Args:
+        mesh (Union[Sequence[tuple[float, float, int]],MeshGrid]): mesh information for the Fourier spectral method
+            it can be a sequence of tuple (start,end,n_points) for each dimension or a MeshGrid object
+        device: device for the fft frequency. If you initialze the obkjct with a MeshGrid object and you dont specify this parameter, the device will be the same as the MeshGrid object.
+        dtype: data type for the fft frequency. If you initialze the obkjct with a MeshGrid object and you dont specify this parameter, the dtype will be the same as the MeshGrid object.
     """
     def __init__(self, 
                  mesh: Union[Sequence[tuple[float, float, int]],MeshGrid], 
@@ -291,8 +308,8 @@ class FourierMesh():
         else:
             self.mesh_info=mesh
             self.device,self.dtype=format_device_dtype(device,dtype)
-        self.f=WaveNumber(self.mesh_info,device=self.device,dtype=self.dtype)
-        self.bf=BroadcastedWaveNumber(self.f)
+        self.f=FFTFrequency(self.mesh_info,device=self.device,dtype=self.dtype)
+        self.bf=BroadcastedFFTFrequency(self.f)
         self.n_dim=len(self.mesh_info)
         self.fft_dim=tuple(-1*(i+1) for i in range(self.n_dim))
         self._default_freq_threshold=2/3
@@ -304,21 +321,21 @@ class FourierMesh():
     @property
     def f_x(self)->torch.Tensor:
         """
-        Wave number for the first dimension
+        Fft frequency for the first dimension
         """
         return self.f.f_x
     
     @property
     def f_y(self)->torch.Tensor:
         """
-        Wave number for the second dimension
+        Fft frequency for the second dimension
         """
         return self.f.f_y
     
     @property
     def f_z(self)->torch.Tensor:
         """
-        Wave number for the third dimension
+        Fft frequency for the third dimension
         """
         return self.f.f_z    
     
