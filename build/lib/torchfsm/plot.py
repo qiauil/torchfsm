@@ -5,7 +5,7 @@ import matplotlib.colors as colors
 from matplotlib.animation import FuncAnimation
 from matplotlib.colors import Colormap,LinearSegmentedColormap, ListedColormap
 import torch,os,copy
-from torchfsm.utils import default
+from .utils import default
 from typing import Union,Optional,Sequence,Tuple,Callable,Literal
 from mpl_toolkits.axes_grid1 import ImageGrid
 from warnings import warn
@@ -311,6 +311,7 @@ def plot_traj(traj:Union[np.ndarray,torch.Tensor],
                 fps=30,
                 show_in_notebook:bool=True,
                 animation_engine:Literal["jshtml","html5"]="html5",
+                save_name:Optional[str]=None,
                 **kwargs
                 ):
     if isinstance(traj, torch.Tensor):
@@ -399,6 +400,8 @@ def plot_traj(traj:Union[np.ndarray,torch.Tensor],
                     aspect=aspect,
                     **kwargs)
             set_colorbar()
+            if save_name is not None:
+                plt.savefig(save_name)
             plt.show()
             return None
     elif n_dim == 2:
@@ -419,6 +422,8 @@ def plot_traj(traj:Union[np.ndarray,torch.Tensor],
             for i, ax_i in enumerate(grid):
                 data_i,x_label,y_label,i_column,i_row=_data_plot(i,traj,n_dim,n_channel,n_batch,channel_names,batch_names,animation=animation)
                 plot_3D_field(ax=ax_i,data=data_i,bottom_label=x_label,left_label=y_label,aspect=aspect,cmap=cmaps[i_column],**kwargs)
+            if save_name is not None:
+                plt.savefig(save_name)
             set_colorbar()
             plt.show()
             return None
@@ -467,6 +472,8 @@ def plot_traj(traj:Union[np.ndarray,torch.Tensor],
             return ani
     else:
         ani_func(0)
+        if save_name is not None:
+            plt.savefig(save_name)
         plt.show()
         
         
@@ -486,6 +493,7 @@ def plot_field(
     ticks_x:Tuple[Sequence[float],Sequence[str]]=None,
     ticks_y:Tuple[Sequence[float],Sequence[str]]=None,
     ticks_z:Tuple[Sequence[float],Sequence[str]]=None,
+    save_name:Optional[str]=None,
     **kwargs):
     if isinstance(field, torch.Tensor):
         field = field.cpu().detach().numpy()
@@ -508,5 +516,6 @@ def plot_field(
         ticks_z=ticks_z,
         animation=True,
         show_time_index=False,
+        save_name=save_name,
         **kwargs
     )
