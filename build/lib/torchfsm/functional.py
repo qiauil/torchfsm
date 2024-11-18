@@ -1,7 +1,48 @@
-from .operator import  Convection, Laplacian, Div, Curl, OperatorLike, Vorticity2Velocity
+from .operator import *
 from .mesh import FourierMesh,MeshGrid
 from typing import Optional,Union,Sequence
 import torch
+
+def biharmonic(u:Optional[torch.Tensor]=None,
+               u_fft:Optional[torch.Tensor]=None,
+               mesh:Optional[Union[Sequence[tuple[float, float, int]],MeshGrid,FourierMesh]]=None):
+    return Biharmonic()(u=u,u_fft=u_fft,mesh=mesh)
+
+def conservative_convection(u:Optional[torch.Tensor]=None,
+                            u_fft:Optional[torch.Tensor]=None,
+                            mesh:Optional[Union[Sequence[tuple[float, float, int]],MeshGrid,FourierMesh]]=None,):
+    return ConservativeConvection()(u=u,u_fft=u_fft,mesh=mesh)
+
+def convection(u:Optional[torch.Tensor]=None,
+                u_fft:Optional[torch.Tensor]=None,
+                mesh:Optional[Union[Sequence[tuple[float, float, int]],MeshGrid,FourierMesh]]=None,):
+     return Convection()(u=u,u_fft=u_fft,mesh=mesh)
+
+def curl(u:Optional[torch.Tensor]=None,
+            u_fft:Optional[torch.Tensor]=None,
+            mesh:Optional[Union[Sequence[tuple[float, float, int]],MeshGrid,FourierMesh]]=None,):
+    return Curl()(u=u,u_fft=u_fft,mesh=mesh)
+
+def div(u:Optional[torch.Tensor]=None,
+              u_fft:Optional[torch.Tensor]=None,
+              mesh:Optional[Union[Sequence[tuple[float, float, int]],MeshGrid,FourierMesh]]=None,):
+     return Div()(u=u,u_fft=u_fft,mesh=mesh)
+
+def grad(u:Optional[torch.Tensor]=None,
+              u_fft:Optional[torch.Tensor]=None,
+              mesh:Optional[Union[Sequence[tuple[float, float, int]],MeshGrid,FourierMesh]]=None,):
+     return Grad()(u=u,u_fft=u_fft,mesh=mesh)
+
+def laplacian(u:Optional[torch.Tensor]=None,
+                u_fft:Optional[torch.Tensor]=None,
+                mesh:Optional[Union[Sequence[tuple[float, float, int]],MeshGrid,FourierMesh]]=None,):
+        return Laplacian()(u=u,u_fft=u_fft,mesh=mesh)
+
+def spatial_derivative( dim_index:int,order:int,
+                        u:Optional[torch.Tensor]=None,
+                        u_fft:Optional[torch.Tensor]=None,
+                        mesh:Optional[Union[Sequence[tuple[float, float, int]],MeshGrid,FourierMesh]]=None,):
+    return SpatialDerivative(dim_index,order)(u=u,u_fft=u_fft,mesh=mesh)
 
 def _get_fft_with_mesh(value:Optional[torch.Tensor]=None,
                        value_fft:Optional[torch.Tensor]=None,
