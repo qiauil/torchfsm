@@ -1,4 +1,8 @@
 # Cheetsheet
+## Data shape
+
+* $[B,C,H,W,\cdots]$: [Batch, Channel, x, y, $\cdots$]
+* $[B,T,C,H,W,\cdots]$: [Batch, Trajectory, Channel, x, y, $\cdots$]
 
 ## Operators
 

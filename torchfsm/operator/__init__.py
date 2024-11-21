@@ -7,7 +7,9 @@ from ._base import Operator, OperatorLike, ExplicitSource, LinearCoef, Nonlinear
 from .generic import *
 from .dedicated import *
 
-def run_operators(u:torch.Tensor,
+from .._type import PhysicalTensor
+
+def run_operators(u:PhysicalTensor["B C H W ..."],
                   operators:Sequence[Operator],
                   mesh: Union[Sequence[tuple[float, float, int]],MeshGrid,FourierMesh]) -> torch.Tensor:
     if not isinstance(mesh,FourierMesh):

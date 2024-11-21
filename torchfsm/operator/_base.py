@@ -1,7 +1,8 @@
 import torch, copy
 from torch import Tensor
 from typing import Union, Sequence, Callable, Optional, Tuple, Literal, List
-from ..utils import default, ValueList
+from ..utils import default
+from .._type import ValueList
 from ..mesh import FourierMesh, MeshGrid
 from ..integrator import ETDRKIntegrator, RKIntegrator
 from ..traj_recorder import _TrajRecorder

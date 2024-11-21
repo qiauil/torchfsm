@@ -1,7 +1,7 @@
 import torch
 import numpy as np
 from typing import Union,Optional
-from typing import _SpecialForm,_type_check,List,Union
+from _type import ValueList
         
 def default(value, default):
     return value if value is not None else default
@@ -15,11 +15,6 @@ def format_device_dtype(device:Optional[Union[torch.device,str]]=None,dtype:Opti
             device=torch.device(device.type,0)
     dtype=default(dtype,torch.float32)
     return device,dtype
-
-@_SpecialForm
-def ValueList(self, parameters):
-    arg = _type_check(parameters, f"{self} requires a single type.")
-    return Union[arg, List[arg]]
 
 def statistics_traj(traj:ValueList[Union[torch.Tensor,np.ndarray]]):
     # [B, T, C, H, ...]
