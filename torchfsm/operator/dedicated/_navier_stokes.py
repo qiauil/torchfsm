@@ -8,8 +8,10 @@ from .._base import (
 )
 from ...mesh import FourierMesh
 import torch
-from typing import Optional, Union
+from typing import Optional
+from ..._type import FourierTensor, SpatialTensor
 from ..generic._convection import _ConvectionCore
+from ..._type import FourierTensor, SpatialTensor
 
 
 # Vorticity Convection
@@ -20,20 +22,20 @@ class _VorticityConvectionCore(NonlinearFunc):
 
     def __call__(
         self,
-        u_fft: torch.Tensor,
+        u_fft: FourierTensor["B C H W ..."],
         f_mesh: FourierMesh,
         n_channel: int,
-        u: Optional[torch.Tensor],
-    ) -> torch.Tensor:
+        u: Optional[SpatialTensor["B C H W ..."]],
+    ) -> FourierTensor["B C H W ..."]:
         return f_mesh.fft(self.spatial_value(u_fft, f_mesh, n_channel, u))
 
     def spatial_value(
         self,
-        u_fft: torch.Tensor,
+        u_fft: FourierTensor["B C H W ..."],
         f_mesh: FourierMesh,
         n_channel: int,
-        u: Optional[torch.Tensor],
-    ) -> torch.Tensor:
+        u: Optional[SpatialTensor["B C H W ..."]],
+    ) -> SpatialTensor["B C H W ..."]:
         psi = -u_fft * f_mesh.invert_laplacian()
         ux = f_mesh.ifft(f_mesh.grad(1, 1) * psi).real
         uy = f_mesh.ifft(-f_mesh.grad(0, 1) * psi).real
@@ -59,7 +61,7 @@ class VorticityConvection(NonlinearOperator):
 # Vorticity To Velocity
 class _Vorticity2VelocityCore(LinearCoef):
 
-    def __call__(self, f_mesh, n_channel):
+    def __call__(self, f_mesh, n_channel) -> FourierTensor["B C H W ..."]:
         return (
             -1
             * f_mesh.invert_laplacian()
@@ -96,11 +98,13 @@ class _Vorticity2PressureCore(NonlinearFunc):
         self._vorticity2velocity = _Vorticity2VelocityCore()
         self._convection = _ConvectionCore()
 
-    def __call__(self, u_fft, f_mesh, n_channel, u):
-        velocity_fft = u_fft*self._vorticity2velocity(f_mesh, n_channel)
+    def __call__(self, u_fft, f_mesh, n_channel, u) -> FourierTensor["B C H W ..."]:
+        velocity_fft = u_fft * self._vorticity2velocity(f_mesh, n_channel)
         if self.external_force is not None:
             velocity_fft *= f_mesh.low_pass_filter()
-        convection = self._convection(velocity_fft, f_mesh, n_channel, f_mesh.ifft(velocity_fft).real)
+        convection = self._convection(
+            velocity_fft, f_mesh, n_channel, f_mesh.ifft(velocity_fft).real
+        )
         if self.external_force is not None:
             convection -= self.external_force(
                 u_fft=u_fft, mesh=f_mesh, return_in_fourier=True
@@ -139,11 +143,11 @@ class _Velocity2PressureCore(NonlinearFunc):
 
     def __call__(
         self,
-        u_fft: torch.Tensor,
+        u_fft: FourierTensor["B C H W ..."],
         f_mesh: FourierMesh,
         n_channel: int,
-        u: torch.Tensor | None,
-    ) -> torch.Tensor:
+        u: SpatialTensor["B C H W ..."] | None,
+    ) -> FourierTensor["B C H W ..."]:
         if self.external_force is not None:  # u_fft is original version
             force = self.external_force(
                 u_fft=u_fft, mesh=f_mesh, return_in_fourier=True
@@ -178,10 +182,10 @@ class _NSPressureConvectionCore(NonlinearFunc):
 
     def __call__(
         self,
-        u_fft: torch.Tensor,
+        u_fft: FourierTensor["B C H W ..."],
         f_mesh: FourierMesh,
         n_channel: int,
-        u: torch.Tensor | None,
+        u: SpatialTensor["B C H W ..."] | None,
     ) -> torch.Tensor:
         if self.external_force is not None:  # u_fft is original version
             force = self.external_force(
@@ -192,7 +196,7 @@ class _NSPressureConvectionCore(NonlinearFunc):
         else:  # u_fft is dealiased version
             if u is None:
                 u = f_mesh.ifft(u_fft).real
-        convection=self._convection(u_fft, f_mesh, n_channel, u)
+        convection = self._convection(u_fft, f_mesh, n_channel, u)
         if self.external_force is not None:
             convection -= force
         p = f_mesh.invert_laplacian() * torch.sum(

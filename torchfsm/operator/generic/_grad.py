@@ -1,20 +1,25 @@
-from torch import Tensor
 from ...mesh import FourierMesh
-from .._base import LinearCoef,LinearOperator,CoreGenerator
+from .._base import LinearCoef, LinearOperator, CoreGenerator
+from ..._type import FourierTensor
+
+
 class _GradCore(LinearCoef):
-    
-    def __call__(self, f_mesh: FourierMesh, n_channel: int) -> Tensor:
+
+    def __call__(
+        self, f_mesh: FourierMesh, n_channel: int
+    ) -> FourierTensor["B C H W ..."]:
         return f_mesh.nabla_vector(1)
-    
+
+
 class _GradGenerator(CoreGenerator):
-    
+
     def __call__(self, f_mesh: FourierMesh, n_channel: int) -> LinearCoef:
-        if n_channel!=1:
+        if n_channel != 1:
             raise ValueError("The Grad operator only supports scalar field.")
         return _GradCore()
-        
+
+
 class Grad(LinearOperator):
-    
     r"""
     `Grad` calculates the spatial gradient of a scalar field:
     $$
@@ -27,6 +32,6 @@ class Grad(LinearOperator):
     \right]
     $$
     """
-    
+
     def __init__(self) -> None:
         super().__init__(_GradGenerator())

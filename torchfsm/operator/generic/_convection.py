@@ -1,34 +1,52 @@
 from torch import Tensor
 from ...mesh import FourierMesh
-from .._base import LinearCoef,NonlinearOperator,CoreGenerator,NonlinearFunc
+from .._base import LinearCoef, NonlinearOperator, CoreGenerator, NonlinearFunc
 from functools import lru_cache
+from ..._type import FourierTensor, SpatialTensor
 
 
 class _ConvectionCore(NonlinearFunc):
 
     def __init__(self):
         super().__init__()
-    
-    def __call__(self, u_fft: Tensor, f_mesh: FourierMesh, n_channel: int, u: Tensor | None) -> Tensor:
-        return f_mesh.fft(self.spatial_value(u_fft,f_mesh,n_channel,u))
-    
-    def spatial_value(self, u_fft: Tensor, f_mesh: FourierMesh, n_channel: int, u: Tensor | None):
+
+    def __call__(
+        self,
+        u_fft: FourierTensor["B C H W ..."],
+        f_mesh: FourierMesh,
+        n_channel: int,
+        u: SpatialTensor["B C H W ..."] | None,
+    ) -> FourierTensor["B C H W ..."]:
+        return f_mesh.fft(self.spatial_value(u_fft, f_mesh, n_channel, u))
+
+    def spatial_value(
+        self,
+        u_fft: FourierTensor["B C H W ..."],
+        f_mesh: FourierMesh,
+        n_channel: int,
+        u: FourierTensor["B C H W ..."] | None,
+    ) -> SpatialTensor["B C H W ..."]:
         if u is None:
-            u=f_mesh.ifft(u_fft).real
-        nabla_u=f_mesh.nabla_vector(1).unsqueeze(2)*u_fft.unsqueeze(1)
-        return (u.unsqueeze(2)*f_mesh.ifft(nabla_u).real).sum(1)
+            u = f_mesh.ifft(u_fft).real
+        nabla_u = f_mesh.nabla_vector(1).unsqueeze(2) * u_fft.unsqueeze(1)
+        return (u.unsqueeze(2) * f_mesh.ifft(nabla_u).real).sum(1)
         # another way to calculate convection:
         # return sum([u[:,i:i+1,...]*f_mesh.ifft(f_mesh.grad(i,1)*u_fft).real for i in range(n_channel)])
-        
+
+
 class _ConvectionGenerator(CoreGenerator):
-    
-    def __call__(self, f_mesh: FourierMesh, n_channel: int) -> LinearCoef | NonlinearFunc:
+
+    def __call__(
+        self, f_mesh: FourierMesh, n_channel: int
+    ) -> LinearCoef | NonlinearFunc:
         if f_mesh.n_dim != n_channel:
-            raise ValueError(f"convection operator only works for vector field with the same dimension as mesh")
+            raise ValueError(
+                f"convection operator only works for vector field with the same dimension as mesh"
+            )
         return _ConvectionCore()
-    
+
+
 class Convection(NonlinearOperator):
-    
     """
     `Convection` calculates the convection of a vector field on itself if the vector field is divergence free, i.e., $\nabla \cdot \mathbf{u} =0$.
     $$
@@ -43,6 +61,6 @@ class Convection(NonlinearOperator):
     \right]
     $$
     """
-        
+
     def __init__(self) -> None:
         super().__init__(_ConvectionGenerator())

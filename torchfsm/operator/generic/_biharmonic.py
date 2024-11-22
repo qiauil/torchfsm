@@ -1,15 +1,18 @@
 import torch
 from torch import Tensor
 from ...mesh import FourierMesh
-from .._base import LinearCoef,LinearOperator
+from .._base import LinearCoef, LinearOperator
+from ..._type import FourierTensor
+
 
 class _BiharmonicCore(LinearCoef):
-    
-    def __call__(self, 
-                 f_mesh: FourierMesh, 
-                 n_channel: int) -> Tensor:
-        return torch.cat([f_mesh.laplacian()*f_mesh.laplacian()]*n_channel,dim=1)
-    
+
+    def __call__(
+        self, f_mesh: FourierMesh, n_channel: int
+    ) -> FourierTensor["B C H W ..."]:
+        return torch.cat([f_mesh.laplacian() * f_mesh.laplacian()] * n_channel, dim=1)
+
+
 class Biharmonic(LinearOperator):
     r"""
     `Biharmonic` calculates the Biharmonic of a vector field:
@@ -26,6 +29,6 @@ class Biharmonic(LinearOperator):
     \right]
     $$
     """
-    
+
     def __init__(self) -> None:
-        super().__init__( _BiharmonicCore())
+        super().__init__(_BiharmonicCore())

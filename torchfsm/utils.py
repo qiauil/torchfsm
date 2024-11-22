@@ -1,7 +1,7 @@
 import torch
 import numpy as np
 from typing import Union,Optional
-from _type import ValueList
+from ._type import ValueList
         
 def default(value, default):
     return value if value is not None else default

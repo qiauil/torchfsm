@@ -6,12 +6,12 @@ def ValueList(self, parameters):
     arg = _type_check(parameters, f"{self} requires a single type.")
     return Union[arg, List[arg]]
 
-class PhysicalTensor:
+class SpatialTensor:
 
     __slots__ = ()
 
     def __new__(cls, *args, **kwargs):
-        raise TypeError("Type PhysicalTensor cannot be instantiated.")
+        raise TypeError("Type SpatialTensor cannot be instantiated.")
 
     @_tp_cache
     def __class_getitem__(cls, shape:str):
@@ -19,15 +19,15 @@ class PhysicalTensor:
 
     def __init_subclass__(cls, *args, **kwargs):
         raise TypeError(
-            "Cannot subclass {}.PhysicalTensor".format(cls.__module__)
+            "Cannot subclass {}.SpatialTensor".format(cls.__module__)
         )
     
-class SpectralTensor:
+class FourierTensor:
     
     __slots__ = ()
 
     def __new__(cls, *args, **kwargs):
-        raise TypeError("Type SpectralTensor cannot be instantiated.")
+        raise TypeError("Type FourierTensor cannot be instantiated.")
 
     @_tp_cache
     def __class_getitem__(cls, shape:str):
@@ -35,5 +35,5 @@ class SpectralTensor:
 
     def __init_subclass__(cls, *args, **kwargs):
         raise TypeError(
-            "Cannot subclass {}.SpectralTensor".format(cls.__module__)
+            "Cannot subclass {}.FourierTensor".format(cls.__module__)
         )

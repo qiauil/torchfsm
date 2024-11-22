@@ -17,13 +17,14 @@ class _TrajRecorder():
 
     def __init__(self,
                  control_func:Optional[Callable[[int],bool]]=None,
-                 include_initial_state:bool=True,
+                 include_initial_state:bool=True
                  ):
         control_func=default(control_func,lambda step: True)
         if include_initial_state:
             self.control_func=control_func
         else:
             self.control_func=lambda step: False if step==0 else control_func(step)
+        self.return_in_fourier=True
 
     def record(self,step:int,frame:torch.tensor):
         if self.control_func(step):
@@ -35,9 +36,9 @@ class _TrajRecorder():
     def _traj_ifft(self,trajectory:torch.tensor):
         fft_dim=tuple(-1*(i+1) for i in range(len(trajectory.shape)-3))
         return torch.fft.ifftn(trajectory,dim=fft_dim)
-    
+
     @property
-    def trajectory(self):
+    def trajectory(self,return_in_fourier:bool=False):
         raise NotImplementedError
     
 class AutoRecorder(_TrajRecorder):
@@ -45,11 +46,9 @@ class AutoRecorder(_TrajRecorder):
     def __init__(self,
                  control_func:Optional[Callable[[int],bool]]=None,
                  include_initial_state:bool=True,
-                 ifft_traj:bool=True,
                  ):
         super().__init__(control_func,include_initial_state)
         self._trajectory=[]
-        self.ifft_traj=ifft_traj
     
     def _record(self,step:int,frame:torch.tensor):
         if not isinstance(self._trajectory,torch.Tensor):
@@ -59,19 +58,18 @@ class AutoRecorder(_TrajRecorder):
     
     @property
     def trajectory(self):
-        self._trajectory=torch.stack(self._trajectory,dim=1)
-        if self.ifft_traj:
-            self._trajectory=self._traj_ifft(self._trajectory).real
-        return self._trajectory
+        if self.return_in_fourier:
+            return torch.stack(self._trajectory,dim=1)
+        else:
+            return self._traj_ifft(torch.stack(self._trajectory,dim=1)).real
     
 class CPURecorder(AutoRecorder):
     
     def __init__(self,
                  control_func:Optional[Callable[[int],bool]]=None,
-                 include_initial_state:bool=True,
-                 ifft_traj:bool=True,
+                 include_initial_state:bool=True
                  ):
-        super().__init__(control_func,include_initial_state,ifft_traj)
+        super().__init__(control_func,include_initial_state)
     
     def _record(self,step:int,frame:torch.tensor):
         if frame.is_cpu:
@@ -88,10 +86,8 @@ class DiskRecorder(_TrajRecorder):
                  cache_freq:int=1,
                  temp_cache_loc:Literal["auto","cpu"]="cpu",
                  save_format:Literal["numpy","torch"]="torch",
-                 ifft_traj:bool=True,
                  ):
         super().__init__(control_func,include_initial_state)
-        self.ifft_traj=ifft_traj
         self.cache_dir=default(cache_dir,"./saved_traj/")
         self.cache_freq=cache_freq
         self._trajectory=[]
@@ -111,7 +107,7 @@ class DiskRecorder(_TrajRecorder):
         else:
             temp_cache=torch.stack(self._trajectory,dim=1)
             temp_cache=temp_cache.to("cpu") if not temp_cache.is_cpu else temp_cache
-            if self.iff_traj:
+            if not self.return_in_fourier:
                 temp_cache=self._traj_ifft(temp_cache).real
             if self.save_format=="numpy":
                 np.save(self.cache_dir+f"temp_cache_{step}",temp_cache.numpy()) 

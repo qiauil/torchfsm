@@ -7,11 +7,11 @@ from ._base import Operator, OperatorLike, ExplicitSource, LinearCoef, Nonlinear
 from .generic import *
 from .dedicated import *
 
-from .._type import PhysicalTensor
+from .._type import SpatialTensor
 
-def run_operators(u:PhysicalTensor["B C H W ..."],
+def run_operators(u:SpatialTensor["B C H W ..."],
                   operators:Sequence[Operator],
-                  mesh: Union[Sequence[tuple[float, float, int]],MeshGrid,FourierMesh]) -> torch.Tensor:
+                  mesh: Union[Sequence[tuple[float, float, int]],MeshGrid,FourierMesh]) -> SpatialTensor["B C H W ..."]:
     if not isinstance(mesh,FourierMesh):
         mesh=FourierMesh(mesh)
     u_fft=mesh.fft(u)

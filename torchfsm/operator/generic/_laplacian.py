@@ -2,12 +2,13 @@ import torch
 from torch import Tensor
 from ...mesh import FourierMesh
 from .._base import LinearCoef,LinearOperator
+from ..._type import FourierTensor
 
 class _LaplacianCore(LinearCoef):
     
     def __call__(self, 
                  f_mesh: FourierMesh, 
-                 n_channel: int) -> Tensor:
+                 n_channel: int) -> FourierTensor["B C H W ..."]:
         return torch.cat([f_mesh.laplacian()]*n_channel,dim=1)
     
 class Laplacian(LinearOperator):
