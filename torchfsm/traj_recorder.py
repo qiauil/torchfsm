@@ -58,6 +58,8 @@ class AutoRecorder(_TrajRecorder):
     
     @property
     def trajectory(self):
+        if len(self._trajectory)==0:
+            return None
         if self.return_in_fourier:
             return torch.stack(self._trajectory,dim=1)
         else:

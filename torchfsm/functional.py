@@ -2,7 +2,8 @@ from .operator import *
 from .mesh import FourierMesh, MeshGrid
 from typing import Optional, Union, Sequence
 import torch
-from ._type import SpatialTensor, FourierTensor, OperatorLike
+from ._type import SpatialTensor, FourierTensor
+from .operator._base import OperatorLike
 
 
 def biharmonic(

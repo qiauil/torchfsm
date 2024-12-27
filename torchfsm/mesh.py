@@ -1,10 +1,9 @@
 import torch
-from typing import Union, Sequence, Optional, Annotated
+from typing import Union, Sequence, Optional, Annotated, Tuple
 from functools import lru_cache
-from .utils import format_device_dtype, default, Tuple
+from .utils import format_device_dtype, default
 import numpy as np
 from ._type import SpatialTensor, FourierTensor, ValueList
-
 
 class MeshGrid:
     """
