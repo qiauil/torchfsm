@@ -9,7 +9,7 @@ class _BiharmonicCore(LinearCoef):
 
     def __call__(
         self, f_mesh: FourierMesh, n_channel: int
-    ) -> FourierTensor["B C H W ..."]:
+    ) -> FourierTensor["B C H ..."]:
         return torch.cat([f_mesh.laplacian() * f_mesh.laplacian()] * n_channel, dim=1)
 
 

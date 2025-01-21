@@ -11,11 +11,11 @@ class _Curl2DCore(NonlinearFunc):
 
     def __call__(
         self,
-        u_fft: FourierTensor["B C H W ..."],
+        u_fft: FourierTensor["B C H ..."],
         f_mesh: FourierMesh,
         n_channel: int,
-        u: SpatialTensor["B C H W ..."] | None,
-    ) -> FourierTensor["B C H W ..."]:
+        u: SpatialTensor["B C H ..."] | None,
+    ) -> FourierTensor["B C H ..."]:
         return (
             f_mesh.grad(0, 1) * u_fft[:, 1:2, ...]
             - f_mesh.grad(1, 1) * u_fft[:, 0:1, ...]
@@ -28,11 +28,11 @@ class _Curl3DCore(NonlinearFunc):
 
     def __call__(
         self,
-        u_fft: FourierTensor["B C H W ..."],
+        u_fft: FourierTensor["B C H ..."],
         f_mesh: FourierMesh,
         n_channel: int,
-        u: SpatialTensor["B C H W ..."] | None,
-    ) -> FourierTensor["B C H W ..."]:
+        u: SpatialTensor["B C H ..."] | None,
+    ) -> FourierTensor["B C H ..."]:
         return torch.cat(
             [
                 f_mesh.grad(1, 1) * u_fft[:, 2:3, ...]

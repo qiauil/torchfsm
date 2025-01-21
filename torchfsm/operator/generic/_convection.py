@@ -12,20 +12,20 @@ class _ConvectionCore(NonlinearFunc):
 
     def __call__(
         self,
-        u_fft: FourierTensor["B C H W ..."],
+        u_fft: FourierTensor["B C H ..."],
         f_mesh: FourierMesh,
         n_channel: int,
-        u: SpatialTensor["B C H W ..."] | None,
-    ) -> FourierTensor["B C H W ..."]:
+        u: SpatialTensor["B C H ..."] | None,
+    ) -> FourierTensor["B C H ..."]:
         return f_mesh.fft(self.spatial_value(u_fft, f_mesh, n_channel, u))
 
     def spatial_value(
         self,
-        u_fft: FourierTensor["B C H W ..."],
+        u_fft: FourierTensor["B C H ..."],
         f_mesh: FourierMesh,
         n_channel: int,
-        u: FourierTensor["B C H W ..."] | None,
-    ) -> SpatialTensor["B C H W ..."]:
+        u: FourierTensor["B C H ..."] | None,
+    ) -> SpatialTensor["B C H ..."]:
         if u is None:
             u = f_mesh.ifft(u_fft).real
         nabla_u = f_mesh.nabla_vector(1).unsqueeze(2) * u_fft.unsqueeze(1)

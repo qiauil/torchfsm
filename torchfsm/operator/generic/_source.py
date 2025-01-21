@@ -10,7 +10,7 @@ class _ImplicitUnitSourceCore(LinearCoef):
 
     def __call__(
         self, f_mesh: FourierMesh, n_channel: int
-    ) -> FourierTensor["B C H W ..."]:
+    ) -> FourierTensor["B C H ..."]:
         return torch.ones_like(f_mesh.bf_x)
 
 
@@ -26,11 +26,11 @@ class _ImplicitFuncSourceCore(NonlinearFunc):
 
     def __call__(
         self,
-        u_fft: FourierTensor["B C H W ..."],
+        u_fft: FourierTensor["B C H ..."],
         f_mesh: FourierMesh,
         n_channel: int,
-        u: SpatialTensor["B C H W ..."] | None,
-    ) -> FourierTensor["B C H W ..."]:
+        u: SpatialTensor["B C H ..."] | None,
+    ) -> FourierTensor["B C H ..."]:
         if u is None:
             u = f_mesh.ifft(u_fft).real
         return f_mesh.fft(self.source_func(u))

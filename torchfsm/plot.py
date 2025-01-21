@@ -383,7 +383,7 @@ def plot_3D_field(
 
 def plot_traj(
     traj: Union[
-        SpatialTensor["B T C H W ..."], Annotated[np.ndarray, "Spatial, B T C H W ..."]
+        SpatialTensor["B T C H ..."], Annotated[np.ndarray, "Spatial, B T C H ..."]
     ],
     channel_names: Optional[Sequence[str]] = None,
     batch_names: Optional[Sequence[str]] = None,
@@ -694,7 +694,7 @@ def plot_traj(
 
 def plot_field(
     field: Union[
-        SpatialTensor["B C H W ..."], Annotated[np.ndarray, "Spatial, B C H W ..."]
+        SpatialTensor["B C H ..."], Annotated[np.ndarray, "Spatial, B C H ..."]
     ],
     channel_names: Optional[Sequence[str]] = None,
     batch_names: Optional[Sequence[str]] = None,

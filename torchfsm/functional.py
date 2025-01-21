@@ -7,84 +7,84 @@ from .operator._base import OperatorLike
 
 
 def biharmonic(
-    u: Optional[SpatialTensor["B C H W ..."]] = None,
-    u_fft: Optional[FourierTensor["B C H W ..."]] = None,
+    u: Optional[SpatialTensor["B C H ..."]] = None,
+    u_fft: Optional[FourierTensor["B C H ..."]] = None,
     mesh: Optional[
         Union[Sequence[tuple[float, float, int]], MeshGrid, FourierMesh]
     ] = None,
-) -> SpatialTensor["B C H W ..."]:
+) -> SpatialTensor["B C H ..."]:
     return Biharmonic()(u=u, u_fft=u_fft, mesh=mesh)
 
 
 def conservative_convection(
-    u: Optional[SpatialTensor["B C H W ..."]] = None,
-    u_fft: Optional[FourierTensor["B C H W ..."]] = None,
+    u: Optional[SpatialTensor["B C H ..."]] = None,
+    u_fft: Optional[FourierTensor["B C H ..."]] = None,
     mesh: Optional[
         Union[Sequence[tuple[float, float, int]], MeshGrid, FourierMesh]
     ] = None,
-) -> SpatialTensor["B C H W ..."]:
+) -> SpatialTensor["B C H ..."]:
     return ConservativeConvection()(u=u, u_fft=u_fft, mesh=mesh)
 
 
 def convection(
-    u: Optional[SpatialTensor["B C H W ..."]] = None,
-    u_fft: Optional[FourierTensor["B C H W ..."]] = None,
+    u: Optional[SpatialTensor["B C H ..."]] = None,
+    u_fft: Optional[FourierTensor["B C H ..."]] = None,
     mesh: Optional[
         Union[Sequence[tuple[float, float, int]], MeshGrid, FourierMesh]
     ] = None,
-) -> SpatialTensor["B C H W ..."]:
+) -> SpatialTensor["B C H ..."]:
     return Convection()(u=u, u_fft=u_fft, mesh=mesh)
 
 
 def curl(
-    u: Optional[SpatialTensor["B C H W ..."]] = None,
-    u_fft: Optional[FourierTensor["B C H W ..."]] = None,
+    u: Optional[SpatialTensor["B C H ..."]] = None,
+    u_fft: Optional[FourierTensor["B C H ..."]] = None,
     mesh: Optional[
         Union[Sequence[tuple[float, float, int]], MeshGrid, FourierMesh]
     ] = None,
-) -> SpatialTensor["B C H W ..."]:
+) -> SpatialTensor["B C H ..."]:
     return Curl()(u=u, u_fft=u_fft, mesh=mesh)
 
 
 def div(
-    u: Optional[SpatialTensor["B C H W ..."]] = None,
-    u_fft: Optional[FourierTensor["B C H W ..."]] = None,
+    u: Optional[SpatialTensor["B C H ..."]] = None,
+    u_fft: Optional[FourierTensor["B C H ..."]] = None,
     mesh: Optional[
         Union[Sequence[tuple[float, float, int]], MeshGrid, FourierMesh]
     ] = None,
-) -> SpatialTensor["B C H W ..."]:
+) -> SpatialTensor["B C H ..."]:
     return Div()(u=u, u_fft=u_fft, mesh=mesh)
 
 
 def grad(
-    u: Optional[SpatialTensor["B C H W ..."]] = None,
-    u_fft: Optional[FourierTensor["B C H W ..."]] = None,
+    u: Optional[SpatialTensor["B C H ..."]] = None,
+    u_fft: Optional[FourierTensor["B C H ..."]] = None,
     mesh: Optional[
         Union[Sequence[tuple[float, float, int]], MeshGrid, FourierMesh]
     ] = None,
-) -> SpatialTensor["B C H W ..."]:
+) -> SpatialTensor["B C H ..."]:
     return Grad()(u=u, u_fft=u_fft, mesh=mesh)
 
 
 def laplacian(
-    u: Optional[SpatialTensor["B C H W ..."]] = None,
-    u_fft: Optional[FourierTensor["B C H W ..."]] = None,
+    u: Optional[SpatialTensor["B C H ..."]] = None,
+    u_fft: Optional[FourierTensor["B C H ..."]] = None,
     mesh: Optional[
         Union[Sequence[tuple[float, float, int]], MeshGrid, FourierMesh]
     ] = None,
-) -> SpatialTensor["B C H W ..."]:
+) -> SpatialTensor["B C H ..."]:
     return Laplacian()(u=u, u_fft=u_fft, mesh=mesh)
 
 
 def spatial_derivative(
     dim_index: int,
     order: int,
-    u: Optional[SpatialTensor["B C H W ..."]] = None,
-    u_fft: Optional[FourierTensor["B C H W ..."]] = None,
+    u: Optional[SpatialTensor["B C H ..."]] = None,
+    u_fft: Optional[FourierTensor["B C H ..."]] = None,
     mesh: Optional[
         Union[Sequence[tuple[float, float, int]], MeshGrid, FourierMesh]
     ] = None,
-) -> SpatialTensor["B C H W ..."]:
+) -> SpatialTensor["B C H ..."]:
     return SpatialDerivative(dim_index, order)(u=u, u_fft=u_fft, mesh=mesh)
 
 
@@ -115,7 +115,7 @@ def vorticity2velocity(
     mesh: Optional[
         Union[Sequence[tuple[float, float, int]], MeshGrid, FourierMesh]
     ] = None,
-) -> SpatialTensor["B C H W ..."]:
+) -> SpatialTensor["B C H ..."]:
     return Vorticity2Velocity()(u=vorticity, u_fft=vorticity_fft, mesh=mesh)
 
 
@@ -126,7 +126,7 @@ def velocity2pressure(
         Union[Sequence[tuple[float, float, int]], MeshGrid, FourierMesh]
     ] = None,
     external_force: Optional[OperatorLike] = None,
-) -> SpatialTensor["B C H W ..."]:
+) -> SpatialTensor["B C H ..."]:
     velocity_fft, f_mesh = _get_fft_with_mesh(
         value=velocity, value_fft=velocity_fft, mesh=mesh
     )
@@ -146,7 +146,7 @@ def vorticity2pressure(
         Union[Sequence[tuple[float, float, int]], MeshGrid, FourierMesh]
     ] = None,
     external_force: Optional[OperatorLike] = None,
-) -> SpatialTensor["B C H W ..."]:
+) -> SpatialTensor["B C H ..."]:
     vorticity_fft, f_mesh = _get_fft_with_mesh(
         value=vorticity, value_fft=vorticity_fft, mesh=mesh
     )

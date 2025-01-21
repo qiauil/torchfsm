@@ -9,9 +9,9 @@ from .dedicated import *
 
 from .._type import SpatialTensor
 
-def run_operators(u:SpatialTensor["B C H W ..."],
+def run_operators(u:SpatialTensor["B C H ..."],
                   operators:Sequence[Operator],
-                  mesh: Union[Sequence[tuple[float, float, int]],MeshGrid,FourierMesh]) -> SpatialTensor["B C H W ..."]:
+                  mesh: Union[Sequence[tuple[float, float, int]],MeshGrid,FourierMesh]) -> SpatialTensor["B C H ..."]:
     if not isinstance(mesh,FourierMesh):
         mesh=FourierMesh(mesh)
     u_fft=mesh.fft(u)

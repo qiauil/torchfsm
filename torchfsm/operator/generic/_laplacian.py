@@ -8,7 +8,7 @@ class _LaplacianCore(LinearCoef):
     
     def __call__(self, 
                  f_mesh: FourierMesh, 
-                 n_channel: int) -> FourierTensor["B C H W ..."]:
+                 n_channel: int) -> FourierTensor["B C H ..."]:
         return torch.cat([f_mesh.laplacian()]*n_channel,dim=1)
     
 class Laplacian(LinearOperator):

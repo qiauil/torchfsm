@@ -13,20 +13,20 @@ class _KSConvectionCore(NonlinearFunc):
 
     def __call__(
         self,
-        u_fft: FourierTensor["B C H W ..."],
+        u_fft: FourierTensor["B C H ..."],
         f_mesh: FourierMesh,
         n_channel: int,
-        u: Optional[SpatialTensor["B C H W ..."]],
-    ) -> FourierTensor["B C H W ..."]:
+        u: Optional[SpatialTensor["B C H ..."]],
+    ) -> FourierTensor["B C H ..."]:
         return f_mesh.fft(self.spatial_value(u_fft, f_mesh, n_channel, u))
 
     def spatial_value(
         self,
-        u_fft: FourierTensor["B C H W ..."],
+        u_fft: FourierTensor["B C H ..."],
         f_mesh: FourierMesh,
         n_channel: int,
-        u: Optional[SpatialTensor["B C H W ..."]],
-    ) -> SpatialTensor["B C H W ..."]:
+        u: Optional[SpatialTensor["B C H ..."]],
+    ) -> SpatialTensor["B C H ..."]:
         grad_u = f_mesh.ifft(f_mesh.nabla_vector(1) * u_fft).real
         if self.remove_mean:
             re = 0.5 * torch.sum(grad_u**2, dim=1, keepdim=True)

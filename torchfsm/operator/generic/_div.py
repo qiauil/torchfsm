@@ -11,11 +11,11 @@ class _DivCore(NonlinearFunc):
 
     def __call__(
         self,
-        u_fft: FourierTensor["B C H W ..."],
+        u_fft: FourierTensor["B C H ..."],
         f_mesh: FourierMesh,
         n_channel: int,
-        u: SpatialTensor["B C H W ..."] | None,
-    ) -> FourierTensor["B C H W ..."]:
+        u: SpatialTensor["B C H ..."] | None,
+    ) -> FourierTensor["B C H ..."]:
         return torch.sum(f_mesh.nabla_vector(1) * u_fft, dim=1, keepdim=True)
 
 

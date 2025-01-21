@@ -13,7 +13,7 @@ class _SpatialDerivativeCore(LinearCoef):
 
     def __call__(
         self, f_mesh: FourierMesh, n_channel: int
-    ) -> FourierTensor["B C H W ..."]:
+    ) -> FourierTensor["B C H ..."]:
         return f_mesh.grad(self.dim_index, self.order)
 
 

@@ -14,7 +14,7 @@ def diffused_noise(
     dtype: Optional[torch.dtype] = None,
     n_batch: int = 1,
     n_channel: int = 1,
-) -> SpatialTensor["B C H W ..."]:
+) -> SpatialTensor["B C H ..."]:
     if device is None and (isinstance(mesh, FourierMesh) or isinstance(mesh, MeshGrid)):
         device = mesh.device
     if dtype is None and (isinstance(mesh, FourierMesh) or isinstance(mesh, MeshGrid)):
@@ -47,7 +47,7 @@ def kolm_force(
 
 
 def wave_1d(
-    x: SpatialTensor["B C H W ..."],
+    x: SpatialTensor["B C H ..."],
     min_k: int = 1,
     max_k: int = 5,
     min_amplitude: float = 0.5,
@@ -56,7 +56,7 @@ def wave_1d(
     zero_mean: bool = False,
     mean_shift_coef=0.3,
     batched: bool = False,
-) -> SpatialTensor["B C H W ..."]:
+) -> SpatialTensor["B C H ..."]:
     x_new = x / x.max() * torch.pi * 2
     y = torch.zeros_like(x)
     if not batched:

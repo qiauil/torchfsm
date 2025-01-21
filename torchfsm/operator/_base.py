@@ -17,16 +17,16 @@ class LinearCoef(ABC):
     @abstractmethod
     def __call__(
         self, f_mesh: FourierMesh, n_channel: int
-    ) -> FourierTensor["B C H W ..."]:
+    ) -> FourierTensor["B C H ..."]:
         pass
 
     def nonlinear_like(
         self,
-        u_fft: FourierTensor["B C H W ..."],
+        u_fft: FourierTensor["B C H ..."],
         f_mesh: FourierMesh,
         n_channel: int,
-        u: Optional[SpatialTensor["B C H W ..."]],
-    ) -> FourierTensor["B C H W ..."]:
+        u: Optional[SpatialTensor["B C H ..."]],
+    ) -> FourierTensor["B C H ..."]:
         return self(f_mesh, n_channel) * u_fft
 
 
@@ -38,20 +38,20 @@ class NonlinearFunc(ABC):
     @abstractmethod
     def __call__(
         self,
-        u_fft: FourierTensor["B C H W ..."],
+        u_fft: FourierTensor["B C H ..."],
         f_mesh: FourierMesh,
         n_channel: int,
-        u: Optional[SpatialTensor["B C H W ..."]],
-    ) -> FourierTensor["B C H W ..."]:
+        u: Optional[SpatialTensor["B C H ..."]],
+    ) -> FourierTensor["B C H ..."]:
         pass
 
     def spatial_value(
         self,
-        u_fft: FourierTensor["B C H W ..."],
+        u_fft: FourierTensor["B C H ..."],
         f_mesh: FourierMesh,
         n_channel: int,
-        u: Optional[SpatialTensor["B C H W ..."]],
-    ) -> SpatialTensor["B C H W ..."]:
+        u: Optional[SpatialTensor["B C H ..."]],
+    ) -> SpatialTensor["B C H ..."]:
         return f_mesh.ifft(self(u_fft, f_mesh, n_channel, u)).real
 
 
@@ -70,7 +70,7 @@ GeneratorLike = Union[CoreGenerator, Callable]
 
 
 def check_value_with_mesh(
-    u: SpatialTensor["B C H W ..."],
+    u: SpatialTensor["B C H ..."],
     mesh: Union[Sequence[tuple[float, float, int]], MeshGrid, FourierMesh],
 ):
     if isinstance(mesh, FourierMesh) or isinstance(mesh, MeshGrid):
@@ -137,7 +137,7 @@ class _InverseSolveMixin:
         ] = None,
         n_channel: Optional[int] = None,
         return_in_fourier=False,
-    ) -> Union[SpatialTensor["B C H W ..."], SpatialTensor["B C H W ..."]]:
+    ) -> Union[SpatialTensor["B C H ..."], SpatialTensor["B C H ..."]]:
         if not (mesh is not None and n_channel is not None):
             assert (
                 self._state_dict["f_mesh"] is not None
@@ -342,8 +342,8 @@ class OperatorLike(_MutableMixIn):
 
     def _pre_check(
         self,
-        u: Optional[SpatialTensor["B C H W ..."]] = None,
-        u_fft: Optional[FourierTensor["B C H W ..."]] = None,
+        u: Optional[SpatialTensor["B C H ..."]] = None,
+        u_fft: Optional[FourierTensor["B C H ..."]] = None,
         mesh: Union[Sequence[tuple[float, float, int]], MeshGrid, FourierMesh] = None,
     ) -> Tuple[FourierMesh, int]:
         if u_fft is None and u is None:
@@ -451,10 +451,10 @@ class OperatorLike(_MutableMixIn):
         return_in_fourier: bool = False,
     ) -> Optional[
         Union[
-            SpatialTensor["B C H W ..."],
-            SpatialTensor["B T C H W ..."],
-            FourierTensor["B C H W ..."],
-            FourierTensor["B T C H W ..."],
+            SpatialTensor["B C H ..."],
+            SpatialTensor["B T C H ..."],
+            FourierTensor["B C H ..."],
+            FourierTensor["B T C H ..."],
         ]
     ]:
         if self._state_dict["f_mesh"] is None or mesh is not None:
@@ -486,13 +486,13 @@ class OperatorLike(_MutableMixIn):
 
     def __call__(
         self,
-        u: Optional[SpatialTensor["B C H W ..."]] = None,
-        u_fft: Optional[FourierTensor["B C H W ..."]] = None,
+        u: Optional[SpatialTensor["B C H ..."]] = None,
+        u_fft: Optional[FourierTensor["B C H ..."]] = None,
         mesh: Optional[
             Union[Sequence[tuple[float, float, int]], MeshGrid, FourierMesh]
         ] = None,
         return_in_fourier=False,
-    ) -> Union[SpatialTensor["B C H W ..."], FourierTensor["B C H W ..."]]:
+    ) -> Union[SpatialTensor["B C H ..."], FourierTensor["B C H ..."]]:
         if self._state_dict["f_mesh"] is None or mesh is not None:
             mesh, n_channel = self._pre_check(u, u_fft, mesh)
             self.register_mesh(mesh, n_channel)
@@ -680,18 +680,18 @@ class NonlinearOperator(OperatorLike, _DeAliasMixin):
 
 class _ExplicitSourceCore(NonlinearFunc):
 
-    def __init__(self, source: SpatialTensor["B C H W ..."]) -> None:
+    def __init__(self, source: SpatialTensor["B C H ..."]) -> None:
         super().__init__(dealiasing_swtich=False)
         fft_dim = [i + 2 for i in range(source.dim() - 2)]
         self.source = torch.fft.fftn(source, dim=fft_dim)
 
     def __call__(
         self,
-        u_fft: FourierTensor["B C H W ..."],
+        u_fft: FourierTensor["B C H ..."],
         f_mesh: FourierMesh,
         n_channel: int,
-        u: SpatialTensor["B C H W ..."] | None,
-    ) -> FourierTensor["B C H W ..."]:
+        u: SpatialTensor["B C H ..."] | None,
+    ) -> FourierTensor["B C H ..."]:
         if self.source.device != f_mesh.device:
             self.source = self.source.to(f_mesh.device)
         return self.source

@@ -40,7 +40,7 @@ class MeshGrid:
     def __len__(self):
         return len(self.mesh_info)
 
-    def __getitem__(self, idx: int) -> SpatialTensor["H W ..."]:
+    def __getitem__(self, idx: int) -> SpatialTensor["H ..."]:
         if len(self.meshs) <= idx:
             if idx > 2:
                 raise ValueError(f"mesh dim with id{idx} is not defined")
@@ -79,7 +79,7 @@ class MeshGrid:
 
     def mesh_grid(
         self, numpy=False
-    ) -> ValueList[Union[SpatialTensor["H W ..."], Annotated[np.ndarray, "Spatial, H W ..."]]]:
+    ) -> ValueList[Union[SpatialTensor["H ..."], Annotated[np.ndarray, "Spatial, H ..."]]]:
         """
         Generate the mesh grid for all dimensions.
         The shape of the mesh grid will be (n1,n2,n3,...,nk).
@@ -103,7 +103,7 @@ class MeshGrid:
     def bc_mesh_grid(
         self, batch_size: int = 1, n_channels: int = 1, numpy=False
     ) -> ValueList[
-        Union[SpatialTensor["B C H W ..."], Annotated[np.ndarray, "Spatial, B C H W ..."]]
+        Union[SpatialTensor["B C H ..."], Annotated[np.ndarray, "Spatial, B C H ..."]]
     ]:
         """
         Generate the mesh grid with batch size and channel size.
@@ -389,21 +389,21 @@ class FourierMesh:
         return self.bf.bf_vector
 
     @lru_cache()
-    def grad(self, dim_i: int, order: int) -> FourierTensor["B C H W ..."]:
+    def grad(self, dim_i: int, order: int) -> FourierTensor["B C H ..."]:
         """
         Linear operator for the nth order gradient w.r.t the ith dimension.
         """
         return (2j * torch.pi * self.bf[dim_i]) ** order
 
     @lru_cache()
-    def laplacian(self) -> FourierTensor["B C H W ..."]:
+    def laplacian(self) -> FourierTensor["B C H ..."]:
         """
         Linear operator for the nth order Laplacian.
         """
         return self.nabla(2)
 
     @lru_cache()
-    def invert_laplacian(self) -> FourierTensor["B C H W ..."]:
+    def invert_laplacian(self) -> FourierTensor["B C H ..."]:
         """
         Linear operator for the nth order inverse Laplacian.
         """
@@ -411,14 +411,14 @@ class FourierMesh:
         return torch.where(lap == 0, 1.0, 1 / lap)
 
     @lru_cache()
-    def nabla(self, order: int = 1) -> FourierTensor["B C H W ..."]:
+    def nabla(self, order: int = 1) -> FourierTensor["B C H ..."]:
         """
         Linear operator for the nth order gradient.
         """
         return sum([self.grad(dim_i, order) for dim_i in range(len(self.bf))])
 
     @lru_cache()
-    def invert_nabla(self, order: int = 1) -> FourierTensor["B C H W ..."]:
+    def invert_nabla(self, order: int = 1) -> FourierTensor["B C H ..."]:
         """
         Linear operator for the nth order inverse gradient.
         """
@@ -426,7 +426,7 @@ class FourierMesh:
         return torch.where(nab == 0, 1.0, 1 / nab)
 
     @lru_cache()
-    def nabla_vector(self, order: int) -> FourierTensor["B C H W ..."]:
+    def nabla_vector(self, order: int) -> FourierTensor["B C H ..."]:
         """
         Linear operator vector for the nth order gradient.
         """
@@ -441,13 +441,13 @@ class FourierMesh:
             mask *= torch.where(abs_f > abs_f.max() * freq_threshold, 0, 1)
         return mask.to(device=self.device, dtype=self.dtype)
 
-    def fft(self, u) -> FourierTensor["B C H W ..."]:
+    def fft(self, u) -> FourierTensor["B C H ..."]:
         """
         Fast Fourier Transform
         """
         return torch.fft.fftn(u, dim=self.fft_dim)
 
-    def ifft(self, u_fft) -> SpatialTensor["B C H W ..."]:
+    def ifft(self, u_fft) -> SpatialTensor["B C H ..."]:
         """
         Inverse Fast Fourier Transform
         """

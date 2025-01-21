@@ -7,7 +7,7 @@ class _GradCore(LinearCoef):
 
     def __call__(
         self, f_mesh: FourierMesh, n_channel: int
-    ) -> FourierTensor["B C H W ..."]:
+    ) -> FourierTensor["B C H ..."]:
         return f_mesh.nabla_vector(1)
 
 

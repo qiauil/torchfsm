@@ -11,11 +11,11 @@ class _ConservativeConvectionCore(NonlinearFunc):
 
     def __call__(
         self,
-        u_fft: FourierTensor["B C H W ..."],
+        u_fft: FourierTensor["B C H ..."],
         f_mesh: FourierMesh,
         n_channel: int,
-        u: SpatialTensor["B C H W ..."] | None,
-    ) -> FourierTensor["B C H W ..."]:
+        u: SpatialTensor["B C H ..."] | None,
+    ) -> FourierTensor["B C H ..."]:
         if u is None:
             u = f_mesh.ifft(u_fft).real
         uu = u.unsqueeze(2) * u.unsqueeze(1)
