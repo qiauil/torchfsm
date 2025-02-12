@@ -1,8 +1,10 @@
 # Cheetsheet
-## Data shape
+## Data Types
 
 * $[B,C,H,W,\cdots]$: [Batch, Channel, x, y, $\cdots$]
 * $[B,T,C,H,W,\cdots]$: [Batch, Trajectory, Channel, x, y, $\cdots$]
+* `SpatialTensor`/`SpatialArray`: A tensor/array in physical space.
+* `FourierTensor`/`FourierArray`: A tensor/array in Fourier space, i.e., the tensor is a complex tensor.
 
 ## Operators
 
