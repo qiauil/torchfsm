@@ -31,6 +31,9 @@ class MeshGrid:
     def __init__(
         self, mesh_info: Sequence[tuple[float, float, int]], device=None, dtype=None
     ) -> None:
+        for dim_i in mesh_info:
+            if len(dim_i) != 3:
+                raise ValueError("each dimension should be a tuple of (start,end,n_points)")
         self.mesh_info = mesh_info
         self.meshs = [[] for _ in range(len(mesh_info))]
         self._dim_names = ["x", "y", "z"]
