@@ -440,15 +440,17 @@ class OperatorLike(_MutableMixIn):
 
     def integrate(
         self,
-        u_0: torch.Tensor,
-        dt: float,
-        step: int,
+        u_0: Optional[torch.Tensor] = None,
+        u_0_fft: Optional[torch.Tensor] = None,
+        dt: float = 1,
+        step: int = 1,
         mesh: Optional[
             Union[Sequence[tuple[float, float, int]], MeshGrid, FourierMesh]
         ] = None,
         progressive: bool = False,
         trajectory_recorder: Optional[_TrajRecorder] = None,
         return_in_fourier: bool = False,
+        
     ) -> Optional[
         Union[
             SpatialTensor["B C H ..."],
@@ -458,17 +460,18 @@ class OperatorLike(_MutableMixIn):
         ]
     ]:
         if self._state_dict["f_mesh"] is None or mesh is not None:
-            mesh, n_channel = self._pre_check(u=u_0, mesh=mesh)
+            mesh, n_channel = self._pre_check(u=u_0, u_fft=u_0_fft, mesh=mesh)
             self.register_mesh(mesh, n_channel)
         else:
-            self._pre_check(u=u_0, mesh=self._state_dict["f_mesh"])
+            self._pre_check(u=u_0, u_fft=u_0_fft, mesh=self._state_dict["f_mesh"])
         if self._state_dict["integrator"] is None:
             self._build_integrator(dt)
         elif self._is_etdrk_integrator:
             if self._state_dict["integrator"].dt != dt:
                 self._build_integrator(dt)
         f_mesh = self._state_dict["f_mesh"]
-        u_fft = f_mesh.fft(u_0)
+        if u_0_fft is None:
+            u_fft = f_mesh.fft(u_0)
         p_bar = tqdm(range(step), desc="Integrating", disable=not progressive)
         for i in p_bar:
             if trajectory_recorder is not None:

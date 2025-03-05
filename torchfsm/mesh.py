@@ -146,7 +146,7 @@ class FFTFrequency:
     The length of the class is determined by the number of dimension.
     The attribute f_x, f_y, f_z are the fft frequency for the first three dimension.
     You can also access the fft frequency for other dimension by indexing the object.
-    E.g., wave_number[0] is the fft frequency for the first dimension, equivalent to f_x.
+    E.g., fft_frequency[0] is the fft frequency for the first dimension, equivalent to f_x.
     There is no limit for the number of dimension.
 
     Args:
@@ -209,6 +209,7 @@ class FFTFrequency:
 
     def to(self, device=None, dtype=None):
         self.__init__(self.mesh_info, device=device, dtype=dtype)
+            
 
 
 class BroadcastedFFTFrequency:
@@ -220,21 +221,21 @@ class BroadcastedFFTFrequency:
     The length of the class is determined by the number of dimension.
     The attribute bf_x, bf_y, bf_z are the broadcasted fft frequency for the first three dimension.
     You can also access the broadcasted fft frequency for other dimension by indexing the object.
-    E.g., broadcasted_wave_number[0] is the broadcasted fft frequency for the first dimension, equivalent to bf_x.
+    E.g., broadcasted_fft_frequency[0] is the broadcasted fft frequency for the first dimension, equivalent to bf_x.
 
     Args:
-        wave_number (FFTFrequency): FFTFrequency object
+        fft_frequency (FFTFrequency): FFTFrequency object
     """
 
-    def __init__(self, wave_number: FFTFrequency) -> None:
-        self.wave_number = wave_number
-        self.bdks = [[] for _ in range(len(self.wave_number))]
-        self._dim_names = self.wave_number._dim_names
-        self.mesh_shape = tuple((i[-1] for i in self.wave_number.mesh_info))
+    def __init__(self, fft_frequency: FFTFrequency) -> None:
+        self.fft_frequency = fft_frequency
+        self.bdks = [[] for _ in range(len(self.fft_frequency))]
+        self._dim_names = self.fft_frequency._dim_names
+        self.mesh_shape = tuple((i[-1] for i in self.fft_frequency.mesh_info))
         self._bf_vector = None
 
     def __len__(self):
-        return len(self.wave_number)
+        return len(self.fft_frequency)
 
     def __getitem__(self, idx: int) -> torch.Tensor:
         if len(self) <= idx:
@@ -243,9 +244,9 @@ class BroadcastedFFTFrequency:
             else:
                 raise ValueError(f"{self._dim_names[idx]} fft frequency is not defined")
         if len(self.bdks[idx]) == 0:
-            shapes = [1] * (len(self.wave_number) + 2)
-            shapes[idx + 2] = self.wave_number[idx].shape[0]
-            self.bdks[idx] = self.wave_number[idx].reshape(*shapes)
+            shapes = [1] * (len(self.fft_frequency) + 2)
+            shapes[idx + 2] = self.fft_frequency[idx].shape[0]
+            self.bdks[idx] = self.fft_frequency[idx].reshape(*shapes)
         return self.bdks[idx]
 
     @property
@@ -282,8 +283,8 @@ class BroadcastedFFTFrequency:
         return self[2]
 
     def to(self, device=None, dtype=None):
-        self.wave_number.to(device=device, dtype=dtype)
-        self.__init__(self.wave_number)
+        self.fft_frequency.to(device=device, dtype=dtype)
+        self.__init__(self.fft_frequency)
 
 
 class FourierMesh:
