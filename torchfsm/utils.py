@@ -39,7 +39,7 @@ def statistics_traj(traj: ValueList[Union[torch.Tensor, np.ndarray]]):
     return means, stds, mins, maxs
 
 
-def random_select_time_steps(
+def random_clip_traj(
     traj: Union[
         SpatialTensor["B T C H ..."],
         SpatialArray["B T C H ..."],
@@ -60,3 +60,39 @@ def random_select_time_steps(
     if isinstance(traj, np.ndarray):
         new_traj = new_traj.numpy()
     return new_traj
+
+def random_select_frames(
+    traj: Union[
+        SpatialTensor["B T C H ..."],
+        SpatialArray["B T C H ..."],
+        FourierTensor["B T C H ..."],
+        FourierArray["B T C H ..."],
+    ],
+    n_frames: int,
+):
+    if isinstance(traj, np.ndarray):
+        traj = torch.from_numpy(traj)
+    ori_len_time = traj.shape[1]
+    selected_frames = torch.randint(0, ori_len_time, (n_frames,))
+    new_traj = traj[:, selected_frames]
+    if isinstance(traj, np.ndarray):
+        new_traj = new_traj.numpy()
+    return new_traj
+
+def uniformly_select_frames(
+    traj: Union[
+        SpatialTensor["B T C H ..."],
+        SpatialArray["B T C H ..."],
+        FourierTensor["B T C H ..."],
+        FourierArray["B T C H ..."],
+    ],
+    n_frames: int,
+):
+    if isinstance(traj, np.ndarray):
+        traj = torch.from_numpy(traj)
+    ori_len_time = traj.shape[1]
+    selected_frames = torch.linspace(0, ori_len_time - 1, n_frames).long()
+    new_traj = traj[:, selected_frames]
+    if isinstance(traj, np.ndarray):
+        new_traj = new_traj.numpy()
+    return new_traj  
