@@ -389,7 +389,7 @@ class OperatorLike(_MutableMixIn):
         if isinstance(mesh, FourierMesh):
             f_mesh = mesh
             if device is not None or dtype is not None:
-                f_mesh = mesh.to(device=device, dtype=dtype)
+                f_mesh.to(device=device, dtype=dtype)
         else:
             f_mesh = FourierMesh(mesh, device=device, dtype=dtype)
         for key in self._state_dict:
@@ -513,12 +513,8 @@ class OperatorLike(_MutableMixIn):
 
     def to(self, device=None, dtype=None):
         if self._state_dict is not None:
-            self._state_dict["f_mesh"] = self._state_dict["f_mesh"].to(
-                device=device, dtype=dtype
-            )
-            self.register_mesh(
-                self._state_dict["f_mesh"], self._state_dict["n_channel"]
-            )
+            self._state_dict["f_mesh"].to(device=device, dtype=dtype)
+            self.register_mesh(self._state_dict["f_mesh"], self._state_dict["n_channel"])
 
 
 class Operator(OperatorLike, _DeAliasMixin):
