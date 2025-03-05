@@ -24,7 +24,7 @@ class _TrajRecorder():
             self.control_func=control_func
         else:
             self.control_func=lambda step: False if step==0 else control_func(step)
-        self.return_in_fourier=True
+        self.return_in_fourier=False
 
     def record(self,step:int,frame:torch.tensor):
         if self.control_func(step):
