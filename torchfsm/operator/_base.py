@@ -471,21 +471,21 @@ class OperatorLike(_MutableMixIn):
                 self._build_integrator(dt)
         f_mesh = self._state_dict["f_mesh"]
         if u_0_fft is None:
-            u_fft = f_mesh.fft(u_0)
+            u_0_fft = f_mesh.fft(u_0)
         p_bar = tqdm(range(step), desc="Integrating", disable=not progressive)
         for i in p_bar:
             if trajectory_recorder is not None:
-                trajectory_recorder.record(i, u_fft)
-            u_fft = self._state_dict["integrator"].forward(u_fft, dt)
+                trajectory_recorder.record(i, u_0_fft)
+            u_0_fft = self._state_dict["integrator"].forward(u_0_fft, dt)
         if trajectory_recorder is not None:
-            trajectory_recorder.record(i + 1, u_fft)
+            trajectory_recorder.record(i + 1, u_0_fft)
             trajectory_recorder.return_in_fourier = return_in_fourier
             return trajectory_recorder.trajectory
         else:
             if return_in_fourier:
-                return u_fft
+                return u_0_fft
             else:
-                return f_mesh.ifft(u_fft).real
+                return f_mesh.ifft(u_0_fft).real
 
     def __call__(
         self,
