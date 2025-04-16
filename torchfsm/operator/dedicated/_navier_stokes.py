@@ -202,6 +202,8 @@ class _NSPressureConvectionCore(NonlinearFunc):
         p = f_mesh.invert_laplacian() * torch.sum(
             f_mesh.nabla_vector(1) * convection, dim=1, keepdim=True
         )  # - p = nabla.(u.nabla_u)/laplacian
+        if self.external_force is not None:
+            return f_mesh.nabla_vector(1) * p - convection + force # -nabla(p) - nabla.(u.nabla_u) + f
         return f_mesh.nabla_vector(1) * p - convection  # -nabla(p) - nabla.(u.nabla_u)
 
 
