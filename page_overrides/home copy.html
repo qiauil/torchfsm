@@ -224,7 +224,6 @@
     .md-footer-social {
         padding-top: 20px;
     }
-
 </style>
 
 
@@ -242,199 +241,29 @@
         <div class="tx-hero__content">
           <h1>{{ config.home_tagline }}</h1>
           <p>{{ config.home_description }}</p>
-          <div class="copy-container">
-            <div class="copy-wrapper">
-                <input 
-                    type="text" 
-                    value="pip install torchfsm" 
-                    readonly 
-                    class="copy-textbox"
-                />
-            <button 
-                onclick="copyToClipboard('pip install torchfsm')" 
-                title="Click to copy" 
-                class="copy-button">
-                <!-- Inline SVG for the icon -->
-                <svg 
-                    xmlns="http://www.w3.org/2000/svg" 
-                    viewBox="0 0 24 24" 
-                    class="copy-icon" 
-                    fill="currentColor">
-                    <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
-                </svg>
-            </button>
-            </div>
-        </div>
-
-        <script>
-            function copyToClipboard(text) {
-                navigator.clipboard.writeText(text).then(() => {
-                    alert('Copied to clipboard: ' + text);
-                }).catch(err => {
-                    console.error('Failed to copy text: ', err);
-                });
-            }
-        </script>
+	  
+	  <!-- Added Buttons (up to 3) -->
+          {%- if config.home_button1_name -%}
+          <a href="{{ config.home_button1_url }}" title="Material | MkDocs" class="{{ config.home_button1_theme }}">
+            {{ config.home_button1_name }}
+          </a>
+	  {%- endif -%}
+	  
+          {%- if config.home_button2_name -%}
+          <a href="{{ config.home_button2_url }}" title="Material | MkDocs" class="{{ config.home_button2_theme }}">
+            {{ config.home_button2_name }}
+          </a>
+	  {%- endif -%}
+	  
+	  {%- if config.home_button3_name -%}
+          <a href="{{ config.home_button3_url }}" title="Material | MkDocs" class="{{ config.home_button3_theme }}">
+            {{ config.home_button3_name }}
+          </a>
+	  {%- endif -%}
         </div>
       </div>
     </div>
 </section>
-
-<style>
-    /* Container for the textbox and button */
-    .copy-container {
-        display: flex;
-        justify-content: center;
-        margin: 0;
-        width: 100%; /* Adjust width as needed */
-        max-width: 400px; /* Set a maximum width */
-    }
-    
-    /* Wrapper for the textbox and button to share the same boundary */
-    .copy-wrapper {
-        display: flex;
-        align-items: center;
-        border: 2px solid #f0f0f0;
-        border-radius: 4px;
-        overflow: hidden;
-        background-color: transparent;
-        width: 100%; /* Adjust width as needed */
-        max-width: 400px; /* Set a maximum width */
-    }
-    
-    /* Textbox styling */
-    .copy-textbox {
-        flex: 1;
-        padding: 0.5rem;
-        font-size: 1rem;
-        border: none;
-        background-color: transparent;
-        color: white;
-        outline: none;
-        cursor: default;
-        text-align: center;
-    }
-    
-    /* Button styling */
-    .copy-button {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 0.75rem;
-        background-color: #f0f0f0;
-        border: none;
-        cursor: pointer;
-        outline: none;
-    }
-    
-    .copy-button:hover {
-        background-color: white; /* Light gray hover effect */
-    }
-    
-    /* SVG Icon styling */
-    .copy-icon {
-        width: 20px; /* Adjust size as needed */
-        height: 20px; /* Adjust size as needed */
-        fill: currentColor; /* Use current text color */
-        color: var(--md-primary-fg-color); /* Default color */
-    }
-
-    .copy-button:hover .copy-icon {
-        color: var(--md-primary-fg-color); /* Change color on hover */
-    }
-    </style>
-
-<!-- New Image Carousel -->
-<section class="image-carousel">
-<div class="swiper-container">
-    <div class="swiper-wrapper">
-    <div class="swiper-slide">
-        <img src="{{ config.home_cover_image }}" alt="Image 1">
-    </div>
-    <div class="swiper-slide">
-        <img src="{{ config.home_cover_image }}" alt="Image 2">
-    </div>
-    <div class="swiper-slide">
-        <img src="{{ config.home_cover_image }}" alt="Image 3">
-    </div>
-    <!-- Add more slides as needed -->
-    </div>
-    <!-- Add navigation buttons -->
-    <div class="swiper-button-next"></div>
-    <div class="swiper-button-prev"></div>
-    <!-- Add pagination -->
-    <div class="swiper-pagination"></div>
-</div>
-</section>
-
-<!-- Swiper.js Styles -->
-<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
-
-<style>
-.image-carousel {
-    margin-top: 2rem;
-    padding: 1rem 0;
-}
-
-.swiper-container {
-    width: 100%;
-    height: auto;
-    position: relative; /* Ensure positioning context for arrows */
-}
-
-.swiper-slide {
-    display: flex; /* Use flexbox to center content */
-    justify-content: center; /* Center horizontally */
-    align-items: center; /* Center vertically */
-}
-
-.swiper-slide img {
-    width: auto; /* Maintain aspect ratio */
-    max-width: 100%; /* Ensure it doesn't exceed the container width */
-    height: auto; /* Maintain aspect ratio */
-    max-height: 400px; /* Set a maximum height for the images */
-    margin: auto; /* Center the image horizontally and vertically */
-    object-fit: contain; /* Ensure the image fits within the bounds */
-}
-
-/* Center navigation arrows relative to the images */
-.swiper-button-next,
-.swiper-button-prev {
-    top: 50%; /* Center vertically within the Swiper container */
-    transform: translateY(-50%); /* Adjust for exact centering */
-    color: #333; /* Optional: Change arrow color */
-    opacity: 0.8; /* Optional: Slight transparency */
-}
-
-.swiper-button-next:hover,
-.swiper-button-prev:hover {
-    opacity: 1; /* Optional: Full opacity on hover */
-}
-
-</style>
-
-<!-- Swiper.js Script -->
-<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    const swiper = new Swiper('.swiper-container', {
-    loop: true,
-    navigation: {
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',
-    },
-    pagination: {
-        el: '.swiper-pagination',
-        clickable: true,
-    },
-    autoplay: {
-        delay: 3000,
-        disableOnInteraction: false,
-    },
-    });
-});
-</script>
-
 
 <!-- Toggleable JavaScript execution -->
 {%- if config.home_execute_js -%}

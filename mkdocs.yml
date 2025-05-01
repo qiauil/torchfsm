@@ -132,22 +132,25 @@ plugins:
 nav:
     - 'Home': 'index.md'
     - 'Theory Introduction': 'theory.ipynb'
-    - 'Basic Usage':
-        - '1. Concepts': 'concepts.ipynb'
+    - 'Tutorials':
+        - '1. Concepts': 'tutorials/concepts.ipynb'
         - '2. Evaluate Derivatives': 
-            - '2.1. Call the Operator': 'call_operator.ipynb'
-            - '2.2. Examples': 'derivative_example.ipynb'
+            - '2.1. Call the Operator': 'tutorials/call_operator.ipynb'
+            - '2.2. Examples': 'tutorials/derivative_example.ipynb'
         - '3. Simulations':
-            - "3.1. Solve Differential Equations": 'solve_de.ipynb'
+            - "3.1. Solve Differential Equations": 'tutorials/solve_de.ipynb'
             - "3.2. Simulation Gallery":
                 - "3.2.1 Simple PDEs":
-                    - "Burgers": 'pdes/burgers.ipynb'
-                    - "Korteweg de Vries": 'pdes/korteweg_de_vries.ipynb'
-                    - "Kuramoto_Sivashinsky": "pdes/kuramoto_sivashinsky.ipynb"
+                    - "Burgers": 'tutorials/pdes/burgers.ipynb'
+                    - "Korteweg de Vries": 'tutorials/pdes/korteweg_de_vries.ipynb'
+                    - "Kuramoto Sivashinsky": "tutorials/pdes/kuramoto_sivashinsky.ipynb"
                 - "3.2.1. Navier-Stokes Simulation":
-                    - "2.3.4.1 Vorticity Based": 'pdes/ns_vorticity.ipynb'
-                    - "2.3.4.1 Velocity Based": 'pdes/ns_velocity.ipynb'
-        - 'Cheet Sheet': 'cheetsheet.md'
+                    - "2.3.4.1 Vorticity Based": 'tutorials/pdes/ns_vorticity.ipynb'
+                    - "2.3.4.1 Velocity Based": 'tutorials/pdes/ns_velocity.ipynb'
+        - 'Cheat Sheet': 'tutorials/cheatsheet.md'
+    - 'APIs':
+        - 'pde': 'apis/pde.md'
+        - 'operator': 'apis/operator.md'
     #- 'Advanced Applications':
     #    - '1. Concepts': 'concepts.ipynb'
     #- 'Development':

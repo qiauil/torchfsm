@@ -12,6 +12,17 @@ from .._type import SpatialTensor
 def run_operators(u:SpatialTensor["B C H ..."],
                   operators:Sequence[Operator],
                   mesh: Union[Sequence[tuple[float, float, int]],MeshGrid,FourierMesh]) -> SpatialTensor["B C H ..."]:
+    r"""
+    Run a sequence of operators on the input tensor.
+    
+    Args:
+        u (SpatialTensor): Input tensor of shape (B, C, H, ...).
+        operators (Sequence[Operator]): Sequence of operators to be applied.
+        mesh (Union[Sequence[tuple[float, float, int]],MeshGrid,FourierMesh]): Mesh information or mesh object.
+
+    Returns:
+        SpatialTensor: Resulting tensor after applying the operators.
+    """
     if not isinstance(mesh,FourierMesh):
         mesh=FourierMesh(mesh)
     u_fft=mesh.fft(u)

@@ -14,11 +14,26 @@ from .._type import SpatialTensor, FourierTensor
 
 class LinearCoef(ABC):
 
+    r"""
+    Abstract class for linear coefficients.
+    """
+
     @abstractmethod
     def __call__(
         self, f_mesh: FourierMesh, n_channel: int
     ) -> FourierTensor["B C H ..."]:
-        pass
+        r"""
+        Returns the linear coefficient tensor for an linear operation.
+
+        Args:
+            f_mesh (FourierMesh): Fourier mesh object.
+            n_channel (int): Number of channels of the input tensor.
+
+        Returns:
+            FourierTensor: Linear coefficient tensor.
+        """
+
+        raise NotImplementedError
 
     def nonlinear_like(
         self,
@@ -27,6 +42,18 @@ class LinearCoef(ABC):
         n_channel: int,
         u: Optional[SpatialTensor["B C H ..."]],
     ) -> FourierTensor["B C H ..."]:
+        r"""
+        Returns a nonlinear-like tensor based on the linear coefficient.
+
+        Args:
+            u_fft (FourierTensor): Fourier-transformed input tensor.
+            f_mesh (FourierMesh): Fourier mesh object.
+            n_channel (int): Number of channels of the input tensor, i.e, u_fft.shape[1].
+            u (Optional[SpatialTensor]): Corresponding tensor of u_fft in spatial domain.
+
+        Returns:
+            FourierTensor: Nonlinear-like tensor.
+        """
         return self(f_mesh, n_channel) * u_fft
 
 
@@ -73,6 +100,13 @@ def check_value_with_mesh(
     u: SpatialTensor["B C H ..."],
     mesh: Union[Sequence[tuple[float, float, int]], MeshGrid, FourierMesh],
 ):
+    r"""
+    Check if the value and mesh are compatible. If not, raise a ValueError.
+    
+    Args:
+        u (SpatialTensor): Input tensor of shape (B, C, H, ...).
+        mesh (Union[Sequence[tuple[float, float, int]],MeshGrid,FourierMesh]): Mesh information or mesh object.
+    """
     if isinstance(mesh, FourierMesh) or isinstance(mesh, MeshGrid):
         mesh = mesh.mesh_info
     n_dim = len(mesh)
