@@ -24,16 +24,14 @@ class _VorticityConvectionCore(NonlinearFunc):
         self,
         u_fft: FourierTensor["B C H ..."],
         f_mesh: FourierMesh,
-        n_channel: int,
         u: Optional[SpatialTensor["B C H ..."]],
     ) -> FourierTensor["B C H ..."]:
-        return f_mesh.fft(self.spatial_value(u_fft, f_mesh, n_channel, u))
+        return f_mesh.fft(self.spatial_value(u_fft, f_mesh, u))
 
     def spatial_value(
         self,
         u_fft: FourierTensor["B C H ..."],
         f_mesh: FourierMesh,
-        n_channel: int,
         u: Optional[SpatialTensor["B C H ..."]],
     ) -> SpatialTensor["B C H ..."]:
         psi = -u_fft * f_mesh.invert_laplacian()
@@ -98,12 +96,12 @@ class _Vorticity2PressureCore(NonlinearFunc):
         self._vorticity2velocity = _Vorticity2VelocityCore()
         self._convection = _ConvectionCore()
 
-    def __call__(self, u_fft, f_mesh, n_channel, u) -> FourierTensor["B C H ..."]:
-        velocity_fft = u_fft * self._vorticity2velocity(f_mesh, n_channel)
+    def __call__(self, u_fft, f_mesh, u) -> FourierTensor["B C H ..."]:
+        velocity_fft = u_fft * self._vorticity2velocity(f_mesh)
         if self.external_force is not None:
             velocity_fft *= f_mesh.low_pass_filter()
         convection = self._convection(
-            velocity_fft, f_mesh, n_channel, f_mesh.ifft(velocity_fft).real
+            velocity_fft, f_mesh, f_mesh.ifft(velocity_fft).real
         )
         if self.external_force is not None:
             convection -= self.external_force(
@@ -145,7 +143,6 @@ class _Velocity2PressureCore(NonlinearFunc):
         self,
         u_fft: FourierTensor["B C H ..."],
         f_mesh: FourierMesh,
-        n_channel: int,
         u: SpatialTensor["B C H ..."] | None,
     ) -> FourierTensor["B C H ..."]:
         if self.external_force is not None:  # u_fft is original version
@@ -157,7 +154,7 @@ class _Velocity2PressureCore(NonlinearFunc):
         else:  # u_fft is dealiased version
             if u is None:
                 u = f_mesh.ifft(u_fft).real
-        convection = self._convection(u_fft, f_mesh, n_channel, u)
+        convection = self._convection(u_fft, f_mesh, u)
         if self.external_force is not None:
             convection -= force
         p = torch.sum(
@@ -184,7 +181,6 @@ class _NSPressureConvectionCore(NonlinearFunc):
         self,
         u_fft: FourierTensor["B C H ..."],
         f_mesh: FourierMesh,
-        n_channel: int,
         u: SpatialTensor["B C H ..."] | None,
     ) -> torch.Tensor:
         if self.external_force is not None:  # u_fft is original version
@@ -196,7 +192,7 @@ class _NSPressureConvectionCore(NonlinearFunc):
         else:  # u_fft is dealiased version
             if u is None:
                 u = f_mesh.ifft(u_fft).real
-        convection = self._convection(u_fft, f_mesh, n_channel, u)
+        convection = self._convection(u_fft, f_mesh,u)
         if self.external_force is not None:
             convection -= force
         p = f_mesh.invert_laplacian() * torch.sum(

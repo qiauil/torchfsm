@@ -18,13 +18,12 @@ class _KSConvectionCore(NonlinearFunc):
         n_channel: int,
         u: Optional[SpatialTensor["B C H ..."]],
     ) -> FourierTensor["B C H ..."]:
-        return f_mesh.fft(self.spatial_value(u_fft, f_mesh, n_channel, u))
+        return f_mesh.fft(self.spatial_value(u_fft, f_mesh, u))
 
     def spatial_value(
         self,
         u_fft: FourierTensor["B C H ..."],
         f_mesh: FourierMesh,
-        n_channel: int,
         u: Optional[SpatialTensor["B C H ..."]],
     ) -> SpatialTensor["B C H ..."]:
         grad_u = f_mesh.ifft(f_mesh.nabla_vector(1) * u_fft).real

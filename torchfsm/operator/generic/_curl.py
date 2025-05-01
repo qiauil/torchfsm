@@ -13,7 +13,6 @@ class _Curl2DCore(NonlinearFunc):
         self,
         u_fft: FourierTensor["B C H ..."],
         f_mesh: FourierMesh,
-        n_channel: int,
         u: SpatialTensor["B C H ..."] | None,
     ) -> FourierTensor["B C H ..."]:
         return (
@@ -30,7 +29,6 @@ class _Curl3DCore(NonlinearFunc):
         self,
         u_fft: FourierTensor["B C H ..."],
         f_mesh: FourierMesh,
-        n_channel: int,
         u: SpatialTensor["B C H ..."] | None,
     ) -> FourierTensor["B C H ..."]:
         return torch.cat(

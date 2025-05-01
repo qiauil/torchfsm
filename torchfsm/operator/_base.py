@@ -23,7 +23,7 @@ class LinearCoef(ABC):
         self, f_mesh: FourierMesh, n_channel: int
     ) -> FourierTensor["B C H ..."]:
         r"""
-        Returns the linear coefficient tensor for an linear operation.
+        Abstract method to be implemented by subclasses. It should define the linear coefficient tensor.
 
         Args:
             f_mesh (FourierMesh): Fourier mesh object.
@@ -39,25 +39,32 @@ class LinearCoef(ABC):
         self,
         u_fft: FourierTensor["B C H ..."],
         f_mesh: FourierMesh,
-        n_channel: int,
         u: Optional[SpatialTensor["B C H ..."]],
     ) -> FourierTensor["B C H ..."]:
         r"""
-        Returns a nonlinear-like tensor based on the linear coefficient.
+        Calculate the result out based on the linear coefficient. It is designed to have same pattern as the nonlinear function.
 
         Args:
             u_fft (FourierTensor): Fourier-transformed input tensor.
             f_mesh (FourierMesh): Fourier mesh object.
-            n_channel (int): Number of channels of the input tensor, i.e, u_fft.shape[1].
-            u (Optional[SpatialTensor]): Corresponding tensor of u_fft in spatial domain.
+            u (Optional[SpatialTensor]): Corresponding tensor of u_fft in spatial domain. This option aims to avoid repeating the inverse FFT operation in operators.
 
         Returns:
             FourierTensor: Nonlinear-like tensor.
         """
-        return self(f_mesh, n_channel) * u_fft
+        return self(f_mesh, u_fft.shape[1]) * u_fft
 
 
 class NonlinearFunc(ABC):
+
+    r"""
+    Abstract class for nonlinear functions.
+
+    Args:
+        dealiasing_swtich (bool): Whether to apply dealiasing. Default is True.
+            If True, the dealiased version of u_fft will be input to the function in operator.
+            If False, the original u_fft will be used.
+    """
 
     def __init__(self, dealiasing_swtich: bool = True) -> None:
         self._dealiasing_swtich = dealiasing_swtich
@@ -67,31 +74,69 @@ class NonlinearFunc(ABC):
         self,
         u_fft: FourierTensor["B C H ..."],
         f_mesh: FourierMesh,
-        n_channel: int,
         u: Optional[SpatialTensor["B C H ..."]],
     ) -> FourierTensor["B C H ..."]:
-        pass
+        r"""
+        Abstract method to be implemented by subclasses. It should define the nonlinear function.
+
+        Args:
+            u_fft (FourierTensor): Fourier-transformed input tensor.
+            f_mesh (FourierMesh): Fourier mesh object.
+            u (Optional[SpatialTensor]): Corresponding tensor of u_fft in spatial domain. This option aims to avoid repeating the inverse FFT operation in operators.
+       
+        Returns:
+            FourierTensor: Result of the nonlinear function.
+        """
+        raise NotImplementedError
 
     def spatial_value(
         self,
         u_fft: FourierTensor["B C H ..."],
         f_mesh: FourierMesh,
-        n_channel: int,
         u: Optional[SpatialTensor["B C H ..."]],
     ) -> SpatialTensor["B C H ..."]:
-        return f_mesh.ifft(self(u_fft, f_mesh, n_channel, u)).real
+        r"""
+        Return the result of the nonlinear function in spatial domain.
+
+        Args:
+            u_fft (FourierTensor): Fourier-transformed input tensor.
+            f_mesh (FourierMesh): Fourier mesh object.
+            u (Optional[SpatialTensor]): Corresponding tensor of u_fft in spatial domain. This option aims to avoid repeating the inverse FFT operation in operators.
+        
+        Returns:
+            SpatialTensor: Result of the nonlinear function in spatial domain.
+        """
+
+        return f_mesh.ifft(self(u_fft, f_mesh, u)).real
 
 
 class CoreGenerator(ABC):
+
+    r"""
+    Abstract class for core generator. A core generator is a callable that generates a linear coefficient or a nonlinear function based on the Fourier mesh and channels of the tensor.
+    """
 
     @abstractmethod
     def __call__(
         self, f_mesh: FourierMesh, n_channel: int
     ) -> Union[LinearCoef, NonlinearFunc]:
-        pass
+        r"""
+        Abstract method to be implemented by subclasses. It should define the core generator.
+        
+        Args:
+            f_mesh (FourierMesh): Fourier mesh object.
+            n_channel (int): Number of channels of the input tensor.
+        
+        Returns:
+            Union[LinearCoef, NonlinearFunc]: Linear coefficient or nonlinear function.
+        """
+        raise NotImplementedError
 
 
-GeneratorLike = Union[CoreGenerator, Callable]
+GeneratorLike = Union[CoreGenerator, Callable[[FourierMesh, int], Union[LinearCoef, NonlinearFunc]]]
+# GeneratorLike is a type that can be either a CoreGenerator or a callable function
+# It is used to define the type of generator functions that can be passed to the Operator class.
+# This allows for more flexibility in defining the behavior of the operator.
 
 # Operator
 
@@ -123,6 +168,10 @@ def check_value_with_mesh(
 
 
 class _MutableMixIn:
+
+    r'''
+    Mixin class for mutable operations. This class supports basic arithmetic operations for the operator.
+    '''
 
     def __radd__(self, other):
         return self + other
@@ -285,7 +334,6 @@ class OperatorLike(_MutableMixIn):
                         result += coef * fun(
                             dealiased_u_fft,
                             self._state_dict["f_mesh"],
-                            self._state_dict["n_channel"],
                             dealiased_u,
                         )
                     else:
@@ -294,7 +342,6 @@ class OperatorLike(_MutableMixIn):
                         result += coef * fun(
                             u_fft,
                             self._state_dict["f_mesh"],
-                            self._state_dict["n_channel"],
                             u,
                         )
 
@@ -722,7 +769,6 @@ class _ExplicitSourceCore(NonlinearFunc):
         self,
         u_fft: FourierTensor["B C H ..."],
         f_mesh: FourierMesh,
-        n_channel: int,
         u: SpatialTensor["B C H ..."] | None,
     ) -> FourierTensor["B C H ..."]:
         if self.source.device != f_mesh.device:

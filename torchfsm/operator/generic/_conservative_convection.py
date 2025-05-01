@@ -13,7 +13,6 @@ class _ConservativeConvectionCore(NonlinearFunc):
         self,
         u_fft: FourierTensor["B C H ..."],
         f_mesh: FourierMesh,
-        n_channel: int,
         u: SpatialTensor["B C H ..."] | None,
     ) -> FourierTensor["B C H ..."]:
         if u is None:
