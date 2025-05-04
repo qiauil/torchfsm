@@ -149,8 +149,12 @@ nav:
                     - "2.3.4.1 Velocity Based": 'tutorials/pdes/ns_velocity.ipynb'
         - 'Cheat Sheet': 'tutorials/cheatsheet.md'
     - 'APIs':
-        - 'pde': 'apis/pde.md'
         - 'operator': 'apis/operator.md'
+        - 'pde': 'apis/pde.md'
+        - 'Base Classes for Operators': 'apis/operator_base.md'
+        - 'Cores and Generators for Operators': 
+            - 'Cores': 'apis/operator_core.md'
+            - 'Generators': 'apis/operator_generator.md'
     #- 'Advanced Applications':
     #    - '1. Concepts': 'concepts.ipynb'
     #- 'Development':

@@ -6,6 +6,11 @@ from ..._type import FourierTensor, SpatialTensor
 
 
 class _Curl2DCore(NonlinearFunc):
+
+    r"""
+    Implementation of the Curl operator for 2D vector fields.
+    """
+
     def __init__(self):
         super().__init__(False)
 
@@ -22,6 +27,11 @@ class _Curl2DCore(NonlinearFunc):
 
 
 class _Curl3DCore(NonlinearFunc):
+
+    r"""
+    Implementation of the Curl operator for 3D vector fields.
+    """
+
     def __init__(self):
         super().__init__(False)
 
@@ -45,6 +55,10 @@ class _Curl3DCore(NonlinearFunc):
 
 
 class _CurlGenerator(CoreGenerator):
+    r"""
+    Generator of the Curl operator. 
+        It ensure that curl only works for 2D or 3D vector field with the same dimension as the mesh.
+    """
 
     def __call__(
         self, f_mesh: FourierMesh, n_channel: int
@@ -62,6 +76,17 @@ class _CurlGenerator(CoreGenerator):
 
 
 class Curl(NonlinearOperator):
+
+    r"""
+    Curl operator for 2D and 3D vector fields. 
+        It is defined as: $\nabla \times \mathbf{u} = \frac{\partial u_y}{\partial x}-\frac{\partial u_x}{\partial y}$
+        for 2D vector field $\mathbf{u} = (u_x, u_y)$ and
+        $\nabla \times \mathbf{u} = \left[\begin{matrix} \frac{\partial u_z}{\partial y}-\frac{\partial u_y}{\partial z} \\ \frac{\partial u_x}{\partial z}-\frac{\partial u_z}{\partial x} \\ \frac{\partial u_y}{\partial x}-\frac{\partial u_x}{\partial y} \end{matrix} \right]$
+        for 3D vector field $\mathbf{u} = (u_x, u_y, u_z)$.
+        This operator only works for vector fields with the same dimension as the mesh.
+        Note that this class is an operator wrapper. The real implementation of the source term is in the `_Curl2DCore` and `_Curl2DCore` class.
+
+    """
 
     def __init__(self) -> None:
         super().__init__(_CurlGenerator())

@@ -1,4 +1,4 @@
-# Cheatsheet
+# Cheat Sheet
 ## Data Types
 
 * $[B,C,H,W,\cdots]$: [Batch, Channel, x, y, $\cdots$]

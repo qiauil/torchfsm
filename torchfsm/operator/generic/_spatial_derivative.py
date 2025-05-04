@@ -5,6 +5,9 @@ from ..._type import FourierTensor
 
 
 class _SpatialDerivativeCore(LinearCoef):
+    r"""
+    Implementation of the SpatialDerivative operator.
+    """
 
     def __init__(self, dim_index, order) -> None:
         super().__init__()
@@ -18,6 +21,11 @@ class _SpatialDerivativeCore(LinearCoef):
 
 
 class _SpatialDerivativeGenerator(CoreGenerator):
+
+    r"""
+    Generator of the SpatialDerivative operator.
+        It ensures that spatial derivative only works for scalar field.
+    """
 
     def __init__(self, dim_index, order) -> None:
         super().__init__()
@@ -34,11 +42,9 @@ class _SpatialDerivativeGenerator(CoreGenerator):
 
 class SpatialDerivative(LinearOperator):
     r"""
-    `SpatialDeritivate` calculates the spatial derivative of a scalar field w.r.t to a spatial dimension:
-    $$
-    \frac{\partial ^n}{\partial i} p
-    $$
-    where $i = x, y, z, \cdots$ and $n=1, 2, 3$
+    `SpatialDeritivate` calculates the spatial derivative of a scalar field w.r.t to a spatial dimension.
+        It is defined as$\frac{\partial ^n}{\partial i} p$ where $i = x, y, z, \cdots$ and $n=1, 2, 3, \cdots$
+        Note that this class is an operator wrapper. The actual implementation of the operator is in the `_SpatialDerivativeCore` class.
 
     Args:
         dim_index (int): The index of the spatial dimension.

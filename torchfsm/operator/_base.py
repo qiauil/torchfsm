@@ -211,6 +211,10 @@ class _InverseSolveMixin:
     _state_dict: Optional[dict]
     register_mesh: Callable
 
+    r'''
+    Mixin class for inverse solving operations. This class supports solving the linear operator equation.
+    '''
+
     def solve(
         self,
         b: Optional[torch.Tensor] = None,
@@ -221,6 +225,20 @@ class _InverseSolveMixin:
         n_channel: Optional[int] = None,
         return_in_fourier=False,
     ) -> Union[SpatialTensor["B C H ..."], SpatialTensor["B C H ..."]]:
+        
+        r"""
+        Solve the linear operator equation $Ax = b$, where $A$ is the linear operator and $b$ is the right-hand side.
+        
+        Args:
+            b (Optional[torch.Tensor]): Right-hand side tensor in spatial domain. If None, b_fft should be provided.
+            b_fft (Optional[torch.Tensor]): Right-hand side tensor in Fourier domain. If None, b should be provided.
+            mesh (Optional[Union[Sequence[tuple[float, float, int]], MeshGrid, FourierMesh]]): Mesh information or mesh object. If None, the mesh registered in the operator will be used.
+            n_channel (Optional[int]): Number of channels of $x$. If None, the number of channels registered in the operator will be used.
+            return_in_fourier (bool): If True, return the result in Fourier domain. If False, return the result in spatial domain.
+        
+        Returns:
+            Union[SpatialTensor["B C H ..."], FourierTensor["B C H ..."]]: Solution tensor in spatial or Fourier domain.
+        """
         if not (mesh is not None and n_channel is not None):
             assert (
                 self._state_dict["f_mesh"] is not None
@@ -250,12 +268,34 @@ class _DeAliasMixin:
     _de_aliasing_rate: float
     _state_dict: Optional[dict]
 
+    r'''
+    Mixin class for de-aliasing operations. This class supports setting the de-aliasing rate for the nonlinear operator.
+    '''
+
     def set_de_aliasing_rate(self, de_aliasing_rate: float):
+        r"""
+        Set the de-aliasing rate for the nonlinear operator.
+        Args:
+            de_aliasing_rate (float): De-aliasing rate. Default is 2/3.
+        """
+        
         self._de_aliasing_rate = de_aliasing_rate
         self._state_dict = None
 
 
 class OperatorLike(_MutableMixIn):
+
+    r"""
+    Base class for All Operators.
+
+    Args:
+        operator_generators (Optional[ValueList[GeneratorLike]]): List of operator generators. Default is None.
+            Each generator should be a callable that takes a Fourier mesh and number of channels as input and returns a linear coefficient or nonlinear function.
+        coefs (Optional[List]): List of coefficients for each operator generator. Default is None.
+            If None, all coefficients are set to 1.
+            The length of the list should match the number of operator generators.
+
+    """
 
     def __init__(
         self,
@@ -285,6 +325,12 @@ class OperatorLike(_MutableMixIn):
 
     @property
     def is_linear(self) -> bool:
+        r"""
+        Check if the operator is linear.
+
+        Returns:
+            bool: True if the operator is linear, False otherwise.
+        """
         assert (
             self._state_dict["f_mesh"] is not None
         ), "Mesh should be registered before checking if the operator is linear"
@@ -295,7 +341,14 @@ class OperatorLike(_MutableMixIn):
 
     def _build_linear_coefs(
         self, linear_coefs: Optional[Sequence[LinearCoef]]
-    ) -> torch.Tensor:
+    ):
+        r"""
+        Build the linear coefficients based on the provided linear coefficient generators.
+
+        Args:
+            linear_coefs (Optional[Sequence[LinearCoef]]): List of linear coefficient generators.
+
+        """
         if len(linear_coefs) == 0:
             linear_coefs = None
         else:
@@ -310,6 +363,12 @@ class OperatorLike(_MutableMixIn):
     def _build_nonlinear_funcs(
         self, nonlinear_funcs: Optional[Sequence[NonlinearFunc]]
     ):
+        r"""
+        Build the nonlinear functions based on the provided nonlinear function generators.
+
+        Args:
+            nonlinear_funcs (Optional[Sequence[NonlinearFunc]]): List of nonlinear function generators.
+        """
         if len(nonlinear_funcs) == 0:
             nonlinear_funcs_all = None
         else:
@@ -350,22 +409,25 @@ class OperatorLike(_MutableMixIn):
         self._state_dict["nonlinear_func"] = nonlinear_funcs_all
 
     def _build_operator(self):
+        r"""
+        Build the operator based on the linear coefficient and nonlinear function.
+        If both linear coefficient and nonlinear function are None, the operator is set to None.
+        """
         if self._state_dict["nonlinear_func"] is None:
-
             def operator(u_fft):
                 return self._state_dict["linear_coef"] * u_fft
-
         elif self._state_dict["linear_coef"] is None:
-
             def operator(u_fft):
                 return self._state_dict["nonlinear_func"](u_fft)
-
-        else:
-
+        elif self._state_dict["nonlinear_func"] is not None and self._state_dict["linear_coef"] is not None:
             def operator(u_fft):
                 return self._state_dict["linear_coef"] * u_fft + self._state_dict[
                     "nonlinear_func"
                 ](u_fft)
+        else:
+            raise ValueError(
+                "Both linear coefficient and nonlinear function are None. Cannot build operator."
+            )
 
         self._state_dict["operator"] = operator
 
@@ -373,6 +435,12 @@ class OperatorLike(_MutableMixIn):
         self,
         dt: float,
     ):
+        r"""
+        Build the integrator based on the provided time step and integrator type.
+
+        Args:
+            dt (float): Time step for the integrator.
+        """
         if self._integrator == "auto":
             if self.is_linear:
                 solver = ETDRKIntegrator.ETDRK0
@@ -427,6 +495,20 @@ class OperatorLike(_MutableMixIn):
         u_fft: Optional[FourierTensor["B C H ..."]] = None,
         mesh: Union[Sequence[tuple[float, float, int]], MeshGrid, FourierMesh] = None,
     ) -> Tuple[FourierMesh, int]:
+        r"""
+        Pre-check the input tensor and mesh. If the mesh is not registered, register it.
+
+        Args:
+            u (Optional[SpatialTensor]): Input tensor in spatial domain. Default is None.
+            u_fft (Optional[FourierTensor]): Input tensor in Fourier domain. Default is None.
+                At least one of u or u_fft should be provided.
+            mesh (Union[Sequence[tuple[float, float, int]], MeshGrid, FourierMesh]): Mesh information or mesh object. Default is None.
+                If None, the mesh registered in the operator will be used.
+
+        Returns:
+            Tuple[FourierMesh, int]: Tuple of Fourier mesh and number of channels.
+        """
+
         if u_fft is None and u is None:
             raise ValueError("Either u or u_fft should be given")
         if u_fft is not None and u is not None:
@@ -466,7 +548,16 @@ class OperatorLike(_MutableMixIn):
         n_channel: int,
         device=None,
         dtype=None,
-    ) -> FourierMesh:
+    ):
+        r"""
+        Register the mesh and number of channels for the operator. Once a mesh is registered, mesh information is not required for integration and operator call.
+
+        Args:
+            mesh (Union[Sequence[tuple[float, float, int]], MeshGrid, FourierMesh]): Mesh information or mesh object.
+            n_channel (int): Number of channels of the input tensor.
+            device (Optional[torch.device]): Device to which the mesh should be moved. Default is None.
+            dtype (Optional[torch.dtype]): Data type of the mesh. Default is None.
+        """
         if isinstance(mesh, FourierMesh):
             f_mesh = mesh
             if device is not None or dtype is not None:
@@ -496,9 +587,22 @@ class OperatorLike(_MutableMixIn):
         self._build_nonlinear_funcs(self._nonlinear_funcs)
 
     def regisiter_additional_check(self, func: Callable[[int, int], bool]):
+        r"""
+        Register an additional check function for the value and mesh compatibility.
+
+        Args:
+            func (Callable[[int, int], bool]): Function that takes the dimension of the value and mesh as input and returns a boolean indicating whether they are compatible.
+        """
         self._value_mesh_check_func = func
 
-    def add_generator(self, generator: GeneratorLike, coef=1) -> None:
+    def add_generator(self, generator: GeneratorLike, coef=1):
+        r"""
+        Add a generator to the operator.
+        
+        Args:
+            generator (GeneratorLike): Generator to be added. It should be a callable that takes a Fourier mesh and number of channels as input and returns a linear coefficient or nonlinear function.
+            coef (float): Coefficient for the generator. Default is 1.
+        """
         self.operator_generators.append(generator)
         self.coefs.append(coef)
 
@@ -507,6 +611,15 @@ class OperatorLike(_MutableMixIn):
         integrator: Union[Literal["auto"], ETDRKIntegrator, RKIntegrator],
         **integrator_config,
     ):
+        r"""
+        Set the integrator for the operator. The integrator is used for time integration of the operator.
+
+        Args:
+            integrator (Union[Literal["auto"], ETDRKIntegrator, RKIntegrator]): Integrator to be used. If "auto", the integrator will be chosen automatically based on the operator type.
+                If "auto", the integrator will be set as ETDRKIntegrator.ETDRK0 for linear operators and ETDRKIntegrator.ETDRK4 for nonlinear operators.
+            **integrator_config: Additional configuration for the integrator.
+        """
+
         if isinstance(integrator, str):
             assert (
                 integrator == "auto"
@@ -532,14 +645,34 @@ class OperatorLike(_MutableMixIn):
         trajectory_recorder: Optional[_TrajRecorder] = None,
         return_in_fourier: bool = False,
         
-    ) -> Optional[
-        Union[
+    ) -> Union[
             SpatialTensor["B C H ..."],
             SpatialTensor["B T C H ..."],
             FourierTensor["B C H ..."],
             FourierTensor["B T C H ..."],
-        ]
-    ]:
+        ]:
+        r"""
+        Integrate the operator using the provided initial condition and time step.  
+
+        Args:
+            u_0 (Optional[torch.Tensor]): Initial condition in spatial domain. Default is None.
+            u_0_fft (Optional[torch.Tensor]): Initial condition in Fourier domain. Default is None.
+                At least one of u_0 or u_0_fft should be provided.
+            dt (float): Time step for the integrator. Default is 1.
+            step (int): Number of time steps to integrate. Default is 1.
+            mesh (Optional[Union[Sequence[tuple[float, float, int]], MeshGrid, FourierMesh]]): Mesh information or mesh object. Default is None.
+                If None, the mesh registered in the operator will be used. You can use `register_mesh` to register a mesh before integration.
+            progressive (bool): If True, show a progress bar during integration. Default is False.
+            trajectory_recorder (Optional[_TrajRecorder]): Trajectory recorder for recording the trajectory during integration. Default is None.
+                If None, no trajectory will be recorded. The function will only return the final frame.
+            return_in_fourier (bool): If True, return the result in Fourier domain. If False, return the result in spatial domain. Default is False.
+
+        Returns:
+            Union[SpatialTensor["B C H ..."], SpatialTensor["B T C H ..."], FourierTensor["B C H ..."], FourierTensor["B T C H ..."]]: Integrated result in spatial or Fourier domain.
+                If trajectory_recorder is provided, the result will be a trajectory tensor of shape (B, T, C, H, ...). Otherwise, the result will be a tensor of shape (B, C, H, ...).
+                If return_in_fourier is True, the result will be in Fourier domain. Otherwise, it will be in spatial domain.
+
+        """
         if self._state_dict["f_mesh"] is None or mesh is not None:
             mesh, n_channel = self._pre_check(u=u_0, u_fft=u_0_fft, mesh=mesh)
             self.register_mesh(mesh, n_channel)
@@ -577,6 +710,21 @@ class OperatorLike(_MutableMixIn):
         ] = None,
         return_in_fourier=False,
     ) -> Union[SpatialTensor["B C H ..."], FourierTensor["B C H ..."]]:
+        r"""
+        Call the operator with the provided input tensor. The operator will apply the linear coefficient and nonlinear function to the input tensor.
+        
+        Args:
+            u (Optional[SpatialTensor]): Input tensor in spatial domain. Default is None.
+            u_fft (Optional[FourierTensor]): Input tensor in Fourier domain. Default is None.
+                At least one of u or u_fft should be provided.
+            mesh (Optional[Union[Sequence[tuple[float, float, int]], MeshGrid, FourierMesh]]): Mesh information or mesh object. Default is None.
+                If None, the mesh registered in the operator will be used. You can use `register_mesh` to register a mesh before calling the operator.
+            return_in_fourier (bool): If True, return the result in Fourier domain. If False, return the result in spatial domain. Default is False.
+
+        Returns:
+            Union[SpatialTensor["B C H ..."], FourierTensor["B C H ..."]]: Result of the operator in spatial or Fourier domain.
+        """    
+    
         if self._state_dict["f_mesh"] is None or mesh is not None:
             mesh, n_channel = self._pre_check(u, u_fft, mesh)
             self.register_mesh(mesh, n_channel)
@@ -593,12 +741,29 @@ class OperatorLike(_MutableMixIn):
             return self._state_dict["f_mesh"].ifft(value_fft).real
 
     def to(self, device=None, dtype=None):
+        r"""
+        Move the operator to the specified device and change the data type.
+
+        Args:
+            device (Optional[torch.device]): Device to which the operator should be moved. Default is None.
+            dtype (Optional[torch.dtype]): Data type of the operator. Default is None.
+        """
         if self._state_dict is not None:
             self._state_dict["f_mesh"].to(device=device, dtype=dtype)
             self.register_mesh(self._state_dict["f_mesh"], self._state_dict["n_channel"])
 
 
 class Operator(OperatorLike, _DeAliasMixin):
+    r"""
+    Operator class for linear and nonlinear operations.
+
+    Args:
+        operator_generators (Optional[ValueList[GeneratorLike]]): List of operator generators. Default is None.
+            Each generator should be a callable that takes a Fourier mesh and number of channels as input and returns a linear coefficient or nonlinear function.
+        coefs (Optional[List]): List of coefficients for each operator generator. Default is None.
+            If None, all coefficients are set to 1.
+            The length of the list should match the number of operator generators.
+    """
 
     def __init__(
         self,
@@ -635,6 +800,18 @@ class Operator(OperatorLike, _DeAliasMixin):
 
 
 class LinearOperator(OperatorLike, _InverseSolveMixin):
+
+    r"""
+    Operators that contain only linear operations.
+
+    Args:
+        linear_coef (ValueList[Union[LinearCoef, GeneratorLike]]): List of linear coefficient generators. Default is None.
+            Each generator should be a callable that takes a Fourier mesh and number of channels as input and returns a linear coefficient.
+        coefs (Optional[List]): List of coefficients for each linear coefficient generator. Default is None.
+            If None, all coefficients are set to 1.
+            The length of the list should match the number of linear coefficient generators.
+    """
+
 
     def __init__(
         self,
@@ -694,6 +871,18 @@ class LinearOperator(OperatorLike, _InverseSolveMixin):
 
 
 class NonlinearOperator(OperatorLike, _DeAliasMixin):
+
+    r"""
+    Operators that contain only nonlinear operations.
+
+    Args:
+        nonlinear_func (ValueList[Union[NonlinearFunc, GeneratorLike]]): List of nonlinear function generators. Default is None.
+            Each generator should be a callable that takes a Fourier mesh and number of channels as input and returns a nonlinear function.
+        coefs (Optional[List]): List of coefficients for each nonlinear function generator. Default is None.
+            If None, all coefficients are set to 1.
+            The length of the list should match the number of nonlinear function generators.
+    """
+
     def __init__(
         self,
         nonlinear_func: ValueList[Union[NonlinearFunc, GeneratorLike]] = None,
@@ -716,10 +905,6 @@ class NonlinearOperator(OperatorLike, _DeAliasMixin):
     @property
     def is_linear(self):
         return False
-
-    @property
-    def is_linear(self):
-        return True
 
     def __add__(self, other):
         if isinstance(other, NonlinearOperator):
@@ -760,6 +945,13 @@ class NonlinearOperator(OperatorLike, _DeAliasMixin):
 
 class _ExplicitSourceCore(NonlinearFunc):
 
+    r"""
+    Implementation of the explicit source term for the operator.
+
+    Args:
+        source (SpatialTensor["B C H ..."]): Source term in spatial domain. This is a tensor that represents the source term in the spatial domain.
+    """
+
     def __init__(self, source: SpatialTensor["B C H ..."]) -> None:
         super().__init__(dealiasing_swtich=False)
         fft_dim = [i + 2 for i in range(source.dim() - 2)]
@@ -777,6 +969,14 @@ class _ExplicitSourceCore(NonlinearFunc):
 
 
 class ExplicitSource(NonlinearOperator):
+
+    r"""
+    Explicit source term for the operator. This class is used to represent an explicit source term in the operator.
+        Note that this class is an operator wrapper. The real implementation of the source term is in the _ExplicitSourceCore class. 
+    
+    Args:
+        source (torch.Tensor): Source term in spatial domain. This is a tensor that represents the source term in the spatial domain.
+    """
 
     def __init__(self, source: torch.Tensor) -> None:
         super().__init__(_ExplicitSourceCore(source))

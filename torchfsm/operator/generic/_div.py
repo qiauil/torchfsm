@@ -6,6 +6,10 @@ from ..._type import FourierTensor, SpatialTensor
 
 
 class _DivCore(NonlinearFunc):
+    r"""
+    Implementation of the Divergence operator.
+    """
+
     def __init__(self):
         super().__init__(False)
 
@@ -20,6 +24,11 @@ class _DivCore(NonlinearFunc):
 
 class _DivGenerator(CoreGenerator):
 
+    r"""
+    Generator of the Divergence operator.
+        It ensures that divergence only works for vector fields with the same dimension as the mesh.
+    """
+
     def __call__(
         self, f_mesh: FourierMesh, n_channel: int
     ) -> LinearCoef | NonlinearFunc:
@@ -32,10 +41,11 @@ class _DivGenerator(CoreGenerator):
 
 class Div(NonlinearOperator):
     r"""
-    `Div` calculates the divergence of a vector field:
-    $$
-    \nabla \cdot \mathbf{u} = \sum_i \frac{\partial u_i}{\partial i}
-    $$
+    `Div` calculates the divergence of a vector field.
+        It is defined as$\nabla \cdot \mathbf{u} = \sum_i \frac{\partial u_i}{\partial i}$.
+        This operator only works for vector fields with the same dimension as the mesh.
+        Note that this class is an operator wrapper. The actual implementation of the operator is in the `_DivCore` class.
+    
     """
 
     def __init__(self) -> None:

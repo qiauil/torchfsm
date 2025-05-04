@@ -6,6 +6,10 @@ from ..._type import FourierTensor, SpatialTensor
 
 class _ConservativeConvectionCore(NonlinearFunc):
 
+    r"""
+    Implementation of the Conservative Convection operator.
+    """
+
     def __init__(self):
         super().__init__()
 
@@ -24,6 +28,10 @@ class _ConservativeConvectionCore(NonlinearFunc):
 
 class _ConservativeConvectionGenerator(CoreGenerator):
 
+    r"""
+    Generator of the Conservative Convection operator. It ensures that the operator is only applied to vector fields with the same dimension as the mesh.
+    """
+
     def __call__(
         self, f_mesh: FourierMesh, n_channel: int
     ) -> LinearCoef | NonlinearFunc:
@@ -35,19 +43,11 @@ class _ConservativeConvectionGenerator(CoreGenerator):
 
 
 class ConservativeConvection(NonlinearOperator):
-    """
-    `ConservativeConvection` calculates the convection of a vector field on itself.
-    $$
-    \nabla \cdot \mathbf{u}\mathbf{u}
-    =
-    \left[\begin{matrix}
-    \sum_{i=0}^I \frac{\partial u_i u_x }{\partial i} \\
-    \sum_{i=0}^I \frac{\partial u_i u_y }{\partial i} \\
-    \cdots\\
-    \sum_{i=0}^I \frac{\partial u_i u_I }{\partial i} \\
-    \end{matrix}
-    \right]
-    $$
+    r"""
+    `ConservativeConvection` calculates the convection of a vector field on itself. 
+        It is defined as $\nabla \cdot \mathbf{u}\mathbf{u}=\left[\begin{matrix}\sum_{i=0}^I \frac{\partial u_i u_x }{\partial i} \\\sum_{i=0}^I \frac{\partial u_i u_y }{\partial i} \\\cdots\\\sum_{i=0}^I \frac{\partial u_i u_I }{\partial i} \\\end{matrix}\right]$.
+        This operator only works for vector fields with the same dimension as the mesh.
+        Note that this class is an operator wrapper. The real implementation of the source term is in the `_ConservativeConvectionCore` class.
     """
 
     def __init__(self) -> None:

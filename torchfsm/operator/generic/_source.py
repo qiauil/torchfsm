@@ -7,6 +7,9 @@ from ..._type import FourierTensor, SpatialTensor
 
 
 class _ImplicitUnitSourceCore(LinearCoef):
+    r"""
+    Implementation of the ImplicitSource operator with unit form.
+    """
 
     def __call__(
         self, f_mesh: FourierMesh, n_channel: int
@@ -15,6 +18,9 @@ class _ImplicitUnitSourceCore(LinearCoef):
 
 
 class _ImplicitFuncSourceCore(NonlinearFunc):
+    r"""
+    Implementation of the ImplicitSource operator with function form.
+    """
 
     def __init__(
         self,
@@ -36,6 +42,23 @@ class _ImplicitFuncSourceCore(NonlinearFunc):
 
 
 class ImplicitSource(Operator):
+
+    r"""
+    `ImplicitSource` allows to define a source term in the implicit form.
+        Note that this class is an operator wrapper. The actual implementation of the operator is in the `_ImplicitFuncSourceCore` class and `_ImplicitUnitSourceCore`.
+
+    Args:
+        source_func (Callable[[torch.Tensor], torch.Tensor], optional): 
+            The f(x) function to be used as the source term.
+            This function is used to define the source term in the implicit form.
+            If None, the source term will be set to the unknown variable itself, i.e., f(x) = x.
+
+        non_linear (bool, optional): 
+            If True, the source term is treated as a nonlinear function. 
+            If False, it is treated as a linear function. Default is True.
+            This actually controls whether the operator wil use the dealiased version of unknown variable for the source term.
+            If the source term is a nonlinear function, the dealiased version of the unknown variable will be used.
+    """
 
     def __init__(
         self,
