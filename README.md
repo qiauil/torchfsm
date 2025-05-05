@@ -39,6 +39,7 @@ traj=burgers.integrate(u_0=u_0,mesh=mesh,
 plot_traj(traj,animation=False,cmap="managua")
 ```
 ![Burgers 1D](./docs/assets/pics/readme/burgers_1d.png)
+
 Directly simulate the Burgers on 2D mesh with the same operator:
 ```python
 mesh=MeshGrid([(0,L,N),(0,L,N)],device=device)
