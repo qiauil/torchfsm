@@ -17,6 +17,10 @@ from ..._type import FourierTensor, SpatialTensor
 # Vorticity Convection
 class _VorticityConvectionCore(NonlinearFunc):
 
+    r"""
+    Implementation of the VorticityConvection operator.
+    """
+
     def __init__(self) -> None:
         super().__init__()
 
@@ -44,6 +48,11 @@ class _VorticityConvectionCore(NonlinearFunc):
 
 class _VorticityConvectionGenerator(CoreGenerator):
 
+    r"""
+    Generator of the VorticityConvection operator. 
+        It ensures that the operator is only applied to scalar vorticity fields in 2D.
+    """
+
     def __call__(self, f_mesh: FourierMesh, n_channel: int) -> NonlinearFunc:
         if f_mesh.n_dim != 2 or n_channel != 1:
             raise ValueError("Only vorticity in 2Dmesh is supported")
@@ -52,12 +61,21 @@ class _VorticityConvectionGenerator(CoreGenerator):
 
 class VorticityConvection(NonlinearOperator):
 
+    r"""
+    Operator for vorticity convection in 2D. 
+        It is defined as $(\mathbf{u}\cdot\nabla) \omega$ where $\omega$ is the vorticity and $\mathbf{u}$ is the velocity.
+        Note that this class is an operator wrapper. The real implementation of the source term is in the `_VorticityConvectionCore` class.
+    """
+
     def __init__(self) -> None:
         super().__init__(_VorticityConvectionGenerator())
 
 
 # Vorticity To Velocity
 class _Vorticity2VelocityCore(LinearCoef):
+    r"""
+    Implementation of the Vorticity2Velocity operator.
+    """
 
     def __call__(self, f_mesh, n_channel) -> FourierTensor["B C H ..."]:
         return (
@@ -75,6 +93,10 @@ class _Vorticity2VelocityCore(LinearCoef):
 
 class _Vorticity2VelocityGenerator(CoreGenerator):
 
+    r"""
+    Generator of the Vorticity2Velocity operator.
+        It ensures that the operator is only applied to scalar vorticity fields in 2D."""
+
     def __call__(self, f_mesh: FourierMesh, n_channel: int) -> NonlinearFunc:
         if f_mesh.n_dim != 2 or n_channel != 1:
             raise ValueError("Only vorticity in 2Dmesh is supported")
@@ -83,12 +105,21 @@ class _Vorticity2VelocityGenerator(CoreGenerator):
 
 class Vorticity2Velocity(LinearOperator):
 
+    r"""
+    Operator for vorticity to velocity conversion in 2D.
+        It is defined as $[u,v]=[-\frac{\partial \nabla^{-2}\omega}{\partial y},\frac{\partial \nabla^{-2}\omega}{\partial x}]$.
+        Note that this class is an operator wrapper. The real implementation of the source term is in the `_Vorticity2VelocityCore` class.
+    """
+
     def __init__(self):
         super().__init__(_Vorticity2VelocityGenerator())
 
 
 # Vorticity To Pressure
 class _Vorticity2PressureCore(NonlinearFunc):
+    r"""
+    Implementation of the Vorticity2Pressure operator.
+    """
     def __init__(self, external_force: Optional[OperatorLike] = None) -> None:
         # if exeternal_force is not None, the external force may need the original u_fft, thus we do not dealiasing at the beginning
         super().__init__(dealiasing_swtich=external_force is None)
@@ -114,6 +145,10 @@ class _Vorticity2PressureCore(NonlinearFunc):
 
 
 class _Vorticity2PressureGenerator(CoreGenerator):
+    r"""
+    Generator of the Vorticity2Pressure operator.
+        It ensures that the operator is only applied to scalar vorticity fields in 2D.
+    """
 
     def __init__(self, external_force: Optional[OperatorLike] = None) -> None:
         self.external_force = external_force
@@ -125,6 +160,11 @@ class _Vorticity2PressureGenerator(CoreGenerator):
 
 
 class Vorticity2Pressure(NonlinearOperator):
+    r"""
+    Operator for vorticity to pressure conversion in 2D.
+        It is defined as $\begin{matrix}\mathbf{u}=[u,v]=[-\frac{\partial \nabla^{-2}\omega}{\partial y},\frac{\partial \nabla^{-2}\omega}{\partial x}]\\ p= -\nabla^{-2} (\nabla \cdot (\left(\mathbf{u}\cdot\nabla\right)\mathbf{u}-f))\end{matrix}$.
+        Note that this class is an operator wrapper. The real implementation of the source term is in the `_Vorticity2PressureCore` class.
+    """
 
     def __init__(self, external_force: Optional[OperatorLike] = None) -> None:
         super().__init__(_Vorticity2PressureGenerator(external_force))
@@ -132,6 +172,9 @@ class Vorticity2Pressure(NonlinearOperator):
 
 # Velocity To Pressure
 class _Velocity2PressureCore(NonlinearFunc):
+    r"""
+    Implementation of the Velocity2Pressure operator.
+    """
 
     def __init__(self, external_force: Optional[OperatorLike] = None) -> None:
         # if exeternal_force is not None, the external force may need the original u_fft, thus we do not dealiasing at the beginning
@@ -164,6 +207,11 @@ class _Velocity2PressureCore(NonlinearFunc):
 
 
 class Velocity2Pressure(NonlinearOperator):
+    r"""
+    Operator for velocity to pressure conversion.
+        It is defined as $-\nabla^{-2} (\nabla \cdot (\left(\mathbf{u}\cdot\nabla\right)\mathbf{u}-f))$
+        Note that this class is an operator wrapper. The real implementation of the source term is in the `_Velocity2PressureCore` class.
+    """
 
     def __init__(self, external_force: Optional[OperatorLike] = None) -> None:
         super().__init__(_Velocity2PressureCore(external_force))
@@ -171,6 +219,9 @@ class Velocity2Pressure(NonlinearOperator):
 
 # Velocity Convection
 class _NSPressureConvectionCore(NonlinearFunc):
+    r"""
+    Implementation of the Navier-Stokes pressure convection operator.
+    """
 
     def __init__(self, external_force: Optional[OperatorLike] = None) -> None:
         super().__init__(dealiasing_swtich=external_force is None)
@@ -204,6 +255,14 @@ class _NSPressureConvectionCore(NonlinearFunc):
 
 
 class NSPressureConvection(NonlinearOperator):
+    r"""
+    Operator for Navier-Stokes pressure convection.
+        It is defined as $-\nabla (\nabla^{-2} \nabla \cdot (\left(\mathbf{u}\cdot\nabla\right)\mathbf{u}-f))-\left(\mathbf{u}\cdot\nabla\right)\mathbf{u} + \mathbf{f}$.
+        Note that this class is an operator wrapper. The real implementation of the source term is in the `_NSPressureConvectionCore` class.
+    
+    Args:
+        external_force: Optional[OperatorLike], optional, default=None
+    """
 
     def __init__(self, external_force: Optional[OperatorLike] = None) -> None:
         super().__init__(_NSPressureConvectionCore(external_force))

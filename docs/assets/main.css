@@ -1,0 +1,59 @@
+
+/* General styles for the feature section */
+.feature {
+    background-color: #f9f9f9; /* Light gray background */
+    padding: 50px 0; /* Add vertical spacing */
+    font-family: Arial, sans-serif; /* Set a clean font */
+}
+
+.feature h2 {
+    text-align: center; /* Center the heading */
+    font-size: 2.5rem; /* Larger font size for the heading */
+    color: #333; /* Dark gray text color */
+    margin-bottom: 30px; /* Add spacing below the heading */
+}
+
+.key-features-boxes {
+    display: flex;
+    flex-wrap: wrap; /* Ensure boxes wrap on smaller screens */
+    justify-content: space-between; /* Add spacing between boxes */
+    gap: 20px; /* Add consistent spacing between boxes */
+}
+
+.key-feature-box {
+    background-color: #fff; /* White background for each box */
+    border: 1px solid #ddd; /* Light border for separation */
+    border-radius: 8px; /* Rounded corners */
+    padding: 20px; /* Add padding inside the box */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    text-align: center; /* Center-align text */
+    flex: 1 1 calc(25% - 20px); /* Ensure boxes are responsive */
+    max-width: calc(25% - 20px); /* Limit the width of each box */
+}
+
+.key-feature-box h5 {
+    font-size: 1.25rem; /* Slightly larger font for subheadings */
+    color: #007bff; /* Blue color for subheadings */
+    margin-bottom: 15px; /* Add spacing below the subheading */
+}
+
+.key-feature-box p {
+    font-size: 1rem; /* Standard font size for text */
+    color: #555; /* Medium gray text color */
+    line-height: 1.6; /* Improve readability */
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+    .key-feature-box {
+        flex: 1 1 calc(50% - 20px); /* Adjust to two columns */
+        max-width: calc(50% - 20px);
+    }
+}
+
+@media (max-width: 576px) {
+    .key-feature-box {
+        flex: 1 1 100%; /* Stack boxes vertically */
+        max-width: 100%;
+    }
+}

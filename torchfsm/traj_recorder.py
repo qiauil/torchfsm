@@ -5,6 +5,14 @@ import numpy as np
 import copy
 
 class IntervalController():
+    """
+    A class to control the recording of trajectories at specified intervals.
+        This class can be used as an input for the `control_func` parameters of recorder objects.
+
+    Args:
+        interval (int): The interval at which to record the trajectory.
+        start (int): The step at which to start recording the trajectory.
+    """
     
     def __init__(self,interval:int=1,start:int=0,) -> None:
         self.start=start
@@ -15,9 +23,18 @@ class IntervalController():
 
 class _TrajRecorder():
 
+    """
+    A base class for trajectory recorders.
+        A recorder is an object that helps to control the recording of trajectories during a simulation
+            
+    Args:
+        control_func (Optional[Callable[[int],bool]]): A function that takes a step as input and returns a boolean indicating whether to record the trajectory at that step.
+        include_initial_state (bool): If True, the initial state will be included in the trajectory.
+    """
+
     def __init__(self,
                  control_func:Optional[Callable[[int],bool]]=None,
-                 include_initial_state:bool=True
+                 include_initial_state:bool=True,
                  ):
         control_func=default(control_func,lambda step: True)
         if include_initial_state:
@@ -27,22 +44,64 @@ class _TrajRecorder():
         self.return_in_fourier=False
 
     def record(self,step:int,frame:torch.tensor):
+        """
+        Record the trajectory at a given step.
+
+        Args:
+            step (int): The current step.
+            frame (torch.tensor): The current frame to be recorded.
+        """
         if self.control_func(step):
             self._record(step,frame)
     
     def _record(self,step:int,frame:torch.tensor):
+        """
+        Record the trajectory at a given step.
+            This method should be implemented by subclasses.
+
+        Args:
+            step (int): The current step.
+            frame (torch.tensor): The current frame to be recorded.
+        """
         raise NotImplementedError
     
     def _traj_ifft(self,trajectory:torch.tensor):
+        """
+        Perform an inverse FFT on the trajectory.
+
+        Args:
+            trajectory (torch.tensor): The trajectory to be transformed.
+
+        Returns:
+            torch.tensor: The transformed trajectory.
+        """
         fft_dim=tuple(-1*(i+1) for i in range(len(trajectory.shape)-3))
         return torch.fft.ifftn(trajectory,dim=fft_dim)
 
     @property
-    def trajectory(self,return_in_fourier:bool=False):
+    def trajectory(self):
+        """
+        Get the recorded trajectory.
+            This method should be implemented by subclasses.
+        
+        Args:
+            return_in_fourier (bool): If True, return the trajectory in Fourier space. Default is False.
+        
+        Returns:
+            torch.tensor: The recorded trajectory.
+        """
         raise NotImplementedError
     
 class AutoRecorder(_TrajRecorder):
-    
+
+    """
+    A recorder that save the trajectory at the same devices as the simulation.
+
+    Args:
+        control_func (Optional[Callable[[int],bool]]): A function that takes a step as input and returns a boolean indicating whether to record the trajectory at that step.
+        include_initial_state (bool): If True, the initial state will be included in the trajectory.
+    """
+
     def __init__(self,
                  control_func:Optional[Callable[[int],bool]]=None,
                  include_initial_state:bool=True,
@@ -66,6 +125,15 @@ class AutoRecorder(_TrajRecorder):
             return self._traj_ifft(torch.stack(self._trajectory,dim=1)).real
     
 class CPURecorder(AutoRecorder):
+
+    """
+    A recorder that saves the trajectory on the CPU memory.
+        This is useful for large trajectories that may not fit in GPU memory during simulation.
+
+    Args:
+        control_func (Optional[Callable[[int],bool]]): A function that takes a step as input and returns a boolean indicating whether to record the trajectory at that step.
+        include_initial_state (bool): If True, the initial state will be included in the trajectory.
+    """
     
     def __init__(self,
                  control_func:Optional[Callable[[int],bool]]=None,
@@ -80,6 +148,20 @@ class CPURecorder(AutoRecorder):
             self._trajectory.append(frame.cpu())
 
 class DiskRecorder(_TrajRecorder):
+
+    """
+    A recorder that saves the trajectory on the disk.
+        This is useful for large trajectories that may not fit in GPU memory during simulation.
+        The trajectory is saved in a temporary cache and then written to disk at specified intervals.
+    
+    Args:
+        control_func (Optional[Callable[[int],bool]]): A function that takes a step as input and returns a boolean indicating whether to record the trajectory at that step.
+        include_initial_state (bool): If True, the initial state will be included in the trajectory.
+        cache_dir (Optional[str]): The directory where the trajectory will be saved. Default is "./saved_traj/".
+        cache_freq (int): The frequency at which to save the trajectory to disk. Default is 1.
+        temp_cache_loc (Literal["auto","cpu"]): The location of the temporary cache. Default is "cpu".
+        save_format (Literal["numpy","torch"]): The format in which to save the trajectory. Default is "torch".
+    """
     
     def __init__(self,
                  control_func:Optional[Callable[[int],bool]]=None,

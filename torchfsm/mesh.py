@@ -5,6 +5,7 @@ from .utils import format_device_dtype, default
 import numpy as np
 from ._type import SpatialTensor, FourierTensor, ValueList
 
+
 class MeshGrid:
     """
     An interable class that reprents a mesh grid.
@@ -33,7 +34,9 @@ class MeshGrid:
     ) -> None:
         for dim_i in mesh_info:
             if len(dim_i) != 3:
-                raise ValueError("each dimension should be a tuple of (start,end,n_points)")
+                raise ValueError(
+                    "each dimension should be a tuple of (start,end,n_points)"
+                )
         self.mesh_info = mesh_info
         self.meshs = [[] for _ in range(len(mesh_info))]
         self._dim_names = ["x", "y", "z"]
@@ -82,7 +85,9 @@ class MeshGrid:
 
     def mesh_grid(
         self, numpy=False
-    ) -> ValueList[Union[SpatialTensor["H ..."], Annotated[np.ndarray, "Spatial, H ..."]]]:
+    ) -> ValueList[
+        Union[SpatialTensor["H ..."], Annotated[np.ndarray, "Spatial, H ..."]]
+    ]:
         """
         Generate the mesh grid for all dimensions.
         The shape of the mesh grid will be (n1,n2,n3,...,nk).
@@ -209,7 +214,6 @@ class FFTFrequency:
 
     def to(self, device=None, dtype=None):
         self.__init__(self.mesh_info, device=device, dtype=dtype)
-            
 
 
 class BroadcastedFFTFrequency:
@@ -458,6 +462,9 @@ class FourierMesh:
         return torch.fft.ifftn(u_fft, dim=self.fft_dim)
 
     def to(self, device=None, dtype=None):
+        """
+        Move the mesh to a different device and dtype.
+        """
         self.__init__(self.mesh_info, device=device, dtype=dtype)
         self.grad.cache_clear()
         self.laplacian.cache_clear()
@@ -473,6 +480,19 @@ def mesh_shape(
     n_batch: int = 1,
     n_channel: int = 1,
 ) -> Tuple:
+    """
+    Get the shape of the mesh.
+    The shape is in the form of (batch_size, n_channels, n1, n2, n3, ...).
+
+    Args:
+        mesh (Union[Sequence[tuple[float, float, int]], MeshGrid, FourierMesh]): The mesh to get the shape from.
+            If a sequence is provided, it should be in the form of [(x_min, x_max, n_points), ...].
+        n_batch (int): The number of batches. Default is 1.
+        n_channel (int): The number of channels. Default is 1.
+
+    Returns:
+        Tuple: The shape of the mesh.
+    """
     if isinstance(mesh, FourierMesh) or isinstance(mesh, MeshGrid):
         mesh = mesh.mesh_info
     return tuple([n_batch, n_channel] + [m[2] for m in mesh])

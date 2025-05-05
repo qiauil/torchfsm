@@ -82,6 +82,10 @@ class ETDRK0():
 
 class ETDRK1(_ETDRKBase):
 
+    """
+    First-order ETDRK method.
+    """
+
     def __init__(
         self,
         dt: float,
@@ -100,6 +104,9 @@ class ETDRK1(_ETDRKBase):
         return self._exp_term * u_hat + self._coef_1 * self._nonlinear_func(u_hat)
 
 class ETDRK2(_ETDRKBase):
+    """
+    Second-order ETDRK method.
+    """
 
     def __init__(
         self,
@@ -126,6 +133,9 @@ class ETDRK2(_ETDRKBase):
         return u_next_hat
 
 class ETDRK3(_ETDRKBase):
+    """
+    Third-order ETDRK method.
+    """
     def __init__(
         self,
         dt: float,
@@ -177,6 +187,9 @@ class ETDRK3(_ETDRKBase):
         return u_next_hat
     
 class ETDRK4(_ETDRKBase):
+    """
+    Fourth-order ETDRK method.
+    """
 
     def __init__(
         self,
@@ -231,6 +244,10 @@ class ETDRK4(_ETDRKBase):
         return u_next_hat
     
 class ETDRKIntegrator(Enum):
+    """
+    ETDRK Integrator
+    Provides a unified interface for all ETDRK methods.
+    """
     ETDRK0 = ETDRK0
     ETDRK1 = ETDRK1
     ETDRK2 = ETDRK2

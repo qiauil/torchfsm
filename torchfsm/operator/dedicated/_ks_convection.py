@@ -7,6 +7,10 @@ from typing import Optional
 
 class _KSConvectionCore(NonlinearFunc):
 
+    r"""
+    Implementation of the KSConvection operator.
+    """
+
     def __init__(self, remove_mean: bool) -> None:
         super().__init__()
         self.remove_mean = remove_mean
@@ -35,6 +39,10 @@ class _KSConvectionCore(NonlinearFunc):
 
 
 class _KSConvectionGenerator(CoreGenerator):
+    r"""
+    Generator of the KSConvection operator. It ensures that the operator is only applied to scalar fields.
+    """
+
     def __init__(self, remove_mean: bool) -> None:
         self.remove_mean = remove_mean
 
@@ -45,6 +53,15 @@ class _KSConvectionGenerator(CoreGenerator):
 
 
 class KSConvection(NonlinearOperator):
+
+    r"""
+    The Kuramoto-Sivashinsky convection operator for a scalar field.
+        It is defined as: $\frac{1}{2}|\nabla \phi|^2=\frac{1}{2}\sum_{i=0}^{I}(\frac{\partial \phi}{\partial i})^2$
+        Note that this class is an operator wrapper. The real implementation of the source term is in the `_KSConvectionCore` class.
+   
+    Args:
+        remove_mean (bool): Whether to remove the mean of the result. Default is True. Set to True will improve the stability of the simulation.
+    """
 
     def __init__(self, remove_mean: bool = True) -> None:
         super().__init__(_KSConvectionGenerator(remove_mean))

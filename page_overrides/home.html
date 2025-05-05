@@ -9,7 +9,6 @@
 <!-- .tx-container Original Green Gradient: hsla(160deg,47%,55%,1) -->
 <!--  gradient:  background: linear-gradient(to bottom, var(--md-primary-fg-color), {{ config.home_gradient_hsla }} 99%,#fff 99%) -->
 <style>
-
     .md-main {
         flex-grow: 0
     }
@@ -41,30 +40,11 @@
         margin: 0 auto;
     }
 
-    .tx-hero__image{
-        width:30rem;
-        height:17rem;
-        order:1;
+    .tx-hero__image {
+        width: 25rem;
+        height: 15rem;
+        order: 1;
         padding-right: 2.5rem;
-    }
-
-    .tx-hero .md-button {
-        margin-top: .5rem;
-        margin-right: .5rem;
-        color: var(--md-primary-bg-color)
-    }
-
-    .tx-hero .md-button--primary {
-        background-color: var(--md-primary-bg-color);
-        color:  var(--md-primary-fg-color);
-        border-color: var(--md-primary-bg-color)
-    }
-
-    .tx-hero .md-button:focus,
-    .tx-hero .md-button:hover {
-        background-color: var(--md-accent-fg-color);
-        color: var(--md-default-bg-color);
-        border-color: var(--md-accent-fg-color)
     }
 
     .feature-item h2 svg {
@@ -79,10 +59,10 @@
     }
 
     .feature-item {
-	border-radius: 20px;
-	margin-top: .5rem;
+        border-radius: 20px;
+        margin-top: .5rem;
         margin-right: .5rem;
-	background-color: var(--md-primary-bg-color);
+        background-color: var(--md-primary-bg-color);
         font-family: 'Lato', sans-serif;
         font-weight: 300;
         box-sizing: border-box;
@@ -116,6 +96,12 @@
     @media screen and (max-width:30em) {
         .tx-hero h1 {
             font-size: 1.4rem
+        }
+    }
+
+    @media (max-width: 950px) {
+        .tx-hero__image {
+            display: none
         }
     }
 
@@ -225,71 +211,17 @@
         padding-top: 20px;
     }
 
-</style>
-
-
-<!-- Main site entry button descriptions -->
-<section class="tx-container">
-    <div class="md-grid md-typeset">
-      <div class="tx-hero">
-      
-        <!-- Custom Image -->
-        <div class="tx-hero__image">
-	  <img src="{{ config.home_cover_image }}" draggable="false">
-        </div>
-	
-	<!-- Main Tagline -->
-        <div class="tx-hero__content">
-          <h1>{{ config.home_tagline }}</h1>
-          <p>{{ config.home_description }}</p>
-          <div class="copy-container">
-            <div class="copy-wrapper">
-                <input 
-                    type="text" 
-                    value="pip install torchfsm" 
-                    readonly 
-                    class="copy-textbox"
-                />
-            <button 
-                onclick="copyToClipboard('pip install torchfsm')" 
-                title="Click to copy" 
-                class="copy-button">
-                <!-- Inline SVG for the icon -->
-                <svg 
-                    xmlns="http://www.w3.org/2000/svg" 
-                    viewBox="0 0 24 24" 
-                    class="copy-icon" 
-                    fill="currentColor">
-                    <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
-                </svg>
-            </button>
-            </div>
-        </div>
-
-        <script>
-            function copyToClipboard(text) {
-                navigator.clipboard.writeText(text).then(() => {
-                    alert('Copied to clipboard: ' + text);
-                }).catch(err => {
-                    console.error('Failed to copy text: ', err);
-                });
-            }
-        </script>
-        </div>
-      </div>
-    </div>
-</section>
-
-<style>
     /* Container for the textbox and button */
     .copy-container {
         display: flex;
         justify-content: center;
         margin: 0;
-        width: 100%; /* Adjust width as needed */
-        max-width: 400px; /* Set a maximum width */
+        width: 100%;
+        /* Adjust width as needed */
+        max-width: 400px;
+        /* Set a maximum width */
     }
-    
+
     /* Wrapper for the textbox and button to share the same boundary */
     .copy-wrapper {
         display: flex;
@@ -298,10 +230,12 @@
         border-radius: 4px;
         overflow: hidden;
         background-color: transparent;
-        width: 100%; /* Adjust width as needed */
-        max-width: 400px; /* Set a maximum width */
+        width: 100%;
+        /* Adjust width as needed */
+        max-width: 400px;
+        /* Set a maximum width */
     }
-    
+
     /* Textbox styling */
     .copy-textbox {
         flex: 1;
@@ -314,7 +248,7 @@
         cursor: default;
         text-align: center;
     }
-    
+
     /* Button styling */
     .copy-button {
         display: flex;
@@ -326,125 +260,182 @@
         cursor: pointer;
         outline: none;
     }
-    
+
     .copy-button:hover {
-        background-color: white; /* Light gray hover effect */
+        background-color: white;
+        /* Light gray hover effect */
     }
-    
+
     /* SVG Icon styling */
     .copy-icon {
-        width: 20px; /* Adjust size as needed */
-        height: 20px; /* Adjust size as needed */
-        fill: currentColor; /* Use current text color */
-        color: var(--md-primary-fg-color); /* Default color */
+        width: 20px;
+        /* Adjust size as needed */
+        height: 20px;
+        /* Adjust size as needed */
+        fill: currentColor;
+        /* Use current text color */
+        color: var(--md-primary-fg-color);
+        /* Default color */
     }
 
     .copy-button:hover .copy-icon {
-        color: var(--md-primary-fg-color); /* Change color on hover */
+        color: var(--md-primary-fg-color);
+        /* Change color on hover */
     }
-    </style>
 
-<!-- New Image Carousel -->
-<section class="image-carousel">
-<div class="swiper-container">
-    <div class="swiper-wrapper">
-    <div class="swiper-slide">
-        <img src="{{ config.home_cover_image }}" alt="Image 1">
-    </div>
-    <div class="swiper-slide">
-        <img src="{{ config.home_cover_image }}" alt="Image 2">
-    </div>
-    <div class="swiper-slide">
-        <img src="{{ config.home_cover_image }}" alt="Image 3">
-    </div>
-    <!-- Add more slides as needed -->
-    </div>
-    <!-- Add navigation buttons -->
-    <div class="swiper-button-next"></div>
-    <div class="swiper-button-prev"></div>
-    <!-- Add pagination -->
-    <div class="swiper-pagination"></div>
-</div>
-</section>
+    /* General styles for the feature section */
+    .feature {
+        background-color: transparent;
+        /* Light gray background */
+        padding-top: 50px;
+        /* Space above the section */
+        padding-bottom: 50px;
+        /* Space below the section */
+        font-family: Arial, sans-serif;
+        /* Set a clean font */
+        margin-left: 10%;
+        margin-right: 10%;
+    }
 
-<!-- Swiper.js Styles -->
-<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+    .key-features-boxes {
+        display: flex;
+        flex-wrap: wrap;
+        /* Ensure boxes wrap on smaller screens */
+        justify-content: space-between;
+        /* Add spacing between boxes */
+        gap: 20px;
+        /* Add consistent spacing between boxes */
+    }
 
-<style>
-.image-carousel {
-    margin-top: 2rem;
-    padding: 1rem 0;
-}
+    .key-feature-box {
+        background-color: transparent;
+        /* White background for each box */
+        border: 1px solid #ddd;
+        /* Light border for separation */
+        border-radius: 8px;
+        /* Rounded corners */
+        padding: 20px;
+        /* Add padding inside the box */
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        /* Subtle shadow for depth */
+        text-align: center;
+        /* Center-align text */
+        flex: 1 1 calc(25% - 20px);
+        /* Ensure boxes are responsive */
+        max-width: calc(25% - 20px);
+        /* Limit the width of each box */
+    }
 
-.swiper-container {
-    width: 100%;
-    height: auto;
-    position: relative; /* Ensure positioning context for arrows */
-}
+    .key-feature-box h1 {
+        font-size: 1rem;
+        /* Slightly larger font for subheadings */
+        margin-bottom: 15px;
+        /* Add spacing below the subheading */
+    }
 
-.swiper-slide {
-    display: flex; /* Use flexbox to center content */
-    justify-content: center; /* Center horizontally */
-    align-items: center; /* Center vertically */
-}
+    .key-feature-box p {
+        font-size: 0.75rem;
+        /* Standard font size for text */
+        line-height: 1.6;
+        /* Improve readability */
+    }
 
-.swiper-slide img {
-    width: auto; /* Maintain aspect ratio */
-    max-width: 100%; /* Ensure it doesn't exceed the container width */
-    height: auto; /* Maintain aspect ratio */
-    max-height: 400px; /* Set a maximum height for the images */
-    margin: auto; /* Center the image horizontally and vertically */
-    object-fit: contain; /* Ensure the image fits within the bounds */
-}
+    /* Responsive design for smaller screens */
+    @media (max-width: 768px) {
+        .key-feature-box {
+            flex: 1 1 calc(50% - 20px);
+            /* Adjust to two columns */
+            max-width: calc(50% - 20px);
+        }
+    }
 
-/* Center navigation arrows relative to the images */
-.swiper-button-next,
-.swiper-button-prev {
-    top: 50%; /* Center vertically within the Swiper container */
-    transform: translateY(-50%); /* Adjust for exact centering */
-    color: #333; /* Optional: Change arrow color */
-    opacity: 0.8; /* Optional: Slight transparency */
-}
-
-.swiper-button-next:hover,
-.swiper-button-prev:hover {
-    opacity: 1; /* Optional: Full opacity on hover */
-}
-
+    @media (max-width: 576px) {
+        .key-feature-box {
+            flex: 1 1 100%;
+            /* Stack boxes vertically */
+            max-width: 100%;
+        }
+    }
 </style>
 
-<!-- Swiper.js Script -->
-<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    const swiper = new Swiper('.swiper-container', {
-    loop: true,
-    navigation: {
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',
-    },
-    pagination: {
-        el: '.swiper-pagination',
-        clickable: true,
-    },
-    autoplay: {
-        delay: 3000,
-        disableOnInteraction: false,
-    },
-    });
-});
-</script>
+<!-- Main site entry button descriptions -->
+<section class="tx-container">
+    <div class="md-grid md-typeset">
+        <div class="tx-hero">
+            <!-- Custom Image -->
+            <div class="tx-hero__image">
+                <img src="{{ config.home_cover_image }}" draggable="false">
+            </div>
 
+            <!-- Main Tagline -->
+            <div class="tx-hero__content">
+                <div class="title-with-logo" style="display: flex; align-items: center; margin-right: 50; padding: 0;">
+                    <!-- Logo Image -->
+                    <img src="assets/logo/icon_torchfsm white.png" alt="Logo"
+                        style="width: 50px; height: 50px; margin-right: 10px;">
+                    <!-- Main Tagline -->
+                    <h1 style="margin: 0; padding: 0; font-size: 2.5rem;">TorchFSM</h1>
+                </div>
+                <h2 style="margin-top: 0; margin-bottom: 0; font-size: 1.8rem;">Fourier Spectral Method</h2>
+                <h2 style="margin-top: 0; margin-bottom: 0.5rem; font-size: 1.8rem;">with PyTorch</h2>
+                <div class="copy-container">
+                    <div class="copy-wrapper">
+                        <input type="text" value="pip install torchfsm" readonly class="copy-textbox" />
+                        <button onclick="copyToClipboard('pip install torchfsm')" title="Click to copy"
+                            class="copy-button">
+                            <!-- Inline SVG for the icon -->
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="copy-icon"
+                                fill="currentColor">
+                                <path
+                                    d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <script>
+                    function copyToClipboard(text) {
+                        navigator.clipboard.writeText(text).then(() => {
+                            alert('Copied to clipboard: ' + text);
+                        }).catch(err => {
+                            console.error('Failed to copy text: ', err);
+                        });
+                    }
+                </script>
+            </div>
+        </div>
+    </div>
+</section>
 
-<!-- Toggleable JavaScript execution -->
-{%- if config.home_execute_js -%}
-<script>
-document$.subscribe(function() {
-  console.log("'home_execute_js' is enabled:");
-  {{ config.home_execute_js }}
-}).unsubscribe();
-</script>
-{%- endif -%}
+<section class="feature">
+    <div class="container homepage-feature-module key-features-module">
+        <div class="row">
+            <div class="row key-features-boxes">
+                <div class="col-md-3 key-feature-box">
+                    <h1>Modular by design</h1>
+                    <p>TorchFSM offers a modular architecture with essential mathematical operators—like divergence, gradient, and convection—so you can build custom solvers like stacking building blocks, quickly and intuitively.</p>
+                </div>
+
+                <div class="col-md-3 key-feature-box">
+                    <h1>GPU-accelerated</h1>
+                    <p> TorchFSM leverages GPU computing to speed up simulations dramatically. Run complex 3D PDEs in minutes, not hours, with seamless hardware acceleration.</p>
+                </div>
+
+                <div class="col-md-3 key-feature-box">
+                    <h1>Batched simulation support</h1>
+                    <p> Built on PyTorch, TorchFSM enables batched simulations with varied initial conditions—ideal for parameter sweeps, uncertainty quantification, or ensemble analysis.</p>
+                </div>
+
+                <div class="col-md-3 key-feature-box">
+                    <h1>Differentiable and ML-ready</h1>
+                    <p> Fully differentiable by design, TorchFSM integrates naturally with machine learning workflows—for residual operators, differentiable physics, or dataset generation.</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    </div>
+</section>
+
 
 {% endblock %}
 {% block content %}

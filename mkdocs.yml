@@ -1,4 +1,4 @@
-site_name: torchfsm
+site_name: TorchFSM
 site_description: Fourier Spectral Method with PyTorch
 site_author: Qiang Liu
 site_url: https://qiauil.github.io/torchfsm
@@ -8,35 +8,10 @@ repo_name: qiauil/torchfsm
 edit_uri: ""  # No edit button, as some of our pages are in /docs and some in /examples via symlink, so it's impossible for them all to be accurate
 
 # Custom Homepage Elements
-home_cover_image: assets/pics/main/burgers_example.png # This path starts at your root mkdocs directory.
-home_tagline: "Fourier Spectral Method with PyTorch"
-home_description: |
-  GPU Based | Differentiable | Deep Learning Friendly
+home_cover_image: assets/pics/main/burgers_wr.png # This path starts at your root mkdocs directory.
 
 # Gradient Color
 home_gradient_hsla: hsla(0deg,47%,55%,1) # Default Green: hsla(160deg,47%,55%,1)
-
-# Custom Homepage Button(s)
-home_button1_name: Install torchfsm                   # Comment this parameter out to remove the button.
-home_button1_url: Folder1/                       # This path starts at your root mkdocs directory.
-home_button1_theme: md-button md-button--primary # Options: "md-button", "md-button md-button--primary"
-home_button1_icon: gear                        # Options: "people", "gear", "image"
-home_button1_blurb: |                            # Short description of this button / section.
-  Install torchfsm
-
-#home_button2_name: Clicky 2   # Comment this parameter out to remove the button.
-#home_button2_url: Folder2/    # This path starts at your root mkdocs directory.
-#home_button2_theme: md-button # Options: "md-button", "md-button md-button--primary"
-#home_button2_icon: gear       # Options: "people", "gear", "image"
-#home_button2_blurb: |         # Short description of this button / section.
-#  This goober navigates to some important thingies located in "/Folder2/index.md"
-
-#home_button3_name: Clicky 3   # Comment this parameter out to remove the button.
-#home_button3_url: Folder3/    # This path starts at your root mkdocs directory.
-#home_button3_theme: md-button # Options: "md-button", "md-button md-button--primary"
-#home_button3_icon: image      # Options: "people", "gear", "image"
-#home_button3_blurb: |         # Short description of this button / section.
-#  This psycho navigates to an interesting table of stuff located in "/Folder3/index.md"
 
 theme:
     name: material
@@ -74,7 +49,7 @@ theme:
     icon:
         repo: fontawesome/brands/github  # GitHub logo in top right
     logo: assets/logo/icon_torchfsm white.png
-    favicon: assets/icon_torchfsm.svg
+    favicon: assets/logo/icon_torchfsm.svg
 
 extra:
   social:
@@ -149,28 +124,15 @@ nav:
                     - "2.3.4.1 Velocity Based": 'tutorials/pdes/ns_velocity.ipynb'
         - 'Cheat Sheet': 'tutorials/cheatsheet.md'
     - 'APIs':
-        - 'operator': 'apis/operator.md'
-        - 'pde': 'apis/pde.md'
-        - 'Base Classes for Operators': 'apis/operator_base.md'
-        - 'Cores and Generators for Operators': 
+        - '1. operator': 'apis/operator.md'
+        - '2. pde': 'apis/pde.md'
+        - '3. functional': 'apis/functional.md'
+        - '4. integrator': 'apis/integrator.md'
+        - '5. field': 'apis/field.md'
+        - '6. plot': 'apis/plot.md'
+        - '7. traj_recorder': 'apis/traj_recorder.md'
+        - '8. utils': 'apis/utils.md'
+        - '9. Base Classes for Operators': 'apis/operator_base.md'
+        - '10. Cores and Generators for Operators': 
             - 'Cores': 'apis/operator_core.md'
             - 'Generators': 'apis/operator_generator.md'
-    #- 'Advanced Applications':
-    #    - '1. Concepts': 'concepts.ipynb'
-    #- 'Development':
-    #    - '1. Concepts': 'concepts.ipynb' 
-    #- 'API Reference':
-    #    - '1. Concepts': 'concepts.ipynb' 
-    #- '1. Get Started': 
-    #    - '1.1. Quick Start': 'start/start.md'
-    #    - '1.2. Theory Introduction': 'start/theory.md'
-    #- '2. Examples': 
-    #    - '2.1. Toy Example of Muti-task Learning': 'examples/mtl_toy.ipynb'
-    #    - "2.2. Solve Burgers' Equation with PINN": 'examples/pinn_burgers.ipynb'
-    #- '3. API Reference':
-    #    - "3.1. Gradient Operator": 'api/grad_operator.md'
-    #    - "3.2. Momentum Operator": 'api/momentum_operator.md'
-    #    - "3.3. Weight Model": 'api/weight_model.md'
-    #    - "4.4. Length Model": 'api/length_model.md'
-    #    - "4.5. Loss Recorder": 'api/loss_recorder.md'
-    #    - "4.6. Utils": 'api/utils.md'

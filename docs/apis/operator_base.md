@@ -1,4 +1,3 @@
-## Base Class for Operators
 ::: torchfsm.operator.LinearCoef
 ---
 ::: torchfsm.operator.NonlinearFunc

@@ -169,6 +169,18 @@ def sym_colormap(d_min, d_max, d_cen=0, cmap="coolwarm", cmapname="sym_map"):
 def generate_uniform_ticks(
     start: float, end: float, n_tick, label_func: Callable[[np.number], str]
 ):
+    """
+    Generate uniform ticks for a plot.
+
+    Args:
+        start (float): The start value of the ticks.
+        end (float): The end value of the ticks.
+        n_tick (int): The number of ticks to generate.
+        label_func (Callable[[np.number], str]): A function to format the tick labels.
+    
+    Returns:
+        Tuple[Sequence[float], Sequence[str]]: A tuple containing the tick positions and labels.
+    """
     ticks = np.linspace(start, end, n_tick)
     return ticks, [label_func(tick) for tick in ticks]
 
@@ -189,6 +201,26 @@ def plot_1D_field(
     grid=True,
     **kwargs
 ):
+    """
+    Plot a 1D field.
+
+    Args:
+        ax (plt.Axes): The axes to plot on.
+        data (Union[np.ndarray, torch.Tensor]): The data to plot.
+        x_label (Optional[str], optional): The label for the x-axis. Defaults to None.
+        y_label (Optional[str], optional): The label for the y-axis. Defaults to None.
+        title (Optional[str], optional): The title of the plot. Defaults to None.
+        title_loc (str, optional): The location of the title. Defaults to "center".
+        show_ticks (bool, optional): Whether to show ticks. Defaults to True.
+        ticks_x (Tuple[Sequence[float], Sequence[str]], optional): Custom ticks for the x-axis. Defaults to None.
+        ticks_y (Tuple[Sequence[float], Sequence[str]], optional): Custom ticks for the y-axis. Defaults to None.
+        vmin (Optional[float], optional): The minimum value for the color scale. Defaults to None.
+        vmax (Optional[float], optional): The maximum value for the color scale. Defaults to None.
+        extend_value_range (bool, optional): Whether to extend the value range. Defaults to True.
+        grid (bool, optional): Whether to show grid lines. Defaults to True.
+        **kwargs: Additional keyword arguments for the plot.
+    
+    """
     if isinstance(data, torch.Tensor):
         data = data.detach().cpu().numpy()
     elif not isinstance(data, np.ndarray):
@@ -234,6 +266,24 @@ def plot_2D_field(
     ticks_y: Tuple[Sequence[float], Sequence[str]] = None,
     **kwargs
 ):
+    """
+    Plot a 2D field.
+
+    Args:
+        ax (plt.Axes): The axes to plot on.
+        data (Union[np.ndarray, torch.Tensor]): The data to plot.
+        x_label (Optional[str], optional): The label for the x-axis. Defaults to None.
+        y_label (Optional[str], optional): The label for the y-axis. Defaults to None.
+        title (Optional[str], optional): The title of the plot. Defaults to None.
+        title_loc (str, optional): The location of the title. Defaults to "center".
+        interpolation (str, optional): The interpolation method. Defaults to "none".
+        aspect (str, optional): The aspect ratio. Defaults to "auto".
+        cmap (Union[str, Colormap], optional): The colormap to use. Defaults to "coolwarm".
+        show_ticks (bool, optional): Whether to show ticks. Defaults to True.
+        ticks_x (Tuple[Sequence[float], Sequence[str]], optional): Custom ticks for the x-axis. Defaults to None.
+        ticks_y (Tuple[Sequence[float], Sequence[str]], optional): Custom ticks for the y-axis. Defaults to None.
+        **kwargs: Additional keyword arguments for the plot.
+    """
     if isinstance(data, torch.Tensor):
         data = data.detach().cpu().numpy()
     elif not isinstance(data, np.ndarray):
@@ -273,6 +323,18 @@ def _plot_3D_field(
     title_loc="center",
     aspect="auto",
 ):
+    """
+    Plot a 3D field.
+
+    Args:
+        ax (plt.Axes): The axes to plot on.
+        img (np.ndarray): The image to plot.
+        bottom_label (Optional[str], optional): The label for the bottom axis. Defaults to None.
+        left_label (Optional[str], optional): The label for the left axis. Defaults to None.
+        title (Optional[str], optional): The title of the plot. Defaults to None.
+        title_loc (str, optional): The location of the title. Defaults to "center".
+        aspect (str, optional): The aspect ratio. Defaults to "auto".
+    """
     im = ax.imshow(img, aspect=aspect)
     ax.set_xticks([])
     ax.set_yticks([])
@@ -347,6 +409,30 @@ def plot_3D_field(
     gamma_correction: float = 2.4,
     **kwargs
 ):
+    """
+    Plot a 3D field.
+    Powered by https://github.com/KeKsBoTer/vape4d
+
+    Args:
+        ax (plt.Axes): The axes to plot on.
+        data (Union[np.ndarray, torch.Tensor]): The data to plot.
+        bottom_label (Optional[str], optional): The label for the bottom axis. Defaults to None.
+        left_label (Optional[str], optional): The label for the left axis. Defaults to None.
+        title (Optional[str], optional): The title of the plot. Defaults to None.
+        title_loc (str, optional): The location of the title. Defaults to "center".
+        aspect (str, optional): The aspect ratio. Defaults to "auto".
+        cmap (Union[str, Colormap], optional): The colormap to use. Defaults to "coolwarm".
+        vmin (Optional[float], optional): The minimum value for the color scale. Defaults to None.
+        vmax (Optional[float], optional): The maximum value for the color scale. Defaults to None.
+        return_cmap (bool, optional): Whether to return the colormap. Defaults to False.
+        distance_scale (float, optional): The distance scale for rendering. Defaults to 10.
+        background (tuple, optional): The background color. Defaults to (0, 0, 0, 0).
+        width (int, optional): The width of the rendered image. Defaults to 512.
+        height (int, optional): The height of the rendered image. Defaults to 512.
+        alpha_func (str, optional): The alpha function. Defaults to "zigzag".
+        gamma_correction (float, optional): The gamma correction factor. Defaults to 2.4.
+        **kwargs: Additional keyword arguments for the plot.
+    """
     if isinstance(data, torch.Tensor):
         data = data.detach().cpu().numpy()
     elif not isinstance(data, np.ndarray):
@@ -365,6 +451,7 @@ def plot_3D_field(
         width,
         height,
         alpha_func,
+        gamma_correction,
         **kwargs
     )
     im = _plot_3D_field(
@@ -411,6 +498,39 @@ def plot_traj(
     save_name: Optional[str] = None,
     **kwargs
 ):
+    """
+    Plot a trajectory. The dimension of the trajectory can be 1D, 2D, or 3D.
+
+    Args:
+        traj (Union[SpatialTensor["B T C H ...], Annotated[np.ndarray, "Spatial, B T C H ..."]]): The trajectory to plot.
+        channel_names (Optional[Sequence[str]], optional): The names of the channels. Defaults to None.
+        batch_names (Optional[Sequence[str]], optional): The names of the batches. Defaults to None.
+        vmin (Union[float, Sequence[Optional[float]]], optional): The minimum value for the color scale. Defaults to None.
+        vmax (Union[float, Sequence[Optional[float]]], optional): The maximum value for the color scale. Defaults to None.
+        subfig_size (float, optional): The size of the subfigures. Defaults to 3.5.
+        x_space (float, optional): The space between subfigures in the x direction. Defaults to 0.7.
+        y_space (float, optional): The space between subfigures in the y direction. Defaults to 0.1.
+        cbar_pad (float, optional): The padding for the colorbar. Defaults to 0.1.
+        aspect (Literal["auto", "equal"], optional): The aspect ratio. Defaults to "auto".
+        num_colorbar_value (int, optional): The number of values for the colorbar. Defaults to 4.
+        ctick_format (Optional[str], optional): The format for the colorbar ticks. Defaults to "%.1f".
+        show_ticks (Union[Literal["auto"], bool], optional): Whether to show ticks. Defaults to "auto".
+        show_time_index (bool, optional): Whether to show time index in the title. Defaults to True.
+        use_sym_colormap (bool, optional): Whether to use a symmetric colormap. Defaults to True.
+        cmap (Union[str, Colormap], optional): The colormap to use. Defaults to "coolwarm".
+        ticks_t (Tuple[Sequence[float], Sequence[str]], optional): Custom ticks for the t-axis. Defaults to None.
+        ticks_x (Tuple[Sequence[float], Sequence[str]], optional): Custom ticks for the x-axis. Defaults to None.
+        ticks_y (Tuple[Sequence[float], Sequence[str]], optional): Custom ticks for the y-axis. Defaults to None.
+        ticks_z (Tuple[Sequence[float], Sequence[str]], optional): Custom ticks for the z-axis. Defaults to None.
+        animation (bool, optional): Whether to animate the plot. Defaults to True
+            This only works for 1D and 2D data. If set to False, the 1d trajectory will be plotted as a 2D plot and the 2D trajectory will be plotted as a 3D plot.
+        fps (int, optional): The frames per second for the animation. Defaults to 30.
+        show_in_notebook (bool, optional): Whether to show the plot in a notebook. Defaults to True.
+        animation_engine (Literal["jshtml", "html5"], optional): The engine for the animation. Defaults to "html5".
+        save_name (Optional[str], optional): The name of the file to save the plot. Defaults to None.
+        **kwargs: Additional keyword arguments for the plot.
+    """
+
     if isinstance(traj, torch.Tensor):
         traj = traj.cpu().detach().numpy()
     n_batch, n_frame, n_channel = traj.shape[0], traj.shape[1], traj.shape[2]
@@ -716,6 +836,32 @@ def plot_field(
     save_name: Optional[str] = None,
     **kwargs
 ):
+    """
+    Plot a field. The dimension of the field can be 1D, 2D, or 3D.
+
+    Args:
+        field (Union[SpatialTensor["B C H ...], Annotated[np.ndarray, "Spatial, B C H ..."]]): The field to plot.
+        channel_names (Optional[Sequence[str]], optional): The names of the channels. Defaults to None.
+        batch_names (Optional[Sequence[str]], optional): The names of the batches. Defaults to None.
+        vmin (Union[float, Sequence[Optional[float]]], optional): The minimum value for the color scale. Defaults to None.
+        vmax (Union[float, Sequence[Optional[float]]], optional): The maximum value for the color scale. Defaults to None.
+        subfig_size (float, optional): The size of the subfigures. Defaults to 3.5.
+        x_space (float, optional): The space between subfigures in the x direction. Defaults to 0.7.
+        y_space (float, optional): The space between subfigures in the y direction. Defaults to 0.1.
+        cbar_pad (float, optional): The padding for the colorbar. Defaults to 0.1.
+        aspect (Literal["auto", "equal"], optional): The aspect ratio. Defaults to "auto".
+        num_colorbar_value (int, optional): The number of values for the colorbar. Defaults to 4.
+        ctick_format (Optional[str], optional): The format for the colorbar ticks. Defaults to "%.1f".
+        show_ticks (Union[Literal["auto"], bool], optional): Whether to show ticks. Defaults to "auto".
+        use_sym_colormap (bool, optional): Whether to use a symmetric colormap. Defaults to True.
+        cmap (Union[str, Colormap], optional): The colormap to use. Defaults to "coolwarm".
+        ticks_x (Tuple[Sequence[float], Sequence[str]], optional): Custom ticks for the x-axis. Defaults to None.
+        ticks_y (Tuple[Sequence[float], Sequence[str]], optional): Custom ticks for the y-axis. Defaults to None.
+        ticks_z (Tuple[Sequence[float], Sequence[str]], optional): Custom ticks for the z-axis. Defaults to None.
+        save_name (Optional[str], optional): The name of the file to save the plot. Defaults to None.
+        **kwargs: Additional keyword arguments for the plot.
+    """
+
     if isinstance(field, torch.Tensor):
         field = field.cpu().detach().numpy()
     field = np.expand_dims(field, 1)

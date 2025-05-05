@@ -21,3 +21,15 @@
 ::: torchfsm.operator.generic._laplacian._LaplacianCore
 ---
 ::: torchfsm.operator.generic._spatial_derivative._SpatialDerivativeCore
+---
+::: torchfsm.operator.dedicated._ks_convection._KSConvectionCore
+---
+::: torchfsm.operator.dedicated._navier_stokes._VorticityConvectionCore
+---
+::: torchfsm.operator.dedicated._navier_stokes._Vorticity2VelocityCore
+---
+::: torchfsm.operator.dedicated._navier_stokes._Vorticity2PressureCore
+---
+::: torchfsm.operator.dedicated._navier_stokes._Velocity2PressureCore
+---
+::: torchfsm.operator.dedicated._navier_stokes._NSPressureConvectionCore
