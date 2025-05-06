@@ -1,7 +1,7 @@
 import setuptools
 from pathlib import Path
 
-with open("README.md", "r") as fh:
+with open("description.md", "r") as fh:
     long_description = fh.read()
 
 def get_install_requires():
@@ -24,7 +24,7 @@ setuptools.setup(
     url="https://qiauil.github.io/torchfsm",
     packages=setuptools.find_packages(),
     classifiers=[
-        "Programming Language :: Python :: 3",
+        'Programming Language :: Python :: 3',
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],

@@ -1,11 +1,8 @@
 <h1 align="center">
-  <img src="./docs/assets/logo/icon_torchfsm.png" width="100"/>
+  <img src="../../assets/logo/icon_torchfsm.png" width="100"/>
   <br>TorchFSM<br>
 </h1>
 <h4 align="center">Fourier Spectral Method with PyTorch</h4>
-<p align="center">
-  [<a href="https://qiauil.github.io/torchfsm/"> Documentation & Examples</a>]
-</p>
 
 ## TL;DR
 `TorchFSM` is a PyTorch-based library for solving PDEs using Fourier spectral method. It is designed for physics-based deep learning and differentiable simulations.
@@ -38,7 +35,7 @@ traj=burgers.integrate(u_0=u_0,mesh=mesh,
 )
 plot_traj(traj,animation=False,cmap="managua")
 ```
-![Burgers 1D](./docs/assets/pics/readme/burgers_1d.png)
+![Burgers 1D](../../assets/pics/readme/burgers_1d.png)
 
 Directly simulate the Burgers on 2D mesh with the same operator:
 ```python
@@ -55,7 +52,7 @@ traj=burgers.integrate(u_0=u_0,mesh=mesh,
 
 plot_traj(traj,animation=False,cmap="managua")
 ```
-![Burgers 1D](./docs/assets/pics/readme/burgers_2d.png)
+![Burgers 1D](../../assets/pics/readme/burgers_2d.png)
 ## Feature
 
 * **Modular by design**: TorchFSM offers a modular architecture with essential mathematical operators—like divergence, gradient, and convection—so you can build custom solvers like stacking building blocks, quickly and intuitively.
@@ -96,5 +93,5 @@ We will be happy if you use `TorchFSM` in your research. If you find our work us
 
 ## Further Information
 
-* `TorchFSM` is mainly built by <a href="https://qiauil.github.io/">Qiang Liu</a>, <a href="https://fkoehler.site/">Felix Köhler</a>, and <a href="https://ge.in.tum.de/about/n-thuerey/">Nils Thuerey</a> at <a href="https://ge.in.tum.de">Physics Based Simulation Group, Technical University of Munich</a> <img src="./docs/assets/pics/TUM.svg" width="16"> </h6>
+* `TorchFSM` is mainly built by <a href="https://qiauil.github.io/">Qiang Liu</a>, <a href="https://fkoehler.site/">Felix Köhler</a>, and <a href="https://ge.in.tum.de/about/n-thuerey/">Nils Thuerey</a> at <a href="https://ge.in.tum.de">Physics Based Simulation Group, Technical University of Munich</a> <img src="../../assets/pics/TUM.svg" width="16"> </h6>
 * If you are more familiar with Jax, please check our Jax alternative [Exponax](https://github.com/Ceyron/exponax)

@@ -108,6 +108,7 @@ nav:
     - 'Home': 'index.md'
     - 'Theory Introduction': 'theory.ipynb'
     - 'Tutorials':
+        - '0. Introduction': 'tutorials/introduction.md'
         - '1. Concepts': 'tutorials/concepts.ipynb'
         - '2. Evaluate Derivatives': 
             - '2.1. Call the Operator': 'tutorials/call_operator.ipynb'
