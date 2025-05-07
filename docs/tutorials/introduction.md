@@ -80,7 +80,7 @@ We will be happy if you use `TorchFSM` in your research. If you find our work us
 ```
 @software{liu_2025_15350210,
   author       = {Liu, Qiang and
-                  Köhler, Felix and
+                  Koehler, Felix and
                   Thuerey, Nils},
   title        = {TorchFSM: Fourier Spectral Method with PyTorch},
   month        = may,
@@ -93,5 +93,5 @@ We will be happy if you use `TorchFSM` in your research. If you find our work us
 
 ## Further Information
 
-* `TorchFSM` is mainly built by <a href="https://qiauil.github.io/">Qiang Liu</a>, <a href="https://fkoehler.site/">Felix Köhler</a>, and <a href="https://ge.in.tum.de/about/n-thuerey/">Nils Thuerey</a> at <a href="https://ge.in.tum.de">Physics Based Simulation Group, Technical University of Munich</a> <img src="../../assets/pics/TUM.svg" width="16"> </h6>
+* `TorchFSM` is mainly built by <a href="https://qiauil.github.io/">Qiang Liu</a>, <a href="https://fkoehler.site/">Felix Koehler</a>, and <a href="https://ge.in.tum.de/about/n-thuerey/">Nils Thuerey</a> at <a href="https://ge.in.tum.de">Physics Based Simulation Group, Technical University of Munich</a> <img src="../../assets/pics/TUM.svg" width="16"> </h6>
 * If you are more familiar with Jax, please check our Jax alternative [Exponax](https://github.com/Ceyron/exponax)

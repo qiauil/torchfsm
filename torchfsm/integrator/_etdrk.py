@@ -1,7 +1,7 @@
 """
 Modified from https://github.com/Ceyron/exponax/tree/main/exponax/etdrk
 
-We would like to thank Felix Köhler (https://github.com/Ceyron) for his contribution on the original code and help during the implementation.
+We would like to thank Felix Koehler (https://github.com/Ceyron) for his contribution on the original code and help during the implementation.
 """
 
 import torch
