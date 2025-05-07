@@ -324,6 +324,12 @@
 <!-- .tx-container Original Green Gradient: hsla(160deg,47%,55%,1) -->
 <!--  gradient:  background: linear-gradient(to bottom, var(--md-primary-fg-color), hsla(0deg,47%,55%,1) 99%,#fff 99%) -->
 <style>
+    .general_main {
+    margin: 0;
+    padding: 0;
+        background: transparent
+    }
+
     .md-main {
         flex-grow: 0
     }
@@ -334,12 +340,13 @@
     }
 
     .tx-container {
-        padding-top: .0rem;
+        padding-top: 0 !important; /* Ensure no padding at the top */
+        margin-top: 0 !important;
         background: var(--md-primary-fg-color)
     }
 
     .tx-hero {
-        margin: 32px 2.8rem;
+        margin: 0 2.8rem;
         color: var(--md-primary-bg-color);
         justify-content: center;
     }
@@ -604,7 +611,7 @@
         /* Light gray background */
         padding-top: 50px;
         /* Space above the section */
-        padding-bottom: 50px;
+        padding-bottom: 25px;
         /* Space below the section */
         font-family: Arial, sans-serif;
         /* Set a clean font */
@@ -674,83 +681,112 @@
 </style>
 
 <!-- Main site entry button descriptions -->
-<section class="tx-container">
-    <div class="md-grid md-typeset">
-        <div class="tx-hero">
-            <!-- Custom Image -->
-            <div class="tx-hero__image">
-                <img src="assets/pics/main/burgers_wr.png" draggable="false">
-            </div>
 
-            <!-- Main Tagline -->
-            <div class="tx-hero__content">
-                <div class="title-with-logo" style="display: flex; align-items: center; margin-right: 50; padding: 0;">
-                    <!-- Logo Image -->
-                    <img src="assets/logo/icon_torchfsm white.png" alt="Logo"
-                        style="width: 50px; height: 50px; margin-right: 10px;">
-                    <!-- Main Tagline -->
-                    <h1 style="margin: 0; padding: 0; font-size: 2.5rem;">TorchFSM</h1>
+<section class=".general_main">
+    <div class="tx-container">
+        <div class="md-grid md-typeset">
+            <div class="tx-hero">
+                <!-- Custom Image -->
+                <div class="tx-hero__image">
+                    <img src="assets/pics/main/burgers_wr.png" draggable="false">
                 </div>
-                <h2 style="margin-top: 0; margin-bottom: 0; font-size: 1.8rem;">Fourier Spectral Method</h2>
-                <h2 style="margin-top: 0; margin-bottom: 0.5rem; font-size: 1.8rem;">with PyTorch</h2>
-                <div class="copy-container">
-                    <div class="copy-wrapper">
-                        <input type="text" value="pip install torchfsm" readonly class="copy-textbox" />
-                        <button onclick="copyToClipboard('pip install torchfsm')" title="Click to copy"
-                            class="copy-button">
-                            <!-- Inline SVG for the icon -->
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="copy-icon"
-                                fill="currentColor">
-                                <path
-                                    d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z" />
-                            </svg>
-                        </button>
+
+                <!-- Main Tagline -->
+                <div class="tx-hero__content">
+                    <div class="title-with-logo"
+                        style="display: flex; align-items: center; margin-right: 50; padding: 0;">
+                        <!-- Logo Image -->
+                        <img src="assets/logo/icon_torchfsm white.png" alt="Logo"
+                            style="width: 50px; height: 50px; margin-right: 10px;">
+                        <!-- Main Tagline -->
+                        <h1 style="margin: 0; padding: 0; font-size: 2.5rem;">TorchFSM</h1>
                     </div>
+                    <h2 style="margin-top: 0; margin-bottom: 0; font-size: 1.8rem;">Fourier Spectral Method</h2>
+                    <h2 style="margin-top: 0; margin-bottom: 0.5rem; font-size: 1.8rem;">with PyTorch</h2>
+                    <div class="copy-container">
+                        <div class="copy-wrapper">
+                            <input type="text" value="pip install torchfsm" readonly class="copy-textbox" />
+                            <button onclick="copyToClipboard('pip install torchfsm')" title="Click to copy"
+                                class="copy-button">
+                                <!-- Inline SVG for the icon -->
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="copy-icon"
+                                    fill="currentColor">
+                                    <path
+                                        d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <script>
+                        function copyToClipboard(text) {
+                            navigator.clipboard.writeText(text).then(() => {
+                                alert('Copied to clipboard: ' + text);
+                            }).catch(err => {
+                                console.error('Failed to copy text: ', err);
+                            });
+                        }
+                    </script>
                 </div>
-                <script>
-                    function copyToClipboard(text) {
-                        navigator.clipboard.writeText(text).then(() => {
-                            alert('Copied to clipboard: ' + text);
-                        }).catch(err => {
-                            console.error('Failed to copy text: ', err);
-                        });
-                    }
-                </script>
             </div>
         </div>
     </div>
+    <div class="feature">
+        <div class="key-features-boxes">
+            <div class="key-feature-box">
+                <h1>Modular by design</h1>
+                <p>TorchFSM offers a modular architecture with essential mathematical operators—like divergence,
+                    gradient, and convection—so you can build custom solvers like stacking building blocks, quickly and
+                    intuitively.</p>
+            </div>
+
+            <div class="key-feature-box">
+                <h1>GPU-accelerated</h1>
+                <p> TorchFSM leverages GPU computing to speed up simulations dramatically. Run complex 3D PDEs in
+                    minutes, not hours, with seamless hardware acceleration.</p>
+            </div>
+
+            <div class="key-feature-box">
+                <h1>Batched simulation support</h1>
+                <p> Built on PyTorch, TorchFSM enables batched simulations with varied initial conditions—ideal for
+                    parameter sweeps, uncertainty quantification, or ensemble analysis.</p>
+            </div>
+
+            <div class="key-feature-box">
+                <h1>Differentiable and ML-ready</h1>
+                <p> Fully differentiable by design, TorchFSM integrates naturally with machine learning workflows—for
+                    residual operators, differentiable physics, or dataset generation.</p>
+            </div>
+        </div>
 </section>
 
+
+<!--
 <section class="feature">
-    <div class="container homepage-feature-module key-features-module">
-        <div class="row">
-            <div class="row key-features-boxes">
-                <div class="col-md-3 key-feature-box">
-                    <h1>Modular by design</h1>
-                    <p>TorchFSM offers a modular architecture with essential mathematical operators—like divergence, gradient, and convection—so you can build custom solvers like stacking building blocks, quickly and intuitively.</p>
-                </div>
-
-                <div class="col-md-3 key-feature-box">
-                    <h1>GPU-accelerated</h1>
-                    <p> TorchFSM leverages GPU computing to speed up simulations dramatically. Run complex 3D PDEs in minutes, not hours, with seamless hardware acceleration.</p>
-                </div>
-
-                <div class="col-md-3 key-feature-box">
-                    <h1>Batched simulation support</h1>
-                    <p> Built on PyTorch, TorchFSM enables batched simulations with varied initial conditions—ideal for parameter sweeps, uncertainty quantification, or ensemble analysis.</p>
-                </div>
-
-                <div class="col-md-3 key-feature-box">
-                    <h1>Differentiable and ML-ready</h1>
-                    <p> Fully differentiable by design, TorchFSM integrates naturally with machine learning workflows—for residual operators, differentiable physics, or dataset generation.</p>
-                </div>
-
-            </div>
-        </div>
+<div class="key-features-boxes">
+    <div class="key-feature-box">
+        <h1>Modular by design</h1>
+        <p>TorchFSM offers a modular architecture with essential mathematical operators—like divergence, gradient, and convection—so you can build custom solvers like stacking building blocks, quickly and intuitively.</p>
     </div>
+
+    <div class="key-feature-box">
+        <h1>GPU-accelerated</h1>
+        <p> TorchFSM leverages GPU computing to speed up simulations dramatically. Run complex 3D PDEs in minutes, not hours, with seamless hardware acceleration.</p>
     </div>
+
+    <div class="key-feature-box">
+        <h1>Batched simulation support</h1>
+        <p> Built on PyTorch, TorchFSM enables batched simulations with varied initial conditions—ideal for parameter sweeps, uncertainty quantification, or ensemble analysis.</p>
+    </div>
+
+    <div class="key-feature-box">
+        <h1>Differentiable and ML-ready</h1>
+        <p> Fully differentiable by design, TorchFSM integrates naturally with machine learning workflows—for residual operators, differentiable physics, or dataset generation.</p>
+    </div>
+
+</div>
+</div>
 </section>
-
+-->
 
 
       <main class="md-main" data-md-component="main">
@@ -1827,7 +1863,7 @@
             <div class="md-content" data-md-component="content">
               <article class="md-content__inner md-typeset">
                 <h6 align="center">
-Major Author: <a href="https://qiauil.github.io/">Qiang Liu</a>, <a href="https://fkoehler.site/">Felix Köhler</a>, and <a href="https://ge.in.tum.de/about/n-thuerey/">Nils Thuerey</a> at <a href="https://ge.in.tum.de">Physics Based Simulation Group, Technical University of Munich</a> <img src="assets/pics/TUM.svg" width="16"> </h6> <!--
+Major Author: <a href="https://qiauil.github.io/">Qiang Liu</a>, <a href="https://fkoehler.site/">Felix Koehler</a>, and <a href="https://ge.in.tum.de/about/n-thuerey/">Nils Thuerey</a> at <a href="https://ge.in.tum.de">Physics Based Simulation Group, Technical University of Munich</a> <img src="assets/pics/TUM.svg" width="16"> </h6> <!--
                   
   
 
@@ -1837,7 +1873,7 @@ Major Author: <a href="https://qiauil.github.io/">Qiang Liu</a>, <a href="https:
   <h1>Home</h1>
 
 <h6 align="center">
-Major Author: <a href="https://qiauil.github.io/">Qiang Liu</a>, <a href="https://fkoehler.site/">Felix Köhler</a>, and <a href="https://ge.in.tum.de/about/n-thuerey/">Nils Thuerey</a> at <a href="https://ge.in.tum.de">Physics Based Simulation Group, Technical University of Munich</a> <img src="assets/pics/TUM.svg" width="16"> </h6>
+Major Author: <a href="https://qiauil.github.io/">Qiang Liu</a>, <a href="https://fkoehler.site/">Felix Koehler</a>, and <a href="https://ge.in.tum.de/about/n-thuerey/">Nils Thuerey</a> at <a href="https://ge.in.tum.de">Physics Based Simulation Group, Technical University of Munich</a> <img src="assets/pics/TUM.svg" width="16"> </h6>
 
 
 
