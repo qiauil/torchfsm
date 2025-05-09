@@ -1,11 +1,12 @@
 <h1 align="center">
-  <img src="./docs/assets/logo/icon_torchfsm.png" width="100"/>
+  <img src="./docs/assets/pics/readme/icon_torchfsm.png" width="100"/>
   <br>TorchFSM<br>
 </h1>
 <h4 align="center">Fourier Spectral Method with PyTorch</h4>
 <p align="center">
   [<a href="https://qiauil.github.io/torchfsm/"> Documentation & Examples</a>]
 </p>
+
 
 ## TL;DR
 `TorchFSM` is a PyTorch-based library for solving PDEs using Fourier spectral method. It is designed for physics-based deep learning and differentiable simulations.
@@ -96,5 +97,5 @@ We will be happy if you use `TorchFSM` in your research. If you find our work us
 
 ## Further Information
 
-* `TorchFSM` is mainly built by <a href="https://qiauil.github.io/">Qiang Liu</a>, <a href="https://fkoehler.site/">Felix Koehler</a>, and <a href="https://ge.in.tum.de/about/n-thuerey/">Nils Thuerey</a> at <a href="https://ge.in.tum.de">Physics Based Simulation Group, Technical University of Munich</a> <img src="./docs/assets/pics/TUM.svg" width="16"> </h6>
+* `TorchFSM` is mainly built by <a href="https://qiauil.github.io/">Qiang Liu</a>, <a href="https://fkoehler.site/">Felix Koehler</a>, and <a href="https://ge.in.tum.de/about/n-thuerey/">Nils Thuerey</a> at <a href="https://ge.in.tum.de">Physics Based Simulation Group, Technical University of Munich</a> <img src="./docs/assets/pics/readme/TUM.svg" width="16"> </h6>
 * If you are more familiar with Jax, please check our Jax alternative [Exponax](https://github.com/Ceyron/exponax)
