@@ -961,7 +961,7 @@ class _ExplicitSourceCore(NonlinearFunc):
         self,
         u_fft: FourierTensor["B C H ..."],
         f_mesh: FourierMesh,
-        u: SpatialTensor["B C H ..."] | None,
+        u: Optional[SpatialTensor["B C H ..."], None],
     ) -> FourierTensor["B C H ..."]:
         if self.source.device != f_mesh.device:
             self.source = self.source.to(f_mesh.device)
