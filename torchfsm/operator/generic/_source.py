@@ -34,7 +34,7 @@ class _ImplicitFuncSourceCore(NonlinearFunc):
         self,
         u_fft: FourierTensor["B C H ..."],
         f_mesh: FourierMesh,
-        u: SpatialTensor["B C H ..."] | None,
+        u: Optional[SpatialTensor["B C H ..."]] = None,
     ) -> FourierTensor["B C H ..."]:
         if u is None:
             u = f_mesh.ifft(u_fft).real

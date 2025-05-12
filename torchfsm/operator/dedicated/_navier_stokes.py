@@ -186,7 +186,7 @@ class _Velocity2PressureCore(NonlinearFunc):
         self,
         u_fft: FourierTensor["B C H ..."],
         f_mesh: FourierMesh,
-        u: SpatialTensor["B C H ..."] | None,
+        u: Optional[SpatialTensor["B C H ..."]] = None,
     ) -> FourierTensor["B C H ..."]:
         if self.external_force is not None:  # u_fft is original version
             force = self.external_force(
@@ -232,7 +232,7 @@ class _NSPressureConvectionCore(NonlinearFunc):
         self,
         u_fft: FourierTensor["B C H ..."],
         f_mesh: FourierMesh,
-        u: SpatialTensor["B C H ..."] | None,
+        u: Optional[SpatialTensor["B C H ..."]] = None,
     ) -> torch.Tensor:
         if self.external_force is not None:  # u_fft is original version
             force = self.external_force(

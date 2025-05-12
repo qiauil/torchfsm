@@ -2,6 +2,7 @@ from torch import Tensor
 from ...mesh import FourierMesh
 from .._base import LinearCoef, NonlinearOperator, CoreGenerator, NonlinearFunc
 from ..._type import FourierTensor, SpatialTensor
+from typing import Optional
 
 
 class _ConservativeConvectionCore(NonlinearFunc):
@@ -17,7 +18,7 @@ class _ConservativeConvectionCore(NonlinearFunc):
         self,
         u_fft: FourierTensor["B C H ..."],
         f_mesh: FourierMesh,
-        u: SpatialTensor["B C H ..."] | None,
+        u: Optional[SpatialTensor["B C H ..."]] = None,
     ) -> FourierTensor["B C H ..."]:
         if u is None:
             u = f_mesh.ifft(u_fft).real
