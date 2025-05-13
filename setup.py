@@ -15,7 +15,7 @@ def get_install_requires():
 
 setuptools.setup(
     name="torchfsm",
-    version="0.0.1",
+    version="0.0.2",
     author="Qiang Liu, Felix Koehler, Nils Thuerey",
     author_email="qiangliu.7@outlook.com",
     description="Fourier Spectral Method with PyTorch",
