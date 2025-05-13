@@ -2,110 +2,114 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://qiauil.github.io/torchfsm/</loc>
-         <lastmod>2025-05-07</lastmod>
+         <lastmod>2025-05-13</lastmod>
     </url>
     <url>
          <loc>https://qiauil.github.io/torchfsm/theory/</loc>
-         <lastmod>2025-05-07</lastmod>
+         <lastmod>2025-05-13</lastmod>
     </url>
     <url>
          <loc>https://qiauil.github.io/torchfsm/apis/field/</loc>
-         <lastmod>2025-05-07</lastmod>
+         <lastmod>2025-05-13</lastmod>
     </url>
     <url>
          <loc>https://qiauil.github.io/torchfsm/apis/functional/</loc>
-         <lastmod>2025-05-07</lastmod>
+         <lastmod>2025-05-13</lastmod>
     </url>
     <url>
          <loc>https://qiauil.github.io/torchfsm/apis/integrator/</loc>
-         <lastmod>2025-05-07</lastmod>
+         <lastmod>2025-05-13</lastmod>
     </url>
     <url>
          <loc>https://qiauil.github.io/torchfsm/apis/mesh/</loc>
-         <lastmod>2025-05-07</lastmod>
+         <lastmod>2025-05-13</lastmod>
     </url>
     <url>
          <loc>https://qiauil.github.io/torchfsm/apis/operator/</loc>
-         <lastmod>2025-05-07</lastmod>
+         <lastmod>2025-05-13</lastmod>
     </url>
     <url>
          <loc>https://qiauil.github.io/torchfsm/apis/operator_base/</loc>
-         <lastmod>2025-05-07</lastmod>
+         <lastmod>2025-05-13</lastmod>
     </url>
     <url>
          <loc>https://qiauil.github.io/torchfsm/apis/operator_core/</loc>
-         <lastmod>2025-05-07</lastmod>
+         <lastmod>2025-05-13</lastmod>
     </url>
     <url>
          <loc>https://qiauil.github.io/torchfsm/apis/operator_generator/</loc>
-         <lastmod>2025-05-07</lastmod>
+         <lastmod>2025-05-13</lastmod>
     </url>
     <url>
          <loc>https://qiauil.github.io/torchfsm/apis/pde/</loc>
-         <lastmod>2025-05-07</lastmod>
+         <lastmod>2025-05-13</lastmod>
     </url>
     <url>
          <loc>https://qiauil.github.io/torchfsm/apis/plot/</loc>
-         <lastmod>2025-05-07</lastmod>
+         <lastmod>2025-05-13</lastmod>
     </url>
     <url>
          <loc>https://qiauil.github.io/torchfsm/apis/traj_recorder/</loc>
-         <lastmod>2025-05-07</lastmod>
+         <lastmod>2025-05-13</lastmod>
     </url>
     <url>
          <loc>https://qiauil.github.io/torchfsm/apis/utils/</loc>
-         <lastmod>2025-05-07</lastmod>
+         <lastmod>2025-05-13</lastmod>
     </url>
     <url>
          <loc>https://qiauil.github.io/torchfsm/assets/scripts/showcase/</loc>
-         <lastmod>2025-05-07</lastmod>
+         <lastmod>2025-05-13</lastmod>
     </url>
     <url>
          <loc>https://qiauil.github.io/torchfsm/tutorials/call_operator/</loc>
-         <lastmod>2025-05-07</lastmod>
+         <lastmod>2025-05-13</lastmod>
     </url>
     <url>
          <loc>https://qiauil.github.io/torchfsm/tutorials/cheatsheet/</loc>
-         <lastmod>2025-05-07</lastmod>
+         <lastmod>2025-05-13</lastmod>
     </url>
     <url>
          <loc>https://qiauil.github.io/torchfsm/tutorials/concepts/</loc>
-         <lastmod>2025-05-07</lastmod>
+         <lastmod>2025-05-13</lastmod>
     </url>
     <url>
          <loc>https://qiauil.github.io/torchfsm/tutorials/derivative_example/</loc>
-         <lastmod>2025-05-07</lastmod>
+         <lastmod>2025-05-13</lastmod>
     </url>
     <url>
          <loc>https://qiauil.github.io/torchfsm/tutorials/introduction/</loc>
-         <lastmod>2025-05-07</lastmod>
+         <lastmod>2025-05-13</lastmod>
     </url>
     <url>
          <loc>https://qiauil.github.io/torchfsm/tutorials/solve_de/</loc>
-         <lastmod>2025-05-07</lastmod>
+         <lastmod>2025-05-13</lastmod>
     </url>
     <url>
          <loc>https://qiauil.github.io/torchfsm/tutorials/pdes/burgers/</loc>
-         <lastmod>2025-05-07</lastmod>
+         <lastmod>2025-05-13</lastmod>
     </url>
     <url>
          <loc>https://qiauil.github.io/torchfsm/tutorials/pdes/burgers_example/</loc>
-         <lastmod>2025-05-07</lastmod>
+         <lastmod>2025-05-13</lastmod>
     </url>
     <url>
          <loc>https://qiauil.github.io/torchfsm/tutorials/pdes/korteweg_de_vries/</loc>
-         <lastmod>2025-05-07</lastmod>
+         <lastmod>2025-05-13</lastmod>
     </url>
     <url>
          <loc>https://qiauil.github.io/torchfsm/tutorials/pdes/kuramoto_sivashinsky/</loc>
-         <lastmod>2025-05-07</lastmod>
+         <lastmod>2025-05-13</lastmod>
     </url>
     <url>
          <loc>https://qiauil.github.io/torchfsm/tutorials/pdes/ns_velocity/</loc>
-         <lastmod>2025-05-07</lastmod>
+         <lastmod>2025-05-13</lastmod>
+    </url>
+    <url>
+         <loc>https://qiauil.github.io/torchfsm/tutorials/pdes/ns_velocity_example/</loc>
+         <lastmod>2025-05-13</lastmod>
     </url>
     <url>
          <loc>https://qiauil.github.io/torchfsm/tutorials/pdes/ns_vorticity/</loc>
-         <lastmod>2025-05-07</lastmod>
+         <lastmod>2025-05-13</lastmod>
     </url>
 </urlset>

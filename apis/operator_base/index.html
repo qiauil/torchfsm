@@ -1618,7 +1618,7 @@
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">u_fft</span><span class="p">:</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">],</span>
         <span class="n">f_mesh</span><span class="p">:</span> <span class="n">FourierMesh</span><span class="p">,</span>
-        <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]],</span>
+        <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]:</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calculate the result out based on the linear coefficient. It is designed to have same pattern as the nonlinear function.</span>
@@ -1789,7 +1789,7 @@
 <div class="doc-signature highlight"><pre><span></span><code><span class="nf">nonlinear_like</span><span class="p">(</span>
     <span class="n">u_fft</span><span class="p">:</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">],</span>
     <span class="n">f_mesh</span><span class="p">:</span> <span class="n">FourierMesh</span><span class="p">,</span>
-    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]],</span>
+    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]</span>
 </code></pre></div>
 
@@ -1854,7 +1854,7 @@
               </div>
             </td>
             <td>
-                <em>required</em>
+                  <code>None</code>
             </td>
           </tr>
       </tbody>
@@ -1907,7 +1907,7 @@
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">u_fft</span><span class="p">:</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">],</span>
     <span class="n">f_mesh</span><span class="p">:</span> <span class="n">FourierMesh</span><span class="p">,</span>
-    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]],</span>
+    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]:</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Calculate the result out based on the linear coefficient. It is designed to have same pattern as the nonlinear function.</span>
@@ -2066,7 +2066,7 @@ If False, the original u_fft will be used.</p>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">u_fft</span><span class="p">:</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">],</span>
         <span class="n">f_mesh</span><span class="p">:</span> <span class="n">FourierMesh</span><span class="p">,</span>
-        <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]],</span>
+        <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]:</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Abstract method to be implemented by subclasses. It should define the nonlinear function.</span>
@@ -2085,7 +2085,7 @@ If False, the original u_fft will be used.</p>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">u_fft</span><span class="p">:</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">],</span>
         <span class="n">f_mesh</span><span class="p">:</span> <span class="n">FourierMesh</span><span class="p">,</span>
-        <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]],</span>
+        <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]:</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the result of the nonlinear function in spatial domain.</span>
@@ -2155,7 +2155,7 @@ If False, the original u_fft will be used.</p>
 <div class="doc-signature highlight"><pre><span></span><code><span class="fm">__call__</span><span class="p">(</span>
     <span class="nf">u_fft</span><span class="p">:</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">],</span>
     <span class="n">f_mesh</span><span class="p">:</span> <span class="n">FourierMesh</span><span class="p">,</span>
-    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]],</span>
+    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]</span>
 </code></pre></div>
 
@@ -2220,7 +2220,7 @@ If False, the original u_fft will be used.</p>
               </div>
             </td>
             <td>
-                <em>required</em>
+                  <code>None</code>
             </td>
           </tr>
       </tbody>
@@ -2275,7 +2275,7 @@ If False, the original u_fft will be used.</p>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">u_fft</span><span class="p">:</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">],</span>
     <span class="n">f_mesh</span><span class="p">:</span> <span class="n">FourierMesh</span><span class="p">,</span>
-    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]],</span>
+    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]:</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Abstract method to be implemented by subclasses. It should define the nonlinear function.</span>
@@ -2306,7 +2306,7 @@ If False, the original u_fft will be used.</p>
 <div class="doc-signature highlight"><pre><span></span><code><span class="nf">spatial_value</span><span class="p">(</span>
     <span class="n">u_fft</span><span class="p">:</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">],</span>
     <span class="n">f_mesh</span><span class="p">:</span> <span class="n">FourierMesh</span><span class="p">,</span>
-    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]],</span>
+    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]</span>
 </code></pre></div>
 
@@ -2371,7 +2371,7 @@ If False, the original u_fft will be used.</p>
               </div>
             </td>
             <td>
-                <em>required</em>
+                  <code>None</code>
             </td>
           </tr>
       </tbody>
@@ -2425,7 +2425,7 @@ If False, the original u_fft will be used.</p>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">u_fft</span><span class="p">:</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">],</span>
     <span class="n">f_mesh</span><span class="p">:</span> <span class="n">FourierMesh</span><span class="p">,</span>
-    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]],</span>
+    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]:</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Return the result of the nonlinear function in spatial domain.</span>

@@ -1551,8 +1551,7 @@
 
               <details class="quote">
                 <summary>Source code in <code>torchfsm/operator/generic/_conservative_convection.py</code></summary>
-                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">29</span>
-<span class="normal">30</span>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">30</span>
 <span class="normal">31</span>
 <span class="normal">32</span>
 <span class="normal">33</span>
@@ -1564,7 +1563,8 @@
 <span class="normal">39</span>
 <span class="normal">40</span>
 <span class="normal">41</span>
-<span class="normal">42</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">_ConservativeConvectionGenerator</span><span class="p">(</span><span class="n">CoreGenerator</span><span class="p">):</span>
+<span class="normal">42</span>
+<span class="normal">43</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">_ConservativeConvectionGenerator</span><span class="p">(</span><span class="n">CoreGenerator</span><span class="p">):</span>
 
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Generator of the Conservative Convection operator. It ensures that the operator is only applied to vector fields with the same dimension as the mesh.</span>
@@ -1611,14 +1611,14 @@
 
             <details class="quote">
               <summary>Source code in <code>torchfsm/operator/generic/_conservative_convection.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">35</span>
-<span class="normal">36</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">36</span>
 <span class="normal">37</span>
 <span class="normal">38</span>
 <span class="normal">39</span>
 <span class="normal">40</span>
 <span class="normal">41</span>
-<span class="normal">42</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span>
+<span class="normal">42</span>
+<span class="normal">43</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span> <span class="n">f_mesh</span><span class="p">:</span> <span class="n">FourierMesh</span><span class="p">,</span> <span class="n">n_channel</span><span class="p">:</span> <span class="nb">int</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">LinearCoef</span> <span class="o">|</span> <span class="n">NonlinearFunc</span><span class="p">:</span>
     <span class="k">if</span> <span class="n">f_mesh</span><span class="o">.</span><span class="n">n_dim</span> <span class="o">!=</span> <span class="n">n_channel</span><span class="p">:</span>
@@ -1667,8 +1667,7 @@
 
               <details class="quote">
                 <summary>Source code in <code>torchfsm/operator/generic/_convection.py</code></summary>
-                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">50</span>
-<span class="normal">51</span>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">51</span>
 <span class="normal">52</span>
 <span class="normal">53</span>
 <span class="normal">54</span>
@@ -1680,7 +1679,8 @@
 <span class="normal">60</span>
 <span class="normal">61</span>
 <span class="normal">62</span>
-<span class="normal">63</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">_ConvectionGenerator</span><span class="p">(</span><span class="n">CoreGenerator</span><span class="p">):</span>
+<span class="normal">63</span>
+<span class="normal">64</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">_ConvectionGenerator</span><span class="p">(</span><span class="n">CoreGenerator</span><span class="p">):</span>
 
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Generator of the Convection operator. It ensures that the operator is only applied to vector fields with the same dimension as the mesh.</span>
@@ -1727,14 +1727,14 @@
 
             <details class="quote">
               <summary>Source code in <code>torchfsm/operator/generic/_convection.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">56</span>
-<span class="normal">57</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">57</span>
 <span class="normal">58</span>
 <span class="normal">59</span>
 <span class="normal">60</span>
 <span class="normal">61</span>
 <span class="normal">62</span>
-<span class="normal">63</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span>
+<span class="normal">63</span>
+<span class="normal">64</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span> <span class="n">f_mesh</span><span class="p">:</span> <span class="n">FourierMesh</span><span class="p">,</span> <span class="n">n_channel</span><span class="p">:</span> <span class="nb">int</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">LinearCoef</span> <span class="o">|</span> <span class="n">NonlinearFunc</span><span class="p">:</span>
     <span class="k">if</span> <span class="n">f_mesh</span><span class="o">.</span><span class="n">n_dim</span> <span class="o">!=</span> <span class="n">n_channel</span><span class="p">:</span>
@@ -1784,8 +1784,7 @@
 
               <details class="quote">
                 <summary>Source code in <code>torchfsm/operator/generic/_curl.py</code></summary>
-                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">57</span>
-<span class="normal">58</span>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">58</span>
 <span class="normal">59</span>
 <span class="normal">60</span>
 <span class="normal">61</span>
@@ -1802,7 +1801,8 @@
 <span class="normal">72</span>
 <span class="normal">73</span>
 <span class="normal">74</span>
-<span class="normal">75</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">_CurlGenerator</span><span class="p">(</span><span class="n">CoreGenerator</span><span class="p">):</span>
+<span class="normal">75</span>
+<span class="normal">76</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">_CurlGenerator</span><span class="p">(</span><span class="n">CoreGenerator</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Generator of the Curl operator. </span>
 <span class="sd">        It ensure that curl only works for 2D or 3D vector field with the same dimension as the mesh.</span>
@@ -1854,8 +1854,7 @@
 
             <details class="quote">
               <summary>Source code in <code>torchfsm/operator/generic/_curl.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">63</span>
-<span class="normal">64</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">64</span>
 <span class="normal">65</span>
 <span class="normal">66</span>
 <span class="normal">67</span>
@@ -1866,7 +1865,8 @@
 <span class="normal">72</span>
 <span class="normal">73</span>
 <span class="normal">74</span>
-<span class="normal">75</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span>
+<span class="normal">75</span>
+<span class="normal">76</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span> <span class="n">f_mesh</span><span class="p">:</span> <span class="n">FourierMesh</span><span class="p">,</span> <span class="n">n_channel</span><span class="p">:</span> <span class="nb">int</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">LinearCoef</span> <span class="o">|</span> <span class="n">NonlinearFunc</span><span class="p">:</span>
     <span class="k">if</span> <span class="n">f_mesh</span><span class="o">.</span><span class="n">n_dim</span> <span class="o">!=</span> <span class="n">n_channel</span><span class="p">:</span>
@@ -1921,8 +1921,7 @@
 
               <details class="quote">
                 <summary>Source code in <code>torchfsm/operator/generic/_div.py</code></summary>
-                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">25</span>
-<span class="normal">26</span>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">26</span>
 <span class="normal">27</span>
 <span class="normal">28</span>
 <span class="normal">29</span>
@@ -1935,7 +1934,8 @@
 <span class="normal">36</span>
 <span class="normal">37</span>
 <span class="normal">38</span>
-<span class="normal">39</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">_DivGenerator</span><span class="p">(</span><span class="n">CoreGenerator</span><span class="p">):</span>
+<span class="normal">39</span>
+<span class="normal">40</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">_DivGenerator</span><span class="p">(</span><span class="n">CoreGenerator</span><span class="p">):</span>
 
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Generator of the Divergence operator.</span>
@@ -1983,14 +1983,14 @@
 
             <details class="quote">
               <summary>Source code in <code>torchfsm/operator/generic/_div.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">32</span>
-<span class="normal">33</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">33</span>
 <span class="normal">34</span>
 <span class="normal">35</span>
 <span class="normal">36</span>
 <span class="normal">37</span>
 <span class="normal">38</span>
-<span class="normal">39</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span>
+<span class="normal">39</span>
+<span class="normal">40</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span> <span class="n">f_mesh</span><span class="p">:</span> <span class="n">FourierMesh</span><span class="p">,</span> <span class="n">n_channel</span><span class="p">:</span> <span class="nb">int</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">LinearCoef</span> <span class="o">|</span> <span class="n">NonlinearFunc</span><span class="p">:</span>
     <span class="k">if</span> <span class="n">f_mesh</span><span class="o">.</span><span class="n">n_dim</span> <span class="o">!=</span> <span class="n">n_channel</span><span class="p">:</span>

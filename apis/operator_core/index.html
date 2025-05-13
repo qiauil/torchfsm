@@ -1699,7 +1699,7 @@
 <div class="doc-signature highlight"><pre><span></span><code><span class="nf">nonlinear_like</span><span class="p">(</span>
     <span class="n">u_fft</span><span class="p">:</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">],</span>
     <span class="n">f_mesh</span><span class="p">:</span> <span class="n">FourierMesh</span><span class="p">,</span>
-    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]],</span>
+    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]</span>
 </code></pre></div>
 
@@ -1764,7 +1764,7 @@
               </div>
             </td>
             <td>
-                <em>required</em>
+                  <code>None</code>
             </td>
           </tr>
       </tbody>
@@ -1817,7 +1817,7 @@
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">u_fft</span><span class="p">:</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">],</span>
     <span class="n">f_mesh</span><span class="p">:</span> <span class="n">FourierMesh</span><span class="p">,</span>
-    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]],</span>
+    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]:</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Calculate the result out based on the linear coefficient. It is designed to have same pattern as the nonlinear function.</span>
@@ -1872,8 +1872,7 @@
 
               <details class="quote">
                 <summary>Source code in <code>torchfsm/operator/generic/_conservative_convection.py</code></summary>
-                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 7</span>
-<span class="normal"> 8</span>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 8</span>
 <span class="normal"> 9</span>
 <span class="normal">10</span>
 <span class="normal">11</span>
@@ -1891,7 +1890,8 @@
 <span class="normal">23</span>
 <span class="normal">24</span>
 <span class="normal">25</span>
-<span class="normal">26</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">_ConservativeConvectionCore</span><span class="p">(</span><span class="n">NonlinearFunc</span><span class="p">):</span>
+<span class="normal">26</span>
+<span class="normal">27</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">_ConservativeConvectionCore</span><span class="p">(</span><span class="n">NonlinearFunc</span><span class="p">):</span>
 
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Implementation of the Conservative Convection operator.</span>
@@ -1904,7 +1904,7 @@
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">u_fft</span><span class="p">:</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">],</span>
         <span class="n">f_mesh</span><span class="p">:</span> <span class="n">FourierMesh</span><span class="p">,</span>
-        <span class="n">u</span><span class="p">:</span> <span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]:</span>
         <span class="k">if</span> <span class="n">u</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">u</span> <span class="o">=</span> <span class="n">f_mesh</span><span class="o">.</span><span class="n">ifft</span><span class="p">(</span><span class="n">u_fft</span><span class="p">)</span><span class="o">.</span><span class="n">real</span>
@@ -1942,8 +1942,8 @@
 
             <details class="quote">
               <summary>Source code in <code>torchfsm/operator/generic/_conservative_convection.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">13</span>
-<span class="normal">14</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">14</span>
+<span class="normal">15</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
 </code></pre></div></td></tr></table></div>
             </details>
@@ -1962,7 +1962,7 @@
 <div class="doc-signature highlight"><pre><span></span><code><span class="fm">__call__</span><span class="p">(</span>
     <span class="nf">u_fft</span><span class="p">:</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">],</span>
     <span class="n">f_mesh</span><span class="p">:</span> <span class="n">FourierMesh</span><span class="p">,</span>
-    <span class="n">u</span><span class="p">:</span> <span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]</span>
 </code></pre></div>
 
@@ -1971,8 +1971,7 @@
 
             <details class="quote">
               <summary>Source code in <code>torchfsm/operator/generic/_conservative_convection.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">16</span>
-<span class="normal">17</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">17</span>
 <span class="normal">18</span>
 <span class="normal">19</span>
 <span class="normal">20</span>
@@ -1981,11 +1980,12 @@
 <span class="normal">23</span>
 <span class="normal">24</span>
 <span class="normal">25</span>
-<span class="normal">26</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span>
+<span class="normal">26</span>
+<span class="normal">27</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">u_fft</span><span class="p">:</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">],</span>
     <span class="n">f_mesh</span><span class="p">:</span> <span class="n">FourierMesh</span><span class="p">,</span>
-    <span class="n">u</span><span class="p">:</span> <span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]:</span>
     <span class="k">if</span> <span class="n">u</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">u</span> <span class="o">=</span> <span class="n">f_mesh</span><span class="o">.</span><span class="n">ifft</span><span class="p">(</span><span class="n">u_fft</span><span class="p">)</span><span class="o">.</span><span class="n">real</span>
@@ -2009,7 +2009,7 @@
 <div class="doc-signature highlight"><pre><span></span><code><span class="nf">spatial_value</span><span class="p">(</span>
     <span class="n">u_fft</span><span class="p">:</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">],</span>
     <span class="n">f_mesh</span><span class="p">:</span> <span class="n">FourierMesh</span><span class="p">,</span>
-    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]],</span>
+    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]</span>
 </code></pre></div>
 
@@ -2074,7 +2074,7 @@
               </div>
             </td>
             <td>
-                <em>required</em>
+                  <code>None</code>
             </td>
           </tr>
       </tbody>
@@ -2128,7 +2128,7 @@
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">u_fft</span><span class="p">:</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">],</span>
     <span class="n">f_mesh</span><span class="p">:</span> <span class="n">FourierMesh</span><span class="p">,</span>
-    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]],</span>
+    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]:</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Return the result of the nonlinear function in spatial domain.</span>
@@ -2184,8 +2184,7 @@
 
               <details class="quote">
                 <summary>Source code in <code>torchfsm/operator/generic/_convection.py</code></summary>
-                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 8</span>
-<span class="normal"> 9</span>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 9</span>
 <span class="normal">10</span>
 <span class="normal">11</span>
 <span class="normal">12</span>
@@ -2221,7 +2220,8 @@
 <span class="normal">42</span>
 <span class="normal">43</span>
 <span class="normal">44</span>
-<span class="normal">45</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">_ConvectionCore</span><span class="p">(</span><span class="n">NonlinearFunc</span><span class="p">):</span>
+<span class="normal">45</span>
+<span class="normal">46</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">_ConvectionCore</span><span class="p">(</span><span class="n">NonlinearFunc</span><span class="p">):</span>
 
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Implementation of the Convection operator.</span>
@@ -2234,7 +2234,7 @@
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">u_fft</span><span class="p">:</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">],</span>
         <span class="n">f_mesh</span><span class="p">:</span> <span class="n">FourierMesh</span><span class="p">,</span>
-        <span class="n">u</span><span class="p">:</span> <span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]:</span>
         <span class="k">return</span> <span class="n">f_mesh</span><span class="o">.</span><span class="n">fft</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">spatial_value</span><span class="p">(</span><span class="n">u_fft</span><span class="p">,</span> <span class="n">f_mesh</span><span class="p">,</span> <span class="n">u</span><span class="p">))</span>
 
@@ -2290,8 +2290,8 @@
 
             <details class="quote">
               <summary>Source code in <code>torchfsm/operator/generic/_convection.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">14</span>
-<span class="normal">15</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">15</span>
+<span class="normal">16</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
 </code></pre></div></td></tr></table></div>
             </details>
@@ -2310,7 +2310,7 @@
 <div class="doc-signature highlight"><pre><span></span><code><span class="fm">__call__</span><span class="p">(</span>
     <span class="nf">u_fft</span><span class="p">:</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">],</span>
     <span class="n">f_mesh</span><span class="p">:</span> <span class="n">FourierMesh</span><span class="p">,</span>
-    <span class="n">u</span><span class="p">:</span> <span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]</span>
 </code></pre></div>
 
@@ -2319,17 +2319,17 @@
 
             <details class="quote">
               <summary>Source code in <code>torchfsm/operator/generic/_convection.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">17</span>
-<span class="normal">18</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">18</span>
 <span class="normal">19</span>
 <span class="normal">20</span>
 <span class="normal">21</span>
 <span class="normal">22</span>
-<span class="normal">23</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span>
+<span class="normal">23</span>
+<span class="normal">24</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">u_fft</span><span class="p">:</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">],</span>
     <span class="n">f_mesh</span><span class="p">:</span> <span class="n">FourierMesh</span><span class="p">,</span>
-    <span class="n">u</span><span class="p">:</span> <span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]:</span>
     <span class="k">return</span> <span class="n">f_mesh</span><span class="o">.</span><span class="n">fft</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">spatial_value</span><span class="p">(</span><span class="n">u_fft</span><span class="p">,</span> <span class="n">f_mesh</span><span class="p">,</span> <span class="n">u</span><span class="p">))</span>
 </code></pre></div></td></tr></table></div>
@@ -2406,7 +2406,7 @@
                 <code>u</code>
             </td>
             <td>
-                  <code><span title="Optional">Optional</span>[<span title="torchfsm._type.SpatialTensor">SpatialTensor</span>]</code>
+                  <code><span title="typing.Optional">Optional</span>[<span title="torchfsm._type.SpatialTensor">SpatialTensor</span>]</code>
             </td>
             <td>
               <div class="doc-md-description">
@@ -2446,8 +2446,7 @@
 
             <details class="quote">
               <summary>Source code in <code>torchfsm/operator/generic/_convection.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">25</span>
-<span class="normal">26</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">26</span>
 <span class="normal">27</span>
 <span class="normal">28</span>
 <span class="normal">29</span>
@@ -2466,7 +2465,8 @@
 <span class="normal">42</span>
 <span class="normal">43</span>
 <span class="normal">44</span>
-<span class="normal">45</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">spatial_value</span><span class="p">(</span>
+<span class="normal">45</span>
+<span class="normal">46</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">spatial_value</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">u_fft</span><span class="p">:</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">],</span>
     <span class="n">f_mesh</span><span class="p">:</span> <span class="n">FourierMesh</span><span class="p">,</span>
@@ -2528,8 +2528,7 @@
 
               <details class="quote">
                 <summary>Source code in <code>torchfsm/operator/generic/_curl.py</code></summary>
-                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 8</span>
-<span class="normal"> 9</span>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 9</span>
 <span class="normal">10</span>
 <span class="normal">11</span>
 <span class="normal">12</span>
@@ -2546,7 +2545,8 @@
 <span class="normal">23</span>
 <span class="normal">24</span>
 <span class="normal">25</span>
-<span class="normal">26</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">_Curl2DCore</span><span class="p">(</span><span class="n">NonlinearFunc</span><span class="p">):</span>
+<span class="normal">26</span>
+<span class="normal">27</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">_Curl2DCore</span><span class="p">(</span><span class="n">NonlinearFunc</span><span class="p">):</span>
 
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Implementation of the Curl operator for 2D vector fields.</span>
@@ -2559,7 +2559,7 @@
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">u_fft</span><span class="p">:</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">],</span>
         <span class="n">f_mesh</span><span class="p">:</span> <span class="n">FourierMesh</span><span class="p">,</span>
-        <span class="n">u</span><span class="p">:</span> <span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]:</span>
         <span class="k">return</span> <span class="p">(</span>
             <span class="n">f_mesh</span><span class="o">.</span><span class="n">grad</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">u_fft</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
@@ -2596,8 +2596,8 @@
 
             <details class="quote">
               <summary>Source code in <code>torchfsm/operator/generic/_curl.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">14</span>
-<span class="normal">15</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">15</span>
+<span class="normal">16</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
             </details>
@@ -2616,7 +2616,7 @@
 <div class="doc-signature highlight"><pre><span></span><code><span class="fm">__call__</span><span class="p">(</span>
     <span class="nf">u_fft</span><span class="p">:</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">],</span>
     <span class="n">f_mesh</span><span class="p">:</span> <span class="n">FourierMesh</span><span class="p">,</span>
-    <span class="n">u</span><span class="p">:</span> <span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]</span>
 </code></pre></div>
 
@@ -2625,8 +2625,7 @@
 
             <details class="quote">
               <summary>Source code in <code>torchfsm/operator/generic/_curl.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">17</span>
-<span class="normal">18</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">18</span>
 <span class="normal">19</span>
 <span class="normal">20</span>
 <span class="normal">21</span>
@@ -2634,11 +2633,12 @@
 <span class="normal">23</span>
 <span class="normal">24</span>
 <span class="normal">25</span>
-<span class="normal">26</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span>
+<span class="normal">26</span>
+<span class="normal">27</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">u_fft</span><span class="p">:</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">],</span>
     <span class="n">f_mesh</span><span class="p">:</span> <span class="n">FourierMesh</span><span class="p">,</span>
-    <span class="n">u</span><span class="p">:</span> <span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]:</span>
     <span class="k">return</span> <span class="p">(</span>
         <span class="n">f_mesh</span><span class="o">.</span><span class="n">grad</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">u_fft</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
@@ -2661,7 +2661,7 @@
 <div class="doc-signature highlight"><pre><span></span><code><span class="nf">spatial_value</span><span class="p">(</span>
     <span class="n">u_fft</span><span class="p">:</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">],</span>
     <span class="n">f_mesh</span><span class="p">:</span> <span class="n">FourierMesh</span><span class="p">,</span>
-    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]],</span>
+    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]</span>
 </code></pre></div>
 
@@ -2726,7 +2726,7 @@
               </div>
             </td>
             <td>
-                <em>required</em>
+                  <code>None</code>
             </td>
           </tr>
       </tbody>
@@ -2780,7 +2780,7 @@
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">u_fft</span><span class="p">:</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">],</span>
     <span class="n">f_mesh</span><span class="p">:</span> <span class="n">FourierMesh</span><span class="p">,</span>
-    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]],</span>
+    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]:</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Return the result of the nonlinear function in spatial domain.</span>
@@ -2836,8 +2836,7 @@
 
               <details class="quote">
                 <summary>Source code in <code>torchfsm/operator/generic/_curl.py</code></summary>
-                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">29</span>
-<span class="normal">30</span>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">30</span>
 <span class="normal">31</span>
 <span class="normal">32</span>
 <span class="normal">33</span>
@@ -2861,7 +2860,8 @@
 <span class="normal">51</span>
 <span class="normal">52</span>
 <span class="normal">53</span>
-<span class="normal">54</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">_Curl3DCore</span><span class="p">(</span><span class="n">NonlinearFunc</span><span class="p">):</span>
+<span class="normal">54</span>
+<span class="normal">55</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">_Curl3DCore</span><span class="p">(</span><span class="n">NonlinearFunc</span><span class="p">):</span>
 
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Implementation of the Curl operator for 3D vector fields.</span>
@@ -2874,7 +2874,7 @@
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">u_fft</span><span class="p">:</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">],</span>
         <span class="n">f_mesh</span><span class="p">:</span> <span class="n">FourierMesh</span><span class="p">,</span>
-        <span class="n">u</span><span class="p">:</span> <span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]:</span>
         <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">(</span>
             <span class="p">[</span>
@@ -2918,8 +2918,8 @@
 
             <details class="quote">
               <summary>Source code in <code>torchfsm/operator/generic/_curl.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">35</span>
-<span class="normal">36</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">36</span>
+<span class="normal">37</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
             </details>
@@ -2938,7 +2938,7 @@
 <div class="doc-signature highlight"><pre><span></span><code><span class="fm">__call__</span><span class="p">(</span>
     <span class="nf">u_fft</span><span class="p">:</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">],</span>
     <span class="n">f_mesh</span><span class="p">:</span> <span class="n">FourierMesh</span><span class="p">,</span>
-    <span class="n">u</span><span class="p">:</span> <span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]</span>
 </code></pre></div>
 
@@ -2947,8 +2947,7 @@
 
             <details class="quote">
               <summary>Source code in <code>torchfsm/operator/generic/_curl.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">38</span>
-<span class="normal">39</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">39</span>
 <span class="normal">40</span>
 <span class="normal">41</span>
 <span class="normal">42</span>
@@ -2963,11 +2962,12 @@
 <span class="normal">51</span>
 <span class="normal">52</span>
 <span class="normal">53</span>
-<span class="normal">54</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span>
+<span class="normal">54</span>
+<span class="normal">55</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">u_fft</span><span class="p">:</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">],</span>
     <span class="n">f_mesh</span><span class="p">:</span> <span class="n">FourierMesh</span><span class="p">,</span>
-    <span class="n">u</span><span class="p">:</span> <span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]:</span>
     <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">(</span>
         <span class="p">[</span>
@@ -2997,7 +2997,7 @@
 <div class="doc-signature highlight"><pre><span></span><code><span class="nf">spatial_value</span><span class="p">(</span>
     <span class="n">u_fft</span><span class="p">:</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">],</span>
     <span class="n">f_mesh</span><span class="p">:</span> <span class="n">FourierMesh</span><span class="p">,</span>
-    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]],</span>
+    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]</span>
 </code></pre></div>
 
@@ -3062,7 +3062,7 @@
               </div>
             </td>
             <td>
-                <em>required</em>
+                  <code>None</code>
             </td>
           </tr>
       </tbody>
@@ -3116,7 +3116,7 @@
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">u_fft</span><span class="p">:</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">],</span>
     <span class="n">f_mesh</span><span class="p">:</span> <span class="n">FourierMesh</span><span class="p">,</span>
-    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]],</span>
+    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]:</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Return the result of the nonlinear function in spatial domain.</span>
@@ -3172,8 +3172,7 @@
 
               <details class="quote">
                 <summary>Source code in <code>torchfsm/operator/generic/_div.py</code></summary>
-                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 8</span>
-<span class="normal"> 9</span>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 9</span>
 <span class="normal">10</span>
 <span class="normal">11</span>
 <span class="normal">12</span>
@@ -3186,7 +3185,8 @@
 <span class="normal">19</span>
 <span class="normal">20</span>
 <span class="normal">21</span>
-<span class="normal">22</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">_DivCore</span><span class="p">(</span><span class="n">NonlinearFunc</span><span class="p">):</span>
+<span class="normal">22</span>
+<span class="normal">23</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">_DivCore</span><span class="p">(</span><span class="n">NonlinearFunc</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Implementation of the Divergence operator.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -3198,7 +3198,7 @@
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">u_fft</span><span class="p">:</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">],</span>
         <span class="n">f_mesh</span><span class="p">:</span> <span class="n">FourierMesh</span><span class="p">,</span>
-        <span class="n">u</span><span class="p">:</span> <span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]:</span>
         <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">f_mesh</span><span class="o">.</span><span class="n">nabla_vector</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">u_fft</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdim</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
@@ -3232,8 +3232,8 @@
 
             <details class="quote">
               <summary>Source code in <code>torchfsm/operator/generic/_div.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">13</span>
-<span class="normal">14</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">14</span>
+<span class="normal">15</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
             </details>
@@ -3252,7 +3252,7 @@
 <div class="doc-signature highlight"><pre><span></span><code><span class="fm">__call__</span><span class="p">(</span>
     <span class="nf">u_fft</span><span class="p">:</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">],</span>
     <span class="n">f_mesh</span><span class="p">:</span> <span class="n">FourierMesh</span><span class="p">,</span>
-    <span class="n">u</span><span class="p">:</span> <span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]</span>
 </code></pre></div>
 
@@ -3261,17 +3261,17 @@
 
             <details class="quote">
               <summary>Source code in <code>torchfsm/operator/generic/_div.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">16</span>
-<span class="normal">17</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">17</span>
 <span class="normal">18</span>
 <span class="normal">19</span>
 <span class="normal">20</span>
 <span class="normal">21</span>
-<span class="normal">22</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span>
+<span class="normal">22</span>
+<span class="normal">23</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">u_fft</span><span class="p">:</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">],</span>
     <span class="n">f_mesh</span><span class="p">:</span> <span class="n">FourierMesh</span><span class="p">,</span>
-    <span class="n">u</span><span class="p">:</span> <span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]:</span>
     <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">f_mesh</span><span class="o">.</span><span class="n">nabla_vector</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">u_fft</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdim</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
@@ -3291,7 +3291,7 @@
 <div class="doc-signature highlight"><pre><span></span><code><span class="nf">spatial_value</span><span class="p">(</span>
     <span class="n">u_fft</span><span class="p">:</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">],</span>
     <span class="n">f_mesh</span><span class="p">:</span> <span class="n">FourierMesh</span><span class="p">,</span>
-    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]],</span>
+    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]</span>
 </code></pre></div>
 
@@ -3356,7 +3356,7 @@
               </div>
             </td>
             <td>
-                <em>required</em>
+                  <code>None</code>
             </td>
           </tr>
       </tbody>
@@ -3410,7 +3410,7 @@
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">u_fft</span><span class="p">:</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">],</span>
     <span class="n">f_mesh</span><span class="p">:</span> <span class="n">FourierMesh</span><span class="p">,</span>
-    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]],</span>
+    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]:</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Return the result of the nonlinear function in spatial domain.</span>
@@ -3542,7 +3542,7 @@
 <div class="doc-signature highlight"><pre><span></span><code><span class="nf">nonlinear_like</span><span class="p">(</span>
     <span class="n">u_fft</span><span class="p">:</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">],</span>
     <span class="n">f_mesh</span><span class="p">:</span> <span class="n">FourierMesh</span><span class="p">,</span>
-    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]],</span>
+    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]</span>
 </code></pre></div>
 
@@ -3607,7 +3607,7 @@
               </div>
             </td>
             <td>
-                <em>required</em>
+                  <code>None</code>
             </td>
           </tr>
       </tbody>
@@ -3660,7 +3660,7 @@
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">u_fft</span><span class="p">:</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">],</span>
     <span class="n">f_mesh</span><span class="p">:</span> <span class="n">FourierMesh</span><span class="p">,</span>
-    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]],</span>
+    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]:</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Calculate the result out based on the linear coefficient. It is designed to have same pattern as the nonlinear function.</span>
@@ -3786,7 +3786,7 @@
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">u_fft</span><span class="p">:</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">],</span>
         <span class="n">f_mesh</span><span class="p">:</span> <span class="n">FourierMesh</span><span class="p">,</span>
-        <span class="n">u</span><span class="p">:</span> <span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]:</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="o">.</span><span class="n">device</span> <span class="o">!=</span> <span class="n">f_mesh</span><span class="o">.</span><span class="n">device</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">source</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">f_mesh</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
@@ -3868,7 +3868,7 @@
 <div class="doc-signature highlight"><pre><span></span><code><span class="fm">__call__</span><span class="p">(</span>
     <span class="nf">u_fft</span><span class="p">:</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">],</span>
     <span class="n">f_mesh</span><span class="p">:</span> <span class="n">FourierMesh</span><span class="p">,</span>
-    <span class="n">u</span><span class="p">:</span> <span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]</span>
 </code></pre></div>
 
@@ -3889,7 +3889,7 @@
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">u_fft</span><span class="p">:</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">],</span>
     <span class="n">f_mesh</span><span class="p">:</span> <span class="n">FourierMesh</span><span class="p">,</span>
-    <span class="n">u</span><span class="p">:</span> <span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]:</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="o">.</span><span class="n">device</span> <span class="o">!=</span> <span class="n">f_mesh</span><span class="o">.</span><span class="n">device</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">source</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">f_mesh</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
@@ -3911,7 +3911,7 @@
 <div class="doc-signature highlight"><pre><span></span><code><span class="nf">spatial_value</span><span class="p">(</span>
     <span class="n">u_fft</span><span class="p">:</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">],</span>
     <span class="n">f_mesh</span><span class="p">:</span> <span class="n">FourierMesh</span><span class="p">,</span>
-    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]],</span>
+    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]</span>
 </code></pre></div>
 
@@ -3976,7 +3976,7 @@
               </div>
             </td>
             <td>
-                <em>required</em>
+                  <code>None</code>
             </td>
           </tr>
       </tbody>
@@ -4030,7 +4030,7 @@
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">u_fft</span><span class="p">:</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">],</span>
     <span class="n">f_mesh</span><span class="p">:</span> <span class="n">FourierMesh</span><span class="p">,</span>
-    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]],</span>
+    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]:</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Return the result of the nonlinear function in spatial domain.</span>
@@ -4160,7 +4160,7 @@
 <div class="doc-signature highlight"><pre><span></span><code><span class="nf">nonlinear_like</span><span class="p">(</span>
     <span class="n">u_fft</span><span class="p">:</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">],</span>
     <span class="n">f_mesh</span><span class="p">:</span> <span class="n">FourierMesh</span><span class="p">,</span>
-    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]],</span>
+    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]</span>
 </code></pre></div>
 
@@ -4225,7 +4225,7 @@
               </div>
             </td>
             <td>
-                <em>required</em>
+                  <code>None</code>
             </td>
           </tr>
       </tbody>
@@ -4278,7 +4278,7 @@
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">u_fft</span><span class="p">:</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">],</span>
     <span class="n">f_mesh</span><span class="p">:</span> <span class="n">FourierMesh</span><span class="p">,</span>
-    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]],</span>
+    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]:</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Calculate the result out based on the linear coefficient. It is designed to have same pattern as the nonlinear function.</span>
@@ -4371,7 +4371,7 @@
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">u_fft</span><span class="p">:</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">],</span>
         <span class="n">f_mesh</span><span class="p">:</span> <span class="n">FourierMesh</span><span class="p">,</span>
-        <span class="n">u</span><span class="p">:</span> <span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]:</span>
         <span class="k">if</span> <span class="n">u</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">u</span> <span class="o">=</span> <span class="n">f_mesh</span><span class="o">.</span><span class="n">ifft</span><span class="p">(</span><span class="n">u_fft</span><span class="p">)</span><span class="o">.</span><span class="n">real</span>
@@ -4462,7 +4462,7 @@
 <div class="doc-signature highlight"><pre><span></span><code><span class="fm">__call__</span><span class="p">(</span>
     <span class="nf">u_fft</span><span class="p">:</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">],</span>
     <span class="n">f_mesh</span><span class="p">:</span> <span class="n">FourierMesh</span><span class="p">,</span>
-    <span class="n">u</span><span class="p">:</span> <span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]</span>
 </code></pre></div>
 
@@ -4483,7 +4483,7 @@
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">u_fft</span><span class="p">:</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">],</span>
     <span class="n">f_mesh</span><span class="p">:</span> <span class="n">FourierMesh</span><span class="p">,</span>
-    <span class="n">u</span><span class="p">:</span> <span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]:</span>
     <span class="k">if</span> <span class="n">u</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">u</span> <span class="o">=</span> <span class="n">f_mesh</span><span class="o">.</span><span class="n">ifft</span><span class="p">(</span><span class="n">u_fft</span><span class="p">)</span><span class="o">.</span><span class="n">real</span>
@@ -4505,7 +4505,7 @@
 <div class="doc-signature highlight"><pre><span></span><code><span class="nf">spatial_value</span><span class="p">(</span>
     <span class="n">u_fft</span><span class="p">:</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">],</span>
     <span class="n">f_mesh</span><span class="p">:</span> <span class="n">FourierMesh</span><span class="p">,</span>
-    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]],</span>
+    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]</span>
 </code></pre></div>
 
@@ -4570,7 +4570,7 @@
               </div>
             </td>
             <td>
-                <em>required</em>
+                  <code>None</code>
             </td>
           </tr>
       </tbody>
@@ -4624,7 +4624,7 @@
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">u_fft</span><span class="p">:</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">],</span>
     <span class="n">f_mesh</span><span class="p">:</span> <span class="n">FourierMesh</span><span class="p">,</span>
-    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]],</span>
+    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]:</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Return the result of the nonlinear function in spatial domain.</span>
@@ -4754,7 +4754,7 @@
 <div class="doc-signature highlight"><pre><span></span><code><span class="nf">nonlinear_like</span><span class="p">(</span>
     <span class="n">u_fft</span><span class="p">:</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">],</span>
     <span class="n">f_mesh</span><span class="p">:</span> <span class="n">FourierMesh</span><span class="p">,</span>
-    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]],</span>
+    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]</span>
 </code></pre></div>
 
@@ -4819,7 +4819,7 @@
               </div>
             </td>
             <td>
-                <em>required</em>
+                  <code>None</code>
             </td>
           </tr>
       </tbody>
@@ -4872,7 +4872,7 @@
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">u_fft</span><span class="p">:</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">],</span>
     <span class="n">f_mesh</span><span class="p">:</span> <span class="n">FourierMesh</span><span class="p">,</span>
-    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]],</span>
+    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]:</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Calculate the result out based on the linear coefficient. It is designed to have same pattern as the nonlinear function.</span>
@@ -5084,7 +5084,7 @@
 <div class="doc-signature highlight"><pre><span></span><code><span class="nf">nonlinear_like</span><span class="p">(</span>
     <span class="n">u_fft</span><span class="p">:</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">],</span>
     <span class="n">f_mesh</span><span class="p">:</span> <span class="n">FourierMesh</span><span class="p">,</span>
-    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]],</span>
+    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]</span>
 </code></pre></div>
 
@@ -5149,7 +5149,7 @@
               </div>
             </td>
             <td>
-                <em>required</em>
+                  <code>None</code>
             </td>
           </tr>
       </tbody>
@@ -5202,7 +5202,7 @@
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">u_fft</span><span class="p">:</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">],</span>
     <span class="n">f_mesh</span><span class="p">:</span> <span class="n">FourierMesh</span><span class="p">,</span>
-    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]],</span>
+    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]:</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Calculate the result out based on the linear coefficient. It is designed to have same pattern as the nonlinear function.</span>
@@ -5302,7 +5302,7 @@
         <span class="n">u_fft</span><span class="p">:</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">],</span>
         <span class="n">f_mesh</span><span class="p">:</span> <span class="n">FourierMesh</span><span class="p">,</span>
         <span class="n">n_channel</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
-        <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]],</span>
+        <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]:</span>
         <span class="k">return</span> <span class="n">f_mesh</span><span class="o">.</span><span class="n">fft</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">spatial_value</span><span class="p">(</span><span class="n">u_fft</span><span class="p">,</span> <span class="n">f_mesh</span><span class="p">,</span> <span class="n">u</span><span class="p">))</span>
 
@@ -5310,7 +5310,7 @@
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">u_fft</span><span class="p">:</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">],</span>
         <span class="n">f_mesh</span><span class="p">:</span> <span class="n">FourierMesh</span><span class="p">,</span>
-        <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]],</span>
+        <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]:</span>
         <span class="n">grad_u</span> <span class="o">=</span> <span class="n">f_mesh</span><span class="o">.</span><span class="n">ifft</span><span class="p">(</span><span class="n">f_mesh</span><span class="o">.</span><span class="n">nabla_vector</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">u_fft</span><span class="p">)</span><span class="o">.</span><span class="n">real</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">remove_mean</span><span class="p">:</span>
@@ -5394,7 +5394,7 @@
     <span class="nf">u_fft</span><span class="p">:</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">],</span>
     <span class="n">f_mesh</span><span class="p">:</span> <span class="n">FourierMesh</span><span class="p">,</span>
     <span class="n">n_channel</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
-    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]],</span>
+    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]</span>
 </code></pre></div>
 
@@ -5415,7 +5415,7 @@
     <span class="n">u_fft</span><span class="p">:</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">],</span>
     <span class="n">f_mesh</span><span class="p">:</span> <span class="n">FourierMesh</span><span class="p">,</span>
     <span class="n">n_channel</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
-    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]],</span>
+    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]:</span>
     <span class="k">return</span> <span class="n">f_mesh</span><span class="o">.</span><span class="n">fft</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">spatial_value</span><span class="p">(</span><span class="n">u_fft</span><span class="p">,</span> <span class="n">f_mesh</span><span class="p">,</span> <span class="n">u</span><span class="p">))</span>
 </code></pre></div></td></tr></table></div>
@@ -5435,7 +5435,7 @@
 <div class="doc-signature highlight"><pre><span></span><code><span class="nf">spatial_value</span><span class="p">(</span>
     <span class="n">u_fft</span><span class="p">:</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">],</span>
     <span class="n">f_mesh</span><span class="p">:</span> <span class="n">FourierMesh</span><span class="p">,</span>
-    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]],</span>
+    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]</span>
 </code></pre></div>
 
@@ -5459,7 +5459,7 @@
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">u_fft</span><span class="p">:</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">],</span>
     <span class="n">f_mesh</span><span class="p">:</span> <span class="n">FourierMesh</span><span class="p">,</span>
-    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]],</span>
+    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]:</span>
     <span class="n">grad_u</span> <span class="o">=</span> <span class="n">f_mesh</span><span class="o">.</span><span class="n">ifft</span><span class="p">(</span><span class="n">f_mesh</span><span class="o">.</span><span class="n">nabla_vector</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">u_fft</span><span class="p">)</span><span class="o">.</span><span class="n">real</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">remove_mean</span><span class="p">:</span>
@@ -5549,7 +5549,7 @@
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">u_fft</span><span class="p">:</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">],</span>
         <span class="n">f_mesh</span><span class="p">:</span> <span class="n">FourierMesh</span><span class="p">,</span>
-        <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]],</span>
+        <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]:</span>
         <span class="k">return</span> <span class="n">f_mesh</span><span class="o">.</span><span class="n">fft</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">spatial_value</span><span class="p">(</span><span class="n">u_fft</span><span class="p">,</span> <span class="n">f_mesh</span><span class="p">,</span> <span class="n">u</span><span class="p">))</span>
 
@@ -5557,7 +5557,7 @@
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">u_fft</span><span class="p">:</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">],</span>
         <span class="n">f_mesh</span><span class="p">:</span> <span class="n">FourierMesh</span><span class="p">,</span>
-        <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]],</span>
+        <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]:</span>
         <span class="n">psi</span> <span class="o">=</span> <span class="o">-</span><span class="n">u_fft</span> <span class="o">*</span> <span class="n">f_mesh</span><span class="o">.</span><span class="n">invert_laplacian</span><span class="p">()</span>
         <span class="n">ux</span> <span class="o">=</span> <span class="n">f_mesh</span><span class="o">.</span><span class="n">ifft</span><span class="p">(</span><span class="n">f_mesh</span><span class="o">.</span><span class="n">grad</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">psi</span><span class="p">)</span><span class="o">.</span><span class="n">real</span>
@@ -5616,7 +5616,7 @@
 <div class="doc-signature highlight"><pre><span></span><code><span class="fm">__call__</span><span class="p">(</span>
     <span class="nf">u_fft</span><span class="p">:</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">],</span>
     <span class="n">f_mesh</span><span class="p">:</span> <span class="n">FourierMesh</span><span class="p">,</span>
-    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]],</span>
+    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]</span>
 </code></pre></div>
 
@@ -5635,7 +5635,7 @@
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">u_fft</span><span class="p">:</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">],</span>
     <span class="n">f_mesh</span><span class="p">:</span> <span class="n">FourierMesh</span><span class="p">,</span>
-    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]],</span>
+    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]:</span>
     <span class="k">return</span> <span class="n">f_mesh</span><span class="o">.</span><span class="n">fft</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">spatial_value</span><span class="p">(</span><span class="n">u_fft</span><span class="p">,</span> <span class="n">f_mesh</span><span class="p">,</span> <span class="n">u</span><span class="p">))</span>
 </code></pre></div></td></tr></table></div>
@@ -5655,7 +5655,7 @@
 <div class="doc-signature highlight"><pre><span></span><code><span class="nf">spatial_value</span><span class="p">(</span>
     <span class="n">u_fft</span><span class="p">:</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">],</span>
     <span class="n">f_mesh</span><span class="p">:</span> <span class="n">FourierMesh</span><span class="p">,</span>
-    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]],</span>
+    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]</span>
 </code></pre></div>
 
@@ -5679,7 +5679,7 @@
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">u_fft</span><span class="p">:</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">],</span>
     <span class="n">f_mesh</span><span class="p">:</span> <span class="n">FourierMesh</span><span class="p">,</span>
-    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]],</span>
+    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]:</span>
     <span class="n">psi</span> <span class="o">=</span> <span class="o">-</span><span class="n">u_fft</span> <span class="o">*</span> <span class="n">f_mesh</span><span class="o">.</span><span class="n">invert_laplacian</span><span class="p">()</span>
     <span class="n">ux</span> <span class="o">=</span> <span class="n">f_mesh</span><span class="o">.</span><span class="n">ifft</span><span class="p">(</span><span class="n">f_mesh</span><span class="o">.</span><span class="n">grad</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">psi</span><span class="p">)</span><span class="o">.</span><span class="n">real</span>
@@ -5832,7 +5832,7 @@
 <div class="doc-signature highlight"><pre><span></span><code><span class="nf">nonlinear_like</span><span class="p">(</span>
     <span class="n">u_fft</span><span class="p">:</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">],</span>
     <span class="n">f_mesh</span><span class="p">:</span> <span class="n">FourierMesh</span><span class="p">,</span>
-    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]],</span>
+    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]</span>
 </code></pre></div>
 
@@ -5897,7 +5897,7 @@
               </div>
             </td>
             <td>
-                <em>required</em>
+                  <code>None</code>
             </td>
           </tr>
       </tbody>
@@ -5950,7 +5950,7 @@
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">u_fft</span><span class="p">:</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">],</span>
     <span class="n">f_mesh</span><span class="p">:</span> <span class="n">FourierMesh</span><span class="p">,</span>
-    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]],</span>
+    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]:</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Calculate the result out based on the linear coefficient. It is designed to have same pattern as the nonlinear function.</span>
@@ -6042,7 +6042,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_convection</span> <span class="o">=</span> <span class="n">_ConvectionCore</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">u_fft</span><span class="p">,</span> <span class="n">f_mesh</span><span class="p">,</span> <span class="n">u</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]:</span>
-        <span class="n">velocity_fft</span> <span class="o">=</span> <span class="n">u_fft</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vorticity2velocity</span><span class="p">(</span><span class="n">f_mesh</span><span class="p">)</span>
+        <span class="n">velocity_fft</span> <span class="o">=</span> <span class="n">u_fft</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vorticity2velocity</span><span class="p">(</span><span class="n">f_mesh</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">external_force</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">velocity_fft</span> <span class="o">*=</span> <span class="n">f_mesh</span><span class="o">.</span><span class="n">low_pass_filter</span><span class="p">()</span>
         <span class="n">convection</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_convection</span><span class="p">(</span>
@@ -6159,7 +6159,7 @@
 <span class="normal">142</span>
 <span class="normal">143</span>
 <span class="normal">144</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">u_fft</span><span class="p">,</span> <span class="n">f_mesh</span><span class="p">,</span> <span class="n">u</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]:</span>
-    <span class="n">velocity_fft</span> <span class="o">=</span> <span class="n">u_fft</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vorticity2velocity</span><span class="p">(</span><span class="n">f_mesh</span><span class="p">)</span>
+    <span class="n">velocity_fft</span> <span class="o">=</span> <span class="n">u_fft</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vorticity2velocity</span><span class="p">(</span><span class="n">f_mesh</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">external_force</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">velocity_fft</span> <span class="o">*=</span> <span class="n">f_mesh</span><span class="o">.</span><span class="n">low_pass_filter</span><span class="p">()</span>
     <span class="n">convection</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_convection</span><span class="p">(</span>
@@ -6190,7 +6190,7 @@
 <div class="doc-signature highlight"><pre><span></span><code><span class="nf">spatial_value</span><span class="p">(</span>
     <span class="n">u_fft</span><span class="p">:</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">],</span>
     <span class="n">f_mesh</span><span class="p">:</span> <span class="n">FourierMesh</span><span class="p">,</span>
-    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]],</span>
+    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]</span>
 </code></pre></div>
 
@@ -6255,7 +6255,7 @@
               </div>
             </td>
             <td>
-                <em>required</em>
+                  <code>None</code>
             </td>
           </tr>
       </tbody>
@@ -6309,7 +6309,7 @@
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">u_fft</span><span class="p">:</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">],</span>
     <span class="n">f_mesh</span><span class="p">:</span> <span class="n">FourierMesh</span><span class="p">,</span>
-    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]],</span>
+    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]:</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Return the result of the nonlinear function in spatial domain.</span>
@@ -6412,7 +6412,7 @@
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">u_fft</span><span class="p">:</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">],</span>
         <span class="n">f_mesh</span><span class="p">:</span> <span class="n">FourierMesh</span><span class="p">,</span>
-        <span class="n">u</span><span class="p">:</span> <span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]:</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">external_force</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># u_fft is original version</span>
             <span class="n">force</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">external_force</span><span class="p">(</span>
@@ -6511,7 +6511,7 @@
 <div class="doc-signature highlight"><pre><span></span><code><span class="fm">__call__</span><span class="p">(</span>
     <span class="nf">u_fft</span><span class="p">:</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">],</span>
     <span class="n">f_mesh</span><span class="p">:</span> <span class="n">FourierMesh</span><span class="p">,</span>
-    <span class="n">u</span><span class="p">:</span> <span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]</span>
 </code></pre></div>
 
@@ -6545,7 +6545,7 @@
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">u_fft</span><span class="p">:</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">],</span>
     <span class="n">f_mesh</span><span class="p">:</span> <span class="n">FourierMesh</span><span class="p">,</span>
-    <span class="n">u</span><span class="p">:</span> <span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]:</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">external_force</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># u_fft is original version</span>
         <span class="n">force</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">external_force</span><span class="p">(</span>
@@ -6580,7 +6580,7 @@
 <div class="doc-signature highlight"><pre><span></span><code><span class="nf">spatial_value</span><span class="p">(</span>
     <span class="n">u_fft</span><span class="p">:</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">],</span>
     <span class="n">f_mesh</span><span class="p">:</span> <span class="n">FourierMesh</span><span class="p">,</span>
-    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]],</span>
+    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]</span>
 </code></pre></div>
 
@@ -6645,7 +6645,7 @@
               </div>
             </td>
             <td>
-                <em>required</em>
+                  <code>None</code>
             </td>
           </tr>
       </tbody>
@@ -6699,7 +6699,7 @@
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">u_fft</span><span class="p">:</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">],</span>
     <span class="n">f_mesh</span><span class="p">:</span> <span class="n">FourierMesh</span><span class="p">,</span>
-    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]],</span>
+    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]:</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Return the result of the nonlinear function in spatial domain.</span>
@@ -6802,7 +6802,7 @@
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">u_fft</span><span class="p">:</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">],</span>
         <span class="n">f_mesh</span><span class="p">:</span> <span class="n">FourierMesh</span><span class="p">,</span>
-        <span class="n">u</span><span class="p">:</span> <span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">external_force</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># u_fft is original version</span>
             <span class="n">force</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">external_force</span><span class="p">(</span>
@@ -6901,7 +6901,7 @@
 <div class="doc-signature highlight"><pre><span></span><code><span class="fm">__call__</span><span class="p">(</span>
     <span class="nf">u_fft</span><span class="p">:</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">],</span>
     <span class="n">f_mesh</span><span class="p">:</span> <span class="n">FourierMesh</span><span class="p">,</span>
-    <span class="n">u</span><span class="p">:</span> <span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span>
 </code></pre></div>
 
@@ -6937,7 +6937,7 @@
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">u_fft</span><span class="p">:</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">],</span>
     <span class="n">f_mesh</span><span class="p">:</span> <span class="n">FourierMesh</span><span class="p">,</span>
-    <span class="n">u</span><span class="p">:</span> <span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">external_force</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># u_fft is original version</span>
         <span class="n">force</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">external_force</span><span class="p">(</span>
@@ -6974,7 +6974,7 @@
 <div class="doc-signature highlight"><pre><span></span><code><span class="nf">spatial_value</span><span class="p">(</span>
     <span class="n">u_fft</span><span class="p">:</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">],</span>
     <span class="n">f_mesh</span><span class="p">:</span> <span class="n">FourierMesh</span><span class="p">,</span>
-    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]],</span>
+    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]</span>
 </code></pre></div>
 
@@ -7039,7 +7039,7 @@
               </div>
             </td>
             <td>
-                <em>required</em>
+                  <code>None</code>
             </td>
           </tr>
       </tbody>
@@ -7093,7 +7093,7 @@
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">u_fft</span><span class="p">:</span> <span class="n">FourierTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">],</span>
     <span class="n">f_mesh</span><span class="p">:</span> <span class="n">FourierMesh</span><span class="p">,</span>
-    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]],</span>
+    <span class="n">u</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]:</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Return the result of the nonlinear function in spatial domain.</span>
