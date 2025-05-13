@@ -27,7 +27,7 @@ class _ConvectionCore(NonlinearFunc):
         self,
         u_fft: FourierTensor["B C H ..."],
         f_mesh: FourierMesh,
-        u: Optional[FourierTensor["B C H ..."]] = None,
+        u: Optional[SpatialTensor["B C H ..."]] = None,
     ) -> SpatialTensor["B C H ..."]:
         r"""
         Return the result of the nonlinear function in spatial domain.
