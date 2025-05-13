@@ -2,7 +2,7 @@ from torch import Tensor
 from ...mesh import FourierMesh
 from .._base import LinearCoef, NonlinearOperator, CoreGenerator, NonlinearFunc
 from ..._type import FourierTensor, SpatialTensor
-from typing import Optional
+from typing import Optional, Union
 
 
 class _ConservativeConvectionCore(NonlinearFunc):
@@ -35,7 +35,7 @@ class _ConservativeConvectionGenerator(CoreGenerator):
 
     def __call__(
         self, f_mesh: FourierMesh, n_channel: int
-    ) -> LinearCoef | NonlinearFunc:
+    ) -> Union[LinearCoef, NonlinearFunc]:
         if f_mesh.n_dim != n_channel:
             raise ValueError(
                 f"div operator only works for vector field with the same dimension as mesh"

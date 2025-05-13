@@ -3,7 +3,7 @@ from ...mesh import FourierMesh
 from .._base import LinearCoef, NonlinearOperator, CoreGenerator, NonlinearFunc
 from functools import lru_cache
 from ..._type import FourierTensor, SpatialTensor
-from typing import Optional
+from typing import Optional, Union
 
 
 class _ConvectionCore(NonlinearFunc):
@@ -27,7 +27,7 @@ class _ConvectionCore(NonlinearFunc):
         self,
         u_fft: FourierTensor["B C H ..."],
         f_mesh: FourierMesh,
-        u: FourierTensor["B C H ..."] | None,
+        u: Optional[FourierTensor["B C H ..."]] = None,
     ) -> SpatialTensor["B C H ..."]:
         r"""
         Return the result of the nonlinear function in spatial domain.
@@ -56,7 +56,7 @@ class _ConvectionGenerator(CoreGenerator):
 
     def __call__(
         self, f_mesh: FourierMesh, n_channel: int
-    ) -> LinearCoef | NonlinearFunc:
+    ) -> Union[LinearCoef, NonlinearFunc]:
         if f_mesh.n_dim != n_channel:
             raise ValueError(
                 f"convection operator only works for vector field with the same dimension as mesh"
