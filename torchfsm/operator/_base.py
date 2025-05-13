@@ -39,7 +39,7 @@ class LinearCoef(ABC):
         self,
         u_fft: FourierTensor["B C H ..."],
         f_mesh: FourierMesh,
-        u: Optional[SpatialTensor["B C H ..."]],
+        u: Optional[SpatialTensor["B C H ..."]]=None,
     ) -> FourierTensor["B C H ..."]:
         r"""
         Calculate the result out based on the linear coefficient. It is designed to have same pattern as the nonlinear function.
@@ -74,7 +74,7 @@ class NonlinearFunc(ABC):
         self,
         u_fft: FourierTensor["B C H ..."],
         f_mesh: FourierMesh,
-        u: Optional[SpatialTensor["B C H ..."]],
+        u: Optional[SpatialTensor["B C H ..."]]=None,
     ) -> FourierTensor["B C H ..."]:
         r"""
         Abstract method to be implemented by subclasses. It should define the nonlinear function.
@@ -93,7 +93,7 @@ class NonlinearFunc(ABC):
         self,
         u_fft: FourierTensor["B C H ..."],
         f_mesh: FourierMesh,
-        u: Optional[SpatialTensor["B C H ..."]],
+        u: Optional[SpatialTensor["B C H ..."]]=None,
     ) -> SpatialTensor["B C H ..."]:
         r"""
         Return the result of the nonlinear function in spatial domain.
