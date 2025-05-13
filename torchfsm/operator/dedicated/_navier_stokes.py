@@ -28,7 +28,7 @@ class _VorticityConvectionCore(NonlinearFunc):
         self,
         u_fft: FourierTensor["B C H ..."],
         f_mesh: FourierMesh,
-        u: Optional[SpatialTensor["B C H ..."]],
+        u: Optional[SpatialTensor["B C H ..."]]=None,
     ) -> FourierTensor["B C H ..."]:
         return f_mesh.fft(self.spatial_value(u_fft, f_mesh, u))
 
@@ -36,7 +36,7 @@ class _VorticityConvectionCore(NonlinearFunc):
         self,
         u_fft: FourierTensor["B C H ..."],
         f_mesh: FourierMesh,
-        u: Optional[SpatialTensor["B C H ..."]],
+        u: Optional[SpatialTensor["B C H ..."]]=None,
     ) -> SpatialTensor["B C H ..."]:
         psi = -u_fft * f_mesh.invert_laplacian()
         ux = f_mesh.ifft(f_mesh.grad(1, 1) * psi).real
@@ -128,7 +128,7 @@ class _Vorticity2PressureCore(NonlinearFunc):
         self._convection = _ConvectionCore()
 
     def __call__(self, u_fft, f_mesh, u) -> FourierTensor["B C H ..."]:
-        velocity_fft = u_fft * self._vorticity2velocity(f_mesh)
+        velocity_fft = u_fft * self._vorticity2velocity(f_mesh, 1)
         if self.external_force is not None:
             velocity_fft *= f_mesh.low_pass_filter()
         convection = self._convection(
