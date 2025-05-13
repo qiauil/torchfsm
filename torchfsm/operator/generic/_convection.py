@@ -3,6 +3,7 @@ from ...mesh import FourierMesh
 from .._base import LinearCoef, NonlinearOperator, CoreGenerator, NonlinearFunc
 from functools import lru_cache
 from ..._type import FourierTensor, SpatialTensor
+from typing import Optional
 
 
 class _ConvectionCore(NonlinearFunc):
@@ -18,7 +19,7 @@ class _ConvectionCore(NonlinearFunc):
         self,
         u_fft: FourierTensor["B C H ..."],
         f_mesh: FourierMesh,
-        u: SpatialTensor["B C H ..."] | None,
+        u: Optional[SpatialTensor["B C H ..."]] = None,
     ) -> FourierTensor["B C H ..."]:
         return f_mesh.fft(self.spatial_value(u_fft, f_mesh, u))
 
