@@ -33,7 +33,7 @@ def KuramotoSivashinsky() -> Operator:
         Operator: The operator representing the Kuramoto-Sivashinsky equation.
     """
     ks_eqn = -Laplacian() - Biharmonic() - Convection()
-    ks_eqn.regisiter_additional_check(
+    ks_eqn.register_additional_check(
         lambda dim_value, dim_mesh: dim_value == 1 and dim_mesh == 1
     )
     return ks_eqn

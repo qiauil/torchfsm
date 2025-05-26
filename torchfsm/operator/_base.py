@@ -586,7 +586,7 @@ class OperatorLike(_MutableMixIn):
         self._build_linear_coefs(linear_coefs)
         self._build_nonlinear_funcs(self._nonlinear_funcs)
 
-    def regisiter_additional_check(self, func: Callable[[int, int], bool]):
+    def register_additional_check(self, func: Callable[[int, int], bool]):
         r"""
         Register an additional check function for the value and mesh compatibility.
 
