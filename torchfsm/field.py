@@ -47,11 +47,11 @@ def diffused_noise(
     diffusion = diffusion_coef * Laplacian()
     u_0 = diffusion.integrate(u_0, dt=1, step=1, mesh=mesh)
     if zero_centered:
-        u_0 = u_0 - u_0.mean()
+        u_0 = u_0 - u_0.mean(dim=[i for i in range(1,u_0.ndim)],keepdim=True)
     if unit_variance:
-        u_0 = u_0 / u_0.std()
+        u_0 = u_0 / u_0.std(dim=[i for i in range(1,u_0.ndim)],keepdim=True)
     if unit_magnitude:
-        u_0 = u_0 / u_0.abs().max()
+        u_0 = u_0 / torch.max(u_0.abs().view(u_0.size(0), -1), dim=1).values.view([u_0.shape[0]]+[1]*(len(u_0.shape)-1))
     return u_0
 
 
