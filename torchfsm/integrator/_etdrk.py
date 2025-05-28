@@ -48,9 +48,18 @@ class _ETDRKBase(ABC):
         self.dt = dt
         self._nonlinear_func = nonlinear_func
         self._exp_term = torch.exp(self.dt * linear_coef)
-        self.LR=(
-            circle_radius * roots_of_unity(num_circle_points,device=linear_coef.device,dtype=linear_coef.real.dtype)
-            + linear_coef.unsqueeze(-1) * dt
+        self.num_circle_points = num_circle_points
+        self.circle_radius = circle_radius
+    
+    def _get_lr(self,linear_coef):
+        """
+        Get the linear coefficients for the ETDRK method.
+        """
+        return (
+            self.circle_radius * roots_of_unity(self.num_circle_points,
+                                           device=linear_coef.device,
+                                           dtype=linear_coef.real.dtype)
+            + linear_coef.unsqueeze(-1) * self.dt
             )
 
     @abstractmethod
@@ -95,7 +104,8 @@ class ETDRK1(_ETDRKBase):
         circle_radius: float = 1.0,
         ):
         super().__init__(dt, linear_coef,nonlinear_func,num_circle_points,circle_radius)
-        self._coef_1 = dt * torch.mean((torch.exp(self.LR) - 1) / self.LR, axis=-1).real
+        lr= self._get_lr(linear_coef)
+        self._coef_1 = dt * torch.mean((torch.exp(lr) - 1) / lr, axis=-1).real
 
     def step(
         self,
@@ -117,8 +127,9 @@ class ETDRK2(_ETDRKBase):
         circle_radius: float = 1.0,
         ):
         super().__init__(dt, linear_coef,nonlinear_func,num_circle_points,circle_radius)
-        self._coef_1 = dt * torch.mean((torch.exp(self.LR) - 1) / self.LR, axis=-1).real
-        self._coef_2 = dt * torch.mean((torch.exp(self.LR) - 1 - self.LR) / self.LR**2, axis=-1).real
+        lr= self._get_lr(linear_coef)
+        self._coef_1 = dt * torch.mean((torch.exp(lr) - 1) / lr, axis=-1).real
+        self._coef_2 = dt * torch.mean((torch.exp(lr) - 1 - lr) / lr**2, axis=-1).real
 
     def step(
         self,
@@ -145,25 +156,26 @@ class ETDRK3(_ETDRKBase):
         circle_radius: float = 1.0,
     ):
         super().__init__(dt, linear_coef,nonlinear_func,num_circle_points,circle_radius)
+        lr= self._get_lr(linear_coef)
         self._half_exp_term = torch.exp(0.5 * dt * linear_coef)
-        self._coef_1 = dt * torch.mean((torch.exp(self.LR / 2) - 1) / self.LR, axis=-1).real
-        self._coef_2 = dt * torch.mean((torch.exp(self.LR) - 1) / self.LR, axis=-1).real
+        self._coef_1 = dt * torch.mean((torch.exp(lr / 2) - 1) / lr, axis=-1).real
+        self._coef_2 = dt * torch.mean((torch.exp(lr) - 1) / lr, axis=-1).real
         self._coef_3 = (
             dt
             * torch.mean(
-                (-4 - self.LR + torch.exp(self.LR) * (4 - 3 * self.LR + self.LR**2)) / (self.LR**3), axis=-1
+                (-4 - lr + torch.exp(lr) * (4 - 3 * lr + lr**2)) / (lr**3), axis=-1
             ).real
         )
         self._coef_4 = (
             dt
             * torch.mean(
-                (4.0 * (2.0 + self.LR + torch.exp(self.LR) * (-2 + self.LR))) / (self.LR**3), axis=-1
+                (4.0 * (2.0 + lr + torch.exp(lr) * (-2 + lr))) / (lr**3), axis=-1
             ).real
         )
         self._coef_5 = (
             dt
             * torch.mean(
-                (-4 - 3 * self.LR - self.LR**2 + torch.exp(self.LR) * (4 - self.LR)) / (self.LR**3), axis=-1
+                (-4 - 3 * lr - lr**2 + torch.exp(lr) * (4 - lr)) / (lr**3), axis=-1
             ).real
         )
 
@@ -200,23 +212,24 @@ class ETDRK4(_ETDRKBase):
         circle_radius: float = 1.0,
     ):
         super().__init__(dt, linear_coef,nonlinear_func,num_circle_points,circle_radius)
+        lr= self._get_lr(linear_coef)
         self._half_exp_term = torch.exp(0.5 * dt * linear_coef)
-        self._coef_1 = dt * torch.mean((torch.exp(self.LR / 2) - 1) / self.LR, axis=-1).real
+        self._coef_1 = dt * torch.mean((torch.exp(lr / 2) - 1) / lr, axis=-1).real
         self._coef_2 = self._coef_1
         self._coef_3 = self._coef_1
         self._coef_4 = (
             dt
             * torch.mean(
-                (-4 - self.LR + torch.exp(self.LR) * (4 - 3 * self.LR + self.LR**2)) / (self.LR**3), axis=-1
+                (-4 - lr + torch.exp(lr) * (4 - 3 * lr + lr**2)) / (lr**3), axis=-1
             ).real
         )
         self._coef_5 = (
-            dt * torch.mean((2 + self.LR + torch.exp(self.LR) * (-2 + self.LR)) / (self.LR**3), axis=-1).real
+            dt * torch.mean((2 + lr + torch.exp(lr) * (-2 + lr)) / (lr**3), axis=-1).real
         )
         self._coef_6 = (
             dt
             * torch.mean(
-                (-4 - 3 * self.LR - self.LR**2 + torch.exp(self.LR) * (4 - self.LR)) / (self.LR**3), axis=-1
+                (-4 - 3 * lr - lr**2 + torch.exp(lr) * (4 - lr)) / (lr**3), axis=-1
             ).real
         )
         
