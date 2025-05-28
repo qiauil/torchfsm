@@ -60,6 +60,70 @@ def diffused_noise(
         u_0 = u_0 / torch.max(u_0.abs().view(u_0.size(0), -1), dim=1).values.view([u_0.shape[0]]+[1]*(len(u_0.shape)-1))
     return u_0
 
+def truncated_fourier_series(
+    mesh: Union[Sequence[tuple[float, float, int]], MeshGrid, FourierMesh],
+    freq_threshold: int = 5,
+    amplitude_range: tuple[int, int] = (-1.0, 1.0),
+    angle_range: tuple[int, int] = (0.0, 2.0 * torch.pi),
+    zero_centered: bool = True,
+    unit_variance: bool = False,
+    unit_magnitude: bool = True,
+    device: Optional[torch.device] = None,
+    dtype: Optional[torch.dtype] = None,
+    n_batch: int = 1,
+    n_channel: int = 1,
+) -> SpatialTensor["B C H ..."]:
+    r"""
+    Generate a truncated Fourier series noise field on a given mesh.
+    
+    Args:
+        mesh (Union[Sequence[tuple[float, float, int]], MeshGrid, FourierMesh]): The mesh on which to generate the noise.
+        freq_threshold (int): The frequency threshold for truncation.
+        amplitude_range (tuple[int, int]): The range of amplitudes for the noise.
+        angle_range (tuple[int, int]): The range of angles for the noise.
+        zero_centered (bool): If True, the noise will be zero-centered.
+        unit_variance (bool): If True, the noise will have unit variance.
+        unit_magnitude (bool): If True, the noise will have unit magnitude.
+        device (Optional[torch.device]): The device on which to create the tensor.
+        dtype (Optional[torch.dtype]): The data type of the tensor.
+        n_batch (int): The number of batches.
+        n_channel (int): The number of channels.
+    
+    Returns:
+        SpatialTensor["B C H ..."]: The generated noise field.
+    """
+    if unit_magnitude and unit_variance:
+        raise ValueError("Cannot set both unit_magnitude and unit_variance to True.")
+    
+    if device is None and (isinstance(mesh, FourierMesh) or isinstance(mesh, MeshGrid)):
+        device = mesh.device
+    if dtype is None and (isinstance(mesh, FourierMesh) or isinstance(mesh, MeshGrid)):
+        dtype = mesh.dtype
+    if not isinstance(mesh, FourierMesh):
+        mesh = FourierMesh(mesh, device=device, dtype=dtype)
+    
+    magnitude=torch.rand(
+        *mesh_shape(mesh, n_batch=n_batch, n_channel=n_channel),
+        device=device,
+        dtype=dtype
+    )* (amplitude_range[1] - amplitude_range[0]) + amplitude_range[0]   
+    angle=torch.rand(
+        *mesh_shape(mesh, n_batch=n_batch, n_channel=n_channel),
+        device=device,
+        dtype=dtype
+    )* (angle_range[1] - angle_range[0]) + angle_range[0]
+    fourier_noise = magnitude * torch.exp(1j * angle)
+    fourier_noise = fourier_noise * mesh.abs_low_pass_filter(freq_threshold)
+    mesh.abs_low_pass_filter.cache_clear()
+    fourier_noise = mesh.ifft(fourier_noise).real
+    if zero_centered:
+        fourier_noise = fourier_noise - fourier_noise.mean(dim=[i for i in range(1,fourier_noise.ndim)],keepdim=True)
+    if unit_variance:
+        fourier_noise = fourier_noise / fourier_noise.std(dim=[i for i in range(1,fourier_noise.ndim)],keepdim=True)
+    if unit_magnitude:
+        fourier_noise = fourier_noise / torch.max(fourier_noise.abs().view(fourier_noise.size(0), -1), dim=1).values.view([fourier_noise.shape[0]]+[1]*(len(fourier_noise.shape)-1))
+    return fourier_noise
+
 
 def kolm_force(
     x: torch.Tensor,
