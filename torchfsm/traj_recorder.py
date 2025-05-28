@@ -202,3 +202,64 @@ class DiskRecorder(_TrajRecorder):
     @property
     def trajectory(self):
         return None
+    
+class RandomBatchWisedRecorder(_TrajRecorder):
+    """
+    A recorder that saves the trajectory at random intervals for each batch.
+    
+    Args:
+        simulation_steps (int): The total number of simulation steps.
+        recorder_interval (int): The interval at which to record the trajectory.
+        n_recorded_frames (int): The number of frames to record for each batch. Default is 2.
+    """
+    
+    def __init__(self,
+                 simulation_steps:int,
+                 recorder_interval:int,
+                 n_recorded_frames:int=2,):
+        super().__init__(None , False)
+        self.simulation_steps = simulation_steps
+        self.recorder_interval = recorder_interval
+        self.n_recorded_frames = n_recorded_frames
+        self._trajectory=[]
+        self._batch_size = None
+        self._recorded_frame_id = None
+        
+    def _initialize_recording(self,
+                              batch_size:int):
+        self._batch_size = batch_size
+        initial_id=np.random.randint(1,self.simulation_steps-self.recorder_interval*self.n_recorded_frames,
+                      size=self._batch_size)
+        self._recorded_frame_id=[initial_id+i*self.recorder_interval for i in range(self.n_recorded_frames)]
+        self._recorded_frame_id=np.stack(self._recorded_frame_id,axis=1)
+        self._trajectory=[[] for _ in range(self._batch_size)]
+        
+    def record(self,step:int,frame:torch.tensor):
+        """
+        Record the trajectory at a given step.
+
+        Args:
+            step (int): The current step.
+            frame (torch.tensor): The current frame to be recorded.
+        """
+        if self._batch_size is None:
+            self._initialize_recording(
+                batch_size=frame.shape[0],
+            )
+        for batch_i in range(self._batch_size):
+            if step in self._recorded_frame_id[batch_i]:
+                self._trajectory[batch_i].append(copy.deepcopy(frame[batch_i]))     
+    
+    @property
+    def trajectory(self):
+        if len(self._trajectory)==0:
+            return None
+        trajs=[]
+        for batch_i in range(self._batch_size):  
+            trajs.append(torch.stack(self._trajectory[batch_i],dim=0)) 
+        trajs=torch.stack(trajs,dim=0)
+        self._trajectory=[]
+        if self.return_in_fourier:
+            return trajs
+        else:
+            return self._traj_ifft(trajs).real
