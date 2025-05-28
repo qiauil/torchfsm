@@ -9,7 +9,7 @@ def diffused_noise(
     mesh: Union[Sequence[tuple[float, float, int]], MeshGrid, FourierMesh],
     diffusion_coef: float = 1.0,
     zero_centered: bool = True,
-    unit_variance: bool = True,
+    unit_variance: bool = False,
     unit_magnitude: bool = True,
     device: Optional[torch.device] = None,
     dtype: Optional[torch.dtype] = None,
@@ -28,6 +28,7 @@ def diffused_noise(
         zero_centered (bool): If True, the noise will be zero-centered. Default is True.
         unit_variance (bool): If True, the noise will have unit variance. Default is True.
         unit_magnitude (bool): If True, the noise will have unit magnitude. Default is True.
+            unit_magnitude and unit_variance are mutually exclusive.
         device (Optional[torch.device]): The device to generate the noise on. Default is None.
         dtype (Optional[torch.dtype]): The data type of the generated noise. Default is None.
         n_batch (int): The number of batches. Default is 1.
@@ -36,6 +37,8 @@ def diffused_noise(
     Returns:
         SpatialTensor["B C H ...]: The generated diffused noise field.
     """
+    if unit_magnitude and unit_variance:
+        raise ValueError("unit_magnitude and unit_variance are mutually exclusive.")
     if device is None and (isinstance(mesh, FourierMesh) or isinstance(mesh, MeshGrid)):
         device = mesh.device
     if dtype is None and (isinstance(mesh, FourierMesh) or isinstance(mesh, MeshGrid)):
