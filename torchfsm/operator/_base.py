@@ -373,7 +373,7 @@ class OperatorLike(_MutableMixIn):
         if len(nonlinear_funcs) == 0:
             nonlinear_funcs_all = None
         else:
-            self._state_dict["f_mesh"].set_default_freq_threshold(
+            self._state_dict["f_mesh"].set_default_rel_freq_threshold(
                 self._de_aliasing_rate
             )
 

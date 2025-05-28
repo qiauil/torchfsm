@@ -341,10 +341,10 @@ class FourierMesh:
         self.bf = BroadcastedFFTFrequency(self.f)
         self.n_dim = len(self.mesh_info)
         self.fft_dim = tuple(-1 * (i + 1) for i in range(self.n_dim))
-        self._default_freq_threshold = 2 / 3
+        self._default_rel_freq_threshold = 2 / 3
 
-    def set_default_freq_threshold(self, threshold: float):
-        self._default_freq_threshold = threshold
+    def set_default_rel_freq_threshold(self, threshold: float):
+        self._default_rel_freq_threshold = threshold
         self.low_pass_filter.cache_clear()
 
     @property
@@ -441,12 +441,41 @@ class FourierMesh:
         return (2j * torch.pi * self.bf.bf_vector) ** order
 
     @lru_cache()
-    def low_pass_filter(self, freq_threshold: Optional[float] = None) -> torch.Tensor:
-        freq_threshold = default(freq_threshold, self._default_freq_threshold)
+    def low_pass_filter(self, rel_freq_threshold: Optional[float] = None) -> torch.Tensor:
+        """
+        Low pass filter mask for the Fourier coefficients.
+        
+        The mask is a tensor of the same shape as the Fourier coefficients, with values 1 for frequencies below the threshold and 0 for frequencies above the threshold.
+        Args:
+            rel_freq_threshold (Optional[float]): The relative frequency threshold for the low pass filter. If None, the default frequency threshold will be used.
+                Default is None, which uses the value set by `set_default_rel_freq_threshold`.
+        
+        Returns:
+            torch.Tensor: A mask tensor with the same shape as the Fourier coefficients, where values are 1 for frequencies below the threshold and 0 for frequencies above the threshold.
+        """
+        rel_freq_threshold = default(rel_freq_threshold, self._default_rel_freq_threshold)
         mask = torch.ones_like(self.nabla().real)
         for i in range(len(self.bf)):
             abs_f = self.bf[i].abs()
-            mask *= torch.where(abs_f > abs_f.max() * freq_threshold, 0, 1)
+            mask *= torch.where(abs_f > abs_f.max() * rel_freq_threshold, 0, 1)
+        return mask.to(device=self.device, dtype=self.dtype)
+
+    @lru_cache()
+    def abs_low_pass_filter(self, abs_freq_threshold: int) -> torch.Tensor:
+        """
+        Low pass filter mask for the Fourier coefficients.
+        
+        The mask is a tensor of the same shape as the Fourier coefficients, with values 1 for frequencies below the threshold and 0 for frequencies above the threshold.
+        Args:
+            abs_rel_freq_threshold (Optional[float]): The absolute frequency threshold for the low pass filter.
+        
+        Returns:
+            torch.Tensor: A mask tensor with the same shape as the Fourier coefficients, where values are 1 for frequencies below the threshold and 0 for frequencies above the threshold.
+        """
+        mask = torch.ones_like(self.nabla().real)
+        for i in range(len(self.bf)):
+            abs_f = self.bf[i].abs()
+            mask *= torch.where(abs_f > abs_freq_threshold, 0, 1)
         return mask.to(device=self.device, dtype=self.dtype)
 
     def fft(self, u) -> FourierTensor["B C H ..."]:
