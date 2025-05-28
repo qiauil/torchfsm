@@ -2,7 +2,7 @@ import torch
 import numpy as np
 from typing import Union, Optional,Tuple
 from ._type import ValueList, SpatialArray, SpatialTensor, FourierArray, FourierTensor
-
+import gc
 
 def default(value, default):
     """
@@ -181,3 +181,10 @@ def uniformly_select_frames(
     if isinstance(traj, np.ndarray):
         new_traj = new_traj.numpy()
     return new_traj  
+
+def clean_up_memory():
+    """
+    Clean up the memory by calling garbage collector and emptying the cache.
+    """
+    gc.collect()
+    torch.cuda.empty_cache()

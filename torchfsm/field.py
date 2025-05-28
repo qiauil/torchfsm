@@ -3,6 +3,7 @@ from .mesh import FourierMesh, MeshGrid, mesh_shape
 import torch
 from typing import Union, Sequence, Optional
 from ._type import SpatialTensor
+from .utils import clean_up_memory
 
 def diffused_noise(
     mesh: Union[Sequence[tuple[float, float, int]], MeshGrid, FourierMesh],
@@ -46,6 +47,8 @@ def diffused_noise(
     )
     diffusion = diffusion_coef * Laplacian()
     u_0 = diffusion.integrate(u_0, dt=1, step=1, mesh=mesh)
+    del diffusion
+    clean_up_memory()
     if zero_centered:
         u_0 = u_0 - u_0.mean(dim=[i for i in range(1,u_0.ndim)],keepdim=True)
     if unit_variance:

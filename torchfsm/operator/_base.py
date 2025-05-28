@@ -1,7 +1,7 @@
 import torch, copy
 from torch import Tensor
 from typing import Union, Sequence, Callable, Optional, Tuple, Literal, List
-from ..utils import default
+from ..utils import default,clean_up_memory
 from .._type import ValueList
 from ..mesh import FourierMesh, MeshGrid
 from ..integrator import ETDRKIntegrator, RKIntegrator
@@ -359,6 +359,7 @@ class OperatorLike(_MutableMixIn):
                 ]
             )
         self._state_dict["linear_coef"] = linear_coefs
+        clean_up_memory()
 
     def _build_nonlinear_funcs(
         self, nonlinear_funcs: Optional[Sequence[NonlinearFunc]]
@@ -407,6 +408,7 @@ class OperatorLike(_MutableMixIn):
                 return result
 
         self._state_dict["nonlinear_func"] = nonlinear_funcs_all
+        clean_up_memory()
 
     def _build_operator(self):
         r"""
@@ -430,6 +432,7 @@ class OperatorLike(_MutableMixIn):
             )
 
         self._state_dict["operator"] = operator
+        clean_up_memory()
 
     def _build_integrator(
         self,
@@ -488,6 +491,7 @@ class OperatorLike(_MutableMixIn):
                     self._state_dict["operator"], u_fft, dt
                 ),
             )
+        clean_up_memory()
 
     def _pre_check(
         self,
@@ -583,6 +587,7 @@ class OperatorLike(_MutableMixIn):
             else:
                 raise ValueError(f"Operator {op} is not supported")
         self._nonlinear_funcs = nonlinear_funcs
+        clean_up_memory()
         self._build_linear_coefs(linear_coefs)
         self._build_nonlinear_funcs(self._nonlinear_funcs)
 
@@ -687,6 +692,7 @@ class OperatorLike(_MutableMixIn):
         if u_0_fft is None:
             u_0_fft = f_mesh.fft(u_0)
         p_bar = tqdm(range(step), desc="Integrating", disable=not progressive)
+        clean_up_memory()
         for i in p_bar:
             if trajectory_recorder is not None:
                 trajectory_recorder.record(i, u_0_fft)
