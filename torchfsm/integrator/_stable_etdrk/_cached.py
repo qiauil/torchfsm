@@ -13,20 +13,20 @@ class _CachedSETDRKBase(ABC):
         dt: float,
         linear_coef: torch.Tensor,
         nonlinear_func: Callable[[torch.Tensor], torch.Tensor],
-        num_circle_points: int = 16,
-        circle_radius: float = 1.0,
+        n_integration_points: int = 16,
+        integration_radius: float = 1.0,
     ):
         self.dt = dt
         self._nonlinear_func = nonlinear_func
         self._exp_term = torch.exp(self.dt * linear_coef)
-        self.num_circle_points = num_circle_points
-        self.circle_radius = circle_radius
+        self.n_integration_points = n_integration_points
+        self.integration_radius = integration_radius
 
     def _get_lr(self, linear_coef):
         return (
-            self.circle_radius
+            self.integration_radius
             * roots_of_unity(
-                self.num_circle_points, device="cpu", dtype=linear_coef.real.dtype
+                self.n_integration_points, device="cpu", dtype=linear_coef.real.dtype
             )
             + linear_coef.unsqueeze(-1).cpu() * self.dt
         )
@@ -52,11 +52,11 @@ class CachedSETDRK1(_CachedSETDRKBase):
         dt: float,
         linear_coef: torch.Tensor,
         nonlinear_func: Callable[[torch.Tensor], torch.Tensor],
-        num_circle_points: int = 16,
-        circle_radius: float = 1.0,
+        n_integration_points: int = 16,
+        integration_radius: float = 1.0,
     ):
         super().__init__(
-            dt, linear_coef, nonlinear_func, num_circle_points, circle_radius
+            dt, linear_coef, nonlinear_func, n_integration_points, integration_radius
         )
         lr = self._get_lr(linear_coef)
         self._coef_1 = dt * torch.mean((torch.exp(lr) - 1) / lr, axis=-1).real.to(
@@ -85,11 +85,11 @@ class CachedSETDRK2(_CachedSETDRKBase):
         dt: float,
         linear_coef: torch.Tensor,
         nonlinear_func: Callable[[torch.Tensor], torch.Tensor],
-        num_circle_points: int = 16,
-        circle_radius: float = 1.0,
+        n_integration_points: int = 16,
+        integration_radius: float = 1.0,
     ):
         super().__init__(
-            dt, linear_coef, nonlinear_func, num_circle_points, circle_radius
+            dt, linear_coef, nonlinear_func, n_integration_points, integration_radius
         )
         lr = self._get_lr(linear_coef)
         self._coef_1 = dt * torch.mean((torch.exp(lr) - 1) / lr, axis=-1).real.to(
@@ -122,11 +122,11 @@ class CachedSETDRK3(_CachedSETDRKBase):
         dt: float,
         linear_coef: torch.Tensor,
         nonlinear_func: Callable[[torch.Tensor], torch.Tensor],
-        num_circle_points: int = 16,
-        circle_radius: float = 1.0,
+        n_integration_points: int = 16,
+        integration_radius: float = 1.0,
     ):
         super().__init__(
-            dt, linear_coef, nonlinear_func, num_circle_points, circle_radius
+            dt, linear_coef, nonlinear_func, n_integration_points, integration_radius
         )
         lr = self._get_lr(linear_coef)
         self._half_exp_term = torch.exp(0.5 * dt * linear_coef)
@@ -173,11 +173,11 @@ class CachedSETDRK4(_CachedSETDRKBase):
         dt: float,
         linear_coef: torch.Tensor,
         nonlinear_func: Callable[[torch.Tensor], torch.Tensor],
-        num_circle_points: int = 16,
-        circle_radius: float = 1.0,
+        n_integration_points: int = 16,
+        integration_radius: float = 1.0,
     ):
         super().__init__(
-            dt, linear_coef, nonlinear_func, num_circle_points, circle_radius
+            dt, linear_coef, nonlinear_func, n_integration_points, integration_radius
         )
         lr = self._get_lr(linear_coef)
         self._half_exp_term = torch.exp(0.5 * dt * linear_coef)

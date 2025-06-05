@@ -26,16 +26,16 @@ class SETDRK1Wrapper:
                  dt: float,
                 linear_coef: torch.Tensor,
                 nonlinear_func: Callable[[torch.Tensor], torch.Tensor],
-                num_circle_points: int = 16,
-                circle_radius: float = 1.0,
+                n_integration_points: int = 16,
+                integration_radius: float = 1.0,
                 cpu_cached: bool = False,):
         if cpu_cached:
             return CachedSETDRK1(
-                dt, linear_coef, nonlinear_func, num_circle_points, circle_radius
+                dt, linear_coef, nonlinear_func, n_integration_points, integration_radius
             )
         else:
             return UnCachedSETDRK1(
-                dt, linear_coef, nonlinear_func, num_circle_points, circle_radius
+                dt, linear_coef, nonlinear_func, n_integration_points, integration_radius
             )
 
 class SETDRK2Wrapper:
@@ -44,18 +44,17 @@ class SETDRK2Wrapper:
                  dt: float,
                 linear_coef: torch.Tensor,
                 nonlinear_func: Callable[[torch.Tensor], torch.Tensor],
-                num_circle_points: int = 16,
-                circle_radius: float = 1.0,
+                n_integration_points: int = 16,
+                integration_radius: float = 1.0,
                 cpu_cached: bool = False,):
         if cpu_cached:
             return CachedSETDRK2(
-                dt, linear_coef, nonlinear_func, num_circle_points, circle_radius
+                dt, linear_coef, nonlinear_func, n_integration_points, integration_radius
             )
         else:
             return UnCachedSETDRK2(
-                dt, linear_coef, nonlinear_func, num_circle_points, circle_radius
+                dt, linear_coef, nonlinear_func, n_integration_points, integration_radius
             )
-
 
 class SETDRK3Wrapper:
     
@@ -63,16 +62,16 @@ class SETDRK3Wrapper:
                  dt: float,
                 linear_coef: torch.Tensor,
                 nonlinear_func: Callable[[torch.Tensor], torch.Tensor],
-                num_circle_points: int = 16,
-                circle_radius: float = 1.0,
+                n_integration_points: int = 16,
+                integration_radius: float = 1.0,
                 cpu_cached: bool = False,):
         if cpu_cached:
             return CachedSETDRK3(
-                dt, linear_coef, nonlinear_func, num_circle_points, circle_radius
+                dt, linear_coef, nonlinear_func, n_integration_points, integration_radius
             )
         else:
             return UnCachedSETDRK3(
-                dt, linear_coef, nonlinear_func, num_circle_points, circle_radius
+                dt, linear_coef, nonlinear_func, n_integration_points, integration_radius
             )
 
 class SETDRK4Wrapper:
@@ -81,16 +80,16 @@ class SETDRK4Wrapper:
                  dt: float,
                 linear_coef: torch.Tensor,
                 nonlinear_func: Callable[[torch.Tensor], torch.Tensor],
-                num_circle_points: int = 16,
-                circle_radius: float = 1.0,
+                n_integration_points: int = 16,
+                integration_radius: float = 1.0,
                 cpu_cached: bool = False,):
         if cpu_cached:
             return CachedSETDRK4(
-                dt, linear_coef, nonlinear_func, num_circle_points, circle_radius
+                dt, linear_coef, nonlinear_func, n_integration_points, integration_radius
             )
         else:
             return UnCachedSETDRK4(
-                dt, linear_coef, nonlinear_func, num_circle_points, circle_radius
+                dt, linear_coef, nonlinear_func, n_integration_points, integration_radius
             )
 
 

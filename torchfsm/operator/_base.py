@@ -515,7 +515,7 @@ class OperatorLike(_MutableMixIn):
                     "1. set the `cpu_cached` to True when call `Operator.set_integrator(). This will slow down the integrator building speed but not effect the integration speed. However, it will increase the CPU memory usage when building the solver."
                 )
                 error_msg.append(
-                    "2. set the `num_circle_points` to a smaller number when call `Operator.set_integrator(). This will effect the stability of the integrator."
+                    "2. set the `n_integration_points` to a smaller number when call `Operator.set_integrator(). This will effect the stability of the integrator."
                 )
                 error_msg.append(
                     "3. Use other integrators, such as ETDRKIntegrator or RKIntegrator or low-order SETDRK. They are more memory efficient but may not be as accurate as SETDRKIntegrator."
