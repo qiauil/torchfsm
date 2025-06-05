@@ -506,7 +506,7 @@ class FourierMesh:
 
 def mesh_shape(
     mesh: Union[Sequence[tuple[float, float, int]], MeshGrid, FourierMesh],
-    n_batch: int = 1,
+    batch_size: int = 1,
     n_channel: int = 1,
 ) -> Tuple:
     """
@@ -516,7 +516,7 @@ def mesh_shape(
     Args:
         mesh (Union[Sequence[tuple[float, float, int]], MeshGrid, FourierMesh]): The mesh to get the shape from.
             If a sequence is provided, it should be in the form of [(x_min, x_max, n_points), ...].
-        n_batch (int): The number of batches. Default is 1.
+        batch_size (int): The number of batches. Default is 1.
         n_channel (int): The number of channels. Default is 1.
 
     Returns:
@@ -524,4 +524,4 @@ def mesh_shape(
     """
     if isinstance(mesh, FourierMesh) or isinstance(mesh, MeshGrid):
         mesh = mesh.mesh_info
-    return tuple([n_batch, n_channel] + [m[2] for m in mesh])
+    return tuple([batch_size, n_channel] + [m[2] for m in mesh])

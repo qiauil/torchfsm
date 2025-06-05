@@ -90,7 +90,7 @@ def _data_plot(
     fields: np.ndarray,
     n_dim: int,
     n_channel: int,
-    n_batch: int,
+    batch_size: int,
     channel_names: Sequence[str],
     batch_names: Sequence[str],
     animation: bool = True,
@@ -131,7 +131,7 @@ def _data_plot(
     elif n_dim == 3:
         x_label = (
             channel_names[i_column]
-            if len(channel_names) > 1 and i_row == n_batch - 1
+            if len(channel_names) > 1 and i_row == batch_size - 1
             else None
         )
         y_label = batch_names[i_row] if len(batch_names) > 1 and i_column == 0 else None
@@ -533,22 +533,22 @@ def plot_traj(
 
     if isinstance(traj, torch.Tensor):
         traj = traj.cpu().detach().numpy()
-    n_batch, n_frame, n_channel = traj.shape[0], traj.shape[1], traj.shape[2]
+    batch_size, n_frame, n_channel = traj.shape[0], traj.shape[1], traj.shape[2]
     n_dim = len(traj.shape) - 3
     channel_names = default(
         channel_names, ["channel {}".format(i) for i in range(n_channel)]
     )
-    batch_names = default(batch_names, ["batch {}".format(i) for i in range(n_batch)])
+    batch_names = default(batch_names, ["batch {}".format(i) for i in range(batch_size)])
     if len(channel_names) != n_channel:
         raise ValueError(
             "The number of channel names should be equal to the number of channels in the input trajectory."
         )
-    if len(batch_names) != n_batch:
+    if len(batch_names) != batch_size:
         raise ValueError(
             "The number of batch names should be equal to the number of batches in the input trajectory."
         )
     vmins, vmaxs = _find_min_max(traj, vmin, vmax)
-    if n_batch == 1:
+    if batch_size == 1:
         cbar_location = "right"
         cbar_mode = "each"
         ticklocation = "right"
@@ -585,12 +585,12 @@ def plot_traj(
         cmaps = [diverging_alpha(cmap) for cmap in cmaps]
     else:
         raise ValueError("Only support 1D, 2D, and 3D trajectories.")
-    fig = plt.figure(figsize=(subfig_w * n_channel, subfig_h * n_batch))
+    fig = plt.figure(figsize=(subfig_w * n_channel, subfig_h * batch_size))
     # fig=plt.figure()
     grid = ImageGrid(
         fig,
         111,
-        nrows_ncols=(n_batch, n_channel),
+        nrows_ncols=(batch_size, n_channel),
         axes_pad=(x_space, y_space),
         share_all=True,
         cbar_location=cbar_location,
@@ -634,7 +634,7 @@ def plot_traj(
                         traj,
                         n_dim,
                         n_channel,
-                        n_batch,
+                        batch_size,
                         channel_names,
                         batch_names,
                         animation=animation,
@@ -660,7 +660,7 @@ def plot_traj(
                     traj,
                     n_dim,
                     n_channel,
-                    n_batch,
+                    batch_size,
                     channel_names,
                     batch_names,
                     animation=animation,
@@ -695,7 +695,7 @@ def plot_traj(
                         traj,
                         n_dim,
                         n_channel,
-                        n_batch,
+                        batch_size,
                         channel_names,
                         batch_names,
                         animation=animation,
@@ -724,7 +724,7 @@ def plot_traj(
                     traj,
                     n_dim,
                     n_channel,
-                    n_batch,
+                    batch_size,
                     channel_names,
                     batch_names,
                     animation=animation,
@@ -749,7 +749,7 @@ def plot_traj(
             t = [0, 1]
         else:
             t = np.linspace(0, 1, n_frame)
-        for b in range(n_batch):
+        for b in range(batch_size):
             for c in range(n_channel):
                 imgs.append(
                     _render(
@@ -764,7 +764,7 @@ def plot_traj(
             for j, ax_j in enumerate(grid):
                 ax_j.clear()
                 _, x_label, y_label, i_column, i_row = _data_plot(
-                    j, traj, n_dim, n_channel, n_batch, channel_names, batch_names
+                    j, traj, n_dim, n_channel, batch_size, channel_names, batch_names
                 )
                 _plot_3D_field(
                     ax_j,

@@ -13,7 +13,7 @@ def diffused_noise(
     unit_magnitude: bool = True,
     device: Optional[torch.device] = None,
     dtype: Optional[torch.dtype] = None,
-    n_batch: int = 1,
+    batch_size: int = 1,
     n_channel: int = 1,
 ) -> SpatialTensor["B C H ..."]:
     r"""
@@ -31,7 +31,7 @@ def diffused_noise(
             unit_magnitude and unit_variance are mutually exclusive.
         device (Optional[torch.device]): The device to generate the noise on. Default is None.
         dtype (Optional[torch.dtype]): The data type of the generated noise. Default is None.
-        n_batch (int): The number of batches. Default is 1.
+        batch_size (int): The number of batches. Default is 1.
         n_channel (int): The number of channels. Default is 1.
 
     Returns:
@@ -44,7 +44,7 @@ def diffused_noise(
     if dtype is None and (isinstance(mesh, FourierMesh) or isinstance(mesh, MeshGrid)):
         dtype = mesh.dtype
     u_0 = torch.randn(
-        *mesh_shape(mesh, n_batch=n_batch, n_channel=n_channel),
+        *mesh_shape(mesh, batch_size=batch_size, n_channel=n_channel),
         device=device,
         dtype=dtype
     )
@@ -70,7 +70,7 @@ def truncated_fourier_series(
     unit_magnitude: bool = True,
     device: Optional[torch.device] = None,
     dtype: Optional[torch.dtype] = None,
-    n_batch: int = 1,
+    batch_size: int = 1,
     n_channel: int = 1,
 ) -> SpatialTensor["B C H ..."]:
     r"""
@@ -86,7 +86,7 @@ def truncated_fourier_series(
         unit_magnitude (bool): If True, the noise will have unit magnitude.
         device (Optional[torch.device]): The device on which to create the tensor.
         dtype (Optional[torch.dtype]): The data type of the tensor.
-        n_batch (int): The number of batches.
+        batch_size (int): The number of batches.
         n_channel (int): The number of channels.
     
     Returns:
@@ -103,12 +103,12 @@ def truncated_fourier_series(
         mesh = FourierMesh(mesh, device=device, dtype=dtype)
     
     magnitude=torch.rand(
-        *mesh_shape(mesh, n_batch=n_batch, n_channel=n_channel),
+        *mesh_shape(mesh, batch_size=batch_size, n_channel=n_channel),
         device=device,
         dtype=dtype
     )* (amplitude_range[1] - amplitude_range[0]) + amplitude_range[0]   
     angle=torch.rand(
-        *mesh_shape(mesh, n_batch=n_batch, n_channel=n_channel),
+        *mesh_shape(mesh, batch_size=batch_size, n_channel=n_channel),
         device=device,
         dtype=dtype
     )* (angle_range[1] - angle_range[0]) + angle_range[0]
