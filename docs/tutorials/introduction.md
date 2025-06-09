@@ -3,6 +3,20 @@
   <br>TorchFSM<br>
 </h1>
 <h4 align="center">Fourier Spectral Method with PyTorch</h4>
+<p align="center">
+<a href="https://pypi.org/project/torchfsm/">
+  <img src="https://img.shields.io/pypi/v/torchfsm.svg" alt="PyPI">
+</a>
+<a href="https://github.com/qiauil/torchfsm/releases">
+  <img src="https://img.shields.io/github/release-date/qiauil/torchfsm?color=yellow" alt="Release Date">
+</a>
+<a href="https://github.com/qiauil/torchfsm/blob/main/LICENSE">
+  <img src="https://img.shields.io/badge/license-MIT-green" alt="License">
+</a>
+<a href="https://doi.org/10.5281/zenodo.15350210">
+  <img src="https://zenodo.org/badge/DOI/10.5281/zenodo.15350210.svg" alt="DOI">
+</a>
+</p>
 
 ## TL;DR
 `TorchFSM` is a PyTorch-based library for solving PDEs using Fourier spectral method. It is designed for physics-based deep learning and differentiable simulations.

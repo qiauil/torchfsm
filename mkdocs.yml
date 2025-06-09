@@ -114,21 +114,28 @@ nav:
             - '2.1. Call the Operator': 'tutorials/call_operator.ipynb'
             - '2.2. Examples': 'tutorials/derivative_example.ipynb'
         - '3. Simulations':
-            - "3.1. Solve Differential Equations": 'tutorials/solve_de.ipynb'
+            - "3.1. Solve Differential Equations": 'tutorials/simulation/solve_de.ipynb'
             - "3.2. Simulation Gallery":
                 - "3.2.1 Simple PDEs":
-                    - "Burgers": 'tutorials/pdes/burgers.ipynb'
-                    - "Korteweg de Vries": 'tutorials/pdes/korteweg_de_vries.ipynb'
-                    - "Kuramoto Sivashinsky": "tutorials/pdes/kuramoto_sivashinsky.ipynb"
+                    - "Burgers": 'tutorials/simulation/gallery/burgers.ipynb'
+                    - "Korteweg de Vries": 'tutorials/simulation/gallery/korteweg_de_vries.ipynb'
+                    - "Kuramoto Sivashinsky": "tutorials/simulation/gallery/kuramoto_sivashinsky.ipynb"
                 - "3.2.1. Navier-Stokes Simulation":
-                    - "2.3.4.1 Vorticity Based": 'tutorials/pdes/ns_vorticity.ipynb'
-                    - "2.3.4.1 Velocity Based": 'tutorials/pdes/ns_velocity.ipynb'
+                    - "2.3.4.1 Vorticity Based": 'tutorials/simulation/gallery/ns_vorticity.ipynb'
+                    - "2.3.4.1 Velocity Based": 'tutorials/simulation/gallery/ns_velocity.ipynb'
+            - "3.3 Advanced Techniques":
+                - "3.3.1. Simulation with Batched Parameters": 'tutorials/simulation/advanced_tech/batched_para.ipynb'
+                - "3.3.2. Choose Integrator": 'tutorials/simulation/advanced_tech/choose_integrator.ipynb'
         - 'Cheat Sheet': 'tutorials/cheatsheet.md'
+        - 'Documenation Release Note': 'tutorials/release_note.md'
     - 'APIs':
         - '1. operator': 'apis/operator.md'
         - '2. pde': 'apis/pde.md'
         - '3. functional': 'apis/functional.md'
-        - '4. integrator': 'apis/integrator.md'
+        - '4. integrator': 
+            - 'ETDRK Integrator': 'apis/etdrk_integrator.md'
+            - 'SETDRK Integrator': 'apis/setdrk_integrator.md'
+            - 'RK Integrator': 'apis/rk_integrator.md'
         - '5. field': 'apis/field.md'
         - '6. plot': 'apis/plot.md'
         - '7. traj_recorder': 'apis/traj_recorder.md'
