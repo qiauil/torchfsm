@@ -2,16 +2,15 @@ import torch, os
 from torch import Tensor
 from typing import Union, Sequence, Callable, Optional, Tuple, Literal, List
 from ..utils import default, clean_up_memory
-from .._type import ValueList
+from .._type import ValueList, SpatialTensor, FourierTensor
 from ..mesh import FourierMesh, MeshGrid
 from ..integrator import ETDRKIntegrator, SETDRKIntegrator, RKIntegrator
 from ..traj_recorder import _TrajRecorder
+from ..errors import NanSimulationError, OutOfMemoryError
 from abc import ABC, abstractmethod
 from tqdm.auto import tqdm
 from typing import Literal
-from torch.cuda import OutOfMemoryError
-from .._type import SpatialTensor, FourierTensor
-
+from torch.cuda import OutOfMemoryError as TorchOutOfMemoryError
 
 class LinearCoef(ABC):
     r"""
@@ -504,7 +503,7 @@ class OperatorLike(_MutableMixIn):
                 raise ValueError(
                     "The integrator should be 'auto' or an instance of ETDRKIntegrator, SETDRKIntegrator or RKIntegrator"
                 )
-        except OutOfMemoryError as e:
+        except TorchOutOfMemoryError as e:
             error_msg = ["Cuda out of memory when building the integrator."]
             error_msg.append("Original error message: {}".format(str(e)))
             if isinstance(solver, SETDRKIntegrator):
@@ -522,7 +521,7 @@ class OperatorLike(_MutableMixIn):
                 )
             else:
                 error_msg.append("Please try to use a smaller mesh or a low-order integrator.")
-            raise RuntimeError(os.linesep.join(error_msg))
+            raise OutOfMemoryError(os.linesep.join(error_msg))
         clean_up_memory()
 
     def _pre_check(
@@ -685,6 +684,7 @@ class OperatorLike(_MutableMixIn):
         progressive: bool = False,
         trajectory_recorder: Optional[_TrajRecorder] = None,
         return_in_fourier: bool = False,
+        nan_check: bool = False,
     ) -> Union[
         SpatialTensor["B C H ..."],
         SpatialTensor["B T C H ..."],
@@ -706,6 +706,7 @@ class OperatorLike(_MutableMixIn):
             trajectory_recorder (Optional[_TrajRecorder]): Trajectory recorder for recording the trajectory during integration. Default is None.
                 If None, no trajectory will be recorded. The function will only return the final frame.
             return_in_fourier (bool): If True, return the result in Fourier domain. If False, return the result in spatial domain. Default is False.
+            Nan_check (bool): If True, check for NaN values in the result. If NaN values are found, raise a NanSimulationError. Default is False.
 
         Returns:
             Union[SpatialTensor["B C H ..."], SpatialTensor["B T C H ..."], FourierTensor["B C H ..."], FourierTensor["B T C H ..."]]: Integrated result in spatial or Fourier domain.
@@ -733,13 +734,18 @@ class OperatorLike(_MutableMixIn):
                 if trajectory_recorder is not None:
                     trajectory_recorder.record(i, u_0_fft)
                 u_0_fft = self._state_dict["integrator"].forward(u_0_fft, dt)
-        except OutOfMemoryError as e:
+                if nan_check:
+                    if torch.isnan(u_0_fft).any():
+                        raise NanSimulationError(
+                            "NaN values found in the result. Please check the input and simulation parameters."
+                        )
+        except TorchOutOfMemoryError as e:
             error_msg = [
                 "Cuda out of memory when integrating the operator.",
                 "Original error message: {}".format(str(e)),
                 "Please try to use a smaller mesh or a low-order integrator.",
             ]
-            raise RuntimeError(os.linesep.join(error_msg))
+            raise OutOfMemoryError(os.linesep.join(error_msg))
         if trajectory_recorder is not None:
             trajectory_recorder.record(i + 1, u_0_fft)
             trajectory_recorder.return_in_fourier = return_in_fourier
