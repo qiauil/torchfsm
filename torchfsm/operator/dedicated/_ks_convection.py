@@ -48,7 +48,7 @@ class _KSConvectionGenerator(CoreGenerator):
 
     def __call__(self, f_mesh: FourierMesh, n_channel: int) -> NonlinearFunc:
         if n_channel != 1:
-            return NotImplementedError("KSConvection only supports scalar field")
+            raise NotImplementedError("KSConvection only supports scalar field")
         return _KSConvectionCore(self.remove_mean)
 
 
