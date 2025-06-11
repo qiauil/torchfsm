@@ -38,7 +38,7 @@ class _TrajRecorder():
                  ):
         control_func=default(control_func,lambda step: True)
         if include_initial_state:
-            self.control_func=control_func
+            self.control_func=lambda step: True if step==0 else control_func(step)
         else:
             self.control_func=lambda step: False if step==0 else control_func(step)
         self.return_in_fourier=False
