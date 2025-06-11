@@ -737,7 +737,7 @@ class OperatorLike(_MutableMixIn):
                 if nan_check:
                     if torch.isnan(u_0_fft).any():
                         raise NanSimulationError(
-                            "NaN values found in the result. Please check the input and simulation parameters."
+                            f"NaN values found in the result at step {i}. Please check the input and simulation parameters."
                         )
         except TorchOutOfMemoryError as e:
             error_msg = [
