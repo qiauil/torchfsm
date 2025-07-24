@@ -266,6 +266,13 @@ class BroadcastedFFTFrequency:
         return self._bf_vector
 
     @property
+    def bf_vector_norm(self) -> torch.Tensor:
+        """
+        Broadcasted fft frequency vector norm
+        """
+        return torch.sqrt(torch.sum(self.bf_vector ** 2, dim=1, keepdim=True))
+
+    @property
     def bf_x(self) -> torch.Tensor:
         """
         Broadcasted fft frequency for the first dimension
@@ -395,6 +402,13 @@ class FourierMesh:
         Broadcasted fft frequency for all dimensions
         """
         return self.bf.bf_vector
+    
+    @property
+    def bf_vector_norm(self) -> torch.Tensor:
+        """
+        Broadcasted fft frequency vector norm
+        """
+        return self.bf.bf_vector_norm
 
     #@lru_cache()
     def grad(self, dim_i: int, order: int) -> FourierTensor["B C H ..."]:
