@@ -5,138 +5,15 @@ import matplotlib.colors as colors
 from matplotlib.animation import FuncAnimation
 from matplotlib.colors import Colormap, LinearSegmentedColormap, ListedColormap
 import torch, os, copy
-from .utils import default, uniformly_select_frames
-from ._type import SpatialTensor, SpatialArray
+from ..utils import default, uniformly_select_frames
+from .._type import SpatialTensor, SpatialArray
+from ._utils import _find_min_max, _data_plot, _render, _to_rendering_cmap
 from typing import Union, Optional, Sequence, Tuple, Callable, Literal, Annotated
 from mpl_toolkits.axes_grid1 import ImageGrid
 from warnings import warn
 from vape4d import render
-from vape4d.utils import diverging_alpha, linear_increasing_alpha
 from IPython.display import HTML
 
-
-# "triagnle_wave" and "zigzag_alpha" functions are copied from exponax(https://github.com/Ceyron/exponax) exponax/exponax/viz/_volume.py
-def triangle_wave(x, p):
-    return 2 * np.abs(x / p - np.floor(x / p + 0.5))
-
-
-def zigzag_alpha(cmap, min_alpha=0.0):
-    """changes the alpha channel of a colormap to be linear (0->0, 1->1)
-
-    Args:
-        cmap (Colormap): colormap
-
-    Returns:a
-        Colormap: new colormap
-    """
-    if isinstance(cmap, ListedColormap):
-        colors = copy.deepcopy(cmap.colors)
-        for i, a in enumerate(colors):
-            a.append(
-                (triangle_wave(i / (cmap.N - 1), 0.5) * (1 - min_alpha)) + min_alpha
-            )
-        return ListedColormap(colors, cmap.name)
-    elif isinstance(cmap, LinearSegmentedColormap):
-        segmentdata = copy.deepcopy(cmap._segmentdata)
-        segmentdata["alpha"] = np.array(
-            [
-                [0.0, 0.0, 0.0],
-                [0.25, 1.0, 1.0],
-                [0.5, 0.0, 0.0],
-                [0.75, 1.0, 1.0],
-                [1.0, 0.0, 0.0],
-            ]
-        )
-        return LinearSegmentedColormap(cmap.name, segmentdata)
-    else:
-        raise TypeError(
-            "cmap must be either a ListedColormap or a LinearSegmentedColormap"
-        )
-
-
-def _find_min_max(
-    traj: np.ndarray,
-    vmin: Union[float, Sequence[Optional[float]]],
-    vmax: Union[float, Sequence[Optional[float]]],
-):
-    axis = tuple([0, 1] + [i + 3 for i in range(len(traj.shape) - 3)])
-    vmins = np.min(traj, axis=axis)
-    vmaxs = np.max(traj, axis=axis)
-    if vmin is not None:
-        if isinstance(vmin, float) or isinstance(vmin, int):
-            vmin = [vmin] * len(vmins)
-        elif len(vmin) != len(vmins):
-            raise ValueError(
-                "The number of vmin values should be equal to the number of channels in the input trajectory."
-            )
-        vmins = np.asarray(
-            [vmin[i] if vmin[i] is not None else vmins[i] for i in range(len(vmins))]
-        )
-    if vmax is not None:
-        if isinstance(vmax, float) or isinstance(vmax, int):
-            vmax = [vmax] * len(vmaxs)
-        elif len(vmax) != len(vmaxs):
-            raise ValueError(
-                "The number of vmax values should be equal to the number of channels in the input trajectory."
-            )
-        vmaxs = np.asarray(
-            [vmax[i] if vmax[i] is not None else vmaxs[i] for i in range(len(vmaxs))]
-        )
-    return vmins, vmaxs
-
-
-def _data_plot(
-    i: int,
-    fields: np.ndarray,
-    n_dim: int,
-    n_channel: int,
-    batch_size: int,
-    channel_names: Sequence[str],
-    batch_names: Sequence[str],
-    animation: bool = True,
-):
-    i_row = i // n_channel
-    i_column = i % n_channel
-
-    if n_dim == 1:
-        if animation:
-            y_label = (
-                batch_names[i_row] + os.linesep + "value"
-                if len(batch_names) > 1
-                else "value"
-            )
-            x_label = (
-                "x" + os.linesep + channel_names[i_column]
-                if len(channel_names) > 1
-                else "x"
-            )
-            data_i = fields[i_row, :, i_column, :]
-        else:
-            y_label = "x"
-            if len(batch_names) > 1:
-                y_label = batch_names[i_row] + os.linesep + y_label
-            x_label = "t"
-            data_i = fields[i_row, :, i_column, :]
-    if n_dim == 2:
-        if animation:
-            y_label = "y"
-            if len(batch_names) > 1:
-                y_label = batch_names[i_row] + os.linesep + y_label
-            x_label = "x"
-            data_i = fields[i_row, :, i_column, ...]
-        else:
-            x_label = channel_names[i_column] if len(channel_names) > 1 else None
-            y_label = batch_names[i_row] if len(batch_names) > 1 else None
-            data_i = fields[i_row, :, i_column, ...]
-    elif n_dim == 3:
-        x_label = (
-            channel_names[i_column]
-            if len(channel_names) > 1 and i_row == batch_size - 1
-            else None
-        )
-        y_label = batch_names[i_row] if len(batch_names) > 1 and i_column == 0 else None
-        data_i = None
-    return data_i, x_label, y_label, i_column, i_row
 
 
 def sym_colormap(d_min, d_max, d_cen=0, cmap="coolwarm", cmapname="sym_map"):
@@ -349,46 +226,6 @@ def _plot_3D_field(
     return im
 
 
-def _render(
-    data: np.ndarray,
-    cmap: Union[str, Colormap],
-    vmin: Optional[float] = None,
-    vmax: Optional[float] = None,
-    distance_scale: float = 10,
-    background=(0, 0, 0, 0),
-    width=512,
-    height=512,
-    alpha_func: Literal["zigzag", "diverging", "linear"] = "zigzag",
-    gamma_correction: float = 2.4,
-    **kwargs,
-):
-    if isinstance(cmap, str):
-        cmap = mlp.colormaps[cmap]
-    if alpha_func == "zigzag":
-        cmap = zigzag_alpha(cmap)
-    elif alpha_func == "diverging":
-        cmap = diverging_alpha(cmap)
-    elif alpha_func == "linear":
-        cmap = linear_increasing_alpha(cmap)
-    else:
-        raise ValueError(
-            "The alpha function should be 'zigzag', 'diverging', or 'linear'."
-        )
-    img = render(
-        data.astype(np.float32),  # expects float32
-        cmap=cmap,  # zigzag alpha
-        width=width,
-        height=height,
-        distance_scale=distance_scale,
-        background=background,  # transparent background
-        vmin=vmin,
-        vmax=vmax,
-        **kwargs,
-    )
-    img = ((img / 255.0) ** (gamma_correction) * 255).astype(np.uint8)
-    return img
-
-
 def plot_3D_field(
     ax: plt.Axes,
     data: Union[np.ndarray, torch.Tensor],
@@ -405,7 +242,7 @@ def plot_3D_field(
     background=(0, 0, 0, 0),
     width=512,
     height=512,
-    alpha_func: Literal["zigzag", "diverging", "linear"] = "zigzag",
+    alpha_func: Literal["zigzag", "diverging", "linear_increase", "linear_decrease"] = "zigzag",
     gamma_correction: float = 2.4,
     **kwargs,
 ):
@@ -493,9 +330,11 @@ def plot_traj(
     fps=30,
     show_in_notebook: bool = True,
     animation_engine: Literal["jshtml", "html5"] = "html5",
+    alpha_func: Literal["zigzag", "diverging", "linear_increase", "linear_decrease"] = "zigzag",
+    use_real_cmap: bool = False,
     save_name: Optional[str] = None,
     **kwargs,
-):
+) ->Optional[FuncAnimation]:
     """
     Plot a trajectory. The dimension of the trajectory can be 1D, 2D, or 3D.
 
@@ -524,9 +363,16 @@ def plot_traj(
             This only works for 1D and 2D data. If set to False, the 1d trajectory will be plotted as a 2D plot and the 2D trajectory will be plotted as a 3D plot.
         fps (int, optional): The frames per second for the animation. Defaults to 30.
         show_in_notebook (bool, optional): Whether to show the plot in a notebook. Defaults to True.
+            If set to True, the current function will not return a `FuncAnimation` object, but will display the plot in the notebook.
         animation_engine (Literal["jshtml", "html5"], optional): The engine for the animation. Defaults to "html5".
         save_name (Optional[str], optional): The name of the file to save the plot. Defaults to None.
+            Note that the save_name only works for 1D plot with animation=False. For other cases, this function will return a `FuncAnimation` object. You can save the animation using `ani.save(save_name, writer='ffmpeg', fps=fps)`.
+        alpha_func (Literal["zigzag", "diverging", "linear_increase", "linear_decrease"], optional): The alpha function for the colormap when plot 3D data. Defaults to "zigzag".
+        use_real_cmap (bool, optional): Whether to use the real colormap for 3D data. Defaults to False. When plotting 3D data, the cmap will automatically be converted to a colormap with alpha channel.
         **kwargs: Additional keyword arguments for the plot.
+        
+    Returns:
+        Optional[FuncAnimation]: If `animation` is True and not show_in_notebook, returns a `FuncAnimation` object.
     """
 
     if isinstance(traj, torch.Tensor):
@@ -558,7 +404,7 @@ def plot_traj(
         ticklocation = "top"
     cmap = mlp.colormaps[cmap] if isinstance(cmap, str) else cmap
     cmaps = [
-        sym_colormap(vmins[i], vmaxs[i], cmap=cmap) if use_sym_colormap else cmap
+        sym_colormap(vmins[i], vmaxs[i], cmap=cmap, cmapname=f"sym_cmap_{i}") if use_sym_colormap else cmap
         for i in range(n_channel)
     ]
     if show_ticks == "auto":
@@ -603,9 +449,13 @@ def plot_traj(
 
     def set_colorbar():
         for i in range(n_channel):
+            if n_dim == 3 and use_real_cmap:
+                current_cmap = _to_rendering_cmap(cmaps[i], alpha_func)
+            else:
+                current_cmap = cmaps[i]
             cb = grid.cbar_axes[i].colorbar(
                 mlp.cm.ScalarMappable(
-                    colors.Normalize(vmin=vmins[i], vmax=vmaxs[i]), cmap=cmaps[i]
+                    colors.Normalize(vmin=vmins[i], vmax=vmaxs[i]), cmap=current_cmap
                 ),
                 ticklocation=ticklocation,
                 label=channel_names[i],
@@ -757,10 +607,12 @@ def plot_traj(
                         traj[b, :, c, ...].astype(np.float32),
                         cmaps[c],
                         time=t,
+                        alpha_func=alpha_func,
+                        vmin=vmins[c],
+                        vmax=vmaxs[c],
                         **kwargs,
                     )
                 )
-
         def ani_func(i):
             for j, ax_j in enumerate(grid):
                 ax_j.clear()
@@ -777,7 +629,6 @@ def plot_traj(
                 )
             title_t(i)
             set_colorbar()
-
     if n_frame != 1:
         ani = FuncAnimation(
             fig, ani_func, frames=n_frame, repeat=False, interval=1000 / fps
@@ -833,6 +684,8 @@ def plot_field(
     ticks_y: Tuple[Sequence[float], Sequence[str]] = None,
     ticks_z: Tuple[Sequence[float], Sequence[str]] = None,
     save_name: Optional[str] = None,
+    alpha_func: Literal["zigzag", "diverging", "linear_increase", "linear_decrease"] = "zigzag",
+    use_real_cmap: bool = False,
     **kwargs,
 ):
     """
@@ -858,6 +711,8 @@ def plot_field(
         ticks_y (Tuple[Sequence[float], Sequence[str]], optional): Custom ticks for the y-axis. Defaults to None.
         ticks_z (Tuple[Sequence[float], Sequence[str]], optional): Custom ticks for the z-axis. Defaults to None.
         save_name (Optional[str], optional): The name of the file to save the plot. Defaults to None.
+        alpha_func (Literal["zigzag", "diverging", "linear_increase", "linear_decrease"], optional): The alpha function for the colormap when plot 3D data. Defaults to "zigzag".
+        use_real_cmap (bool, optional): Whether to use the real colormap for 3D data. Defaults to False. When plotting 3D data, the cmap will automatically
         **kwargs: Additional keyword arguments for the plot.
     """
 
@@ -886,6 +741,8 @@ def plot_field(
         animation=True,
         show_time_index=False,
         save_name=save_name,
+        alpha_func=alpha_func,
+        use_real_cmap=use_real_cmap,
         **kwargs,
     )
 
@@ -911,6 +768,8 @@ def plot_traj_frames(
     ticks_x: Tuple[Sequence[float], Sequence[str]] = None,
     ticks_y: Tuple[Sequence[float], Sequence[str]] = None,
     save_name: Optional[str] = None,
+    alpha_func: Literal["zigzag", "diverging", "linear_increase", "linear_decrease"] = "zigzag",
+    use_real_cmap: bool = False,
     **kwargs,
 ):
     """
@@ -937,6 +796,8 @@ def plot_traj_frames(
         ticks_x (Tuple[Sequence[float], Sequence[str]], optional): Custom ticks for the x-axis. Defaults to None.
         ticks_y (Tuple[Sequence[float], Sequence[str]], optional): Custom ticks for the y-axis. Defaults to None.
         save_name (Optional[str], optional): The name of the file to save the plot. Defaults to None.
+        alpha_func (Literal["zigzag", "diverging", "linear_increase", "linear_decrease"], optional): The alpha function for the colormap when plot 3D data. Defaults to "zigzag".
+        use_real_cmap (bool, optional): Whether to use the real colormap for 3D data. Defaults to False. When plotting 3D data, the cmap will automatically
         **kwargs: Additional keyword arguments for the plot.
     """
     if isinstance(traj, torch.Tensor):
@@ -1068,13 +929,18 @@ def plot_traj_frames(
                 cmap=cmap,
                 vmin=vmin,
                 vmax=vmax,
+                alpha_func=alpha_func,
                 **kwargs,
             )
     if n_dim != 1:
         for i in range(n_channel):
+            if n_dim == 3 and use_real_cmap:
+                current_cmap = _to_rendering_cmap(cmaps[i], alpha_func)
+            else:
+                current_cmap = cmaps[i]
             cb = grid.cbar_axes[i].colorbar(
                 mlp.cm.ScalarMappable(
-                    colors.Normalize(vmin=vmins[i], vmax=vmaxs[i]), cmap=cmaps[i]
+                    colors.Normalize(vmin=vmins[i], vmax=vmaxs[i]), cmap=current_cmap
                 ),
                 ticklocation="right",
                 format=ctick_format,
