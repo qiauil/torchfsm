@@ -15,7 +15,6 @@ from IPython.display import HTML
 from .alpha_func import AlphaFunction
 
 
-
 def sym_colormap(d_min, d_max, d_cen=0, cmap="coolwarm", cmapname="sym_map"):
     """
     Generate a symmetric colormap.
@@ -349,10 +348,10 @@ def plot_traj(
         ],
         AlphaFunction,
     ] = "zigzag",
-    use_real_cmap: bool = False,
+    use_real_cmap: bool = True,
     save_name: Optional[str] = None,
     **kwargs,
-) ->Optional[FuncAnimation]:
+) -> Optional[FuncAnimation]:
     """
     Plot a trajectory. The dimension of the trajectory can be 1D, 2D, or 3D.
 
@@ -386,9 +385,9 @@ def plot_traj(
         save_name (Optional[str], optional): The name of the file to save the plot. Defaults to None.
             Note that the save_name only works for 1D plot with animation=False. For other cases, this function will return a `FuncAnimation` object. You can save the animation using `ani.save(save_name, writer='ffmpeg', fps=fps)`.
         alpha_func (Union[Literal["zigzag","central_peak","central_valley","linear_increase","linear_decrease", "luminance",],AlphaFunction,], optional): The alpha function for the colormap when plot 3D data. Defaults to "zigzag".
-        use_real_cmap (bool, optional): Whether to use the real colormap for 3D data. Defaults to False. When plotting 3D data, the cmap will automatically be converted to a colormap with alpha channel.
+        use_real_cmap (bool, optional): Whether to use the real colormap for 3D data. Defaults to True. When plotting 3D data, the cmap will automatically be converted to a colormap with alpha channel.
         **kwargs: Additional keyword arguments for the plot.
-        
+
     Returns:
         Optional[FuncAnimation]: If `animation` is True and not show_in_notebook, returns a `FuncAnimation` object.
     """
@@ -422,7 +421,11 @@ def plot_traj(
         ticklocation = "top"
     cmap = mlp.colormaps[cmap] if isinstance(cmap, str) else cmap
     cmaps = [
-        sym_colormap(vmins[i], vmaxs[i], cmap=cmap, cmapname=f"sym_cmap_{i}") if use_sym_colormap else cmap
+        (
+            sym_colormap(vmins[i], vmaxs[i], cmap=cmap, cmapname=f"sym_cmap_{i}")
+            if use_sym_colormap
+            else cmap
+        )
         for i in range(n_channel)
     ]
     if show_ticks == "auto":
@@ -447,7 +450,7 @@ def plot_traj(
             or show_ticks
         ):
             warn("Ticks are not supported for 3D trajectories.")
-        #cmaps = [diverging_alpha(cmap) for cmap in cmaps]
+        # cmaps = [diverging_alpha(cmap) for cmap in cmaps]
     else:
         raise ValueError("Only support 1D, 2D, and 3D trajectories.")
     fig = plt.figure(figsize=(subfig_w * n_channel, subfig_h * batch_size))
@@ -632,6 +635,7 @@ def plot_traj(
                         **kwargs,
                     )
                 )
+
         def ani_func(i):
             for j, ax_j in enumerate(grid):
                 ax_j.clear()
@@ -648,6 +652,7 @@ def plot_traj(
                 )
             title_t(i)
             set_colorbar()
+
     if n_frame != 1:
         ani = FuncAnimation(
             fig, ani_func, frames=n_frame, repeat=False, interval=1000 / fps
@@ -713,7 +718,7 @@ def plot_field(
         ],
         AlphaFunction,
     ] = "zigzag",
-    use_real_cmap: bool = False,
+    use_real_cmap: bool = True,
     **kwargs,
 ):
     """
@@ -740,7 +745,7 @@ def plot_field(
         ticks_z (Tuple[Sequence[float], Sequence[str]], optional): Custom ticks for the z-axis. Defaults to None.
         save_name (Optional[str], optional): The name of the file to save the plot. Defaults to None.
         alpha_func (Union[Literal["zigzag","central_peak","central_valley","linear_increase","linear_decrease", "luminance",],AlphaFunction,], optional): The alpha function for the colormap when plot 3D data. Defaults to "zigzag".
-        use_real_cmap (bool, optional): Whether to use the real colormap for 3D data. Defaults to False. When plotting 3D data, the cmap will automatically
+        use_real_cmap (bool, optional): Whether to use the real colormap for 3D data. Defaults to True. When plotting 3D data, the cmap will automatically
         **kwargs: Additional keyword arguments for the plot.
     """
 
@@ -806,7 +811,7 @@ def plot_traj_frames(
         ],
         AlphaFunction,
     ] = "zigzag",
-    use_real_cmap: bool = False,
+    use_real_cmap: bool = True,
     **kwargs,
 ):
     """
@@ -834,7 +839,7 @@ def plot_traj_frames(
         ticks_y (Tuple[Sequence[float], Sequence[str]], optional): Custom ticks for the y-axis. Defaults to None.
         save_name (Optional[str], optional): The name of the file to save the plot. Defaults to None.
         alpha_func (Union[Literal["zigzag","central_peak","central_valley","linear_increase","linear_decrease", "luminance",],AlphaFunction,], optional): The alpha function for the colormap when plot 3D data. Defaults to "zigzag".
-        use_real_cmap (bool, optional): Whether to use the real colormap for 3D data. Defaults to False. When plotting 3D data, the cmap will automatically
+        use_real_cmap (bool, optional): Whether to use the real colormap for 3D data. Defaults to True. When plotting 3D data, the cmap will automatically
         **kwargs: Additional keyword arguments for the plot.
     """
     if isinstance(traj, torch.Tensor):
@@ -886,7 +891,7 @@ def plot_traj_frames(
         subfig_w = subfig_size * w / h
         if ticks_x is not None or ticks_y is not None or show_ticks:
             warn("Ticks are not supported for 3D trajectories.")
-        #cmaps = [diverging_alpha(cmap) for cmap in cmaps]
+        # cmaps = [diverging_alpha(cmap) for cmap in cmaps]
     else:
         raise ValueError("Only support 1D, 2D, and 3D trajectories.")
     if n_dim == 1:  # no_color_bar
