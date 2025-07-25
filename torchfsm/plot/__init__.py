@@ -3,15 +3,14 @@ import matplotlib.pyplot as plt
 import matplotlib as mlp
 import matplotlib.colors as colors
 from matplotlib.animation import FuncAnimation
-from matplotlib.colors import Colormap, LinearSegmentedColormap, ListedColormap
-import torch, os, copy
+from matplotlib.colors import Colormap
+import torch, os
 from ..utils import default, uniformly_select_frames
 from .._type import SpatialTensor, SpatialArray
 from ._utils import _find_min_max, _data_plot, _render, _to_rendering_cmap
-from typing import Union, Optional, Sequence, Tuple, Callable, Literal, Annotated
+from typing import Union, Optional, Sequence, Tuple, Callable, Literal
 from mpl_toolkits.axes_grid1 import ImageGrid
 from warnings import warn
-from vape4d import render
 from IPython.display import HTML
 
 
@@ -453,6 +452,7 @@ def plot_traj(
                 current_cmap = _to_rendering_cmap(cmaps[i], alpha_func)
             else:
                 current_cmap = cmaps[i]
+            grid.cbar_axes[i].clear()
             cb = grid.cbar_axes[i].colorbar(
                 mlp.cm.ScalarMappable(
                     colors.Normalize(vmin=vmins[i], vmax=vmaxs[i]), cmap=current_cmap
@@ -938,6 +938,7 @@ def plot_traj_frames(
                 current_cmap = _to_rendering_cmap(cmaps[i], alpha_func)
             else:
                 current_cmap = cmaps[i]
+            grid.cbar_axes[i].clear()
             cb = grid.cbar_axes[i].colorbar(
                 mlp.cm.ScalarMappable(
                     colors.Normalize(vmin=vmins[i], vmax=vmaxs[i]), cmap=current_cmap
