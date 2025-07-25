@@ -12,6 +12,7 @@ from typing import Union, Optional, Sequence, Tuple, Callable, Literal
 from mpl_toolkits.axes_grid1 import ImageGrid
 from warnings import warn
 from IPython.display import HTML
+from .alpha_func import AlphaFunction
 
 
 
@@ -241,7 +242,16 @@ def plot_3D_field(
     background=(0, 0, 0, 0),
     width=512,
     height=512,
-    alpha_func: Literal["zigzag", "diverging", "linear_increase", "linear_decrease"] = "zigzag",
+    alpha_func: Union[
+        Literal[
+            "zigzag",
+            "central_peak",
+            "central_valley",
+            "linear_increase",
+            "linear_decrease",
+        ],
+        AlphaFunction,
+    ] = "zigzag",
     gamma_correction: float = 2.4,
     **kwargs,
 ):
@@ -265,7 +275,7 @@ def plot_3D_field(
         background (tuple, optional): The background color. Defaults to (0, 0, 0, 0).
         width (int, optional): The width of the rendered image. Defaults to 512.
         height (int, optional): The height of the rendered image. Defaults to 512.
-        alpha_func (str, optional): The alpha function. Defaults to "zigzag".
+        alpha_func (Union[Literal["zigzag","central_peak","central_valley","linear_increase","linear_decrease", "luminance",],AlphaFunction,], optional): The alpha function. Defaults to "zigzag".
         gamma_correction (float, optional): The gamma correction factor. Defaults to 2.4.
         **kwargs: Additional keyword arguments for the plot.
     """
@@ -329,7 +339,16 @@ def plot_traj(
     fps=30,
     show_in_notebook: bool = True,
     animation_engine: Literal["jshtml", "html5"] = "html5",
-    alpha_func: Literal["zigzag", "diverging", "linear_increase", "linear_decrease"] = "zigzag",
+    alpha_func: Union[
+        Literal[
+            "zigzag",
+            "central_peak",
+            "central_valley",
+            "linear_increase",
+            "linear_decrease",
+        ],
+        AlphaFunction,
+    ] = "zigzag",
     use_real_cmap: bool = False,
     save_name: Optional[str] = None,
     **kwargs,
@@ -366,7 +385,7 @@ def plot_traj(
         animation_engine (Literal["jshtml", "html5"], optional): The engine for the animation. Defaults to "html5".
         save_name (Optional[str], optional): The name of the file to save the plot. Defaults to None.
             Note that the save_name only works for 1D plot with animation=False. For other cases, this function will return a `FuncAnimation` object. You can save the animation using `ani.save(save_name, writer='ffmpeg', fps=fps)`.
-        alpha_func (Literal["zigzag", "diverging", "linear_increase", "linear_decrease"], optional): The alpha function for the colormap when plot 3D data. Defaults to "zigzag".
+        alpha_func (Union[Literal["zigzag","central_peak","central_valley","linear_increase","linear_decrease", "luminance",],AlphaFunction,], optional): The alpha function for the colormap when plot 3D data. Defaults to "zigzag".
         use_real_cmap (bool, optional): Whether to use the real colormap for 3D data. Defaults to False. When plotting 3D data, the cmap will automatically be converted to a colormap with alpha channel.
         **kwargs: Additional keyword arguments for the plot.
         
@@ -684,7 +703,16 @@ def plot_field(
     ticks_y: Tuple[Sequence[float], Sequence[str]] = None,
     ticks_z: Tuple[Sequence[float], Sequence[str]] = None,
     save_name: Optional[str] = None,
-    alpha_func: Literal["zigzag", "diverging", "linear_increase", "linear_decrease"] = "zigzag",
+    alpha_func: Union[
+        Literal[
+            "zigzag",
+            "central_peak",
+            "central_valley",
+            "linear_increase",
+            "linear_decrease",
+        ],
+        AlphaFunction,
+    ] = "zigzag",
     use_real_cmap: bool = False,
     **kwargs,
 ):
@@ -711,7 +739,7 @@ def plot_field(
         ticks_y (Tuple[Sequence[float], Sequence[str]], optional): Custom ticks for the y-axis. Defaults to None.
         ticks_z (Tuple[Sequence[float], Sequence[str]], optional): Custom ticks for the z-axis. Defaults to None.
         save_name (Optional[str], optional): The name of the file to save the plot. Defaults to None.
-        alpha_func (Literal["zigzag", "diverging", "linear_increase", "linear_decrease"], optional): The alpha function for the colormap when plot 3D data. Defaults to "zigzag".
+        alpha_func (Union[Literal["zigzag","central_peak","central_valley","linear_increase","linear_decrease", "luminance",],AlphaFunction,], optional): The alpha function for the colormap when plot 3D data. Defaults to "zigzag".
         use_real_cmap (bool, optional): Whether to use the real colormap for 3D data. Defaults to False. When plotting 3D data, the cmap will automatically
         **kwargs: Additional keyword arguments for the plot.
     """
@@ -768,7 +796,16 @@ def plot_traj_frames(
     ticks_x: Tuple[Sequence[float], Sequence[str]] = None,
     ticks_y: Tuple[Sequence[float], Sequence[str]] = None,
     save_name: Optional[str] = None,
-    alpha_func: Literal["zigzag", "diverging", "linear_increase", "linear_decrease"] = "zigzag",
+    alpha_func: Union[
+        Literal[
+            "zigzag",
+            "central_peak",
+            "central_valley",
+            "linear_increase",
+            "linear_decrease",
+        ],
+        AlphaFunction,
+    ] = "zigzag",
     use_real_cmap: bool = False,
     **kwargs,
 ):
@@ -796,7 +833,7 @@ def plot_traj_frames(
         ticks_x (Tuple[Sequence[float], Sequence[str]], optional): Custom ticks for the x-axis. Defaults to None.
         ticks_y (Tuple[Sequence[float], Sequence[str]], optional): Custom ticks for the y-axis. Defaults to None.
         save_name (Optional[str], optional): The name of the file to save the plot. Defaults to None.
-        alpha_func (Literal["zigzag", "diverging", "linear_increase", "linear_decrease"], optional): The alpha function for the colormap when plot 3D data. Defaults to "zigzag".
+        alpha_func (Union[Literal["zigzag","central_peak","central_valley","linear_increase","linear_decrease", "luminance",],AlphaFunction,], optional): The alpha function for the colormap when plot 3D data. Defaults to "zigzag".
         use_real_cmap (bool, optional): Whether to use the real colormap for 3D data. Defaults to False. When plotting 3D data, the cmap will automatically
         **kwargs: Additional keyword arguments for the plot.
     """

@@ -2,10 +2,11 @@ import numpy as np
 import matplotlib as mlp
 from matplotlib.colors import Colormap
 import os
-from ._alpha_func import *
-from typing import Union, Optional, Sequence,Literal
+from .alpha_func import *
+from typing import Union, Optional, Sequence, Literal
 from vape4d import render
 from IPython.display import HTML
+
 
 def _find_min_max(
     traj: np.ndarray,
@@ -91,24 +92,42 @@ def _data_plot(
         data_i = None
     return data_i, x_label, y_label, i_column, i_row
 
-def _to_rendering_cmap(cmap: Union[str, Colormap],
-                       alpha_func: Literal["zigzag", "diverging", "linear_increase", "linear_decrease"] = "zigzag",
-                       ) -> Colormap:
+
+def _to_rendering_cmap(
+    cmap: Union[str, Colormap],
+    alpha_func: Union[
+        Literal[
+            "zigzag",
+            "central_peak",
+            "central_valley",
+            "linear_increase",
+            "linear_decrease",
+        ],
+        AlphaFunction,
+    ] = "zigzag",
+) -> Colormap:
     if isinstance(cmap, str):
         cmap = mlp.colormaps[cmap]
-    if alpha_func == "zigzag":
+    if isinstance(alpha_func, AlphaFunction):
+        return alpha_func(cmap)
+    elif alpha_func == "zigzag":
         cmap = ZigzagAlpha()(cmap)
-    elif alpha_func == "diverging":
-        cmap = DivergingAlpha()(cmap)
+    elif alpha_func == "central_peak":
+        cmap = CentralPeakAlpha()(cmap)
+    elif alpha_func == "central_valley":
+        cmap = CentralValleyAlpha()(cmap)
     elif alpha_func == "linear_increase":
         cmap = LinearIncreasingAlpha()(cmap)
     elif alpha_func == "linear_decrease":
         cmap = LinearDecreasingAlpha()(cmap)
+    elif alpha_func == "luminance":
+        cmap = LuminanceAlpha()(cmap)
     else:
         raise ValueError(
-            "The alpha function should be 'zigzag', 'diverging', 'linear_increase', 'linear_decrease'."
+            "The alpha function should be 'zigzag', 'central_peak', 'central_valley', 'linear_increase', 'linear_decrease', or 'luminance' or an instance of AlphaFunction."
         )
     return cmap
+
 
 def _render(
     data: np.ndarray,
@@ -119,7 +138,9 @@ def _render(
     background=(0, 0, 0, 0),
     width=512,
     height=512,
-    alpha_func: Literal["zigzag", "diverging", "linear_increase", "linear_decrease"] = "zigzag",
+    alpha_func: Literal[
+        "zigzag", "diverging", "linear_increase", "linear_decrease"
+    ] = "zigzag",
     gamma_correction: float = 2.4,
     **kwargs,
 ):
@@ -137,4 +158,3 @@ def _render(
     )
     img = ((img / 255.0) ** (gamma_correction) * 255).astype(np.uint8)
     return img
-
