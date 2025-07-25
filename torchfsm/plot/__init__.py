@@ -1000,7 +1000,7 @@ def plot_traj_frames(
 def plot_3d_traj_slices(
     traj: Union[SpatialTensor["B, T, C, H, W, D"], SpatialArray["B, T, C, H, W, D"]],
     n_frames: int = 5,
-    channel_switch: Tuple[bool, bool, bool] = (True, True, True),
+    dimension_switch: Tuple[bool, bool, bool] = (True, True, True),
     channel_names: Optional[Sequence[str]] = None,
     time_prefix: str = "t=",
     frame_start_index: int = 0,
@@ -1027,7 +1027,7 @@ def plot_3d_traj_slices(
     Args:
         traj (Union[SpatialTensor["B, T, C, H, W, D"], SpatialArray["B, T, C, H, W, D"]]): The 3D trajectory to plot.
         n_frames (int): The number of frames to plot.
-        channel_switch (Tuple[bool,bool,bool], optional): Whether to plot x-slice, y-slice, and z-slice. Defaults to (True, True, True).
+        dimension_switch (Tuple[bool,bool,bool], optional): Whether to plot x-slice, y-slice, and z-slice. Defaults to (True, True, True).
         channel_names (Optional[Sequence[str]], optional): The names of the channels. Defaults to None.
         time_prefix (str, optional): The prefix for the time index in the title. Defaults to "t=".
         frame_start_index (int, optional): The starting index for the frame numbers. Defaults to 0.
@@ -1060,17 +1060,17 @@ def plot_3d_traj_slices(
     if channel_names is None:
         channel_names = [f"Channel {i}" for i in range(traj.shape[2])]
     for channel_idx in range(traj.shape[2]):
-        if channel_switch[0]:
+        if dimension_switch[0]:
             slices.append(traj[:, :, channel_idx : channel_idx + 1, half_x, :, :])
             new_channel_names.append(f"{channel_names[channel_idx]} (x-slice)")
-        if channel_switch[1]:
+        if dimension_switch[1]:
             slices.append(traj[:, :, channel_idx : channel_idx + 1, :, half_y, :])
             new_channel_names.append(f"{channel_names[channel_idx]} (y-slice)")
-        if channel_switch[2]:
+        if dimension_switch[2]:
             slices.append(traj[:, :, channel_idx : channel_idx + 1, :, :, half_z])
             new_channel_names.append(f"{channel_names[channel_idx]} (z-slice)")
     if len(slices) == 0:
-        raise ValueError("No slices to plot. Check channel_switch settings.")
+        raise ValueError("No slices to plot. Check dimension_switch settings.")
     if isinstance(traj, torch.Tensor):
         field = torch.cat(slices, dim=2).cpu().detach().numpy()
     else:
