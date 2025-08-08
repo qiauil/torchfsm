@@ -71,5 +71,5 @@ Note that the corresponding function of `NSPressureConvection` operatoris not av
 |NavierStokesVorticity|$\frac{\partial \omega}{\partial t} + (\mathbf{u}\cdot\nabla) \omega = \frac{1}{Re} \nabla^2 \omega + \nabla \times \mathbf{f}$|
 |NavierStokes|$\frac{\partial\mathbf{u}}{\partial t}=-\nabla (\nabla^{-2} \nabla \cdot (\left(\mathbf{u}\cdot\nabla\right)\mathbf{u}-f))-\left(\mathbf{u}\cdot\nabla\right)\mathbf{u}+\nu \nabla^2 \mathbf{u} + \mathbf{f}$|
 |KPPFisher|$\frac{\partial u}{\partial t} = r u (1 - u) + \nu \nabla^2 u$|
-|SwiftHohenberg|$\frac{\partial \phi}{\partial t} = \nu \nabla^2 \phi + r \phi (1 - \phi)$|
+|SwiftHohenberg|$\frac{\partial \phi}{\partial t} = r \phi - (1 + \Delta)^2 \phi + \phi^2 - \phi^3$|
 |GrayScott|$\begin{aligned}\frac{\partial \phi_0}{\partial t} &= \nu_0 \Delta \phi_0 - \phi_0 \phi_1^2 + f (1 - \phi_0) \\\frac{\partial \phi_1}{\partial t} &= \nu_1 \Delta \phi_1 + \phi_0 \phi_1^2 - (f + k) \phi_1\end{aligned}$|

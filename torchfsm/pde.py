@@ -108,7 +108,7 @@ def KPPFisher(nu:Union[float,Tensor],r:Union[float,Tensor]) -> Operator:
 def SwiftHohenberg(r:Union[float,Tensor]) -> Operator:
     r"""
     Swift-Hohenberg equation:
-        $$\frac{\partial \phi}{\partial t} = \nu \nabla^2 \phi + r \phi (1 - \phi)$$
+        $$\frac{\partial \phi}{\partial t} = r \phi - (1 + \Delta)^2 \phi + \phi^2 - \phi^3$$
 
     Args:
         r (Union[float,Tensor]): Control parameter.
