@@ -1,5 +1,5 @@
 from typing import Callable, Optional, Literal
-from .utils import default
+from .utils.tool import default
 import torch
 import numpy as np
 import copy

@@ -4,7 +4,8 @@ from ..core import (
     concate_fields_plot,
 )
 from ..._type import SpatialTensor, SpatialArray, ValueList
-from ...utils import uniformly_select_frames, default
+from ...utils.traj_manipulate import uniformly_select_frames
+from ...utils.tool import default
 from ..render import AlphaFunction
 from typing import Union, Optional, Sequence, Tuple, Literal
 from matplotlib.colors import Colormap

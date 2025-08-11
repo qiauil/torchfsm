@@ -3,7 +3,7 @@ from ...core import (
     concate_traj_plots,
 )
 from ...._type import SpatialTensor, SpatialArray
-from ....utils import traj_slices
+from ....utils.traj_manipulate import traj_slices
 from ...render import AlphaFunction
 from ..slice import _get_slice_names
 from .traj_field import _process_error, _field_to_traj

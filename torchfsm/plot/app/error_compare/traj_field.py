@@ -3,10 +3,7 @@ from ...core import (
     concate_traj_plots,
 )
 from ...._type import SpatialTensor, SpatialArray
-from ....utils import traj_slices
 from ...render import AlphaFunction
-from ..frame import _plot_traj_frame_group
-from ..slice import _get_slice_names
 from typing import Union, Optional, Sequence, Tuple, Literal, Callable
 from matplotlib.colors import Colormap
 from matplotlib.animation import FuncAnimation

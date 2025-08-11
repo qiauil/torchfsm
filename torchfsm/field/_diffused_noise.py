@@ -1,7 +1,7 @@
 from ..operator import Laplacian
 from ..mesh import FourierMesh, MeshGrid, mesh_shape
 from .._type import SpatialTensor
-from ..utils import clean_up_memory
+from ..utils.memory import clean_up_memory
 from ._normalize import normalize
 import torch
 from typing import Union, Sequence, Optional,Literal

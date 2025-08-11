@@ -1,9 +1,7 @@
-import torch
 from typing import Union,Sequence
-from ..utils import default
 from ..mesh import FourierMesh,MeshGrid
 
-from ._base import Operator, OperatorLike, ExplicitSource, LinearCoef, NonlinearFunc, LinearOperator, NonlinearOperator, CoreGenerator, check_value_with_mesh
+from ._base import Operator
 from .generic import *
 from .dedicated import *
 
