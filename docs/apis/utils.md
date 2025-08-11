@@ -4,9 +4,9 @@
 ---
 ::: torchfsm.utils.traj_manipulate.statistics_traj
 ---
-::: torchfsm.utils.random_clip_traj
+::: torchfsm.utils.randomly_clip_traj
 ---
-::: torchfsm.utils.traj_manipulate.random_select_frames
+::: torchfsm.utils.traj_manipulate.randomly_select_frames
 ---
 ::: torchfsm.utils.traj_manipulate.uniformly_select_frames
 ---

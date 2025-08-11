@@ -1,6 +1,6 @@
 import torch
 from typing import Union, Sequence, Optional, Annotated, Tuple
-from functools import lru_cache
+#from functools import lru_cache
 from .utils.tool import format_device_dtype, default
 import numpy as np
 from ._type import SpatialTensor, FourierTensor, ValueList

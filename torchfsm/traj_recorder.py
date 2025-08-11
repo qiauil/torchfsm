@@ -2,7 +2,6 @@ from typing import Callable, Optional, Literal
 from .utils.tool import default
 import torch
 import numpy as np
-import copy
 
 
 class IntervalController:
