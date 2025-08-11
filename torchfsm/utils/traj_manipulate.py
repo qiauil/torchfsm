@@ -31,7 +31,7 @@ def statistics_traj(traj: ValueList[Union[torch.Tensor, np.ndarray]])-> Tuple[fl
     maxs = [traj_all[:, i].max().item() for i in range(traj_all.shape[1])]
     return means, stds, mins, maxs
 
-def random_clip_traj(
+def randomly_clip_traj(
     traj: Union[
         SpatialTensor["B T C H ..."],
         SpatialArray["B T C H ..."],
@@ -71,7 +71,7 @@ def random_clip_traj(
     new_traj = new_traj.numpy() if is_nparray else new_traj
     return new_traj
 
-def random_select_frames(
+def randomly_select_frames(
     traj: Union[
         SpatialTensor["B T C H ..."],
         SpatialArray["B T C H ..."],
