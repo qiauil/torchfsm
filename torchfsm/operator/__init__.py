@@ -1,7 +1,7 @@
 from typing import Union,Sequence
 from ..mesh import FourierMesh,MeshGrid
 
-from ._base import Operator
+from ._base import Operator,Operator, OperatorLike, ExplicitSource, LinearCoef, NonlinearFunc, LinearOperator, NonlinearOperator, CoreGenerator, check_value_with_mesh
 from .generic import *
 from .dedicated import *
 
