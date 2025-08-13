@@ -12,6 +12,8 @@ from abc import ABC, abstractmethod
 from tqdm.auto import tqdm
 from typing import Literal
 from torch.cuda import OutOfMemoryError as TorchOutOfMemoryError
+from warnings import warn
+from copy import deepcopy
 
 class LinearCoef(ABC):
     r"""
@@ -317,6 +319,8 @@ class OperatorLike(_MutableMixIn):
         self._value_mesh_check_func = lambda dim_value, dim_mesh: True
         self._integrator = "auto"
         self._integrator_config = {}
+        self._default_nonlinear_integrator = SETDRKIntegrator.SETDRK4
+        self._default_nonlinear_integrator_config  ={}
         self._is_etdrk_integrator = True
 
     @property
@@ -451,7 +455,8 @@ class OperatorLike(_MutableMixIn):
             if self.is_linear:
                 solver = ETDRKIntegrator.ETDRK0
             else:
-                solver = SETDRKIntegrator.SETDRK4
+                solver = self._default_nonlinear_integrator
+                self._integrator_config = deepcopy(self._default_nonlinear_integrator_config)
         else:
             solver = self._integrator
         self._is_etdrk_integrator = isinstance(solver, ETDRKIntegrator) or isinstance(
@@ -677,6 +682,31 @@ class OperatorLike(_MutableMixIn):
         self._integrator = integrator
         self._integrator_config = integrator_config
         self._state_dict["integrator"] = None
+
+    def set_default_nonlinear_integrator(
+        self,
+        integrator: Union[ETDRKIntegrator, SETDRKIntegrator, RKIntegrator],
+        **integrator_config,
+        ):
+        r"""
+        Set the default nonlinear integrator for the operator.
+
+        Args:
+            integrator (Union[ETDRKIntegrator, SETDRKIntegrator, RKIntegrator]): Integrator to be used.
+            **integrator_config: Additional configuration for the integrator.
+            
+        """
+        assert (
+                isinstance(integrator, ETDRKIntegrator)
+                or isinstance(integrator, SETDRKIntegrator)
+                or isinstance(integrator, RKIntegrator)
+            ), "The integrator should be 'auto' or an instance of ETDRKIntegrator, SETDRKIntegrator or RKIntegrator"
+        self._default_nonlinear_integrator = integrator
+        self._default_nonlinear_integrator_config = integrator_config
+        if self._integrator == "auto":
+            self._state_dict["integrator"] = None
+        else:
+            warn("Not automatically setting the integrator. The default nonlinear integrator will only be used if the integrator is set to 'auto'.")
 
     def integrate(
         self,
