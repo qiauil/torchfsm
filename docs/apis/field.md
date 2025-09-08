@@ -10,4 +10,4 @@
 ---
 ::: torchfsm.field.random_truncated_fourier_series
 ---
-::: torchfsm.field.truncated_fourier_series_customed_filter
+::: torchfsm.field.truncated_fourier_series_custom_filter

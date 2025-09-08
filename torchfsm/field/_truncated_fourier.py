@@ -17,7 +17,7 @@ def _get_mesh_device_and_dtype(
         mesh = FourierMesh(mesh, device=device, dtype=dtype)
     return mesh, device, dtype
 
-def truncated_fourier_series_customed_filter(
+def truncated_fourier_series_custom_filter(
     mesh: Union[Sequence[tuple[float, float, int]], MeshGrid, FourierMesh],
     low_pass_filter: SpatialTensor["B C H ..."],
     amplitude_range: tuple[int, int] = (-1.0, 1.0),
@@ -108,7 +108,7 @@ def truncated_fourier_series(
         filter =  mesh.abs_low_pass_filter(freq_threshold)
         #mesh.abs_low_pass_filter.cache_clear()
     
-    return truncated_fourier_series_customed_filter(
+    return truncated_fourier_series_custom_filter(
         mesh=mesh,
         low_pass_filter=filter,
         amplitude_range=amplitude_range,
@@ -168,7 +168,7 @@ def random_truncated_fourier_series(
         ], dim=0)
         #mesh.abs_low_pass_filter.cache_clear()
     
-    return truncated_fourier_series_customed_filter(
+    return truncated_fourier_series_custom_filter(
         mesh=mesh,
         low_pass_filter=filter,
         amplitude_range=amplitude_range,

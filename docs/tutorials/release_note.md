@@ -1,3 +1,6 @@
+# 0.0.4 (TorchFSM 0.0.6)
+* Fix wrong equations for `SwiftHohenberg`
+
 ## 0.0.3 (TorchFSM 0.0.5)
 * Add new section for new operators, equations and functions (see code release note).
 

@@ -1,5 +1,5 @@
 from ._diffused_noise import diffused_noise
 from ._gaussian_blobs import random_gaussian_blobs
-from ._truncated_fourier import truncated_fourier_series, truncated_fourier_series_customed_filter, random_truncated_fourier_series
+from ._truncated_fourier import truncated_fourier_series, truncated_fourier_series_custom_filter, random_truncated_fourier_series
 from ._kolm_force import kolm_force
 from ._wave_1d import wave_1d
