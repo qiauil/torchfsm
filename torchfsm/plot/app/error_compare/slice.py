@@ -390,6 +390,8 @@ def compare_error_traj_slice(
     )
 
 
+
+
 def compare_error_field_slice(
     field_1: Union[SpatialTensor["1 C H ..."], SpatialArray["1 C H ..."]],
     field_2: Union[SpatialTensor["1 C H ..."], SpatialArray["1 C H ..."]],
@@ -403,20 +405,20 @@ def compare_error_field_slice(
         ]
     ] = None,
     slice_control: Sequence[Optional[Union[int, float]]] = None,
-    name_traj_1: str = "traj 1",
-    name_traj_2: str = "traj 2",
+    name_field_1: str = "traj 1",
+    name_field_2: str = "traj 2",
     error_name: str = "error",
     channel_names: Optional[Sequence[str]] = None,
     title: Optional[str] = None,
-    vmin_traj: Optional[Union[float, Sequence[float]]] = None,
-    vmax_traj: Optional[Union[float, Sequence[float]]] = None,
+    vmin_field: Optional[Union[float, Sequence[float]]] = None,
+    vmax_field: Optional[Union[float, Sequence[float]]] = None,
     vmin_error: Optional[Union[float, Sequence[float]]] = None,
     vmax_error: Optional[Union[float, Sequence[float]]] = None,
-    cmap_traj: Union[str, Colormap] = "coolwarm",
+    cmap_field: Union[str, Colormap] = "coolwarm",
     cmap_error: Union[str, Colormap] = "Reds",
-    use_sym_colormap_traj: bool = True,
+    use_sym_colormap_field: bool = True,
     use_sym_colormap_error: bool = False,
-    alpha_func_traj: Union[
+    alpha_func_field: Union[
         Literal[
             "zigzag",
             "central_peak",
@@ -437,7 +439,7 @@ def compare_error_field_slice(
         AlphaFunction,
     ] = "linear_increase",
     num_colorbar_value: int = 4,
-    c_bar_labels_traj: Optional[Sequence[str]] = None,
+    c_bar_labels_field: Optional[Sequence[str]] = None,
     c_bar_labels_error: Optional[Sequence[str]] = None,
     cbar_pad: Optional[float] = None,
     ctick_format: Optional[str] = "%.1f",
@@ -458,37 +460,37 @@ def compare_error_field_slice(
     **kwargs,
 ):
     """
-    Compare two trajectories and plot the error between them.
+    Compare two fields and plot the error between them.
 
     Args:
-        traj_1 (Union[SpatialTensor["1 C H ..."], SpatialArray["1 C H ..."]]): The first trajectory to compare.
-        traj_2 (Union[SpatialTensor["1 C H ..."], SpatialArray["1 C H ..."]]): The second trajectory to compare.
+        field_1 (Union[SpatialTensor["1 C H ..."], SpatialArray["1 C H ..."]]): The first field to compare.
+        field_2 (Union[SpatialTensor["1 C H ..."], SpatialArray["1 C H ..."]]): The second field to compare.
         error_func (Optional[Callable[[Union[SpatialTensor["1 C H ..."], SpatialArray["1 C H ..."]], Union[SpatialTensor["1 C H ..."], SpatialArray["1 C H ..."]]], Union[SpatialTensor["
-        1 C H ..."], SpatialArray["1 C H ..."]]]], optional): The function to compute the error between the two trajectories. Defaults to None.
+        1 C H ..."], SpatialArray["1 C H ..."]]]], optional): The function to compute the error between the two fields. Defaults to None.
             If None, it will use the absolute difference.
-        slice_control (Sequence[Optional[Union[int, float]]], optional): The control for slicing the trajectories.
-        name_traj_1 (str, optional): The name of the first trajectory. Defaults to "traj_1".
-        name_traj_2 (str, optional): The name of the second trajectory. Defaults to "traj_2".
-        error_name (str, optional): The name for the error trajectory. Defaults to "error".
+        slice_control (Sequence[Optional[Union[int, float]]], optional): The control for slicing the fields.
+        name_field_1 (str, optional): The name of the first field. Defaults to "field_1".
+        name_field_2 (str, optional): The name of the second field. Defaults to "field_2".
+        error_name (str, optional): The name for the error field. Defaults to "error".
         channel_names (Optional[Sequence[str]], optional): The names of the channels. Defaults to None.
             If None, it will use default channel names like "channel 0", "channel 1", etc.
         title (Optional[str], optional): The title of the plot. Defaults to None.
-        vmin_traj (Optional[Union[float, Sequence[float]]], optional): The minimum value for the color scale of the trajectories. Defaults to None.
+        vmin_field (Optional[Union[float, Sequence[float]]], optional): The minimum value for the color scale of the fields. Defaults to None.
             If a sequence is provided, it should have the same length as the number of channels.
-        vmax_traj (Optional[Union[float, Sequence[float]]], optional): The maximum value for the color scale of the trajectories. Defaults to None.
+        vmax_field (Optional[Union[float, Sequence[float]]], optional): The maximum value for the color scale of the fields. Defaults to None.
             If a sequence is provided, it should have the same length as the number of channels.
         vmin_error (Optional[Union[float, Sequence[float]]], optional): The minimum value for the color scale of the error. Defaults to None.
             If a sequence is provided, it should have the same length as the number of channels.
         vmax_error (Optional[Union[float, Sequence[float]]], optional): The maximum value for the color scale of the error. Defaults to None.
             If a sequence is provided, it should have the same length as the number of channels.
-        cmap_traj (Union[str, Colormap], optional): The colormap to use for the trajectories. Defaults to "coolwarm".
+        cmap_field (Union[str, Colormap], optional): The colormap to use for the fields. Defaults to "coolwarm".
         cmap_error (Union[str, Colormap], optional): The colormap to use for the error. Defaults to "Reds".
-        use_sym_colormap_traj (bool, optional): Whether to use a symmetric colormap for the trajectories. Defaults to True.
+        use_sym_colormap_field (bool, optional): Whether to use a symmetric colormap for the fields. Defaults to True.
         use_sym_colormap_error (bool, optional): Whether to use a symmetric colormap for the error. Defaults to False
-        alpha_func_traj (Union[Literal["zigzag","central_peak","central_valley","linear_increase","linear_decrease",],AlphaFunction,], optional): The alpha function for the colormap of the trajectories. Defaults to "zigzag".
+        alpha_func_field (Union[Literal["zigzag","central_peak","central_valley","linear_increase","linear_decrease",],AlphaFunction,], optional): The alpha function for the colormap of the fields. Defaults to "zigzag".
         alpha_func_error (Union[Literal["zigzag","central_peak","central_valley","linear_increase","linear_decrease",],AlphaFunction,], optional): The alpha function for the colormap of the error. Defaults to "linear_increase".
         num_colorbar_value (int, optional): The number of values for the colorbar. Defaults to 4.
-        c_bar_labels_traj (Optional[Sequence[str]], optional): The labels for the colorbar of the trajectories. Defaults to None.
+        c_bar_labels_field (Optional[Sequence[str]], optional): The labels for the colorbar of the fields. Defaults to None.
             If provided, it should have the same length as the number of channels.
             If not provided, the colorbar will not have labels.
         c_bar_labels_error (Optional[Sequence[str]], optional): The labels for the colorbar of the error. Defaults to None.
@@ -541,28 +543,30 @@ def compare_error_field_slice(
         real_error_func = None
     field_1 = _field_to_traj(field_1)
     field_2 = _field_to_traj(field_2)
+    name_field_1 = name_field_1 if name_field_1 is not None else "field 1"
+    name_field_2 = name_field_2 if name_field_2 is not None else "field 2"
     return compare_error_traj_slice(
         traj_1=field_1,
         traj_2=field_2,
         error_func=real_error_func,
         slice_control=slice_control,
-        name_traj_1=name_traj_1,
-        name_traj_2=name_traj_2,
+        name_field_1=name_field_1,
+        name_field_2=name_field_2,
         error_name=error_name,
         channel_names=channel_names,
         title=title,
-        vmin_traj=vmin_traj,
-        vmax_traj=vmax_traj,
+        vmin_field=vmin_field,
+        vmax_field=vmax_field,
         vmin_error=vmin_error,
         vmax_error=vmax_error,
-        cmap_traj=cmap_traj,
+        cmap_field=cmap_field,
         cmap_error=cmap_error,
-        use_sym_colormap_traj=use_sym_colormap_traj,
+        use_sym_colormap_field=use_sym_colormap_field,
         use_sym_colormap_error=use_sym_colormap_error,
-        alpha_func_traj=alpha_func_traj,
+        alpha_func_field=alpha_func_field,
         alpha_func_error=alpha_func_error,
         num_colorbar_value=num_colorbar_value,
-        c_bar_labels_traj=c_bar_labels_traj,
+        c_bar_labels_field=c_bar_labels_field,
         c_bar_labels_error=c_bar_labels_error,
         cbar_pad=cbar_pad,
         ctick_format=ctick_format,
@@ -582,5 +586,7 @@ def compare_error_field_slice(
         show_time_index=False,
         animation=True,
         save_name=save_name,
+        **kwargs,
     )
+
 
