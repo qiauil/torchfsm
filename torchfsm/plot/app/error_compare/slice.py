@@ -405,8 +405,8 @@ def compare_error_field_slice(
         ]
     ] = None,
     slice_control: Sequence[Optional[Union[int, float]]] = None,
-    name_field_1: str = "traj 1",
-    name_field_2: str = "traj 2",
+    name_field_1: str = "field 1",
+    name_field_2: str = "field 2",
     error_name: str = "error",
     channel_names: Optional[Sequence[str]] = None,
     title: Optional[str] = None,
@@ -469,9 +469,9 @@ def compare_error_field_slice(
         1 C H ..."], SpatialArray["1 C H ..."]]]], optional): The function to compute the error between the two fields. Defaults to None.
             If None, it will use the absolute difference.
         slice_control (Sequence[Optional[Union[int, float]]], optional): The control for slicing the fields.
-        name_field_1 (str, optional): The name of the first field. Defaults to "field_1".
-        name_field_2 (str, optional): The name of the second field. Defaults to "field_2".
-        error_name (str, optional): The name for the error field. Defaults to "error".
+        name_field_1 (str): The name of the first field. Defaults to "field_1".
+        name_field_2 (str): The name of the second field. Defaults to "field_2".
+        error_name (str): The name for the error field. Defaults to "error".
         channel_names (Optional[Sequence[str]], optional): The names of the channels. Defaults to None.
             If None, it will use default channel names like "channel 0", "channel 1", etc.
         title (Optional[str], optional): The title of the plot. Defaults to None.
@@ -543,30 +543,28 @@ def compare_error_field_slice(
         real_error_func = None
     field_1 = _field_to_traj(field_1)
     field_2 = _field_to_traj(field_2)
-    name_field_1 = name_field_1 if name_field_1 is not None else "field 1"
-    name_field_2 = name_field_2 if name_field_2 is not None else "field 2"
     return compare_error_traj_slice(
         traj_1=field_1,
         traj_2=field_2,
         error_func=real_error_func,
         slice_control=slice_control,
-        name_field_1=name_field_1,
-        name_field_2=name_field_2,
+        name_traj_1=name_field_1,
+        name_traj_2=name_field_2,
         error_name=error_name,
         channel_names=channel_names,
         title=title,
-        vmin_field=vmin_field,
-        vmax_field=vmax_field,
+        vmin_traj_1=vmin_field,
+        vmax_traj_1=vmax_field,
         vmin_error=vmin_error,
         vmax_error=vmax_error,
-        cmap_field=cmap_field,
+        cmap_traj=cmap_field,
         cmap_error=cmap_error,
-        use_sym_colormap_field=use_sym_colormap_field,
+        use_sym_colormap_traj=use_sym_colormap_field,
         use_sym_colormap_error=use_sym_colormap_error,
-        alpha_func_field=alpha_func_field,
+        alpha_func_traj=alpha_func_field,
         alpha_func_error=alpha_func_error,
         num_colorbar_value=num_colorbar_value,
-        c_bar_labels_field=c_bar_labels_field,
+        c_bar_labels_traj=c_bar_labels_field,
         c_bar_labels_error=c_bar_labels_error,
         cbar_pad=cbar_pad,
         ctick_format=ctick_format,
