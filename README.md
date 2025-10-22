@@ -83,9 +83,9 @@ plot_traj(traj,animation=False,cmap="managua")
 
 ## Installation
 
-* Install through pip: `pip install torchfsm`
+* Install through pip: `pip install torchfsm` or via conda: `conda install conda-forge::torchfsm`
 * Install the latest version through pip: `pip install git+https://github.com/qiauil/torchfsm`
-* Install locally: Download the repository and run `pip install .`
+* Install locally: Download the repository using `git clone https://github.com/qiauil/torchfsm.git`, `cd torchfsm`, and run `pip install .`
 
 ## Documentations
 
