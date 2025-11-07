@@ -1,9 +1,9 @@
-torchfsm.mesh.MeshGrid
+::: torchfsm.mesh.MeshGrid
 ---
-torchfsm.mesh.FFTFrequency
+::: torchfsm.mesh.FFTFrequency
 ---
-torchfsm.mesh.BroadcastedFFTFrequency
+::: torchfsm.mesh.BroadcastedFFTFrequency
 ---
-torchfsm.mesh.FourierMesh
+::: torchfsm.mesh.FourierMesh
 ---
-torchfsm.mesh.mesh_shape
+:::torchfsm.mesh.mesh_shape
