@@ -691,6 +691,8 @@ class ChannelWisedPlotter:
             c_bar_size = f"{0.15/total_width*100}%"
         else:
             c_bar_size = "5%"
+        if not animation:
+            show_time_index = False
         if fig is None:
             if rect_t_label is not None or rect_title is not None:
                 raise ValueError(
@@ -801,8 +803,8 @@ class ChannelWisedPlotter:
                         ax=ax_i,
                         data=data_i,
                         show_ticks=show_ticks,
-                        x_label=x_label,
-                        y_label=y_label,
+                        x_label="t",
+                        y_label="x",
                         cmap=select_cmap(i_column, i_row),
                         vmin=select_vmin(i_column, i_row),
                         vmax=select_vmax(i_column, i_row),
@@ -846,8 +848,6 @@ class ChannelWisedPlotter:
                     plot_3D_field(
                         ax=ax_i,
                         data=data_i,
-                        bottom_label=x_label,
-                        left_label=y_label,
                         cmap=select_cmap(i_column, i_row),
                         **kwargs,
                     )
