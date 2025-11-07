@@ -1,3 +1,4 @@
+from ._advection import Advection
 from ._biharmonic import Biharmonic
 from ._conservative_convection import ConservativeConvection
 from ._convection import Convection
@@ -5,6 +6,7 @@ from ._curl import Curl
 from ._div import Div
 from ._grad import Grad
 from ._laplacian import Laplacian
+from ._linear_advection import LinearAdvection
 from ._source import ImplicitSource
 from ._spatial_derivative import SpatialDerivative
 from ._dispersion import Dispersion

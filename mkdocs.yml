@@ -117,6 +117,7 @@ nav:
             - "3.1. Solve Differential Equations": 'tutorials/simulation/solve_de.ipynb'
             - "3.2. Simulation Gallery":
                 - "3.2.1 Simple PDEs":
+                    - "Advection": 'tutorials/simulation/gallery/advection.ipynb'
                     - "Burgers": 'tutorials/simulation/gallery/burgers.ipynb'
                     - "Korteweg de Vries": 'tutorials/simulation/gallery/korteweg_de_vries.ipynb'
                     - "Kuramoto Sivashinsky": "tutorials/simulation/gallery/kuramoto_sivashinsky.ipynb"

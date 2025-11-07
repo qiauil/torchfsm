@@ -1,7 +1,11 @@
 ## Operators
 Operators are the core of the torchfsm library. Each operator represents a specific physical process, such as convection, diffusion, or pressure calculation.
 
+::: torchfsm.operator.Advection
+---
 ::: torchfsm.operator.Biharmonic
+---
+::: torchfsm.operator.ChannelWisedDiffusion
 ---
 ::: torchfsm.operator.ConservativeConvection
 ---
@@ -9,39 +13,40 @@ Operators are the core of the torchfsm library. Each operator represents a speci
 ---
 ::: torchfsm.operator.Curl
 ---
+::: torchfsm.operator.Dispersion
+---
 ::: torchfsm.operator.Div
 --- 
-::: torchfsm.operator.Dispersion
+::: torchfsm.operator.ExplicitSource
 ---
 ::: torchfsm.operator.Grad
 ---
-::: torchfsm.operator.ExplicitSource
----
-::: torchfsm.operator.ImplicitSource
+::: torchfsm.operator.GrayScottSource
 ---
 ::: torchfsm.operator.HyperDiffusion
 ---
-::: torchfsm.operator.Laplacian
----
-::: torchfsm.operator.SpatialDerivative
+::: torchfsm.operator.ImplicitSource
 ---
 ::: torchfsm.operator.KSConvection
 ---
-::: torchfsm.operator.VorticityConvection
----
-::: torchfsm.operator.Vorticity2Velocity
----
-::: torchfsm.operator.Vorticity2Pressure
----
-::: torchfsm.operator.Velocity2Pressure
----
-::: torchfsm.operator.NSPressureConvection
+::: torchfsm.operator.Laplacian
 ---
 ::: torchfsm.operator.Leray
 ---
-::: torchfsm.operator.ChannelWisedDiffusion
+::: torchfsm.operator.LinearAdvection
 ---
-::: torchfsm.operator.GrayScottSource
+::: torchfsm.operator.NSPressureConvection
+---
+::: torchfsm.operator.SpatialDerivative
+---
+::: torchfsm.operator.Velocity2Pressure
+---
+::: torchfsm.operator.Vorticity2Pressure
+---
+::: torchfsm.operator.Vorticity2Velocity
+---
+::: torchfsm.operator.VorticityConvection
+---
 
 
 

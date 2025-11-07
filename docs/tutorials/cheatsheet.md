@@ -35,6 +35,8 @@ All the below operators can be imported from `torchfsm.operator` module. Corresp
 | Curl (3D input)  | $\nabla \times \mathbf{u} = \left[\begin{matrix} \frac{\partial u_z}{\partial y}-\frac{\partial u_y}{\partial z} \\ \frac{\partial u_x}{\partial z}-\frac{\partial u_z}{\partial x} \\ \frac{\partial u_y}{\partial x}-\frac{\partial u_x}{\partial y} \end{matrix} \right]$ | False |
 | ConservativeConvection  | $\nabla \cdot \mathbf{u}\mathbf{u}=\left[\begin{matrix}\sum_{i=0}^I \frac{\partial u_i u_x }{\partial i} \\\sum_{i=0}^I \frac{\partial u_i u_y }{\partial i} \\ \cdots\\ \sum_{i=0}^I \frac{\partial u_i u_I }{\partial i} \\ \end{matrix} \right]$ | False |
 | Convection  | $\mathbf{u} \cdot \nabla  \mathbf{u}=\left[\begin{matrix}\sum_{i=0}^I u_i\frac{\partial u_x }{\partial i} \\\sum_{i=0}^I u_i\frac{\partial u_y }{\partial i} \\\cdots\\\sum_{i=0}^I u_i\frac{\partial u_I }{\partial i} \\\end{matrix} \right]$ | False |
+| Advection  | $\nabla \cdot (\phi\mathbf{u}) = \sum_{i=0}^I \frac{\phi\partial u_i}{\partial i}$ | False |
+| LinearAdvection  | $ \mathbf{u} \cdot \nabla \phi = \sum_{i=0}^I u_i \frac{\partial \phi}{\partial i} $ | True |
 
 ### Dedicated Operators
 #### Navier-Stokes Operators
