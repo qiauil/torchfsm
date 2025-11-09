@@ -898,7 +898,7 @@ class ChannelWisedPlotter:
                         imgs[j][i],
                         bottom_label=x_label,
                         left_label=y_label,
-                        show_3d_coordinates=show_3d_coordinates if j == len(grid) - 1 else False,
+                        show_3d_coordinates=show_3d_coordinates if (j == len(grid) - 1 and i == 0) else False,
                         **kwargs,
                     )
                 title_t(i)
