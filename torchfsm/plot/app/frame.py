@@ -172,7 +172,7 @@ def _plot_traj_frame_group(
     n_frames: int = 5,
     channel_names: Optional[Sequence[str]] = None,
     batch_names: Optional[ValueList[Sequence[str]]] = None,
-    hide_batch_name_for_single_batch: ValueList[bool] = True,
+    hide_batch_channel_name_for_single_plot: ValueList[bool] = True,
     title: Optional[str] = None,
     vmin: Optional[ValueList[Sequence[Union[float, Sequence[float]]]]] = None,
     vmax: Optional[ValueList[Sequence[Union[float, Sequence[float]]]]] = None,
@@ -226,7 +226,7 @@ def _plot_traj_frame_group(
         n_frames (int): The number of frames to plot for each trajectory.
         channel_names (Optional[Sequence[str]], optional): The names of the channels. Defaults to None.
         batch_names (Optional[ValueList[Sequence[str]]], optional): The names of the batches. Defaults to None.
-        hide_batch_name_for_single_batch (ValueList[bool], optional): Whether to hide the batch name for a single batch. If a single value is provided, it will be used for all trajectories. If a list is provided, it should have the same length as `trajs`. Defaults to True.
+        hide_batch_channel_name_for_single_plot (ValueList[bool], optional): Whether to hide the batch and channel name for a single batch or channel. If a single value is provided, it will be used for all trajectories. If a list is provided, it should have the same length as `trajs`. Defaults to True.
         title (Optional[str], optional): The title of the plot. Defaults to None.
         vmin (Optional[ValueList[Sequence[Union[float, Sequence[float]]]]], optional): The minimum value for the color scale. If a single value is provided, it will be used for all trajectories. If a list is provided, it should have the same length as `trajs`. Defaults to None.
         vmax (Optional[ValueList[Sequence[Union[float, Sequence[float]]]], optional): The maximum value for the color scale. If a single value is provided, it will be used for all trajectories. If a list is provided, it should have the same length as `trajs`. Defaults to None.
@@ -282,8 +282,8 @@ def _plot_traj_frame_group(
     label_x = check_value_list(label_x)
     label_y = check_value_list(label_y)
     rotate_cbar_for_single_batch = check_value_list(rotate_cbar_for_single_batch)
-    hide_batch_name_for_single_batch = check_value_list(
-        hide_batch_name_for_single_batch
+    hide_batch_channel_name_for_single_plot = check_value_list(
+        hide_batch_channel_name_for_single_plot
     )
     channel_names = default(channel_names, [f"channel {i}" for i in range(n_channel)])
     if batch_names is None:
@@ -363,7 +363,7 @@ def _plot_traj_frame_group(
         label_t=label_t,
         animation=True,
         rotate_cbar_for_single_batch=rotate_cbar_for_single_batch,
-        hide_batch_name_for_single_batch=hide_batch_name_for_single_batch,
+        hide_batch_channel_name_for_single_plot=hide_batch_channel_name_for_single_plot,
         show_3d_coordinates=show_3d_coordinates,
         **kwargs,
     )

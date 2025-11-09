@@ -281,7 +281,7 @@ def compare_error_traj(
         trajs=[traj, error],
         channel_names=channel_names,
         batch_names=batch_names,
-        hide_batch_name_for_single_batch=False,
+        hide_batch_channel_name_for_single_plot=False,
         vmin=vmin,
         vmax=vmax,
         subfig_size=subfig_size,

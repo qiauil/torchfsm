@@ -12,7 +12,7 @@ def concate_traj_plots(
     trajs: Sequence[Union[SpatialTensor["B T C H ..."], SpatialArray["B T C H ..."]]],
     channel_names: Optional[Sequence[str]] = None,
     batch_names: Optional[ValueList[Sequence[str]]] = None,
-    hide_batch_name_for_single_batch: ValueList[bool] = True,
+    hide_batch_channel_name_for_single_plot: ValueList[bool] = True,
     title: Optional[str] = None,
     vmin: Optional[ValueList[Sequence[Union[float, Sequence[float]]]]] = None,
     vmax: Optional[ValueList[Sequence[Union[float, Sequence[float]]]]] = None,
@@ -67,7 +67,7 @@ def concate_traj_plots(
             where `B` is the batch size, `T` is the number of time steps, `C` is the number of channels, and `H` is the height (and possibly width or depth) of the spatial dimensions.
         channel_names (Optional[Sequence[str]], optional): The names of the channels. Defaults to None.
         batch_names (Optional[ValueList[Sequence[str]]], optional): The names of the batches. Defaults to None.
-        hide_batch_name_for_single_batch (ValueList[bool], optional): Whether to hide the batch name for a single batch. If a single value is provided, it will be used for all trajectories. If a list is provided, it should have the same length as `trajs`. Defaults to True.
+        hide_batch_channel_name_for_single_plot (ValueList[bool], optional): Whether to hide the batch and channel name for a single batch or channel. If a single value is provided, it will be used for all trajectories. If a list is provided, it should have the same length as `trajs`. Defaults to True.
         title (Optional[str], optional): The title of the plot. Defaults to None.
         vmin (Optional[ValueList[Sequence[Union[float, Sequence[float]]]]], optional): The minimum value for the color scale. If a single value is provided, it will be used for all trajectories. If a list is provided, it should have the same length as `trajs`. Defaults to None.
         vmax (Optional[ValueList[Sequence[Union[float, Sequence[float]]]], optional): The maximum value for the color scale. If a single value is provided, it will be used for all trajectories. If a list is provided, it should have the same length as `trajs`. Defaults to None.
@@ -131,8 +131,8 @@ def concate_traj_plots(
     label_y = check_value_list(label_y)
     label_t = check_value_list(label_t)
     rotate_cbar_for_single_batch = check_value_list(rotate_cbar_for_single_batch)
-    hide_batch_name_for_single_batch = check_value_list(
-        hide_batch_name_for_single_batch
+    hide_batch_channel_name_for_single_plot = check_value_list(
+        hide_batch_channel_name_for_single_plot
     )
     batch_size, n_frame, n_channel = trajs[0].shape[:3]
     for traj_i in trajs[1:]:
@@ -189,7 +189,7 @@ def concate_traj_plots(
                     channel_names if i == len(trajs) - 1 else [""] * n_channel
                 ),
                 batch_names=batch_names[i],
-                hide_batch_name_for_single_batch=hide_batch_name_for_single_batch[i],
+                hide_batch_channel_name_for_single_plot=hide_batch_channel_name_for_single_plot[i],
                 vmin=vmin[i],
                 vmax=vmax[i],
                 universal_minmax=universal_minmax[i],
@@ -252,7 +252,7 @@ def concate_fields_plot(
     fields: Sequence[Union[SpatialTensor["B T C H ..."], SpatialArray["B T C H ..."]]],
     channel_names: Optional[Sequence[str]] = None,
     batch_names: Optional[ValueList[Sequence[str]]] = None,
-    hide_batch_name_for_single_batch: ValueList[bool] = True,
+    hide_batch_channel_name_for_single_plot: ValueList[bool] = True,
     title: Optional[str] = None,
     vmin: Optional[ValueList[Sequence[Union[float, Sequence[float]]]]] = None,
     vmax: Optional[ValueList[Sequence[Union[float, Sequence[float]]]]] = None,
@@ -306,7 +306,7 @@ def concate_fields_plot(
         fields (Sequence[Union[SpatialTensor["B T C H ..."], SpatialArray["B T C H ..."]]]): A list of static fields to plot.
         channel_names (Optional[Sequence[str]], optional): The names of the channels. Defaults to None.
         batch_names (Optional[ValueList[Sequence[str]]], optional): The names of the batches. Defaults to None.
-        hide_batch_name_for_single_batch (ValueList[bool], optional): Whether to hide the batch name for a single batch. Defaults to True.
+        hide_batch_channel_name_for_single_plot (ValueList[bool], optional): Whether to hide the batch and channel name for a single batch or channel. Defaults to True.
         title (Optional[str], optional): The title of the plot. Defaults to None.
         vmin (Optional[ValueList[Sequence[Union[float, Sequence[float]]]]], optional): The minimum value for the color scale. Defaults to None.
         vmax (Optional[ValueList[Sequence[Union[float, Sequence[float]]]], optional): The maximum value for the color scale. Defaults to None.
@@ -358,7 +358,7 @@ def concate_fields_plot(
         trajs=trajs,
         channel_names=channel_names,
         batch_names=batch_names,
-        hide_batch_name_for_single_batch=hide_batch_name_for_single_batch,
+        hide_batch_channel_name_for_single_plot=hide_batch_channel_name_for_single_plot,
         title=title,
         vmin=vmin,
         vmax=vmax,

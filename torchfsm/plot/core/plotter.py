@@ -194,7 +194,7 @@ class ChannelWisedPlotter:
         label_x: Optional[str] = None,
         label_y: Optional[str] = None,
         label_t: Optional[str] = None,
-        hide_batch_name_for_single_batch: bool = True,
+        hide_batch_channel_name_for_single_plot: bool = True,
     ):
         """
         Select and prepare data for a specific subplot.
@@ -211,7 +211,7 @@ class ChannelWisedPlotter:
             label_x (Optional[str]): Label for x-axis.
             label_y (Optional[str]): Label for y-axis.
             label_t (Optional[str]): Label for time axis.
-            hide_batch_name_for_single_batch (bool): Whether to hide batch name for single batch.
+            hide_batch_channel_name_for_single_plot (bool): Whether to hide batch name for single batch.
 
         Returns:
             Tuple: Data, x_label, y_label, column_index, row_index.
@@ -223,25 +223,25 @@ class ChannelWisedPlotter:
             if animation:
                 y_label = (
                     batch_names[i_row] + os.linesep + "value"
-                    if len(batch_names) > 1 or not hide_batch_name_for_single_batch
+                    if len(batch_names) > 1 or not hide_batch_channel_name_for_single_plot
                     else "value"
                 )
                 x_label = (
                     label_x + os.linesep + channel_names[i_column]
-                    if len(channel_names) > 1 or not hide_batch_name_for_single_batch
+                    if len(channel_names) > 1 or not hide_batch_channel_name_for_single_plot
                     else label_x
                 )
                 data_i = fields[i_row, :, i_column, :]
             else:
                 y_label = label_x
-                if len(batch_names) > 1 or not hide_batch_name_for_single_batch:
+                if len(batch_names) > 1 or not hide_batch_channel_name_for_single_plot:
                     y_label = batch_names[i_row] + os.linesep + y_label
                 x_label = label_t
                 data_i = fields[i_row, :, i_column, :]
         if n_dim == 2:
             if animation:
                 y_label = label_y
-                if len(batch_names) > 1 or not hide_batch_name_for_single_batch:
+                if len(batch_names) > 1 or not hide_batch_channel_name_for_single_plot:
                     y_label = batch_names[i_row] + os.linesep + y_label
                 if len(channel_names) > 1:
                     x_label = label_x + os.linesep + channel_names[i_column]
@@ -252,7 +252,7 @@ class ChannelWisedPlotter:
                 x_label = channel_names[i_column] if len(channel_names) > 1 else None
                 y_label = (
                     batch_names[i_row]
-                    if len(batch_names) > 1 or not hide_batch_name_for_single_batch
+                    if len(batch_names) > 1 or not hide_batch_channel_name_for_single_plot
                     else None
                 )
                 data_i = fields[i_row, :, i_column, ...]
@@ -264,7 +264,7 @@ class ChannelWisedPlotter:
             )
             y_label = (
                 batch_names[i_row]
-                if (len(batch_names) > 1 or not hide_batch_name_for_single_batch)
+                if (len(batch_names) > 1 or not hide_batch_channel_name_for_single_plot)
                 and i_column == 0
                 else None
             )
@@ -555,7 +555,7 @@ class ChannelWisedPlotter:
         rect_title: Optional[Union[Tuple[int, int, int, int]]] = None,
         channel_names: Optional[Sequence[str]] = None,
         batch_names: Optional[Sequence[str]] = None,
-        hide_batch_name_for_single_batch: bool = True,
+        hide_batch_channel_name_for_single_plot: bool = True,
         title: Optional[str] = None,
         vmin: Optional[Union[float, Sequence[float]]] = None,
         vmax: Optional[Union[float, Sequence[float]]] = None,
@@ -609,7 +609,7 @@ class ChannelWisedPlotter:
             fig (Optional[plt.Figure], optional): The figure to plot on. If None, a new figure will be created. Defaults to None.
             channel_names (Optional[Sequence[str]], optional): The names of the channels. Defaults to None.
             batch_names (Optional[Sequence[str]], optional): The names of the batches. Defaults to None.
-            hide_batch_name_for_single_batch (bool, optional): Whether to hide the batch name for a single batch. Defaults to True.
+            hide_batch_channel_name_for_single_plot (bool, optional): Whether to hide the batch and channel name for a single batch or channel. Defaults to True.
             vmin (Optional[Union[float, Sequence[float]]], optional): The minimum value for the color scale. Defaults to None.
             vmax (Optional[Union[float, Sequence[float]]], optional): The maximum value for the color scale. Defaults to None.
             cmap (Union[str, Colormap], optional): The colormap to use. Defaults to "coolwarm".
@@ -775,7 +775,8 @@ class ChannelWisedPlotter:
             label_x=label_x,
             label_y=label_y,
             label_t=label_t,
-            hide_batch_name_for_single_batch=hide_batch_name_for_single_batch,
+            hide_batch_channel_name_for_single_plot=hide_batch_channel_name_for_single_plot,
+            animation=animation,
         )
         if n_dim == 1:
             if animation:

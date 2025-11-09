@@ -216,7 +216,7 @@ def compare_error_traj_frame_slice(
         title=title,
         width_correction=width_correction,
         height_correction=height_correction,
-        hide_batch_name_for_single_batch=False,
+        hide_batch_channel_name_for_single_plot=False,
         rotate_cbar_for_single_batch=False,
         **kwargs,
     )

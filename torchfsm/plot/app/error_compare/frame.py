@@ -196,7 +196,7 @@ def compare_error_traj_frame(
         channel_names=channel_names,
         frame_start_index=frame_start_index,
         rotate_cbar_for_single_batch=False,
-        hide_batch_name_for_single_batch=False,
+        hide_batch_channel_name_for_single_plot=False,
         num_colorbar_value=num_colorbar_value,
         ctick_format=ctick_format,
         cbar_pad=cbar_pad,
