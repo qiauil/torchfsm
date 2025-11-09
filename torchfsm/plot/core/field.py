@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.colors import Colormap
 import torch
-from ..render import AlphaFunction, render_3d_field
+from ..render import AlphaFunction, render_3d_field, add_3d_coord
 from typing import Union, Optional, Sequence, Tuple, Literal
 
 def plot_1D_field(
@@ -142,6 +142,19 @@ def _plot_3D_field(
     title: Optional[str] = None,
     title_loc="center",
     aspect="auto",
+    show_3d_coordinates: bool = True,
+    coordinates_size: float = 0.1,
+    coordinates_x_loc: float = -0.05,
+    coordinates_y_loc: float = -0.05,
+    arrow_length: float = 0.6,
+    x_arrow_label:str='x',
+    y_arrow_label:str='y',
+    z_arrow_label:str='z',
+    x_arrow_color:str='r',
+    y_arrow_color:str='g',
+    z_arrow_color:str='b',
+    arrow_length_ratio:float=0.25,
+    arrow_linewidth:int=1
 ):
     """
     Plot a 3D field.
@@ -154,6 +167,20 @@ def _plot_3D_field(
         title (Optional[str], optional): The title of the plot. Defaults to None.
         title_loc (str, optional): The location of the title. Defaults to "center".
         aspect (str, optional): The aspect ratio. Defaults to "auto".
+        show_3d_coordinates (bool, optional): Whether to show 3D coordinates. Defaults to True.
+                ax2d (mlp.axes.Axes): The 2D axes to which the 3D coordinate system will be added
+        coordinates_size (float, optional): Size of the 3D axes relative to the 2D axes. Defaults to 0.1.
+        coordinates_x_loc (float, optional): X location offset for the 3D axes. Defaults to -0.05.
+        coordinates_y_loc (float, optional): Y location offset for the 3D axes. Defaults to -0.05.
+        arrow_length (float, optional): Length of the arrows. Defaults to 0.6.
+        x_arrow_label (str, optional): Label for the X axis. Defaults to 'x'.
+        y_arrow_label (str, optional): Label for the Y axis. Defaults to 'y'.
+        z_arrow_label (str, optional): Label for the Z axis. Defaults to 'z'.
+        x_arrow_color (str, optional): Color for the X axis arrow. Defaults to 'r'.
+        y_arrow_color (str, optional): Color for the Y axis arrow. Defaults to 'g'.
+        z_arrow_color (str, optional): Color for the Z axis arrow. Defaults to 'b'.
+        arrow_length_ratio (float, optional): Ratio of the arrow head length to the total arrow length. Defaults to 0.25.
+        arrow_linewidth (int, optional): Line width of the arrows. Defaults to 1.
     """
     im = ax.imshow(img, aspect=aspect)
     ax.set_xticks([])
@@ -166,6 +193,20 @@ def _plot_3D_field(
         ax.set_title(title, loc=title_loc)
     for loc in ["bottom", "top", "right", "left"]:
         ax.spines[loc].set_color("white")
+    if show_3d_coordinates:
+        add_3d_coord(ax,  
+                     size=coordinates_size, 
+                     length=arrow_length, 
+                     x_loc=coordinates_x_loc,
+                     y_loc=coordinates_y_loc,
+                     x_label=x_arrow_label,
+                     y_label=y_arrow_label,
+                     z_label=z_arrow_label,
+                     x_color=x_arrow_color,
+                     y_color=y_arrow_color,
+                     z_color=z_arrow_color,
+                     arrow_length_ratio=arrow_length_ratio,
+                     linewidth=arrow_linewidth)
     return im
 
 
@@ -196,6 +237,19 @@ def plot_3D_field(
         AlphaFunction,
     ] = "zigzag",
     gamma_correction: float = 2.4,
+    show_3d_coordinates: bool = True,
+    coordinates_size: float = 0.1,
+    coordinates_x_loc: float = -0.05,
+    coordinates_y_loc: float = -0.05,
+    arrow_length: float = 0.6,
+    x_arrow_label:str='x',
+    y_arrow_label:str='y',
+    z_arrow_label:str='z',
+    x_arrow_color:str='r',
+    y_arrow_color:str='g',
+    z_arrow_color:str='b',
+    arrow_length_ratio:float=0.25,
+    arrow_linewidth:int=1,
     **kwargs,
 ):
     """
@@ -220,6 +274,20 @@ def plot_3D_field(
         height (int, optional): The height of the rendered image. Defaults to 512.
         alpha_func (Union[Literal["zigzag","central_peak","central_valley","linear_increase","linear_decrease", "luminance",],AlphaFunction,], optional): The alpha function. Defaults to "zigzag".
         gamma_correction (float, optional): The gamma correction factor. Defaults to 2.4.
+        show_3d_coordinates (bool, optional): Whether to show 3D coordinates. Defaults to False.
+                ax2d (mlp.axes.Axes): The 2D axes to which the 3D coordinate system will be added
+        coordinates_size (float, optional): Size of the 3D axes relative to the 2D axes. Defaults to 0.1.
+        coordinates_x_loc (float, optional): X location offset for the 3D axes. Defaults to -0.05.
+        coordinates_y_loc (float, optional): Y location offset for the 3D axes. Defaults to -0.05.
+        arrow_length (float, optional): Length of the arrows. Defaults to 0.6.
+        x_arrow_label (str, optional): Label for the X axis. Defaults to 'x'.
+        y_arrow_label (str, optional): Label for the Y axis. Defaults to 'y'.
+        z_arrow_label (str, optional): Label for the Z axis. Defaults to 'z'.
+        x_arrow_color (str, optional): Color for the X axis arrow. Defaults to 'r'.
+        y_arrow_color (str, optional): Color for the Y axis arrow. Defaults to 'g'.
+        z_arrow_color (str, optional): Color for the Z axis arrow. Defaults to 'b'.
+        arrow_length_ratio (float, optional): Ratio of the arrow head length to the total arrow length. Defaults to 0.25.
+        arrow_linewidth (int, optional): Line width of the arrows. Defaults to 1.
         **kwargs: Additional keyword arguments for the plot.
     """
     if isinstance(data, torch.Tensor):
@@ -251,6 +319,19 @@ def plot_3D_field(
         title=title,
         title_loc=title_loc,
         aspect=aspect,
+        show_3d_coordinates=show_3d_coordinates,
+        coordinates_size=coordinates_size,
+        coordinates_x_loc=coordinates_x_loc,
+        coordinates_y_loc=coordinates_y_loc,
+        arrow_length=arrow_length,
+        x_arrow_label=x_arrow_label,
+        y_arrow_label=y_arrow_label,
+        z_arrow_label=z_arrow_label,
+        x_arrow_color=x_arrow_color,
+        y_arrow_color=y_arrow_color,
+        z_arrow_color=z_arrow_color,
+        arrow_length_ratio=arrow_length_ratio,
+        arrow_linewidth=arrow_linewidth,
     )
     if return_cmap:
         return im, cmap

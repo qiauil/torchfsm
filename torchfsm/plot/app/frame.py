@@ -53,6 +53,7 @@ def plot_traj_frame(
         "t_wised", "channel_wised", "channel_wised_universal"
     ] = "channel_wised_universal",
     frame_start_index: int = 0,
+    show_3d_coordinates: bool = True,
     **kwargs,
 ):
     """
@@ -88,6 +89,7 @@ def plot_traj_frame(
         ticks_y (Tuple[Sequence[float], Sequence[str]], optional): Custom ticks for the y-axis. Defaults to None.
         show_ticks (Union[Literal["auto"], bool], optional): Whether to show ticks. Defaults to "auto".
         frame_start_index: (int): The starting index for the frame numbers. Defaults to 0.
+        show_3d_coordinates (bool, optional): Whether to show 3D coordinates for 3D plots. Defaults to True.
         **kwargs: Additional keyword arguments for the plot.
     """
     if isinstance(traj, torch.Tensor):
@@ -161,6 +163,7 @@ def plot_traj_frame(
         label_x=label_x,
         label_y=label_y,
         label_t=label_t,
+        show_3d_coordinates=show_3d_coordinates,
         **kwargs,
     )
 
@@ -211,6 +214,7 @@ def _plot_traj_frame_group(
         "t_wised", "channel_wised", "channel_wised_universal"
     ] = "channel_wised_universal",
     frame_start_index: int = 0,
+    show_3d_coordinates: bool = True,
     **kwargs,
 ):
     """
@@ -251,6 +255,7 @@ def _plot_traj_frame_group(
             "t_wised", "channel_wised", "channel_wised_universal"
         ] = "channel_wised_universal",
         frame_start_index (int, optional): The starting index for the time axis. Defaults to 0.
+        show_3d_coordinates (bool, optional): Whether to show 3D coordinates for 3D plots. Defaults to True.
         **kwargs: Additional keyword arguments to pass to the plotting functions.
     """
     n_channel = trajs[0].shape[2]
@@ -359,5 +364,6 @@ def _plot_traj_frame_group(
         animation=True,
         rotate_cbar_for_single_batch=rotate_cbar_for_single_batch,
         hide_batch_name_for_single_batch=hide_batch_name_for_single_batch,
+        show_3d_coordinates=show_3d_coordinates,
         **kwargs,
     )

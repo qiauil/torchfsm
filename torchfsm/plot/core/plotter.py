@@ -598,6 +598,7 @@ class ChannelWisedPlotter:
         return_ani_func: bool = False,
         save_name: Optional[str] = None,
         show_plot: bool = True,
+        show_3d_coordinates: bool = True,
         **kwargs,
     ) -> Optional[FuncAnimation]:
         """
@@ -641,6 +642,7 @@ class ChannelWisedPlotter:
             return_ani_func (bool, optional): Whether to return the animation function. Defaults to False.
             save_name (Optional[str], optional): The name of the file to save the plot. Defaults to None.
             show_plot (bool, optional): Whether to show the plot. Defaults to True.
+            show_3d_coordinates (bool, optional): Whether to show 3D coordinates for 3D plots. Defaults to True.
             **kwargs: Additional keyword arguments to pass to the plotting functions.
         Returns:
             Optional[FuncAnimation]: If `animation` is True and not show_in_notebook, returns a `FuncAnimation` object.
@@ -849,6 +851,10 @@ class ChannelWisedPlotter:
                         ax=ax_i,
                         data=data_i,
                         cmap=select_cmap(i_column, i_row),
+                        show_3d_coordinates=show_3d_coordinates if i == len(grid) - 1 else False,
+                        x_arrow_label="t",
+                        y_arrow_label="x",
+                        z_arrow_label="y",
                         **kwargs,
                     )
                 title_t(0)
@@ -887,6 +893,7 @@ class ChannelWisedPlotter:
                         imgs[j][i],
                         bottom_label=x_label,
                         left_label=y_label,
+                        show_3d_coordinates=show_3d_coordinates if j == len(grid) - 1 else False,
                         **kwargs,
                     )
                 title_t(i)

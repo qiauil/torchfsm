@@ -240,6 +240,11 @@ def render_3d_field(
     **kwargs,
 ) -> np.ndarray:
     cmap = rendering_cmap(cmap, alpha_func)
+    additional_kwargs = {}
+    keys=["time","distance_scale","spatial_interpolation","temporal_interpolation"]
+    for key in keys:
+        if key in kwargs:
+            additional_kwargs[key] = kwargs.pop(key)
     img = render(
         data.astype(np.float32),  # expects float32
         cmap=cmap,  # zigzag alpha
@@ -249,7 +254,80 @@ def render_3d_field(
         background=background,  # transparent background
         vmin=vmin,
         vmax=vmax,
-        **kwargs,
+        **additional_kwargs,
     )
     img = ((img / 255.0) ** (gamma_correction) * 255).astype(np.uint8)
     return img
+
+def add_3d_coord(ax2d: mlp.axes.Axes, 
+                 elev:int=45, 
+                 azim:int=45,
+                 roll:int=0,
+                 size:float=0.1, 
+                 length:float=0.6, 
+                 x_loc:float=-0.05,
+                 y_loc:float=-0.05,
+                 x_label:str='x',
+                 y_label:str='y',
+                 z_label:str='z',
+                 x_color:str='r',
+                 y_color:str='g',
+                 z_color:str='b',
+                 arrow_length_ratio:float=0.25,
+                 linewidth:int=1
+                 ) -> mlp.axes.Axes:
+    """
+    Add a small 3D coordinate system (XYZ arrows)
+
+    Args:
+        ax2d (mlp.axes.Axes): The 2D axes to which the 3D coordinate system will be added
+        elev (int, optional): Elevation angle for the 3D view. Defaults to 45.
+        azim (int, optional): Azimuth angle for the 3D view. Defaults to 45.
+        roll (int, optional): Roll angle for the 3D view. Defaults to 0.
+        size (float, optional): Size of the 3D axes relative to the 2D axes. Defaults to 0.1.
+        length (float, optional): Length of the arrows. Defaults to 0.6.
+        x_loc (float, optional): X location offset for the 3D axes. Defaults to -0.05.
+        y_loc (float, optional): Y location offset for the 3D axes. Defaults to -0.05.
+        x_label (str, optional): Label for the X axis. Defaults to 'x'.
+        y_label (str, optional): Label for the Y axis. Defaults to 'y'.
+        z_label (str, optional): Label for the Z axis. Defaults to 'z'.
+        x_color (str, optional): Color for the X axis arrow. Defaults to 'r'.
+        y_color (str, optional): Color for the Y axis arrow. Defaults to 'g'.
+        z_color (str, optional): Color for the Z axis arrow. Defaults to 'b'.
+        arrow_length_ratio (float, optional): Ratio of the arrow head length to the total arrow length. Defaults to 0.25.
+
+    Returns:
+      The newly created 3D axes object
+    """
+    fig = ax2d.figure
+    bbox = ax2d.get_position()  # in figure coords
+    #width = bbox.width * size
+    #height = bbox.height * size
+    x0 = bbox.x0 + x_loc
+    y0 = bbox.y0 + y_loc
+
+    ax3 = fig.add_axes([x0, y0, size, size], projection='3d', facecolor='none')
+    ax3.view_init(elev=elev, azim=azim, roll=roll)
+    ax3.set_axis_off()
+
+    vectors = np.array([[length, 0, 0],
+                        [0, length, 0],
+                        [0, 0, length]])
+    ax3.quiver([0, 0, 0], [0, 0, 0], [0, 0, 0],
+               vectors[:, 0], vectors[:, 1], vectors[:, 2],
+               color=[z_color, x_color, y_color], 
+               arrow_length_ratio=arrow_length_ratio, 
+               linewidth=linewidth)
+
+    ax3.set_xlim(0, length); ax3.set_ylim(0, length); ax3.set_zlim(0, length)
+
+    ax3.text(1.2*length, 0, 0, z_label, color=z_color, fontsize=8, horizontalalignment='right', verticalalignment='center')
+    ax3.text(0, 1.2*length, 0, x_label, color=x_color, fontsize=8, horizontalalignment='left', verticalalignment='center')
+    ax3.text(0, 0, 1.2*length, y_label, color=y_color, fontsize=8, horizontalalignment='left', verticalalignment='bottom')
+
+    try:
+        ax3.dist = 7
+    except Exception:
+        pass
+
+    return ax3

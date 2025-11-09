@@ -168,6 +168,7 @@ def compare_error_traj(
     show_in_notebook: bool = True,
     animation_engine: Literal["jshtml", "html5"] = "html5",
     save_name: Optional[str] = None,
+    show_3d_coordinates: bool = True,
     **kwargs,
 ) -> Optional[FuncAnimation]:
     """
@@ -243,6 +244,7 @@ def compare_error_traj(
         save_name (Optional[str], optional): The name of the file to save the plot. Defaults to None.
             If provided, the plot will be saved to the specified file.
             If not provided, the plot will not be saved.
+        show_3d_coordinates (bool, optional): Whether to show 3D coordinates for 3D plots. Defaults to True.
     """
     (
         traj,
@@ -310,6 +312,7 @@ def compare_error_traj(
         label_x=label_x,
         label_y=label_y,
         label_t=label_t,
+        show_3d_coordinates=show_3d_coordinates,
         **kwargs,
     )
 
@@ -382,6 +385,7 @@ def compare_error_field(
     show_in_notebook: bool = True,
     animation_engine: Literal["jshtml", "html5"] = "html5",
     save_name: Optional[str] = None,
+    show_3d_coordinates: bool = True,
     **kwargs,
 ):
     if error_func is not None:
@@ -448,6 +452,7 @@ def compare_error_field(
         show_in_notebook=show_in_notebook,
         animation_engine=animation_engine,
         save_name=save_name,
+        show_3d_coordinates=show_3d_coordinates,
         **kwargs,
     )
 

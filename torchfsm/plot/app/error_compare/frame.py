@@ -70,6 +70,7 @@ def compare_error_traj_frame(
     show_ticks: Union[Literal["auto"], bool] = "auto",
     save_name: Optional[str] = None,
     frame_start_index: int = 0,
+    show_3d_coordinates: bool = True,
     **kwargs,
 ):
     """
@@ -136,6 +137,7 @@ def compare_error_traj_frame(
             If provided, the plot will be saved to the specified file.
             If not provided, the plot will not be saved.
         frame_start_index (int, optional): The starting index for the frames to be compared. Defaults to 0.
+        show_3d_coordinates (bool, optional): Whether to show 3D coordinates for 3D plots. Defaults to True.
     """
     (
         traj,
@@ -198,5 +200,6 @@ def compare_error_traj_frame(
         num_colorbar_value=num_colorbar_value,
         ctick_format=ctick_format,
         cbar_pad=cbar_pad,
+        show_3d_coordinates=show_3d_coordinates,
         **kwargs,
     )

@@ -50,6 +50,7 @@ def plot_traj(
     show_in_notebook: bool = True,
     animation_engine: Literal["jshtml", "html5"] = "html5",
     save_name: Optional[str] = None,
+    show_3d_coordinates: bool = True,
     **kwargs,
 ) -> Optional[FuncAnimation]:
     """
@@ -90,6 +91,7 @@ def plot_traj(
         show_in_notebook (bool, optional): Whether to show the plot in a Jupyter notebook. Defaults to True.
         animation_engine (Literal["jshtml", "html5"], optional): The engine to use for the animation. Defaults to "html5".
         save_name (Optional[str], optional): The name of the file to save the plot. Defaults to None.
+        show_3d_coordinates (bool, optional): Whether to show 3D coordinate axes when plotting 3D data. Defaults to True.
         **kwargs: Additional keyword arguments for the plot.
 
     Returns:
@@ -128,6 +130,7 @@ def plot_traj(
         save_name=save_name,
         width_correction=width_correction,
         height_correction=height_correction,
+        show_3d_coordinates=show_3d_coordinates,
         **kwargs,
     )
 
@@ -168,6 +171,7 @@ def plot_field(
     ticks_y: Tuple[Sequence[float], Sequence[str]] = None,
     show_ticks: Union[Literal["auto"], bool] = "auto",
     save_name: Optional[str] = None,
+    show_3d_coordinates: bool = True,
     **kwargs,
 ):
     """
@@ -202,7 +206,7 @@ def plot_field(
         ticks_y (Tuple[Sequence[float], Sequence[str]], optional): Custom ticks for the y-axis. Defaults to None.
         show_ticks (Union[Literal["auto"], bool], optional): Whether to show ticks. Defaults to "auto".
         save_name (Optional[str], optional): The name of the file to save the plot. Defaults to None.
-
+        show_3d_coordinates (bool, optional): Whether to show 3D coordinate axes when plotting 3D data. Defaults to True.
     """
 
     if isinstance(field, torch.Tensor):
@@ -237,5 +241,6 @@ def plot_field(
         label_x=label_x,
         label_y=label_y,
         label_t=label_t,
+        show_3d_coordinates=show_3d_coordinates,
         **kwargs,
     )
