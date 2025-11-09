@@ -361,13 +361,19 @@ class ChannelWisedPlotter:
             else:
                 subfig_w = subfig_size * 2
         elif n_dim == 2:
-            subfig_w = subfig_size * y_shape / x_shape
+            if not animation:
+                w=(n_frame+y_shape)*0.784
+                h=x_shape/1.4142+max(n_frame,y_shape)*0.555
+                subfig_w = subfig_size * w / h             
+            else:
+                subfig_w = subfig_size * y_shape / x_shape
         elif n_dim == 3:
-            h = z_shape + z_shape
-            w = y_shape + x_shape
+            w=(x_shape+z_shape)*0.784
+            h=y_shape/1.4142+max(x_shape,z_shape)*0.555
             subfig_w = subfig_size * w / h
         else:
             raise ValueError("Only support 1D, 2D, and 3D trajectories.")
+        subfig_w=max(subfig_w,subfig_size/4)  # ensure the subfig_w is not too small
         total_height = subfig_h * batch_size
         total_width = subfig_w * n_channel
         return total_width, total_height
