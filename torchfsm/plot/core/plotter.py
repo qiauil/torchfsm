@@ -237,6 +237,8 @@ class ChannelWisedPlotter:
                 if len(batch_names) > 1 or not hide_batch_channel_name_for_single_plot:
                     y_label = batch_names[i_row] + os.linesep + y_label
                 x_label = label_t
+                if len(channel_names) > 1:
+                    x_label = channel_names[i_column] + os.linesep + x_label
                 data_i = fields[i_row, :, i_column, :]
         if n_dim == 2:
             if animation:
@@ -806,8 +808,8 @@ class ChannelWisedPlotter:
                         ax=ax_i,
                         data=data_i,
                         show_ticks=show_ticks,
-                        x_label="t",
-                        y_label="x",
+                        x_label=x_label,
+                        y_label=y_label,
                         cmap=select_cmap(i_column, i_row),
                         vmin=select_vmin(i_column, i_row),
                         vmax=select_vmax(i_column, i_row),
@@ -852,6 +854,8 @@ class ChannelWisedPlotter:
                         ax=ax_i,
                         data=data_i,
                         cmap=select_cmap(i_column, i_row),
+                        bottom_label=x_label,
+                        left_label=y_label,
                         show_3d_coordinates=show_3d_coordinates if i == len(grid) - 1 else False,
                         x_arrow_label="t",
                         y_arrow_label="x",
