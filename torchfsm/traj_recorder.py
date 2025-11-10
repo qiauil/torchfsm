@@ -146,11 +146,10 @@ class AutoRecorder(_TrajRecorder):
     def trajectory(self):
         if len(self._trajectory) == 0:
             return None
-        self._trajectory = torch.stack(self._trajectory, dim=1)
         if self.return_in_fourier:
-            return self._trajectory
+            return torch.stack(self._trajectory, dim=1)
         else:
-            return self._traj_ifft(self._trajectory).real
+            return self._traj_ifft(torch.stack(self._trajectory, dim=1)).real
 
 
 class CPURecorder(AutoRecorder):
@@ -189,10 +188,11 @@ class CPURecorder(AutoRecorder):
     def trajectory(self):
         if len(self._trajectory) == 0:
             return None
+        self._trajectory = torch.stack(self._trajectory, dim=1)
         if self.return_in_fourier or self.real_time_ifft:
-            return torch.stack(self._trajectory, dim=1)
+            return self._trajectory
         else:
-            return self._traj_ifft(torch.stack(self._trajectory, dim=1)).real
+            return self._traj_ifft(self._trajectory).real
 
 
 class DiskRecorder(_TrajRecorder):
