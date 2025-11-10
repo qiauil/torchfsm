@@ -148,7 +148,8 @@ class AutoRecorder(_TrajRecorder):
         if len(self._trajectory) == 0:
             return None
         if self.return_in_fourier:
-            return torch.stack(self._trajectory, dim=1)
+            self._trajectory = torch.stack(self._trajectory, dim=1)
+            return self._trajectory
         else:
             return self._traj_ifft(torch.stack(self._trajectory, dim=1)).real
 
