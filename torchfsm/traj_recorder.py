@@ -1,4 +1,5 @@
 from typing import Callable, Optional, Literal
+from warnings import warn
 from .utils.tool import default
 import torch
 import numpy as np
@@ -137,10 +138,9 @@ class AutoRecorder(_TrajRecorder):
         self._trajectory = []
 
     def _record(self, step: int, frame: torch.tensor):
-        if not isinstance(self._trajectory, torch.Tensor):
-            self._trajectory.append(frame.clone())
-        else:
-            raise RuntimeError("The trajectory has been finalized.")
+        if isinstance(self._trajectory, torch.Tensor) :
+            self._trajectory = [] # reset trajectory if previous traj exists
+        self._trajectory.append(frame.clone())
 
     @property
     def trajectory(self):
@@ -174,6 +174,8 @@ class CPURecorder(AutoRecorder):
         self.real_time_ifft = real_time_ifft
 
     def _record(self, step: int, frame: torch.tensor):
+        if isinstance(self._trajectory, torch.Tensor) :
+            self._trajectory = [] # reset trajectory if previous traj exists
         if frame.is_cpu:
             if self.real_time_ifft and not self.return_in_fourier:
                 self._trajectory.append(self._field_ifft(frame.clone()).real)
@@ -250,6 +252,7 @@ class DiskRecorder(_TrajRecorder):
 
     @property
     def trajectory(self):
+        self._trajectory = [] # Clear the cache after saving to disk.
         return None
 
 
@@ -316,6 +319,7 @@ class RandomBatchWisedRecorder(_TrajRecorder):
             trajs.append(torch.stack(self._trajectory[batch_i], dim=0))
         trajs = torch.stack(trajs, dim=0)
         self._trajectory = []
+        self._batch_size = None # Reset for next recording
         if self.return_in_fourier:
             return trajs
         else:
