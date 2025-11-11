@@ -1,5 +1,5 @@
 // ...existing code...
-::: torchfsm.operator.generic._biharmonic._AdvectionCore
+::: torchfsm.operator.generic._advection._AdvectionCore
 ---
 ::: torchfsm.operator.generic._biharmonic._BiharmonicCore
 ---

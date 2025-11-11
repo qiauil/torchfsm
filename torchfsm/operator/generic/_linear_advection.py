@@ -6,7 +6,7 @@ from ..._type import FourierTensor
 
 class _LinearAdvectionCore(LinearCoef):
     r"""
-    Implementation of the Laplacian operator.
+    Implementation of the LinearAdvection operator.
     """
 
     def __init__(self, velocity: Union[float, Sequence[float]] = 1.0) -> None:

@@ -25,7 +25,9 @@ class _AdvectionCore(NonlinearFunc):
         assert self.velocity.shape[1] == f_mesh.n_dim, \
             f"advection operator only works for scalar field with velocity dimension {f_mesh.n_dim}, "\
             f"but got velocity with dimension {self.velocity.shape[1]}"
-        return self.div(u_fft*f_mesh.fft(self.velocity),f_mesh)
+        if u is None:
+            u = f_mesh.ifft(u_fft).real
+        return self.div(f_mesh.fft(self.velocity*u),f_mesh)
 
 class Advection(NonlinearOperator):
     r"""
