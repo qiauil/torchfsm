@@ -232,7 +232,7 @@ class DiskRecorder(_TrajRecorder):
             raise ValueError("save_format must be either 'numpy' or 'torch'.")
 
     def _record(self, step: int, frame: torch.tensor):
-        if len(self.traj < self.cache_freq):
+        if len(self._trajectory)< self.cache_freq:
             if self.temp_cache_loc == "cpu" and not frame.is_cpu:
                 self._trajectory.append(frame.cpu())
             else:
