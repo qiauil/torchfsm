@@ -32,12 +32,16 @@ class _AdvectionCore(NonlinearFunc):
 class Advection(NonlinearOperator):
     r"""
     `Advection` calculates the advection of a scalar field by a constant velocity field.
-        If your velocity field is constant in space, please consider using `LinearAdvection` operator instead for better performance.
+        If your velocity field is constant in space, please consider using `LinearAdvection` operator to allow you use larger simulation dt.
         It is defined as $\nabla \cdot (\phi\mathbf{u}) = \sum_{i=0}^I \frac{\phi\partial u_i}{\partial i}$
         where $\mathbf{u}$ is the velocity field.
         Note that this class is an operator wrapper. The actual implementation of the operator is in the `_AdvectionCore` class.
 
+    Args:
+        velocity (SpatialTensor["B C H ..."]): The velocity field used for advection. Please not that your velocity should be smooth enough to avoid aliasing error in Fourier space.
     """
 
-    def __init__(self) -> None:
-        super().__init__(_AdvectionCore())
+    def __init__(self,
+                 velocity:SpatialTensor["B C H ..."]
+                 ) -> None:
+        super().__init__(_AdvectionCore(velocity))
