@@ -139,9 +139,8 @@ def random_truncated_fourier_series(
 
     Args:
         mesh (Union[Sequence[tuple[float, float, int]], MeshGrid, FourierMesh]): The mesh on which to generate the noise.
-        freq_threshold (int): The frequency threshold for truncation.
-        amplitude_range (tuple[int, int]): The range of amplitudes for the noise.
-        angle_range (tuple[int, int]): The range of angles for the noise.
+        min_freq (int): The minimum frequency threshold for truncation.
+        max_freq (int): The maximum frequency threshold for truncation.
         device (Optional[torch.device]): The device on which to create the tensor.
         dtype (Optional[torch.dtype]): The data type of the tensor.
         batch_size (int): The number of batches.

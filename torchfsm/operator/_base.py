@@ -742,7 +742,7 @@ class OperatorLike(_MutableMixIn):
             trajectory_recorder (Optional[_TrajRecorder]): Trajectory recorder for recording the trajectory during integration. Default is None.
                 If None, no trajectory will be recorded. The function will only return the final frame.
             return_in_fourier (bool): If True, return the result in Fourier domain. If False, return the result in spatial domain. Default is False.
-            Nan_check (bool): If True, check for NaN values in the result. If NaN values are found, raise a NanSimulationError. Default is False.
+            nan_check (bool): If True, check for NaN values in the result. If NaN values are found, raise a NanSimulationError. Default is False.
 
         Returns:
             Union[SpatialTensor["B C H ..."], SpatialTensor["B T C H ..."], FourierTensor["B C H ..."], FourierTensor["B T C H ..."]]: Integrated result in spatial or Fourier domain.
