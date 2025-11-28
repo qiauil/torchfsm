@@ -3,6 +3,7 @@ from .traj_manipulate import statistics_traj, randomly_clip_traj, randomly_selec
 from .tool import default, format_device_dtype
 from .slice import traj_slices, field_slices
 from .test import test_sim_dt
+from .spectrum import collect_energy_spectrum
 
 __all__ = [
     "clean_up_memory",
@@ -16,4 +17,5 @@ __all__ = [
     "traj_slices",
     "field_slices",
     "test_sim_dt",
+    "collect_energy_spectrum",
 ]

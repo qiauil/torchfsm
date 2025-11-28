@@ -1,6 +1,6 @@
 from ..mesh import FourierMesh, MeshGrid
 from .._type import SpatialTensor
-from typing import Union, Callable, Sequence, Optional,Literal
+from typing import Union, Callable, Sequence, Optional, Literal
 from ._normalize import normalize
 import torch
 
@@ -29,7 +29,7 @@ def functional_energy_spectrum(
     n_batch: int,
     n_channels: int,
     spectrum_func: Callable[[torch.Tensor], torch.Tensor],
-    normalize_mode:Optional[Literal["normal_distribution","-1_1","0_1"]]=None,
+    normalize_mode: Optional[Literal["normal_distribution", "-1_1", "0_1"]] = None,
 ) -> SpatialTensor["B C H ..."]:
     """
     Generate an field $\mathbf{u}$ based on a given energy spectrum function $E(k)$ which statisfies$\frac{1}{2}\oiint_{A(K)}\hat{\mathbf{u}}(\mathbf{k})\hat{\mathbf{u}}^*(\mathbf{k})dA(k)=E(k)$
@@ -37,6 +37,7 @@ def functional_energy_spectrum(
     How it works:
     If $\hat{\mathbf{u}}$ is independent of the direction of $\mathbf{k}$, i.e., $\hat{\mathbf{u}}(\mathbf{k})=\hat{\mathbf{u}}(k)$, then the above equation can be simplified as$\frac{4\pi k^2}{2}|\hat{\mathbf{u}}(k)|^2=E(k)$.
     Therefore, we can derive that $|\hat{\mathbf{u}}(k)|=\sqrt{\frac{E(k)}{2\pi k^2}}$.
+    You can use `torchfsm.utils.collect_energy_spectrum` to verify the energy spectrum of the generated field.
 
     Args:
         mesh (Union[Sequence[tuple[float, float, int]], MeshGrid, FourierMesh]): The mesh or grid on which to generate the initial field.

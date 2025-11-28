@@ -17,3 +17,6 @@
 ::: torchfsm.utils.memory.clean_up_memory
 ---
 ::: torchfsm.utils.memory.print_gpu_memory
+---
+::: torchfsm.utils.spectrum.collect_energy_spectrum
+---
