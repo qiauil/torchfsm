@@ -1,4 +1,3 @@
-from ..mesh import FourierMesh, MeshGrid
 from .._type import SpatialTensor
 from typing import Union, Sequence
 from collections import defaultdict
@@ -8,7 +7,7 @@ import torch
 
 def collect_energy_spectrum(
     u: SpatialTensor["1 C H ..."],
-    mesh: Union[Sequence[tuple[float, float, int]], MeshGrid, FourierMesh],
+    mesh: Union[Sequence[tuple[float, float, int]], "MeshGrid", "FourierMesh"],
     progressive: bool = False,
 ):
     """
