@@ -11,3 +11,7 @@
 ::: torchfsm.field.random_truncated_fourier_series
 ---
 ::: torchfsm.field.truncated_fourier_series_custom_filter
+---
+::: torchfsm.field.functional_energy_spectrum
+---
+::: torchfsm.field.random_hermitian_field
