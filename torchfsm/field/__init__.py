@@ -3,5 +3,5 @@ from ._gaussian_blobs import random_gaussian_blobs
 from ._truncated_fourier import truncated_fourier_series, truncated_fourier_series_custom_filter, random_truncated_fourier_series
 from ._kolm_force import kolm_force
 from ._wave_1d import wave_1d
-from ._functional_energy_spectrum import functional_energy_spectrum, random_hermitian_field
+from ._energy_spectrum import functional_energy_spectrum, random_hermitian_field, random_power_law_energy_spectrum
 from ._normalize import normalize
