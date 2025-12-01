@@ -58,7 +58,7 @@ def functional_energy_spectrum(
 
     """
     if not isinstance(mesh, FourierMesh):
-        f_mesh = FourierMesh(mesh, device="cpu")
+        f_mesh = FourierMesh(mesh)
     else:
         f_mesh = mesh
     k_vec = f_mesh.bf_vector * (2 * torch.pi)
