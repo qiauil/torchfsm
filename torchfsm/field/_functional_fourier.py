@@ -2,7 +2,7 @@ from ..mesh import FourierMesh, MeshGrid
 from .._type import SpatialTensor
 from ._normalize import normalize
 from ._truncated_fourier import _get_mesh_device_and_dtype
-from typing import Union, Sequence, Optional, Literal, Callable
+from typing import Union, Sequence, Optional, Literal, Callable, Tuple
 import torch
 
 
@@ -12,7 +12,12 @@ def functional_fourier_series(
     phi_func: Callable[[FourierMesh], SpatialTensor["B C H ..."]] = None,
     device: Optional[torch.device] = None,
     dtype: Optional[torch.dtype] = None,
-    normalize_mode: Optional[Literal["normal_distribution", "-1_1", "0_1"]] = None,
+    normalize_mode: Optional[
+        Union[
+            Literal["normal_distribution", "-1_1", "0_1"],
+            Tuple[Union[float, Tuple[float, float]], Union[float, Tuple[float, float]]],
+        ]
+    ] = None,
 ) -> SpatialTensor["B C H ..."]:
     r"""
     Generate a truncated Fourier series noise field with custom magnitude and phase functions on a given mesh.
@@ -27,7 +32,8 @@ def functional_fourier_series(
             If None, a random phase between 0 and 2*pi with same shape as the magnitude will be generated.
         device (Optional[torch.device]): The device on which to create the tensor.
         dtype (Optional[torch.dtype]): The data type of the tensor.
-        normalize_mode (Optional[Literal["normal_distribution","-1_1","0_1"]]): The normalization mode for the generated noise.
+        normalize_mode (Optional[Union[Literal["normal_distribution", "-1_1", "0_1"],Tuple[Union[float, Tuple[float, float]], Union[float, Tuple[float, float]]],]]): 
+            The normalization mode for the generated noise. See `torchfsm.field.normalize` for details.
             If None, no normalization is applied. Default is None.
 
     Returns:

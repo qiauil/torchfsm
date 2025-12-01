@@ -1,6 +1,6 @@
 from ..mesh import FourierMesh, MeshGrid
 from .._type import SpatialTensor
-from typing import Union, Callable, Sequence, Optional, Literal
+from typing import Union, Callable, Sequence, Optional, Literal, Tuple
 from ._normalize import normalize
 import torch
 
@@ -29,7 +29,12 @@ def functional_energy_spectrum(
     n_batch: int,
     n_channels: int,
     spectrum_func: Callable[[torch.Tensor], torch.Tensor],
-    normalize_mode: Optional[Literal["normal_distribution","-1_1","0_1","min_max"]] = None,
+    normalize_mode: Optional[
+        Union[
+            Literal["normal_distribution", "-1_1", "0_1"],
+            Tuple[Union[float, Tuple[float, float]], Union[float, Tuple[float, float]]],
+        ]
+    ] = None,
 ) -> SpatialTensor["B C H ..."]:
     """
     Generate an field $\mathbf{u}$ based on a given energy spectrum function $E(k)$ which statisfies$\frac{1}{2}\oiint_{A(K)}\hat{\mathbf{u}}(\mathbf{k})\hat{\mathbf{u}}^*(\mathbf{k})dA(k)=E(k)$
@@ -44,9 +49,9 @@ def functional_energy_spectrum(
         n_batch (int): The number of batches.
         n_channels (int): The number of channels. Note that if multiple channels are used, each channel will be treated as a component of the vector field ans the energy is equally distributed among all channels.
         spectrum_func (Callable[[torch.Tensor], torch.Tensor]): A function that takes a tensor of wave numbers and returns the corresponding energy spectrum values, e.g., lambda k: 0.327*k**(-5/3).
-        normalize_mode (Optional[Literal["normal_distribution","-1_1","0_1","min_max"]]): The normalization mode for the generated noise.
+        normalize_mode (Optional[Union[Literal["normal_distribution", "-1_1", "0_1"],Tuple[Union[float, Tuple[float, float]], Union[float, Tuple[float, float]]],]]): 
+            The normalization mode for the generated noise. See `torchfsm.field.normalize` for details.
             If None, no normalization is applied. Default is None.
-            Note that normalization will **change** the energy spectrum of the generated field.
 
     Returns:
         SpatialTensor["B C H ..."]: The generated initial field with shape (n_batch, n_channels, H, W, D, ...).

@@ -2,7 +2,7 @@ from ..mesh import FourierMesh, MeshGrid, mesh_shape
 from .._type import SpatialTensor
 from ._normalize import normalize
 import torch, random
-from typing import Union, Sequence, Optional, Literal
+from typing import Union, Sequence, Optional, Literal, Tuple
 
 
 def _get_mesh_device_and_dtype(
@@ -26,7 +26,12 @@ def truncated_fourier_series_custom_filter(
     dtype: Optional[torch.dtype] = None,
     batch_size: int = 1,
     n_channel: int = 1,
-    normalize_mode: Optional[Literal["normal_distribution", "-1_1", "0_1"]] = None,
+    normalize_mode: Optional[
+        Union[
+            Literal["normal_distribution", "-1_1", "0_1"],
+            Tuple[Union[float, Tuple[float, float]], Union[float, Tuple[float, float]]],
+        ]
+    ] = None,
     noise_type: Literal["normal", "uniform"] = "normal",
 ) -> SpatialTensor["B C H ..."]:
     r"""
@@ -39,7 +44,8 @@ def truncated_fourier_series_custom_filter(
         dtype (Optional[torch.dtype]): The data type of the tensor.
         batch_size (int): The number of batches.
         n_channel (int): The number of channels.
-        normalize_mode (Optional[Literal["normal_distribution","-1_1","0_1"]]): The normalization mode for the generated noise.
+        normalize_mode (Optional[Union[Literal["normal_distribution", "-1_1", "0_1"],Tuple[Union[float, Tuple[float, float]], Union[float, Tuple[float, float]]],]]):
+            The normalization mode for the generated noise. See `torchfsm.field.normalize` for details.
             If None, no normalization is applied. Default is None.
         noise_type (Literal["normal","uniform"]): The type of noise to generate in the Fourier domain.
 
@@ -78,7 +84,12 @@ def truncated_fourier_series(
     dtype: Optional[torch.dtype] = None,
     batch_size: int = 1,
     n_channel: int = 1,
-    normalize_mode: Optional[Literal["normal_distribution", "-1_1", "0_1"]] = None,
+    normalize_mode: Optional[
+        Union[
+            Literal["normal_distribution", "-1_1", "0_1"],
+            Tuple[Union[float, Tuple[float, float]], Union[float, Tuple[float, float]]],
+        ]
+    ] = None,
     normalized_freq: bool = True,
     noise_type: Literal["normal", "uniform"] = "normal",
 ) -> SpatialTensor["B C H ..."]:
@@ -92,7 +103,8 @@ def truncated_fourier_series(
         dtype (Optional[torch.dtype]): The data type of the tensor.
         batch_size (int): The number of batches.
         n_channel (int): The number of channels.
-        normalize_mode (Optional[Literal["normal_distribution","-1_1","0_1"]]): The normalization mode for the generated noise.
+        normalize_mode (Optional[Union[Literal["normal_distribution", "-1_1", "0_1"],Tuple[Union[float, Tuple[float, float]], Union[float, Tuple[float, float]]],]]):
+            The normalization mode for the generated noise. See `torchfsm.field.normalize` for details.
             If None, no normalization is applied. Default is None.
         normalized_freq (bool): If True, wheather to set the frequency threshold as a normalized value.
             If the domain length is 1, setting this to True or False will not make a difference.
@@ -130,7 +142,12 @@ def random_truncated_fourier_series(
     dtype: Optional[torch.dtype] = None,
     batch_size: int = 1,
     n_channel: int = 1,
-    normalize_mode: Optional[Literal["normal_distribution", "-1_1", "0_1"]] = None,
+    normalize_mode: Optional[
+        Union[
+            Literal["normal_distribution", "-1_1", "0_1"],
+            Tuple[Union[float, Tuple[float, float]], Union[float, Tuple[float, float]]],
+        ]
+    ] = None,
     normalized_freq: bool = True,
     noise_type: Literal["normal", "uniform"] = "normal",
 ) -> SpatialTensor["B C H ..."]:
@@ -145,7 +162,8 @@ def random_truncated_fourier_series(
         dtype (Optional[torch.dtype]): The data type of the tensor.
         batch_size (int): The number of batches.
         n_channel (int): The number of channels.
-        normalize_mode (Optional[Literal["normal_distribution","-1_1","0_1"]]): The normalization mode for the generated noise.
+        normalize_mode (Optional[Union[Literal["normal_distribution", "-1_1", "0_1"],Tuple[Union[float, Tuple[float, float]], Union[float, Tuple[float, float]]],]]):
+            The normalization mode for the generated noise. See `torchfsm.field.normalize` for details.
             If None, no normalization is applied. Default is None.
         normalized_freq (bool): If True, wheather to set the frequency threshold as a normalized value.
             If the domain length is 1, setting this to True or False will not make a difference.
