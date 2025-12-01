@@ -26,9 +26,9 @@ def random_hermitian_field(magnitude: SpatialTensor["B C H ..."]):
 
 def functional_energy_spectrum(
     mesh: Union[Sequence[tuple[float, float, int]], MeshGrid, FourierMesh],
-    n_batch: int,
-    n_channels: int,
     spectrum_func: Callable[[torch.Tensor], torch.Tensor],
+    n_batch: int=1,
+    n_channels: int=1,
     normalize_mode: Optional[
         Union[
             Literal["normal_distribution", "-1_1", "0_1"],
@@ -46,9 +46,9 @@ def functional_energy_spectrum(
 
     Args:
         mesh (Union[Sequence[tuple[float, float, int]], MeshGrid, FourierMesh]): The mesh or grid on which to generate the initial field.
-        n_batch (int): The number of batches.
-        n_channels (int): The number of channels. Note that if multiple channels are used, each channel will be treated as a component of the vector field ans the energy is equally distributed among all channels.
         spectrum_func (Callable[[torch.Tensor], torch.Tensor]): A function that takes a tensor of wave numbers and returns the corresponding energy spectrum values, e.g., lambda k: 0.327*k**(-5/3).
+        n_batch (int): The number of batches. Default is 1.
+        n_channels (int): The number of channels. Note that if multiple channels are used, each channel will be treated as a component of the vector field ans the energy is equally distributed among all channels. Default is 1.
         normalize_mode (Optional[Union[Literal["normal_distribution", "-1_1", "0_1"],Tuple[Union[float, Tuple[float, float]], Union[float, Tuple[float, float]]],]]): 
             The normalization mode for the generated noise. See `torchfsm.field.normalize` for details.
             If None, no normalization is applied. Default is None.
