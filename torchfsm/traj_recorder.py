@@ -1,6 +1,6 @@
 from typing import Callable, Optional, Literal
 from warnings import warn
-from ._util import default
+from ._utils import default
 import torch
 import numpy as np
 

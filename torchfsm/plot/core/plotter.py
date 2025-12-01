@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import matplotlib as mlp
 import matplotlib.colors as colors
 import torch, os
-from ..._util import default
+from ..._utils import default
 from ..._type import SpatialTensor, SpatialArray
 from ..render import AlphaFunction, rendering_cmap, render_3d_field
 from ..tools import sym_colormap

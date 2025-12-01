@@ -1,5 +1,5 @@
 from ..._type import SpatialTensor, SpatialArray
-from ..._util import default
+from ..._utils import default
 from ...utils.slice import traj_slices
 from ..render import AlphaFunction
 from .frame import _plot_traj_frame_group

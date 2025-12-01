@@ -1,7 +1,7 @@
 # torchfsm/_util.py
 # Since the function provided here are both used in utils and mesh modules, we put them in _util.py to avoid circular import.
 
-import torch
+import torch,gc
 from typing import Union, Optional,Tuple
 
 def default(value, default):
@@ -40,3 +40,14 @@ def format_device_dtype(
     dtype = default(dtype, torch.float32)
     return device, dtype
 
+def clean_up_memory():
+    """
+    Clean up the memory by calling garbage collector and emptying the cache.
+    """
+    gc.collect()
+    torch.cuda.empty_cache()
+
+def print_gpu_memory(prefix="",device="cuda:1"):
+    allocated = torch.cuda.memory_allocated(device)
+    reserved = torch.cuda.memory_reserved(device)
+    print(f"{prefix}Allocated: {allocated / 1024**2:.2f} MB, Reserved: {reserved / 1024**2:.2f} MB")
