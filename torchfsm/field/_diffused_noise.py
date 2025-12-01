@@ -9,7 +9,7 @@ from typing import Union, Sequence, Optional, Literal, Tuple
 
 def diffused_noise(
     mesh: Union[Sequence[tuple[float, float, int]], MeshGrid, FourierMesh],
-    diffusion_coef: float = 1.0,
+    diffusion_coef: float = 0.01,
     device: Optional[torch.device] = None,
     dtype: Optional[torch.dtype] = None,
     batch_size: int = 1,
