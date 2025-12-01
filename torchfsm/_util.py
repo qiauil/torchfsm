@@ -1,3 +1,6 @@
+# torchfsm/_util.py
+# Since the function provided here are both used in utils and mesh modules, we put them in _util.py to avoid circular import.
+
 import torch
 from typing import Union, Optional,Tuple
 

@@ -1,7 +1,7 @@
 import torch, os
 from torch import Tensor
 from typing import Union, Sequence, Callable, Optional, Tuple, Literal, List
-from ..utils.tool import default
+from .._util import default
 from ..utils.memory import clean_up_memory
 from .._type import ValueList, SpatialTensor, FourierTensor
 from ..mesh import FourierMesh, MeshGrid

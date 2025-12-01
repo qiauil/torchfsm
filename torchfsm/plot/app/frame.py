@@ -5,7 +5,7 @@ from ..core import (
 )
 from ..._type import SpatialTensor, SpatialArray, ValueList
 from ...utils.traj_manipulate import uniformly_select_frames
-from ...utils.tool import default
+from ..._util import default
 from ..render import AlphaFunction
 from typing import Union, Optional, Sequence, Tuple, Literal
 from matplotlib.colors import Colormap

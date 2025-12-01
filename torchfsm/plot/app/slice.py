@@ -3,7 +3,7 @@ from ..core import (
     concate_traj_plots,
 )
 from ..._type import SpatialTensor, SpatialArray
-from ...utils.tool import  default
+from ..._util import  default
 from ...utils.slice import traj_slices
 from ..render import AlphaFunction
 from typing import Union, Optional, Sequence, Tuple, Literal, List

@@ -1,5 +1,7 @@
 from ..errors import NanSimulationError
 from ..traj_recorder import _TrajRecorder
+from ..operator import Operator
+from ..mesh import MeshGrid, FourierMesh
 from typing import Callable, Optional, Union, Sequence
 import torch
 import numpy as np
@@ -30,12 +32,12 @@ class _DtTestRecorder(_TrajRecorder):
         return self.pre_traj
 
 def test_sim_dt(
-    operator: "Operator",
+    operator: Operator,
     u_0: torch.Tensor,
     max_sim_dt: float,
     min_sim_dt: float,
     mesh: Optional[
-            Union[Sequence[tuple[float, float, int]], "MeshGrid", "FourierMesh"]
+            Union[Sequence[tuple[float, float, int]], MeshGrid, FourierMesh]
         ] = None,
     stop_criteria: float = None,
     initial_step: int = 1,
