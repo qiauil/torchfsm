@@ -3,6 +3,7 @@ from ..mesh import FourierMesh, MeshGrid, mesh_shape
 from .._type import SpatialTensor
 from .._utils import clean_up_memory
 from ._normalize import normalize
+from ._truncated_fourier import _get_mesh_device_and_dtype
 import torch
 from typing import Union, Sequence, Optional, Literal, Tuple
 
@@ -34,7 +35,7 @@ def diffused_noise(
         dtype (Optional[torch.dtype]): The data type of the generated noise. Default is None.
         batch_size (int): The number of batches. Default is 1.
         n_channel (int): The number of channels. Default is 1.
-        normalize_mode (Optional[Union[Literal["normal_distribution", "-1_1", "0_1"],Tuple[Union[float, Tuple[float, float]], Union[float, Tuple[float, float]]],]]): 
+        normalize_mode (Optional[Union[Literal["normal_distribution", "-1_1", "0_1"],Tuple[Union[float, Tuple[float, float]], Union[float, Tuple[float, float]]],]]):
             The normalization mode for the generated noise. See `torchfsm.field.normalize` for details.
             If None, no normalization is applied. Default is None.
 
@@ -57,3 +58,46 @@ def diffused_noise(
     if normalize_mode is not None:
         u_0 = normalize(u_0, normalize_mode=normalize_mode)
     return u_0
+
+
+def random_diffused_noise(
+    mesh: Union[Sequence[tuple[float, float, int]], MeshGrid, FourierMesh],
+    min_diffusion_coef: float = 0.001,
+    max_diffusion_coef: float = 0.01,
+    device: Optional[torch.device] = None,
+    dtype: Optional[torch.dtype] = None,
+    batch_size: int = 1,
+    n_channel: int = 1,
+    normalize_mode: Optional[
+        Union[
+            Literal["normal_distribution", "-1_1", "0_1"],
+            Tuple[Union[float, Tuple[float, float]], Union[float, Tuple[float, float]]],
+        ]
+    ] = None,
+) -> SpatialTensor["B C H ..."]:
+    mesh, device, dtype = _get_mesh_device_and_dtype(mesh, device, dtype)
+    coef_shape = (batch_size, n_channel) + (1,) * mesh.n_dim
+    if max_diffusion_coef >= min_diffusion_coef * 100:  # log uniform sampling
+        log_min = torch.log(
+            torch.tensor(min_diffusion_coef, device=device, dtype=dtype)
+        )
+        log_max = torch.log(
+            torch.tensor(max_diffusion_coef, device=device, dtype=dtype)
+        )
+        diffusion_coef = torch.exp(
+            torch.rand(coef_shape, device=device, dtype=dtype) * (log_max - log_min)
+            + log_min
+        )
+    else:
+        diffusion_coef = (
+            torch.rand(coef_shape, device=device, dtype=dtype)
+            * (max_diffusion_coef - min_diffusion_coef)
+            + min_diffusion_coef
+        )
+    return diffused_noise(
+        mesh=mesh,
+        diffusion_coef=diffusion_coef,
+        batch_size=batch_size,
+        n_channel=n_channel,
+        normalize_mode=normalize_mode,
+    )
