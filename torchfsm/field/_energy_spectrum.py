@@ -28,7 +28,7 @@ def functional_energy_spectrum(
     mesh: Union[Sequence[tuple[float, float, int]], MeshGrid, FourierMesh],
     spectrum_func: Callable[[torch.Tensor], torch.Tensor],
     batch_size: int=1,
-    n_channels: int=1,
+    n_channel: int=1,
     normalize_mode: Optional[
         Union[
             Literal["normal_distribution", "-1_1", "0_1"],
@@ -48,30 +48,30 @@ def functional_energy_spectrum(
         mesh (Union[Sequence[tuple[float, float, int]], MeshGrid, FourierMesh]): The mesh or grid on which to generate the initial field.
         spectrum_func (Callable[[torch.Tensor], torch.Tensor]): A function that takes a tensor of wave numbers (SpatialTensor["B C H ..."]) and returns the corresponding energy spectrum values, e.g., lambda k: 0.327*k**(-5/3).
         batch_size (int): The number of batches. Default is 1.
-        n_channels (int): The number of channels. Note that if multiple channels are used, each channel will be treated as a component of the vector field ans the energy is equally distributed among all channels. Default is 1.
+        n_channel (int): The number of channels. Note that if multiple channels are used, each channel will be treated as a component of the vector field ans the energy is equally distributed among all channels. Default is 1.
         normalize_mode (Optional[Union[Literal["normal_distribution", "-1_1", "0_1"],Tuple[Union[float, Tuple[float, float]], Union[float, Tuple[float, float]]],]]): 
             The normalization mode for the generated noise. See `torchfsm.field.normalize` for details.
             Note that the normalization will change the energy spectrum of the final generated field.
             If None, no normalization is applied. Default is None.
 
     Returns:
-        SpatialTensor["B C H ..."]: The generated initial field with shape (batch_size, n_channels, H, W, D, ...).
+        SpatialTensor["B C H ..."]: The generated initial field with shape (batch_size, n_channel, H, W, D, ...). The device and dtype are inherited from the input mesh.
 
     """
     f_mesh = FourierMesh(mesh) if not isinstance(mesh, FourierMesh) else mesh
     k_vec = f_mesh.bf_vector * (2 * torch.pi)
     norm_k = torch.norm(k_vec, dim=1, keepdim=True)
     norm_k = torch.repeat_interleave(norm_k, batch_size, dim=0)
-    norm_k = torch.repeat_interleave(norm_k, n_channels, dim=1)
+    norm_k = torch.repeat_interleave(norm_k, n_channel, dim=1)
     spectral_magnitude = torch.nan_to_num(
-        spectrum_func(norm_k) / n_channels / (2 * torch.pi * norm_k**2),
+        spectrum_func(norm_k) / n_channel / (2 * torch.pi * norm_k**2),
         nan=0.0,
         posinf=0.0,
         neginf=0.0,
     )
     spectral_magnitude = random_hermitian_field(torch.sqrt(spectral_magnitude))
     u_0 = f_mesh.ifft(spectral_magnitude).real.view(
-        batch_size, n_channels, *k_vec.shape[2:]
+        batch_size, n_channel, *k_vec.shape[2:]
     )
     if normalize_mode is not None:
         u_0 = normalize(u_0, normalize_mode=normalize_mode)
@@ -82,7 +82,7 @@ def random_power_law_energy_spectrum(
     min_power: float=-5.0,
     max_power: float=-2.0,
     batch_size: int=1,
-    n_channels: int=1,
+    n_channel: int=1,
     normalize_mode: Optional[
         Union[
             Literal["normal_distribution", "-1_1", "0_1"],
@@ -98,14 +98,14 @@ def random_power_law_energy_spectrum(
         min_power (float): The minimum power-law exponent.
         max_power (float): The maximum power-law exponent.
         batch_size (int): The number of batches. Default is 1.
-        n_channels (int): The number of channels. Default is 1.
+        n_channel (int): The number of channels. Default is 1.
         normalize_mode (Optional[Union[Literal["normal_distribution", "-1_1", "0_1"],Tuple[Union[float, Tuple[float, float]], Union[float, Tuple[float, float]]],]]): 
             The normalization mode for the generated noise. See `torchfsm.field.normalize` for details.
             Note that the normalization will change the energy spectrum of the final generated field.
             If None, no normalization is applied. Default is None.
     
     Returns:
-        SpatialTensor["B C H ..."]: The generated initial field with shape (batch_size, n_channels, H, W, D, ...).
+        SpatialTensor["B C H ..."]: The generated initial field with shape (batch_size, n_channel, H, W, D, ...). The device and dtype are inherited from the input mesh.
     
     """
     mesh=FourierMesh(mesh) if not isinstance(mesh,FourierMesh) else mesh
@@ -114,6 +114,6 @@ def random_power_law_energy_spectrum(
         mesh=mesh,
         spectrum_func=lambda k: torch.pow(k,powers),
         batch_size=batch_size,
-        n_channels=n_channels,
+        n_channel=n_channel,
         normalize_mode=normalize_mode,
     )

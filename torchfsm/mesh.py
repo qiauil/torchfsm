@@ -109,17 +109,17 @@ class MeshGrid:
         return mesh_grid
 
     def bc_mesh_grid(
-        self, batch_size: int = 1, n_channels: int = 1, numpy=False
+        self, batch_size: int = 1, n_channel: int = 1, numpy=False
     ) -> ValueList[
         Union[SpatialTensor["B C H ..."], Annotated[np.ndarray, "Spatial, B C H ..."]]
     ]:
         """
         Generate the mesh grid with batch size and channel size.
-        The shape of the mesh grid will be (batch_size,n_channels,n1,n2,n3,...,nk).
+        The shape of the mesh grid will be (batch_size,n_channel,n1,n2,n3,...,nk).
 
         Args:
             batch_size (int): batch size
-            n_channels (int): channel size
+            n_channel (int): channel size
             numpy (bool): whether to return the mesh grid as numpy array
 
         Returns:
@@ -133,7 +133,7 @@ class MeshGrid:
             bc_mesh_grid.append(
                 mesh_grid[i]
                 .reshape(1, 1, *mesh_grid[i].shape)
-                .repeat(batch_size, n_channels, *[1] * len(mesh_grid[i].shape))
+                .repeat(batch_size, n_channel, *[1] * len(mesh_grid[i].shape))
             )
         if numpy:
             mesh_grid = [i.cpu().numpy() for i in bc_mesh_grid]
@@ -546,7 +546,7 @@ def mesh_shape(
 ) -> Tuple:
     """
     Get the shape of the mesh.
-    The shape is in the form of (batch_size, n_channels, n1, n2, n3, ...).
+    The shape is in the form of (batch_size, n_channel, n1, n2, n3, ...).
 
     Args:
         mesh (Union[Sequence[tuple[float, float, int]], MeshGrid, FourierMesh]): The mesh to get the shape from.

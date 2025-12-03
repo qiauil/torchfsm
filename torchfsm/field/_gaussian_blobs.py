@@ -38,7 +38,7 @@ def random_gaussian_blobs(
     position_range: Tuple[float, float] = (0.4, 0.6),
     variance_range: Tuple[float, float] = (0.005, 0.01),
     batch_size: int = 1,
-    n_channels: int = 1,
+    n_channel: int = 1,
     device: Optional[torch.device] = None
 ) -> SpatialTensor["B C H ..."]:
     r"""
@@ -52,7 +52,7 @@ def random_gaussian_blobs(
         variance_range (Tuple[float, float]): The range of variances for the Gaussian blob.
             Default is (0.005, 0.01).
         batch_size (int): The number of batches. Default is 1.
-        n_channels (int): The number of channels. Default is 1.
+        n_channel (int): The number of channels. Default is 1.
         device (Optional[torch.device]): The device on which to create the tensor. Default is None. 
         
     Returns:
@@ -69,8 +69,8 @@ def random_gaussian_blobs(
     n_dim = locations.ndim-1 
     position = torch.empty(n_dim).uniform_(position_range[0],position_range[1]).to(mesh.device)
     variance = torch.empty(n_dim).uniform_(variance_range[0], variance_range[1]).to(mesh.device)
-    locations = torch.stack([locations]*batch_size*n_channels, dim=0)
-    position = position.unsqueeze(0).repeat(batch_size*n_channels, 1)
-    variance = variance.unsqueeze(0).repeat(batch_size*n_channels, 1)
+    locations = torch.stack([locations]*batch_size*n_channel, dim=0)
+    position = position.unsqueeze(0).repeat(batch_size*n_channel, 1)
+    variance = variance.unsqueeze(0).repeat(batch_size*n_channel, 1)
     blob=torch.exp(-0.5*_batched_mahalanobis_distance(locations, position, variance))
-    return blob.view(batch_size, n_channels, *blob.shape[1:])
+    return blob.view(batch_size, n_channel, *blob.shape[1:])
