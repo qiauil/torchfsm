@@ -223,12 +223,14 @@ class ChannelWisedPlotter:
             if animation:
                 y_label = (
                     batch_names[i_row] + os.linesep + "value"
-                    if len(batch_names) > 1 or not hide_batch_channel_name_for_single_plot
+                    if len(batch_names) > 1
+                    or not hide_batch_channel_name_for_single_plot
                     else "value"
                 )
                 x_label = (
                     label_x + os.linesep + channel_names[i_column]
-                    if len(channel_names) > 1 or not hide_batch_channel_name_for_single_plot
+                    if len(channel_names) > 1
+                    or not hide_batch_channel_name_for_single_plot
                     else label_x
                 )
                 data_i = fields[i_row, :, i_column, :]
@@ -254,7 +256,8 @@ class ChannelWisedPlotter:
                 x_label = channel_names[i_column] if len(channel_names) > 1 else None
                 y_label = (
                     batch_names[i_row]
-                    if len(batch_names) > 1 or not hide_batch_channel_name_for_single_plot
+                    if len(batch_names) > 1
+                    or not hide_batch_channel_name_for_single_plot
                     else None
                 )
                 data_i = fields[i_row, :, i_column, ...]
@@ -334,7 +337,19 @@ class ChannelWisedPlotter:
         return n_dim, batch_size, n_frame, n_channel, x_shape, y_shape, z_shape
 
     def plot_size(
-        self, subfig_size, traj, animation, batch_size, n_channel, space_x, space_y
+        self,
+        subfig_size,
+        traj,
+        animation,
+        batch_size,
+        n_channel,
+        space_x,
+        space_y,
+        width_correction,
+        height_correction,
+        cbar_mode,
+        cbar_location,
+        cbar_pad,
     ):
         """
         Calculate the total plot size.
@@ -362,21 +377,43 @@ class ChannelWisedPlotter:
                 subfig_w = subfig_size * 2
         elif n_dim == 2:
             if not animation:
-                w=(n_frame+y_shape)*0.784
-                h=x_shape/1.4142+max(n_frame,y_shape)*0.555
-                subfig_w = subfig_size * w / h             
+                w = (n_frame + y_shape) * 0.784
+                h = x_shape / 1.4142 + max(n_frame, y_shape) * 0.555
+                subfig_w = subfig_size * w / h
             else:
                 subfig_w = subfig_size * y_shape / x_shape
         elif n_dim == 3:
-            w=(x_shape+z_shape)*0.784
-            h=y_shape/1.4142+max(x_shape,z_shape)*0.555
+            w = (x_shape + z_shape) * 0.784
+            h = y_shape / 1.4142 + max(x_shape, z_shape) * 0.555
             subfig_w = subfig_size * w / h
         else:
             raise ValueError("Only support 1D, 2D, and 3D trajectories.")
-        subfig_w=max(subfig_w,subfig_size/4)  # ensure the subfig_w is not too small
+        subfig_w = max(
+            subfig_w, subfig_size / 4
+        )
         total_height = subfig_h * batch_size
+        total_height += space_y * (batch_size - 1)
         total_width = subfig_w * n_channel
-        return total_width, total_height
+        total_width += space_x * (n_channel - 1)
+        total_width *= width_correction
+        total_height *= height_correction
+        # the size calculation with colorbar is still very confusing when using ImageGrid
+        # need to be improved in the future
+        if cbar_mode == "single" and cbar_location == "right":
+            c_bar_size = f"{0.15/total_height*100}%"
+            total_width = 1.15*total_width + cbar_pad
+        elif cbar_mode == "single" and cbar_location == "top":
+            c_bar_size = f"{0.15/total_width*100}%"
+            total_height = 1.15*total_height + cbar_pad
+        else:
+            c_bar_size = "5%"
+            if cbar_location == "top":
+                total_height = total_height + 0.05*subfig_h + cbar_pad
+            elif cbar_location == "right":
+                total_width = (
+                    total_width + (0.05 * batch_size*subfig_w) + cbar_pad * n_channel
+                )
+        return total_width, total_height, c_bar_size
 
     def setup_colorbar(
         self,
@@ -428,7 +465,9 @@ class ChannelWisedPlotter:
                 np.linspace(vmins[i], vmaxs[i], num_colorbar_value, endpoint=True)
             )
 
-    def add_text_plot(self, text_ax, string):
+    def add_text_plot(
+        self, text_ax, string, location: Literal["center", "top", "bottom"] = "center"
+    ):
         """
         Add text to a text axis.
 
@@ -438,9 +477,17 @@ class ChannelWisedPlotter:
         """
         text_ax.clear()
         if string is not None:
+            if location == "top":
+                y = 1.0
+            elif location == "bottom":
+                y = 0.0
+            elif location == "center":
+                y = 0.5
+            else:
+                raise ValueError("The location should be 'center', 'top', or 'bottom'.")
             text_ax.text(
                 0.5,
-                0.5,
+                y,
                 string,
                 transform=text_ax.transAxes,  # Coordinates relative to the axes (0,0 bottom-left, 1,1 top-right)
                 horizontalalignment="center",
@@ -473,7 +520,7 @@ class ChannelWisedPlotter:
                     if i in ticks_t[0]:
                         self.add_text_plot(ax_t, ticks_t[1][i])
                 else:
-                    self.add_text_plot(ax_t, f"{label_t}={i}")
+                    self.add_text_plot(ax_t, f"{label_t}={i}", location="top")
             else:
                 self.add_text_plot(ax_t, None)
         elif show_time_index:
@@ -482,7 +529,7 @@ class ChannelWisedPlotter:
                 + "Please provide `rect_t_label` to the `plot` function."
             )
         if ax_title is not None:
-            self.add_text_plot(ax_title, title)
+            self.add_text_plot(ax_title, title, location="bottom")
         elif title is not None:
             warn(
                 "It seems you require showing title, but axis for title is None. "
@@ -553,6 +600,100 @@ class ChannelWisedPlotter:
             List[str]: Generated names.
         """
         return [f"{name}{space}{i}" for i in range(n)]
+
+    def create_figure(
+        self,
+        total_width,
+        total_height,
+        title=None,
+        show_time_index=False,
+        rect_t_label=None,
+        rect_title=None,
+    ):
+        if rect_t_label is not None or rect_title is not None:
+            raise ValueError(
+                "If `rect_t_label` or `rect_title` is provided, `fig` should not be None."
+            )
+        # the pad and height for title and time label are hard coded for now
+        # need to be improved in the future
+        pad_left = 0.5 / total_width
+        pad_top = 0.2 / total_height
+        height_title = 1.0
+        height_t_label = 0.5
+        total_width += pad_left * 2
+        total_height += pad_top * 2
+        if title is None and not show_time_index:
+            fig = plt.figure(figsize=(total_width, total_height))
+            rect_t_label = None
+            rect_title = None
+            gs = fig.add_gridspec(
+                1,
+                1,
+                hspace=0,
+                top=1.0 - pad_top,
+                bottom=pad_top,
+                left=pad_left,
+                right=1.0 - pad_left,
+            )
+            rect_plot = gs[0]
+        elif title is not None and not show_time_index:
+            fig = plt.figure(figsize=(total_width, total_height + height_title))
+            rect_t_label = None
+            gs = fig.add_gridspec(
+                2,
+                1,
+                height_ratios=[
+                    1 - height_title / total_height,
+                    height_title / total_height,
+                ],
+                hspace=0,
+                top=1.0 - pad_top,
+                bottom=pad_top,
+                left=pad_left,
+                right=1.0 - pad_left,
+            )
+            rect_plot = gs[0]
+            rect_title = gs[1]
+        elif title is None and show_time_index:
+            fig = plt.figure(figsize=(total_width, total_height + height_t_label))
+            rect_title = None
+            gs = fig.add_gridspec(
+                2,
+                1,
+                height_ratios=[
+                    height_t_label / total_height,
+                    1 - height_t_label / total_height,
+                ],
+                hspace=0,
+                top=1.0 - pad_top,
+                bottom=pad_top,
+                left=pad_left,
+                right=1.0 - pad_left,
+            )
+            rect_t_label = gs[0]
+            rect_plot = gs[1]
+        else:
+            fig = plt.figure(
+                figsize=(total_width, total_height + height_t_label + height_title)
+            )
+            gs = fig.add_gridspec(
+                3,
+                1,
+                height_ratios=[
+                    height_t_label / total_height,
+                    1 - height_t_label / total_height - height_title / total_height,
+                    height_title / total_height,
+                ],
+                hspace=0,
+                top=1.0 - pad_top,
+                bottom=pad_top,
+                left=pad_left,
+                right=1.0 - pad_left,
+            )
+            rect_t_label = gs[0]
+            rect_plot = gs[1]
+            rect_title = gs[2]
+        return fig, rect_plot, rect_t_label, rect_title
 
     def plot(
         self,
@@ -689,45 +830,32 @@ class ChannelWisedPlotter:
             cbar_mode = None
         if n_dim == 3 and (ticks_x is not None or ticks_y is not None or show_ticks):
             warn("Ticks are not supported for 3D trajectories.")
-        space_x, space_y, cbar_pad = self.setup_pad_size(space_x, space_y, cbar_pad)
-        total_width, total_height = self.plot_size(
-            subfig_size, traj, animation, batch_size, n_channel, space_x, space_y
-        )
-        total_width *= width_correction
-        total_height *= height_correction
-        if cbar_mode == "single" and cbar_location == "right":
-            c_bar_size = f"{0.15/total_height*100}%"
-        elif cbar_mode == "single" and cbar_location == "top":
-            c_bar_size = f"{0.15/total_width*100}%"
-        else:
-            c_bar_size = "5%"
         if not animation:
             show_time_index = False
+        space_x, space_y, cbar_pad = self.setup_pad_size(space_x, space_y, cbar_pad)
+        total_width, total_height, c_bar_size = self.plot_size(
+            subfig_size,
+            traj,
+            animation,
+            batch_size,
+            n_channel,
+            space_x,
+            space_y,
+            width_correction,
+            height_correction,
+            cbar_mode,
+            cbar_location,
+            cbar_pad,
+        )
         if fig is None:
-            if rect_t_label is not None or rect_title is not None:
-                raise ValueError(
-                    "If `rect_t_label` or `rect_title` is provided, `fig` should not be None."
-                )
-            if show_time_index:
-                total_height += 1
-            if title is not None:
-                total_height += 1
-            fig = plt.figure(figsize=(total_width, total_height))
-            pad_left = 0.5 / total_width
-            pad_top = 0.5 / total_height
-            gs = fig.add_gridspec(
-                3,
-                1,
-                height_ratios=[0, 1, 0],
-                hspace=1.5 / total_height,
-                top=1.0 - pad_top,
-                bottom=pad_top,
-                left=pad_left,
-                right=1.0 - pad_left,
+            fig, rect_plot, rect_t_label, rect_title = self.create_figure(
+                total_width,
+                total_height,
+                title,
+                show_time_index,
+                rect_t_label,
+                rect_title,
             )
-            rect_plot = gs[1]
-            rect_t_label = gs[0]
-            rect_title = gs[2]
         if rect_t_label is not None:
             ax_t_label = fig.add_subplot(rect_t_label)
         else:
@@ -736,6 +864,7 @@ class ChannelWisedPlotter:
             ax_title = fig.add_subplot(rect_title)
         else:
             ax_title = None
+
         grid = ImageGrid(
             fig,
             rect=rect_plot,
@@ -862,7 +991,9 @@ class ChannelWisedPlotter:
                         cmap=select_cmap(i_column, i_row),
                         bottom_label=x_label,
                         left_label=y_label,
-                        show_3d_coordinates=show_3d_coordinates if i == len(grid) - 1 else False,
+                        show_3d_coordinates=(
+                            show_3d_coordinates if i == len(grid) - 1 else False
+                        ),
                         x_arrow_label="t",
                         y_arrow_label="x",
                         z_arrow_label="y",
@@ -904,7 +1035,11 @@ class ChannelWisedPlotter:
                         imgs[j][i],
                         bottom_label=x_label,
                         left_label=y_label,
-                        show_3d_coordinates=show_3d_coordinates if (j == len(grid) - 1 and i == 0) else False,
+                        show_3d_coordinates=(
+                            show_3d_coordinates
+                            if (j == len(grid) - 1 and i == 0)
+                            else False
+                        ),
                         **kwargs,
                     )
                 title_t(i)
