@@ -34,7 +34,7 @@ def concate_traj_plots(
     universal_minmax: ValueList[bool] = False,
     num_colorbar_value: int = 4,
     c_bar_labels: Optional[ValueList[Sequence[str]]] = None,
-    cbar_pad: Optional[float] = None,
+    cbar_pad: Optional[float] = 0.1,
     ctick_format: Optional[str] = "%.1f",
     rotate_cbar_for_single_batch: ValueList[bool] = True,
     subfig_size: float = 3.5,
@@ -77,7 +77,7 @@ def concate_traj_plots(
         universal_minmax (ValueList[bool], optional): Whether to use a universal min-max for the color scale. If a single value is provided, it will be used for all trajectories. If a list is provided, it should have the same length as `trajs`. Defaults to False.
         num_colorbar_value (int, optional): The number of values to show on the colorbar. Defaults to 4.
         c_bar_labels (Optional[ValueList[Sequence[str]]], optional): The labels for the colorbar. If a single value is provided, it will be used for all trajectories. If a list is provided, it should have the same length as `trajs`. Defaults to None.
-        cbar_pad (Optional[float], optional): The padding for the colorbar. Defaults to None.
+        cbar_pad (Optional[float], optional): The padding for the colorbar. Defaults to 0.1.
         ctick_format (Optional[str], optional): The format for the colorbar ticks. Defaults to "%.1f".
         rotate_cbar_for_single_batch (ValueList[bool], optional): Whether to rotate the colorbar for a single batch. Defaults to True.
         subfig_size (float, optional): The size of each subplot. Defaults to 3.5.
@@ -149,23 +149,46 @@ def concate_traj_plots(
             ratios.append(trajs[i].shape[-1] * trajs[i].shape[0])
     ratios.append(0.0)
     total_height = 0.0
-    for traj_i in trajs:
-        total_width, height = ploter.plot_size(
-            subfig_size, traj_i, animation, batch_size, n_channel, space_x, space_y
+    for i,traj_i in enumerate(trajs):
+        space_x, space_y, cbar_pad = ploter.setup_pad_size(space_x, space_y, cbar_pad)
+        cbar_location, cbar_mode, _ = ploter.setup_colorbar_location(
+             batch_size, 
+             universal_minmax[i], 
+             rotate_cbar_for_single_batch[i]
+        )
+        total_width, height,_ = ploter.plot_size(
+            subfig_size, 
+            traj_i, 
+            animation, 
+            batch_size, 
+            n_channel, 
+            space_x, 
+            space_y,
+            width_correction,
+            height_correction,
+            cbar_mode,
+            cbar_location,
+            cbar_pad=cbar_pad
         )
         total_height += height
-    total_width *= width_correction
-    total_height *= height_correction
-    if show_time_index:
-        total_height += 1
-    if title is not None:
-        total_height += 1
+    # The pad size is hard coded for now, can be changed in the future if needed.
+    pad_left= 0.5
+    pad_bottom=0.5
+    h_space = 3.0
+    # here we consider the size of title and t_label
+    # it is nicer if we can remove the space when title or t_label is None, just like what we do in the plotter
+    # Ideally, total_height should be calculated as total_height += (h_space*(len(trajs)+1)+h_space*2)
+    # But we find below setting works better in practice
+    # The size setting in matplotlib is quite tricky...
+    total_height += h_space*(len(trajs)-1)
+    total_width += pad_left * 2
+    pad_left = pad_left / total_width
+    pad_bottom = pad_bottom / total_height
+    h_space = h_space / total_height
     figure = plt.figure(
         figsize=(total_width, total_height),
         constrained_layout=False,
     )
-    pad_left = 0.5 / total_width
-    pad_bottom = 0.5 / total_height
     gs = figure.add_gridspec(
         len(trajs) + 2,
         1,
@@ -174,7 +197,7 @@ def concate_traj_plots(
         right=1.0 - pad_left,
         top=1 - pad_bottom,
         bottom=pad_bottom,
-        hspace=3.0 / total_height,
+        hspace=h_space,
     )
     ax_t = figure.add_subplot(gs[0])
     ax_title = figure.add_subplot(gs[-1])
@@ -229,7 +252,6 @@ def concate_traj_plots(
             plt.savefig(save_name, bbox_inches="tight")
         plt.show()
     else:
-
         def ani_func(i):
             for ani_func_i in returns:
                 ani_func_i(i)
@@ -274,7 +296,7 @@ def concate_fields_plot(
     universal_minmax: ValueList[bool] = False,
     num_colorbar_value: int = 4,
     c_bar_labels: Optional[ValueList[Sequence[str]]] = None,
-    cbar_pad: Optional[float] = None,
+    cbar_pad: Optional[float] = 0.1,
     ctick_format: Optional[str] = "%.1f",
     rotate_cbar_for_single_batch: ValueList[bool] = True,
     subfig_size: float = 3.5,
@@ -316,7 +338,7 @@ def concate_fields_plot(
         universal_minmax (ValueList[bool], optional): Whether to use a universal min-max for the color scale. Defaults to False.
         num_colorbar_value (int, optional): The number of values to show on the colorbar. Defaults to 4.
         c_bar_labels (Optional[ValueList[Sequence[str]]], optional): The labels for the colorbar. Defaults to None.
-        cbar_pad (Optional[float], optional): The padding for the colorbar. Defaults to None.
+        cbar_pad (Optional[float], optional): The padding for the colorbar. Defaults to 0.1.
         ctick_format (Optional[str], optional): The format for the colorbar ticks. Defaults to "%.1f".
         rotate_cbar_for_single_batch (ValueList[bool], optional): Whether to rotate the colorbar for a single batch. Defaults to True.
         subfig_size (float, optional): The size of each subplot. Defaults to 3.5.

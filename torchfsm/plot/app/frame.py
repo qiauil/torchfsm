@@ -34,14 +34,14 @@ def plot_traj_frame(
     ] = "zigzag",
     num_colorbar_value: int = 4,
     c_bar_labels: Optional[Sequence[str]] = None,
-    cbar_pad: Optional[float] = None,
+    cbar_pad: Optional[float] = 0.1,
     ctick_format: Optional[str] = "%.1f",
     subfig_size: float = 3.5,
     real_size_ratio: bool = False,
     width_correction: float = 1.0,
     height_correction: float = 1.0,
-    space_x: Optional[float] = None,
-    space_y: Optional[float] = None,
+    space_x: Optional[float] = 0.7,
+    space_y: Optional[float] = 0.1,
     label_x: Optional[str] = "x",
     label_y: Optional[str] = "y",
     label_t: Optional[str] = "t",
@@ -74,14 +74,14 @@ def plot_traj_frame(
         c_bar_labels (Optional[Sequence[str]], optional): The labels for the colorbar. Defaults to None.
             If provided, it should have the same length as the number of channels.
             If not provided, the colorbar will not have labels.
-        cbar_pad (Optional[float], optional): The padding for the colorbar. Defaults to None.
+        cbar_pad (Optional[float], optional): The padding for the colorbar. Defaults to 0.1.
         ctick_format (Optional[str], optional): The format for the colorbar ticks. Defaults to "%.1f".
         subfig_size (float, optional): The size of the subfigures. Defaults to 3.5.
         real_size_ratio (bool, optional): Whether to use the real size ratio for the subfigures. Defaults to False.
         width_correction (float, optional): The correction factor for the width of the subfigures. Defaults to 1.0.
         height_correction (float, optional): The correction factor for the height of the subfigures. Defaults to 1.0.
-        space_x (Optional[float], optional): The space between subfigures in the x direction. Defaults to None.
-        space_y (Optional[float], optional): The space between subfigures in the y direction. Defaults to None.
+        space_x (Optional[float], optional): The space between subfigures in the x direction. Defaults to 0.7.
+        space_y (Optional[float], optional): The space between subfigures in the y direction. Defaults to 0.1.
         label_x (Optional[str], optional): The label for the x-axis. Defaults to "x".
         label_y (Optional[str], optional): The label for the y-axis. Defaults to "y".
         label_t (Optional[str], optional): The label for the time index. Defaults to "t".
@@ -194,7 +194,7 @@ def _plot_traj_frame_group(
     universal_minmax: ValueList[bool] = False,
     num_colorbar_value: int = 4,
     c_bar_labels: Optional[ValueList[Sequence[str]]] = None,
-    cbar_pad: Optional[float] = None,
+    cbar_pad: Optional[float] = 0.1,
     ctick_format: Optional[str] = "%.1f",
     rotate_cbar_for_single_batch: ValueList[bool] = True,
     subfig_size: float = 3.5,
@@ -236,7 +236,7 @@ def _plot_traj_frame_group(
         universal_minmax (ValueList[bool], optional): Whether to use a universal min-max for the color scale. If a single value is provided, it will be used for all trajectories. If a list is provided, it should have the same length as `trajs`. Defaults to False.
         num_colorbar_value (int, optional): The number of values to show on the colorbar. Defaults to 4.
         c_bar_labels (Optional[ValueList[Sequence[str]]], optional): The labels for the colorbar. If a single value is provided, it will be used for all trajectories. If a list is provided, it should have the same length as `trajs`. Defaults to None.
-        cbar_pad (Optional[float], optional): The padding for the colorbar. Defaults to None.
+        cbar_pad (Optional[float], optional): The padding for the colorbar. Defaults to 0.1.
         ctick_format (Optional[str], optional): The format for the colorbar ticks. Defaults to "%.1f".
         subfig_size (float, optional): The size of the subfigures. Defaults to 3.5.
         real_size_ratio (bool, optional): Whether to use the real size ratio for the subfigures. Defaults to False.

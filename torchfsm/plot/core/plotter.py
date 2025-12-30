@@ -723,15 +723,15 @@ class ChannelWisedPlotter:
         universal_minmax: bool = False,
         num_colorbar_value: int = 4,
         c_bar_labels: Optional[Sequence[str]] = None,
-        cbar_pad: Optional[float] = None,
+        cbar_pad: Optional[float] = 0.1,
         ctick_format: Optional[str] = "%.1f",
         rotate_cbar_for_single_batch: bool = True,
         subfig_size: float = 3.5,
         real_size_ratio: bool = False,
         width_correction: float = 1.0,
         height_correction: float = 1.0,
-        space_x: Optional[float] = None,
-        space_y: Optional[float] = None,
+        space_x: Optional[float] = 0.7,
+        space_y: Optional[float] = 0.1,
         label_x: Optional[str] = "x",
         label_y: Optional[str] = "y",
         label_t: Optional[str] = "t",
@@ -767,15 +767,15 @@ class ChannelWisedPlotter:
             universal_minmax (bool, optional): Whether to use a universal min-max for the color scale. Defaults to False.
             num_colorbar_value (int, optional): The number of values to show on the colorbar. Defaults to 4.
             c_bar_labels (Optional[Sequence[str]], optional): The labels for the colorbar. Defaults to None.
-            cbar_pad (Optional[float], optional): The padding for the colorbar. Defaults to None.
+            cbar_pad (Optional[float], optional): The padding for the colorbar. Defaults to 0.1.
             ctick_format (Optional[str], optional): The format for the colorbar ticks. Defaults to "%.1f".
             rotate_cbar_for_single_batch (bool, optional): Whether to rotate the colorbar for a single colorbar. Defaults to True.
             subfig_size (float, optional): The size of each subplot. Defaults to 3.5.
             real_size_ratio (bool, optional): Whether to use the real size ratio for the subfigures. Defaults to False.
             width_correction (float, optional): The correction factor for the width of the subfigures. Defaults to 1.0.
             height_correction (float, optional): The correction factor for the height of the subfigures. Defaults to 1.0.
-            space_x (Optional[float], optional): The space between subfigures in the x direction. Defaults to None.
-            space_y (Optional[float], optional): The space between subfigures in the y direction. Defaults to None.
+            space_x (Optional[float], optional): The space between subfigures in the x direction. Defaults to 0.7.
+            space_y (Optional[float], optional): The space between subfigures in the y direction. Defaults to 0.1.
             label_x (Optional[str], optional): The label for the x axis. Defaults to "x".
             label_y (Optional[str], optional): The label for the y axis. Defaults to "y".
             label_t (Optional[str], optional): The label for the time axis. Defaults to "t".
