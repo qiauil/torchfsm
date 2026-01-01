@@ -68,7 +68,7 @@ def collect_energy_spectrum(
     sorted_k=sorted_k[1:]
     sorted_e=sorted_e[1:]
     if n_bins is not None:
-        if n_bins < len(sorted_k):
-            raise ValueError("n_bins must be greater than or equal to the number of unique wave numbers.")
+        if n_bins > len(sorted_k):
+            raise ValueError("n_bins must be smaller than or equal to the number of unique wave numbers.")
         sorted_k, sorted_e = _smooth_spectrum(sorted_k, sorted_e, n_bins)
     return sorted_k, sorted_e
