@@ -27,10 +27,10 @@ def _get_slice_names(
     ticks_xs = []
     ticks_ys = []
     cordinate_names = [label_x, label_y, label_z]
-    label_x_select = [label_y, label_z, label_x]
-    label_y_select = [label_z, label_x, label_y]
-    ticks_x_slect = [ticks_y, ticks_z, ticks_x]
-    ticks_y_slect = [ticks_z, ticks_x, ticks_y]
+    label_x_select = [label_y, label_x, label_x]
+    label_y_select = [label_z, label_z, label_y]
+    ticks_x_slect = [ticks_y, ticks_x, ticks_x]
+    ticks_y_slect = [ticks_z, ticks_z, ticks_y]
     for i, slice_i in enumerate(slice_control):
         if slice_i is not None:
             slice_names.append(f"{cordinate_names[i]} slice")
