@@ -130,7 +130,7 @@ def plot_traj_frame(
         batch_names, [f"batch {i} " for i in range(channel_wised_data[0].shape[0])]
     )
     batch_names = [
-        [f"{batch_names[j]}{channel_names[i]}" for j in range(len(batch_names))]
+        [f"{batch_names[j]}, {channel_names[i]}" for j in range(len(batch_names))]
         for i in range(len(channel_names))
     ]
     return concate_fields_plot(
