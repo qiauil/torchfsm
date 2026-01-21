@@ -36,7 +36,7 @@ def traj_slices(
     for i, slice_value in enumerate(slice_control):
         if slice_value is None:
             continue
-        if slice_value < 0:
+        if slice_value < 1:
             slice_value = int(traj.shape[i + 3] * slice_value)
         else:
             slice_value = int(slice_value)
