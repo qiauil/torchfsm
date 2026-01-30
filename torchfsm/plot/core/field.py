@@ -80,7 +80,7 @@ def plot_2D_field(
     title_loc="center",
     interpolation="none",
     aspect="auto",
-    cmap: Union[str, Colormap] = "coolwarm",
+    cmap: Union[str, Colormap] = "twilight",
     show_ticks=True,
     ticks_x: Tuple[Sequence[float], Sequence[str]] = None,
     ticks_y: Tuple[Sequence[float], Sequence[str]] = None,
@@ -99,7 +99,7 @@ def plot_2D_field(
         title_loc (str, optional): The location of the title. Defaults to "center".
         interpolation (str, optional): The interpolation method. Defaults to "none".
         aspect (str, optional): The aspect ratio. Defaults to "auto".
-        cmap (Union[str, Colormap], optional): The colormap to use. Defaults to "coolwarm".
+        cmap (Union[str, Colormap], optional): The colormap to use. Defaults to "twilight".
         show_ticks (bool, optional): Whether to show ticks. Defaults to True.
         ticks_x (Tuple[Sequence[float], Sequence[str]], optional): Custom ticks for the x-axis. Defaults to None.
         ticks_y (Tuple[Sequence[float], Sequence[str]], optional): Custom ticks for the y-axis. Defaults to None.
@@ -223,7 +223,7 @@ def plot_3D_field(
     title: Optional[str] = None,
     title_loc="center",
     aspect="auto",
-    cmap: Union[str, Colormap] = "coolwarm",
+    cmap: Union[str, Colormap] = "twilight",
     vmin: Optional[float] = None,
     vmax: Optional[float] = None,
     return_cmap: bool = False,
@@ -269,7 +269,7 @@ def plot_3D_field(
         title (Optional[str], optional): The title of the plot. Defaults to None.
         title_loc (str, optional): The location of the title. Defaults to "center".
         aspect (str, optional): The aspect ratio. Defaults to "auto".
-        cmap (Union[str, Colormap], optional): The colormap to use. Defaults to "coolwarm".
+        cmap (Union[str, Colormap], optional): The colormap to use. Defaults to "twilight".
         vmin (Optional[float], optional): The minimum value for the color scale. Defaults to None.
         vmax (Optional[float], optional): The maximum value for the color scale. Defaults to None.
         return_cmap (bool, optional): Whether to return the colormap. Defaults to False.

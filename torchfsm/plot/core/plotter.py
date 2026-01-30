@@ -708,8 +708,8 @@ class ChannelWisedPlotter:
         title: Optional[str] = None,
         vmin: Optional[Union[float, Sequence[float]]] = None,
         vmax: Optional[Union[float, Sequence[float]]] = None,
-        cmap: Union[str, Colormap] = "coolwarm",
-        use_sym_colormap: bool = True,
+        cmap: Union[str, Colormap] = "twilight",
+        use_sym_colormap: bool = False,
         alpha_func: Union[
             Literal[
                 "zigzag",
@@ -726,7 +726,7 @@ class ChannelWisedPlotter:
         cbar_pad: Optional[float] = 0.1,
         ctick_format: Optional[str] = "%.1f",
         rotate_cbar_for_single_batch: bool = True,
-        subfig_size: float = 3.5,
+        subfig_size: float = 2.5,
         real_size_ratio: bool = False,
         width_correction: float = 1.0,
         height_correction: float = 1.0,
@@ -761,8 +761,8 @@ class ChannelWisedPlotter:
             hide_batch_channel_name_for_single_plot (bool, optional): Whether to hide the batch and channel name for a single batch or channel. Defaults to True.
             vmin (Optional[Union[float, Sequence[float]]], optional): The minimum value for the color scale. Defaults to None.
             vmax (Optional[Union[float, Sequence[float]]], optional): The maximum value for the color scale. Defaults to None.
-            cmap (Union[str, Colormap], optional): The colormap to use. Defaults to "coolwarm".
-            use_sym_colormap (bool, optional): Whether to use a symmetric colormap. Defaults to True.
+            cmap (Union[str, Colormap], optional): The colormap to use. Defaults to "twilight".
+            use_sym_colormap (bool, optional): Whether to use a symmetric colormap. Defaults to False.
             alpha_func (Union[Literal["zigzag", "central_peak", "central_valley", "linear_increase", "linear_decrease"], AlphaFunction], optional): The alpha function to use for 3D rendering. Defaults to "zigzag".
             universal_minmax (bool, optional): Whether to use a universal min-max for the color scale. Defaults to False.
             num_colorbar_value (int, optional): The number of values to show on the colorbar. Defaults to 4.
@@ -770,7 +770,7 @@ class ChannelWisedPlotter:
             cbar_pad (Optional[float], optional): The padding for the colorbar. Defaults to 0.1.
             ctick_format (Optional[str], optional): The format for the colorbar ticks. Defaults to "%.1f".
             rotate_cbar_for_single_batch (bool, optional): Whether to rotate the colorbar for a single colorbar. Defaults to True.
-            subfig_size (float, optional): The size of each subplot. Defaults to 3.5.
+            subfig_size (float, optional): The size of each subplot. Defaults to 2.5.
             real_size_ratio (bool, optional): Whether to use the real size ratio for the subfigures. Defaults to False.
             width_correction (float, optional): The correction factor for the width of the subfigures. Defaults to 1.0.
             height_correction (float, optional): The correction factor for the height of the subfigures. Defaults to 1.0.

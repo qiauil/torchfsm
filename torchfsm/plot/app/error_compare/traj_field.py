@@ -25,9 +25,9 @@ def _process_error(
     name_traj_1: str = "traj_1",
     name_traj_2: str = "traj_2",
     error_name: str = "error",
-    cmap_traj: Union[str, Colormap] = "coolwarm",
+    cmap_traj: Union[str, Colormap] = "twilight",
     cmap_error: Union[str, Colormap] = "Reds",
-    use_sym_colormap_traj: bool = True,
+    use_sym_colormap_traj: bool = False,
     use_sym_colormap_error: bool = False,
     alpha_func_traj: Union[
         Literal[
@@ -120,9 +120,9 @@ def compare_error_traj(
     vmax_traj: Optional[Union[float, Sequence[float]]] = None,
     vmin_error: Optional[Union[float, Sequence[float]]] = None,
     vmax_error: Optional[Union[float, Sequence[float]]] = None,
-    cmap_traj: Union[str, Colormap] = "coolwarm",
+    cmap_traj: Union[str, Colormap] = "twilight",
     cmap_error: Union[str, Colormap] = "Reds",
-    use_sym_colormap_traj: bool = True,
+    use_sym_colormap_traj: bool = False,
     use_sym_colormap_error: bool = False,
     alpha_func_traj: Union[
         Literal[
@@ -149,7 +149,7 @@ def compare_error_traj(
     c_bar_labels_error: Optional[Sequence[str]] = None,
     cbar_pad: Optional[float] = 0.1,
     ctick_format: Optional[str] = "%.1f",
-    subfig_size: float = 3.5,
+    subfig_size: float = 2.5,
     real_size_ratio: bool = False,
     width_correction: float = 1.0,
     height_correction: float = 1.0,
@@ -194,9 +194,9 @@ def compare_error_traj(
             If a sequence is provided, it should have the same length as the number of channels.
         vmax_error (Optional[Union[float, Sequence[float]]], optional): The maximum value for the color scale of the error. Defaults to None.
             If a sequence is provided, it should have the same length as the number of channels.
-        cmap_traj (Union[str, Colormap], optional): The colormap to use for the trajectories. Defaults to "coolwarm".
+        cmap_traj (Union[str, Colormap], optional): The colormap to use for the trajectories. Defaults to "twilight".
         cmap_error (Union[str, Colormap], optional): The colormap to use for the error. Defaults to "Reds".
-        use_sym_colormap_traj (bool, optional): Whether to use a symmetric colormap for the trajectories. Defaults to True.
+        use_sym_colormap_traj (bool, optional): Whether to use a symmetric colormap for the trajectories. Defaults to False.
         use_sym_colormap_error (bool, optional): Whether to use a symmetric colormap for the error. Defaults to False
         alpha_func_traj (Union[Literal["zigzag","central_peak","central_valley","linear_increase","linear_decrease",],AlphaFunction,], optional): The alpha function for the colormap of the trajectories. Defaults to "zigzag".
         alpha_func_error (Union[Literal["zigzag","central_peak","central_valley","linear_increase","linear_decrease",],AlphaFunction,], optional): The alpha function for the colormap of the error. Defaults to "linear_increase".
@@ -209,7 +209,7 @@ def compare_error_traj(
             If not provided, the colorbar will not have labels.
         cbar_pad (Optional[float], optional): The padding for the colorbar. Defaults to 0.1.
         ctick_format (Optional[str], optional): The format for the colorbar ticks. Defaults to "%.1f".
-        subfig_size (float, optional): The size of the subfigures. Defaults to 3.5.
+        subfig_size (float, optional): The size of the subfigures. Defaults to 2.5.
         real_size_ratio (bool, optional): Whether to use the real size ratio for the subfigures. Defaults to False.
         width_correction (float, optional): The correction factor for the width of the subfigures. Defaults to 1.0.
         height_correction (float, optional): The correction factor for the height of the subfigures. Defaults to 1.0.
@@ -338,9 +338,9 @@ def compare_error_field(
     vmax_field: Optional[Union[float, Sequence[float]]] = None,
     vmin_error: Optional[Union[float, Sequence[float]]] = None,
     vmax_error: Optional[Union[float, Sequence[float]]] = None,
-    cmap_field: Union[str, Colormap] = "coolwarm",
+    cmap_field: Union[str, Colormap] = "twilight",
     cmap_error: Union[str, Colormap] = "Reds",
-    use_sym_colormap_field: bool = True,
+    use_sym_colormap_field: bool = False,
     use_sym_colormap_error: bool = False,
     alpha_func_field: Union[
         Literal[
@@ -367,7 +367,7 @@ def compare_error_field(
     c_bar_labels_error: Optional[Sequence[str]] = None,
     cbar_pad: Optional[float] = 0.1,
     ctick_format: Optional[str] = "%.1f",
-    subfig_size: float = 3.5,
+    subfig_size: float = 2.5,
     real_size_ratio: bool = False,
     width_correction: float = 1.0,
     height_correction: float = 1.0,

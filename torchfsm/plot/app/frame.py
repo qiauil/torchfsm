@@ -20,8 +20,8 @@ def plot_traj_frame(
     title: Optional[str] = None,
     vmin: Optional[Union[float, Sequence[float]]] = None,
     vmax: Optional[Union[float, Sequence[float]]] = None,
-    cmap: Union[str, Colormap] = "coolwarm",
-    use_sym_colormap: bool = True,
+    cmap: Union[str, Colormap] = "twilight",
+    use_sym_colormap: bool = False,
     alpha_func: Union[
         Literal[
             "zigzag",
@@ -36,7 +36,7 @@ def plot_traj_frame(
     c_bar_labels: Optional[Sequence[str]] = None,
     cbar_pad: Optional[float] = 0.1,
     ctick_format: Optional[str] = "%.1f",
-    subfig_size: float = 3.5,
+    subfig_size: float = 2.5,
     real_size_ratio: bool = False,
     width_correction: float = 1.0,
     height_correction: float = 1.0,
@@ -67,8 +67,8 @@ def plot_traj_frame(
         title (Optional[str], optional): The title of the plot. Defaults to None.
         vmin (Optional[Union[float, Sequence[float]]], optional): The minimum value for the color scale. Defaults to None. If a sequence is provided, it should have the same length as the number of channels.
         vmax (Optional[Union[float, Sequence[float]]], optional): The maximum value for the color scale. Defaults to None. If a sequence is provided, it should have the same length as the number of channels.
-        cmap (Union[str, Colormap], optional): The colormap to use. Defaults to "coolwarm".
-        use_sym_colormap (bool, optional): Whether to use a symmetric colormap. Defaults to True.
+        cmap (Union[str, Colormap], optional): The colormap to use. Defaults to "twilight".
+        use_sym_colormap (bool, optional): Whether to use a symmetric colormap. Defaults to False.
         alpha_func (Union[Literal["zigzag","central_peak","central_valley","linear_increase","linear_decrease",],AlphaFunction,], optional): The alpha function for the colormap when plot 3D data. Defaults to "zigzag".
         num_colorbar_value (int, optional): The number of values for the colorbar. Defaults to 4.
         c_bar_labels (Optional[Sequence[str]], optional): The labels for the colorbar. Defaults to None.
@@ -76,7 +76,7 @@ def plot_traj_frame(
             If not provided, the colorbar will not have labels.
         cbar_pad (Optional[float], optional): The padding for the colorbar. Defaults to 0.1.
         ctick_format (Optional[str], optional): The format for the colorbar ticks. Defaults to "%.1f".
-        subfig_size (float, optional): The size of the subfigures. Defaults to 3.5.
+        subfig_size (float, optional): The size of the subfigures. Defaults to 2.5.
         real_size_ratio (bool, optional): Whether to use the real size ratio for the subfigures. Defaults to False.
         width_correction (float, optional): The correction factor for the width of the subfigures. Defaults to 1.0.
         height_correction (float, optional): The correction factor for the height of the subfigures. Defaults to 1.0.
@@ -176,8 +176,8 @@ def _plot_traj_frame_group(
     title: Optional[str] = None,
     vmin: Optional[ValueList[Sequence[Union[float, Sequence[float]]]]] = None,
     vmax: Optional[ValueList[Sequence[Union[float, Sequence[float]]]]] = None,
-    cmap: ValueList[Union[str, Colormap]] = "coolwarm",
-    use_sym_colormap: ValueList[bool] = True,
+    cmap: ValueList[Union[str, Colormap]] = "twilight",
+    use_sym_colormap: ValueList[bool] = False,
     alpha_func: ValueList[
         Union[
             Literal[
@@ -197,7 +197,7 @@ def _plot_traj_frame_group(
     cbar_pad: Optional[float] = 0.1,
     ctick_format: Optional[str] = "%.1f",
     rotate_cbar_for_single_batch: ValueList[bool] = True,
-    subfig_size: float = 3.5,
+    subfig_size: float = 2.5,
     real_size_ratio: bool = False,
     width_correction: float = 1.0,
     height_correction: float = 1.0,
@@ -230,15 +230,15 @@ def _plot_traj_frame_group(
         title (Optional[str], optional): The title of the plot. Defaults to None.
         vmin (Optional[ValueList[Sequence[Union[float, Sequence[float]]]]], optional): The minimum value for the color scale. If a single value is provided, it will be used for all trajectories. If a list is provided, it should have the same length as `trajs`. Defaults to None.
         vmax (Optional[ValueList[Sequence[Union[float, Sequence[float]]]], optional): The maximum value for the color scale. If a single value is provided, it will be used for all trajectories. If a list is provided, it should have the same length as `trajs`. Defaults to None.
-        cmap (ValueList[Union[str, Colormap]], optional): The colormap to use for the plot. If a single value is provided, it will be used for all trajectories. If a list is provided, it should have the same length as `trajs`. Defaults to "coolwarm".
-        use_sym_colormap (ValueList[bool], optional): Whether to use a symmetric colormap. If a single value is provided, it will be used for all trajectories. If a list is provided, it should have the same length as `trajs`. Defaults to True.
+        cmap (ValueList[Union[str, Colormap]], optional): The colormap to use for the plot. If a single value is provided, it will be used for all trajectories. If a list is provided, it should have the same length as `trajs`. Defaults to "twilight".
+        use_sym_colormap (ValueList[bool], optional): Whether to use a symmetric colormap. If a single value is provided, it will be used for all trajectories. If a list is provided, it should have the same length as `trajs`. Defaults to False.
         alpha_func (ValueList[Union[Literal["zigzag", "central_peak", "central_valley", "linear_increase", "linear_decrease", "luminance"], AlphaFunction]], optional): The alpha function to use for 3D rendering. If a single value is provided, it will be used for all trajectories. If a list is provided, it should have the same length as `trajs`. Defaults to "zigzag".
         universal_minmax (ValueList[bool], optional): Whether to use a universal min-max for the color scale. If a single value is provided, it will be used for all trajectories. If a list is provided, it should have the same length as `trajs`. Defaults to False.
         num_colorbar_value (int, optional): The number of values to show on the colorbar. Defaults to 4.
         c_bar_labels (Optional[ValueList[Sequence[str]]], optional): The labels for the colorbar. If a single value is provided, it will be used for all trajectories. If a list is provided, it should have the same length as `trajs`. Defaults to None.
         cbar_pad (Optional[float], optional): The padding for the colorbar. Defaults to 0.1.
         ctick_format (Optional[str], optional): The format for the colorbar ticks. Defaults to "%.1f".
-        subfig_size (float, optional): The size of the subfigures. Defaults to 3.5.
+        subfig_size (float, optional): The size of the subfigures. Defaults to 2.5.
         real_size_ratio (bool, optional): Whether to use the real size ratio for the subfigures. Defaults to False.
         width_correction (float, optional): The correction factor for the width of the subfigures. Defaults to 1.0.
         height_correction (float, optional): The correction factor for the height of the subfigures. Defaults to 1.0.

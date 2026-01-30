@@ -4,7 +4,7 @@ import matplotlib.colors as colors
 from typing import Callable
 
 
-def sym_colormap(d_min, d_max, d_cen=0, cmap="coolwarm", cmapname="sym_map"):
+def sym_colormap(d_min, d_max, d_cen=0, cmap="twilight", cmapname="sym_map"):
     """
     Generate a symmetric colormap.
 
@@ -12,7 +12,7 @@ def sym_colormap(d_min, d_max, d_cen=0, cmap="coolwarm", cmapname="sym_map"):
         d_min (float): The minimum value of the colormap.
         d_max (float): The maximum value of the colormap.
         d_cen (float, optional): The center value of the colormap. Defaults to 0.
-        cmap (str, optional): The colormap to use. Defaults to "coolwarm".
+        cmap (str, optional): The colormap to use. Defaults to "twilight".
         cmapname (str, optional): The name of the colormap. Defaults to "sym_map".
 
     Returns:
