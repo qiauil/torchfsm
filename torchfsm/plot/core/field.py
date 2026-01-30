@@ -84,6 +84,7 @@ def plot_2D_field(
     show_ticks=True,
     ticks_x: Tuple[Sequence[float], Sequence[str]] = None,
     ticks_y: Tuple[Sequence[float], Sequence[str]] = None,
+    rasterized: bool = True,
     **kwargs,
 ):
     """
@@ -102,6 +103,7 @@ def plot_2D_field(
         show_ticks (bool, optional): Whether to show ticks. Defaults to True.
         ticks_x (Tuple[Sequence[float], Sequence[str]], optional): Custom ticks for the x-axis. Defaults to None.
         ticks_y (Tuple[Sequence[float], Sequence[str]], optional): Custom ticks for the y-axis. Defaults to None.
+        rasterized (bool, optional): Whether to rasterize the image. Defaults to True.
         **kwargs: Additional keyword arguments for the plot.
     """
     if isinstance(data, torch.Tensor):
@@ -116,6 +118,7 @@ def plot_2D_field(
         cmap=cmap,
         origin="lower",
         aspect=aspect,
+        rasterized=rasterized,
         **kwargs,
     )
     if not show_ticks:
@@ -154,7 +157,8 @@ def _plot_3D_field(
     y_arrow_color:str='g',
     z_arrow_color:str='b',
     arrow_length_ratio:float=0.25,
-    arrow_linewidth:int=1
+    arrow_linewidth:int=1,
+    rasterized: bool = True,
 ):
     """
     Plot a 3D field.
@@ -181,8 +185,9 @@ def _plot_3D_field(
         z_arrow_color (str, optional): Color for the Z axis arrow. Defaults to 'b'.
         arrow_length_ratio (float, optional): Ratio of the arrow head length to the total arrow length. Defaults to 0.25.
         arrow_linewidth (int, optional): Line width of the arrows. Defaults to 1.
+        rasterized (bool, optional): Whether to rasterize the image. Defaults to True.
     """
-    im = ax.imshow(img, aspect=aspect)
+    im = ax.imshow(img, aspect=aspect,rasterized=rasterized)
     ax.set_xticks([])
     ax.set_yticks([])
     if bottom_label is not None:
