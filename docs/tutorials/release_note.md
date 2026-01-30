@@ -1,5 +1,8 @@
 # 0.0.4 (TorchFSM 0.0.6)
 * Fix wrong equations for `SwiftHohenberg`
+* Fix missed documentation for mesh apis.
+* Add documentation for `Advection` and `LinearAdvection` operators.
+* Fix sign errors in Hyper Diffusion equations.
 
 ## 0.0.3 (TorchFSM 0.0.5)
 * Add new section for new operators, equations and functions (see code release note).

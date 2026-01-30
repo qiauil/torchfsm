@@ -20,3 +20,5 @@
 ---
 ::: torchfsm.utils.spectrum.collect_energy_spectrum
 ---
+::: torchfsm.utils.test.test_sim_dt
+---

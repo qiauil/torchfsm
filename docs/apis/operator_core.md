@@ -33,7 +33,7 @@
 ---
 ::: torchfsm.operator.generic._laplacian._LaplacianCore
 ---
-::: torchfsm.operator.dedicated._leray._LerayCore
+::: torchfsm.operator.dedicated._navier_stokes._leray._LerayCore
 ---
 ::: torchfsm.operator.generic._linear_advection._LinearAdvectionCore
 ---
