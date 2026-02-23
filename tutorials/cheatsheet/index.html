@@ -753,6 +753,8 @@
       
         
       
+        
+      
     
     
     
@@ -786,6 +788,29 @@
             3.2.1 Simple PDEs
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../simulation/gallery/advection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Advection
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
             
               
                 
@@ -2051,6 +2076,16 @@
 <td><span class="arithmatex">\(\mathbf{u} \cdot \nabla  \mathbf{u}=\left[\begin{matrix}\sum_{i=0}^I u_i\frac{\partial u_x }{\partial i} \\\sum_{i=0}^I u_i\frac{\partial u_y }{\partial i} \\\cdots\\\sum_{i=0}^I u_i\frac{\partial u_I }{\partial i} \\\end{matrix} \right]\)</span></td>
 <td>False</td>
 </tr>
+<tr>
+<td>Advection</td>
+<td><span class="arithmatex">\(\nabla \cdot (\phi\mathbf{u}) = \sum_{i=0}^I \frac{\phi\partial u_i}{\partial i}\)</span></td>
+<td>False</td>
+</tr>
+<tr>
+<td>LinearAdvection</td>
+<td>$ \mathbf{u} \cdot \nabla \phi = \sum_{i=0}^I u_i \frac{\partial \phi}{\partial i} $</td>
+<td>True</td>
+</tr>
 </tbody>
 </table>
 <h3 id="dedicated-operators">Dedicated Operators<a class="headerlink" href="#dedicated-operators" title="Permanent link">¤</a></h3>
@@ -2163,7 +2198,7 @@
 </tr>
 <tr>
 <td>SwiftHohenberg</td>
-<td><span class="arithmatex">\(\frac{\partial \phi}{\partial t} = \nu \nabla^2 \phi + r \phi (1 - \phi)\)</span></td>
+<td><span class="arithmatex">\(\frac{\partial \phi}{\partial t} = r \phi - (1 + \Delta)^2 \phi + \phi^2 - \phi^3\)</span></td>
 </tr>
 <tr>
 <td>GrayScott</td>

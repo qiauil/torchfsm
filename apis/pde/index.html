@@ -748,6 +748,8 @@
       
         
       
+        
+      
     
     
     
@@ -781,6 +783,29 @@
             3.2.1 Simple PDEs
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials/simulation/gallery/advection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Advection
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
             
               
                 
@@ -2958,7 +2983,7 @@ If provided, it will be added to the vorticity equation. </p>
 
 <details class="swift-hohenberg-equation" open>
   <summary>Swift-Hohenberg equation</summary>
-  <div class="arithmatex">\[\frac{\partial \phi}{\partial t} = \nu \nabla^2 \phi + r \phi (1 - \phi)\]</div>
+  <div class="arithmatex">\[\frac{\partial \phi}{\partial t} = r \phi - (1 + \Delta)^2 \phi + \phi^2 - \phi^3\]</div>
 </details>
 
 <p><span class="doc-section-title">Parameters:</span></p>
@@ -3031,7 +3056,7 @@ If provided, it will be added to the vorticity equation. </p>
 <span class="normal">119</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">SwiftHohenberg</span><span class="p">(</span><span class="n">r</span><span class="p">:</span><span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span><span class="n">Tensor</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Operator</span><span class="p">:</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Swift-Hohenberg equation:</span>
-<span class="sd">        $$\frac{\partial \phi}{\partial t} = \nu \nabla^2 \phi + r \phi (1 - \phi)$$</span>
+<span class="sd">        $$\frac{\partial \phi}{\partial t} = r \phi - (1 + \Delta)^2 \phi + \phi^2 - \phi^3$$</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        r (Union[float,Tensor]): Control parameter.</span>

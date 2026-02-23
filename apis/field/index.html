@@ -748,6 +748,8 @@
       
         
       
+        
+      
     
     
     
@@ -781,6 +783,29 @@
             3.2.1 Simple PDEs
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials/simulation/gallery/advection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Advection
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
             
               
                 
@@ -1629,6 +1654,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#torchfsm.field.random_diffused_noise" class="md-nav__link">
+    <span class="md-ellipsis">
+      random_diffused_noise
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#torchfsm.field.kolm_force" class="md-nav__link">
     <span class="md-ellipsis">
       kolm_force
@@ -1674,9 +1708,36 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#torchfsm.field.truncated_fourier_series_customed_filter" class="md-nav__link">
+  <a href="#torchfsm.field.truncated_fourier_series_custom_filter" class="md-nav__link">
     <span class="md-ellipsis">
-      truncated_fourier_series_customed_filter
+      truncated_fourier_series_custom_filter
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#torchfsm.field.functional_energy_spectrum" class="md-nav__link">
+    <span class="md-ellipsis">
+      functional_energy_spectrum
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#torchfsm.field.random_power_law_energy_spectrum" class="md-nav__link">
+    <span class="md-ellipsis">
+      random_power_law_energy_spectrum
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#torchfsm.field.random_hermitian_field" class="md-nav__link">
+    <span class="md-ellipsis">
+      random_hermitian_field
     </span>
   </a>
   
@@ -1946,13 +2007,19 @@
         <span class="n">MeshGrid</span><span class="p">,</span>
         <span class="n">FourierMesh</span><span class="p">,</span>
     <span class="p">],</span>
-    <span class="n">diffusion_coef</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
+    <span class="n">diffusion_coef</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.01</span><span class="p">,</span>
     <span class="n">device</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">device</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">dtype</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">dtype</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">batch_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
     <span class="n">n_channel</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
     <span class="n">normalize_mode</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span>
-        <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;normal_distribution&quot;</span><span class="p">,</span> <span class="s2">&quot;-1_1&quot;</span><span class="p">,</span> <span class="s2">&quot;0_1&quot;</span><span class="p">]</span>
+        <span class="n">Union</span><span class="p">[</span>
+            <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;normal_distribution&quot;</span><span class="p">,</span> <span class="s2">&quot;-1_1&quot;</span><span class="p">,</span> <span class="s2">&quot;0_1&quot;</span><span class="p">],</span>
+            <span class="n">Tuple</span><span class="p">[</span>
+                <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]],</span>
+                <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]],</span>
+            <span class="p">],</span>
+        <span class="p">]</span>
     <span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]</span>
 </code></pre></div>
@@ -1980,7 +2047,7 @@
                 <code>mesh</code>
             </td>
             <td>
-                  <code><span title="typing.Union">Union</span>[<span title="typing.Sequence">Sequence</span>[<span title="tuple">tuple</span>[<span title="float">float</span>, <span title="float">float</span>, <span title="int">int</span>]], <span title="torchfsm.mesh.MeshGrid">MeshGrid</span>, <span title="torchfsm.mesh.FourierMesh">FourierMesh</span>]</code>
+                  <code><span title="typing.Union">Union</span>[<span title="typing.Sequence">Sequence</span>[<span title="tuple">tuple</span>[<span title="float">float</span>, <span title="float">float</span>, <span title="int">int</span>]], <a class="autorefs autorefs-internal" title="            torchfsm.mesh.MeshGrid" href="../mesh/#torchfsm.mesh.MeshGrid">MeshGrid</a>, <a class="autorefs autorefs-internal" title="            torchfsm.mesh.FourierMesh" href="../mesh/#torchfsm.mesh.FourierMesh">FourierMesh</a>]</code>
             </td>
             <td>
               <div class="doc-md-description">
@@ -2005,7 +2072,7 @@ If a sequence is provided, it should be in the form of [(x_min, x_max, n_points)
               </div>
             </td>
             <td>
-                  <code>1.0</code>
+                  <code>0.01</code>
             </td>
           </tr>
           <tr class="doc-section-item">
@@ -2077,11 +2144,11 @@ If a sequence is provided, it should be in the form of [(x_min, x_max, n_points)
                 <code>normalize_mode</code>
             </td>
             <td>
-                  <code><span title="typing.Optional">Optional</span>[<span title="typing.Literal">Literal</span>[&#39;normal_distribution&#39;, &#39;-1_1&#39;, &#39;0_1&#39;]]</code>
+                  <code><span title="typing.Optional">Optional</span>[<span title="typing.Union">Union</span>[<span title="typing.Literal">Literal</span>[&#39;normal_distribution&#39;, &#39;-1_1&#39;, &#39;0_1&#39;], <span title="typing.Tuple">Tuple</span>[<span title="typing.Union">Union</span>[<span title="float">float</span>, <span title="typing.Tuple">Tuple</span>[<span title="float">float</span>, <span title="float">float</span>]], <span title="typing.Union">Union</span>[<span title="float">float</span>, <span title="typing.Tuple">Tuple</span>[<span title="float">float</span>, <span title="float">float</span>]]]]]</code>
             </td>
             <td>
               <div class="doc-md-description">
-                <p>The normalization mode for the generated noise.
+                <p>The normalization mode for the generated noise. See <code>torchfsm.field.normalize</code> for details.
 If None, no normalization is applied. Default is None.</p>
               </div>
             </td>
@@ -2118,9 +2185,7 @@ If None, no normalization is applied. Default is None.</p>
 
             <details class="quote">
               <summary>Source code in <code>torchfsm/field/_diffused_noise.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 9</span>
-<span class="normal">10</span>
-<span class="normal">11</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">11</span>
 <span class="normal">12</span>
 <span class="normal">13</span>
 <span class="normal">14</span>
@@ -2161,14 +2226,27 @@ If None, no normalization is applied. Default is None.</p>
 <span class="normal">49</span>
 <span class="normal">50</span>
 <span class="normal">51</span>
-<span class="normal">52</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">diffused_noise</span><span class="p">(</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span>
+<span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span>
+<span class="normal">58</span>
+<span class="normal">59</span>
+<span class="normal">60</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">diffused_noise</span><span class="p">(</span>
     <span class="n">mesh</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">]],</span> <span class="n">MeshGrid</span><span class="p">,</span> <span class="n">FourierMesh</span><span class="p">],</span>
-    <span class="n">diffusion_coef</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
+    <span class="n">diffusion_coef</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.01</span><span class="p">,</span>
     <span class="n">device</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">dtype</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">dtype</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">batch_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
     <span class="n">n_channel</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
-    <span class="n">normalize_mode</span><span class="p">:</span><span class="n">Optional</span><span class="p">[</span><span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;normal_distribution&quot;</span><span class="p">,</span><span class="s2">&quot;-1_1&quot;</span><span class="p">,</span><span class="s2">&quot;0_1&quot;</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">normalize_mode</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span>
+        <span class="n">Union</span><span class="p">[</span>
+            <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;normal_distribution&quot;</span><span class="p">,</span> <span class="s2">&quot;-1_1&quot;</span><span class="p">,</span> <span class="s2">&quot;0_1&quot;</span><span class="p">],</span>
+            <span class="n">Tuple</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]],</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]],</span>
+        <span class="p">]</span>
+    <span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]:</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Generate a diffused noise field.</span>
@@ -2183,7 +2261,8 @@ If None, no normalization is applied. Default is None.</p>
 <span class="sd">        dtype (Optional[torch.dtype]): The data type of the generated noise. Default is None.</span>
 <span class="sd">        batch_size (int): The number of batches. Default is 1.</span>
 <span class="sd">        n_channel (int): The number of channels. Default is 1.</span>
-<span class="sd">        normalize_mode (Optional[Literal[&quot;normal_distribution&quot;,&quot;-1_1&quot;,&quot;0_1&quot;]]): The normalization mode for the generated noise.</span>
+<span class="sd">        normalize_mode (Optional[Union[Literal[&quot;normal_distribution&quot;, &quot;-1_1&quot;, &quot;0_1&quot;],Tuple[Union[float, Tuple[float, float]], Union[float, Tuple[float, float]]],]]):</span>
+<span class="sd">            The normalization mode for the generated noise. See `torchfsm.field.normalize` for details.</span>
 <span class="sd">            If None, no normalization is applied. Default is None.</span>
 
 <span class="sd">    Returns:</span>
@@ -2205,6 +2284,131 @@ If None, no normalization is applied. Default is None.</p>
     <span class="k">if</span> <span class="n">normalize_mode</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">u_0</span> <span class="o">=</span> <span class="n">normalize</span><span class="p">(</span><span class="n">u_0</span><span class="p">,</span> <span class="n">normalize_mode</span><span class="o">=</span><span class="n">normalize_mode</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">u_0</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div><hr />
+
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="torchfsm.field.random_diffused_noise" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">torchfsm.field.random_diffused_noise</span>
+
+
+<a href="#torchfsm.field.random_diffused_noise" class="headerlink" title="Permanent link">¤</a></h4>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">random_diffused_noise</span><span class="p">(</span>
+    <span class="n">mesh</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span>
+        <span class="n">Sequence</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">]],</span>
+        <span class="n">MeshGrid</span><span class="p">,</span>
+        <span class="n">FourierMesh</span><span class="p">,</span>
+    <span class="p">],</span>
+    <span class="n">min_diffusion_coef</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.001</span><span class="p">,</span>
+    <span class="n">max_diffusion_coef</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.01</span><span class="p">,</span>
+    <span class="n">device</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">device</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">dtype</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">dtype</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">batch_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="n">n_channel</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="n">normalize_mode</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span>
+        <span class="n">Union</span><span class="p">[</span>
+            <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;normal_distribution&quot;</span><span class="p">,</span> <span class="s2">&quot;-1_1&quot;</span><span class="p">,</span> <span class="s2">&quot;0_1&quot;</span><span class="p">],</span>
+            <span class="n">Tuple</span><span class="p">[</span>
+                <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]],</span>
+                <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]],</span>
+            <span class="p">],</span>
+        <span class="p">]</span>
+    <span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]</span>
+</code></pre></div>
+
+    <div class="doc doc-contents first">
+
+
+            <details class="quote">
+              <summary>Source code in <code>torchfsm/field/_diffused_noise.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 63</span>
+<span class="normal"> 64</span>
+<span class="normal"> 65</span>
+<span class="normal"> 66</span>
+<span class="normal"> 67</span>
+<span class="normal"> 68</span>
+<span class="normal"> 69</span>
+<span class="normal"> 70</span>
+<span class="normal"> 71</span>
+<span class="normal"> 72</span>
+<span class="normal"> 73</span>
+<span class="normal"> 74</span>
+<span class="normal"> 75</span>
+<span class="normal"> 76</span>
+<span class="normal"> 77</span>
+<span class="normal"> 78</span>
+<span class="normal"> 79</span>
+<span class="normal"> 80</span>
+<span class="normal"> 81</span>
+<span class="normal"> 82</span>
+<span class="normal"> 83</span>
+<span class="normal"> 84</span>
+<span class="normal"> 85</span>
+<span class="normal"> 86</span>
+<span class="normal"> 87</span>
+<span class="normal"> 88</span>
+<span class="normal"> 89</span>
+<span class="normal"> 90</span>
+<span class="normal"> 91</span>
+<span class="normal"> 92</span>
+<span class="normal"> 93</span>
+<span class="normal"> 94</span>
+<span class="normal"> 95</span>
+<span class="normal"> 96</span>
+<span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">random_diffused_noise</span><span class="p">(</span>
+    <span class="n">mesh</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">]],</span> <span class="n">MeshGrid</span><span class="p">,</span> <span class="n">FourierMesh</span><span class="p">],</span>
+    <span class="n">min_diffusion_coef</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.001</span><span class="p">,</span>
+    <span class="n">max_diffusion_coef</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.01</span><span class="p">,</span>
+    <span class="n">device</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">dtype</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">dtype</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">batch_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="n">n_channel</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="n">normalize_mode</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span>
+        <span class="n">Union</span><span class="p">[</span>
+            <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;normal_distribution&quot;</span><span class="p">,</span> <span class="s2">&quot;-1_1&quot;</span><span class="p">,</span> <span class="s2">&quot;0_1&quot;</span><span class="p">],</span>
+            <span class="n">Tuple</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]],</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]],</span>
+        <span class="p">]</span>
+    <span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]:</span>
+    <span class="n">mesh</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="n">dtype</span> <span class="o">=</span> <span class="n">_get_mesh_device_and_dtype</span><span class="p">(</span><span class="n">mesh</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="n">dtype</span><span class="p">)</span>
+    <span class="n">coef_shape</span> <span class="o">=</span> <span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">n_channel</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span><span class="p">,)</span> <span class="o">*</span> <span class="n">mesh</span><span class="o">.</span><span class="n">n_dim</span>
+    <span class="k">if</span> <span class="n">max_diffusion_coef</span> <span class="o">&gt;=</span> <span class="n">min_diffusion_coef</span> <span class="o">*</span> <span class="mi">100</span><span class="p">:</span>  <span class="c1"># log uniform sampling</span>
+        <span class="n">log_min</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">log</span><span class="p">(</span>
+            <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">min_diffusion_coef</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">log_max</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">log</span><span class="p">(</span>
+            <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">max_diffusion_coef</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">diffusion_coef</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span>
+            <span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">coef_shape</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">log_max</span> <span class="o">-</span> <span class="n">log_min</span><span class="p">)</span>
+            <span class="o">+</span> <span class="n">log_min</span>
+        <span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">diffusion_coef</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">coef_shape</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">)</span>
+            <span class="o">*</span> <span class="p">(</span><span class="n">max_diffusion_coef</span> <span class="o">-</span> <span class="n">min_diffusion_coef</span><span class="p">)</span>
+            <span class="o">+</span> <span class="n">min_diffusion_coef</span>
+        <span class="p">)</span>
+    <span class="k">return</span> <span class="n">diffused_noise</span><span class="p">(</span>
+        <span class="n">mesh</span><span class="o">=</span><span class="n">mesh</span><span class="p">,</span>
+        <span class="n">diffusion_coef</span><span class="o">=</span><span class="n">diffusion_coef</span><span class="p">,</span>
+        <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span>
+        <span class="n">n_channel</span><span class="o">=</span><span class="n">n_channel</span><span class="p">,</span>
+        <span class="n">normalize_mode</span><span class="o">=</span><span class="n">normalize_mode</span><span class="p">,</span>
+    <span class="p">)</span>
 </code></pre></div></td></tr></table></div>
             </details>
     </div>
@@ -2710,7 +2914,7 @@ If None, no normalization is applied. Default is None.</p>
     <span class="n">position_range</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">),</span>
     <span class="n">variance_range</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.005</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">),</span>
     <span class="n">batch_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
-    <span class="n">n_channels</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="n">n_channel</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
     <span class="n">device</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">device</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]</span>
 </code></pre></div>
@@ -2736,7 +2940,7 @@ If None, no normalization is applied. Default is None.</p>
                 <code>mesh</code>
             </td>
             <td>
-                  <code><span title="typing.Union">Union</span>[<span title="typing.Sequence">Sequence</span>[<span title="tuple">tuple</span>[<span title="float">float</span>, <span title="float">float</span>, <span title="int">int</span>]], <span title="torchfsm.mesh.MeshGrid">MeshGrid</span>, <span title="torchfsm.mesh.FourierMesh">FourierMesh</span>]</code>
+                  <code><span title="typing.Union">Union</span>[<span title="typing.Sequence">Sequence</span>[<span title="tuple">tuple</span>[<span title="float">float</span>, <span title="float">float</span>, <span title="int">int</span>]], <a class="autorefs autorefs-internal" title="            torchfsm.mesh.MeshGrid" href="../mesh/#torchfsm.mesh.MeshGrid">MeshGrid</a>, <a class="autorefs autorefs-internal" title="            torchfsm.mesh.FourierMesh" href="../mesh/#torchfsm.mesh.FourierMesh">FourierMesh</a>]</code>
             </td>
             <td>
               <div class="doc-md-description">
@@ -2799,7 +3003,7 @@ Default is (0.005, 0.01).</p>
           </tr>
           <tr class="doc-section-item">
             <td>
-                <code>n_channels</code>
+                <code>n_channel</code>
             </td>
             <td>
                   <code><span title="int">int</span></code>
@@ -2903,7 +3107,7 @@ Default is (0.005, 0.01).</p>
     <span class="n">position_range</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">),</span>
     <span class="n">variance_range</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.005</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">),</span>
     <span class="n">batch_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
-    <span class="n">n_channels</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="n">n_channel</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
     <span class="n">device</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]:</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
@@ -2917,7 +3121,7 @@ Default is (0.005, 0.01).</p>
 <span class="sd">        variance_range (Tuple[float, float]): The range of variances for the Gaussian blob.</span>
 <span class="sd">            Default is (0.005, 0.01).</span>
 <span class="sd">        batch_size (int): The number of batches. Default is 1.</span>
-<span class="sd">        n_channels (int): The number of channels. Default is 1.</span>
+<span class="sd">        n_channel (int): The number of channels. Default is 1.</span>
 <span class="sd">        device (Optional[torch.device]): The device on which to create the tensor. Default is None. </span>
 
 <span class="sd">    Returns:</span>
@@ -2934,11 +3138,11 @@ Default is (0.005, 0.01).</p>
     <span class="n">n_dim</span> <span class="o">=</span> <span class="n">locations</span><span class="o">.</span><span class="n">ndim</span><span class="o">-</span><span class="mi">1</span> 
     <span class="n">position</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">n_dim</span><span class="p">)</span><span class="o">.</span><span class="n">uniform_</span><span class="p">(</span><span class="n">position_range</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">position_range</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">mesh</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
     <span class="n">variance</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">n_dim</span><span class="p">)</span><span class="o">.</span><span class="n">uniform_</span><span class="p">(</span><span class="n">variance_range</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">variance_range</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">mesh</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
-    <span class="n">locations</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">locations</span><span class="p">]</span><span class="o">*</span><span class="n">batch_size</span><span class="o">*</span><span class="n">n_channels</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">position</span> <span class="o">=</span> <span class="n">position</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">batch_size</span><span class="o">*</span><span class="n">n_channels</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-    <span class="n">variance</span> <span class="o">=</span> <span class="n">variance</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">batch_size</span><span class="o">*</span><span class="n">n_channels</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">locations</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">locations</span><span class="p">]</span><span class="o">*</span><span class="n">batch_size</span><span class="o">*</span><span class="n">n_channel</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">position</span> <span class="o">=</span> <span class="n">position</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">batch_size</span><span class="o">*</span><span class="n">n_channel</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">variance</span> <span class="o">=</span> <span class="n">variance</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">batch_size</span><span class="o">*</span><span class="n">n_channel</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
     <span class="n">blob</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="o">*</span><span class="n">_batched_mahalanobis_distance</span><span class="p">(</span><span class="n">locations</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">variance</span><span class="p">))</span>
-    <span class="k">return</span> <span class="n">blob</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">n_channels</span><span class="p">,</span> <span class="o">*</span><span class="n">blob</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+    <span class="k">return</span> <span class="n">blob</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">n_channel</span><span class="p">,</span> <span class="o">*</span><span class="n">blob</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
 </code></pre></div></td></tr></table></div>
             </details>
     </div>
@@ -2961,16 +3165,21 @@ Default is (0.005, 0.01).</p>
         <span class="n">FourierMesh</span><span class="p">,</span>
     <span class="p">],</span>
     <span class="n">freq_threshold</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
-    <span class="n">amplitude_range</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span>
-    <span class="n">angle_range</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">pi</span><span class="p">),</span>
     <span class="n">device</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">device</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">dtype</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">dtype</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">batch_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
     <span class="n">n_channel</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
     <span class="n">normalize_mode</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span>
-        <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;normal_distribution&quot;</span><span class="p">,</span> <span class="s2">&quot;-1_1&quot;</span><span class="p">,</span> <span class="s2">&quot;0_1&quot;</span><span class="p">]</span>
+        <span class="n">Union</span><span class="p">[</span>
+            <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;normal_distribution&quot;</span><span class="p">,</span> <span class="s2">&quot;-1_1&quot;</span><span class="p">,</span> <span class="s2">&quot;0_1&quot;</span><span class="p">],</span>
+            <span class="n">Tuple</span><span class="p">[</span>
+                <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]],</span>
+                <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]],</span>
+            <span class="p">],</span>
+        <span class="p">]</span>
     <span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">normalized_freq</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">noise_type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;normal&quot;</span><span class="p">,</span> <span class="s2">&quot;uniform&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;normal&quot;</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]</span>
 </code></pre></div>
 
@@ -2995,7 +3204,7 @@ Default is (0.005, 0.01).</p>
                 <code>mesh</code>
             </td>
             <td>
-                  <code><span title="typing.Union">Union</span>[<span title="typing.Sequence">Sequence</span>[<span title="tuple">tuple</span>[<span title="float">float</span>, <span title="float">float</span>, <span title="int">int</span>]], <span title="torchfsm.mesh.MeshGrid">MeshGrid</span>, <span title="torchfsm.mesh.FourierMesh">FourierMesh</span>]</code>
+                  <code><span title="typing.Union">Union</span>[<span title="typing.Sequence">Sequence</span>[<span title="tuple">tuple</span>[<span title="float">float</span>, <span title="float">float</span>, <span title="int">int</span>]], <a class="autorefs autorefs-internal" title="            torchfsm.mesh.MeshGrid" href="../mesh/#torchfsm.mesh.MeshGrid">MeshGrid</a>, <a class="autorefs autorefs-internal" title="            torchfsm.mesh.FourierMesh" href="../mesh/#torchfsm.mesh.FourierMesh">FourierMesh</a>]</code>
             </td>
             <td>
               <div class="doc-md-description">
@@ -3020,38 +3229,6 @@ Default is (0.005, 0.01).</p>
             </td>
             <td>
                   <code>5</code>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>amplitude_range</code>
-            </td>
-            <td>
-                  <code><span title="tuple">tuple</span>[<span title="int">int</span>, <span title="int">int</span>]</code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>The range of amplitudes for the noise.</p>
-              </div>
-            </td>
-            <td>
-                  <code>(-1.0, 1.0)</code>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>angle_range</code>
-            </td>
-            <td>
-                  <code><span title="tuple">tuple</span>[<span title="int">int</span>, <span title="int">int</span>]</code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>The range of angles for the noise.</p>
-              </div>
-            </td>
-            <td>
-                  <code>(0.0, 2.0 * <span title="torch.pi">pi</span>)</code>
             </td>
           </tr>
           <tr class="doc-section-item">
@@ -3123,11 +3300,11 @@ Default is (0.005, 0.01).</p>
                 <code>normalize_mode</code>
             </td>
             <td>
-                  <code><span title="typing.Optional">Optional</span>[<span title="typing.Literal">Literal</span>[&#39;normal_distribution&#39;, &#39;-1_1&#39;, &#39;0_1&#39;]]</code>
+                  <code><span title="typing.Optional">Optional</span>[<span title="typing.Union">Union</span>[<span title="typing.Literal">Literal</span>[&#39;normal_distribution&#39;, &#39;-1_1&#39;, &#39;0_1&#39;], <span title="typing.Tuple">Tuple</span>[<span title="typing.Union">Union</span>[<span title="float">float</span>, <span title="typing.Tuple">Tuple</span>[<span title="float">float</span>, <span title="float">float</span>]], <span title="typing.Union">Union</span>[<span title="float">float</span>, <span title="typing.Tuple">Tuple</span>[<span title="float">float</span>, <span title="float">float</span>]]]]]</code>
             </td>
             <td>
               <div class="doc-md-description">
-                <p>The normalization mode for the generated noise.
+                <p>The normalization mode for the generated noise. See <code>torchfsm.field.normalize</code> for details.
 If None, no normalization is applied. Default is None.</p>
               </div>
             </td>
@@ -3145,11 +3322,27 @@ If None, no normalization is applied. Default is None.</p>
             <td>
               <div class="doc-md-description">
                 <p>If True, wheather to set the frequency threshold as a normalized value.
-If the domain length is 1, setting this to True or False will not make a difference. </p>
+If the domain length is 1, setting this to True or False will not make a difference.</p>
               </div>
             </td>
             <td>
                   <code>True</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>noise_type</code>
+            </td>
+            <td>
+                  <code><span title="typing.Literal">Literal</span>[&#39;normal&#39;, &#39;uniform&#39;]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The type of noise to generate in the Fourier domain.</p>
+              </div>
+            </td>
+            <td>
+                  <code>&#39;normal&#39;</code>
             </td>
           </tr>
       </tbody>
@@ -3181,17 +3374,7 @@ If the domain length is 1, setting this to True or False will not make a differe
 
             <details class="quote">
               <summary>Source code in <code>torchfsm/field/_truncated_fourier.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 70</span>
-<span class="normal"> 71</span>
-<span class="normal"> 72</span>
-<span class="normal"> 73</span>
-<span class="normal"> 74</span>
-<span class="normal"> 75</span>
-<span class="normal"> 76</span>
-<span class="normal"> 77</span>
-<span class="normal"> 78</span>
-<span class="normal"> 79</span>
-<span class="normal"> 80</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 80</span>
 <span class="normal"> 81</span>
 <span class="normal"> 82</span>
 <span class="normal"> 83</span>
@@ -3232,17 +3415,34 @@ If the domain length is 1, setting this to True or False will not make a differe
 <span class="normal">118</span>
 <span class="normal">119</span>
 <span class="normal">120</span>
-<span class="normal">121</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">truncated_fourier_series</span><span class="p">(</span>
+<span class="normal">121</span>
+<span class="normal">122</span>
+<span class="normal">123</span>
+<span class="normal">124</span>
+<span class="normal">125</span>
+<span class="normal">126</span>
+<span class="normal">127</span>
+<span class="normal">128</span>
+<span class="normal">129</span>
+<span class="normal">130</span>
+<span class="normal">131</span>
+<span class="normal">132</span>
+<span class="normal">133</span>
+<span class="normal">134</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">truncated_fourier_series</span><span class="p">(</span>
     <span class="n">mesh</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">]],</span> <span class="n">MeshGrid</span><span class="p">,</span> <span class="n">FourierMesh</span><span class="p">],</span>
     <span class="n">freq_threshold</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
-    <span class="n">amplitude_range</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span>
-    <span class="n">angle_range</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">pi</span><span class="p">),</span>
     <span class="n">device</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">dtype</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">dtype</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">batch_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
     <span class="n">n_channel</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
-    <span class="n">normalize_mode</span><span class="p">:</span><span class="n">Optional</span><span class="p">[</span><span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;normal_distribution&quot;</span><span class="p">,</span><span class="s2">&quot;-1_1&quot;</span><span class="p">,</span><span class="s2">&quot;0_1&quot;</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-    <span class="n">normalized_freq</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">normalize_mode</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span>
+        <span class="n">Union</span><span class="p">[</span>
+            <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;normal_distribution&quot;</span><span class="p">,</span> <span class="s2">&quot;-1_1&quot;</span><span class="p">,</span> <span class="s2">&quot;0_1&quot;</span><span class="p">],</span>
+            <span class="n">Tuple</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]],</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]],</span>
+        <span class="p">]</span>
+    <span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">normalized_freq</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">noise_type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;normal&quot;</span><span class="p">,</span> <span class="s2">&quot;uniform&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;normal&quot;</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]:</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Generate a truncated Fourier series noise field on a given mesh.</span>
@@ -3250,16 +3450,16 @@ If the domain length is 1, setting this to True or False will not make a differe
 <span class="sd">    Args:</span>
 <span class="sd">        mesh (Union[Sequence[tuple[float, float, int]], MeshGrid, FourierMesh]): The mesh on which to generate the noise.</span>
 <span class="sd">        freq_threshold (int): The frequency threshold for truncation.</span>
-<span class="sd">        amplitude_range (tuple[int, int]): The range of amplitudes for the noise.</span>
-<span class="sd">        angle_range (tuple[int, int]): The range of angles for the noise.</span>
 <span class="sd">        device (Optional[torch.device]): The device on which to create the tensor.</span>
 <span class="sd">        dtype (Optional[torch.dtype]): The data type of the tensor.</span>
 <span class="sd">        batch_size (int): The number of batches.</span>
 <span class="sd">        n_channel (int): The number of channels.</span>
-<span class="sd">        normalize_mode (Optional[Literal[&quot;normal_distribution&quot;,&quot;-1_1&quot;,&quot;0_1&quot;]]): The normalization mode for the generated noise.</span>
+<span class="sd">        normalize_mode (Optional[Union[Literal[&quot;normal_distribution&quot;, &quot;-1_1&quot;, &quot;0_1&quot;],Tuple[Union[float, Tuple[float, float]], Union[float, Tuple[float, float]]],]]):</span>
+<span class="sd">            The normalization mode for the generated noise. See `torchfsm.field.normalize` for details.</span>
 <span class="sd">            If None, no normalization is applied. Default is None.</span>
 <span class="sd">        normalized_freq (bool): If True, wheather to set the frequency threshold as a normalized value.</span>
-<span class="sd">            If the domain length is 1, setting this to True or False will not make a difference. </span>
+<span class="sd">            If the domain length is 1, setting this to True or False will not make a difference.</span>
+<span class="sd">        noise_type (Literal[&quot;normal&quot;,&quot;uniform&quot;]): The type of noise to generate in the Fourier domain.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        SpatialTensor[&quot;B C H ...&quot;]: The generated noise field.</span>
@@ -3268,21 +3468,20 @@ If the domain length is 1, setting this to True or False will not make a differe
 
     <span class="k">if</span> <span class="n">normalized_freq</span><span class="p">:</span>
         <span class="nb">filter</span> <span class="o">=</span> <span class="n">mesh</span><span class="o">.</span><span class="n">normalized_low_pass_filter</span><span class="p">(</span><span class="n">freq_threshold</span><span class="p">)</span>
-        <span class="c1">#mesh.normalized_low_pass_filter.cache_clear()</span>
+        <span class="c1"># mesh.normalized_low_pass_filter.cache_clear()</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="nb">filter</span> <span class="o">=</span>  <span class="n">mesh</span><span class="o">.</span><span class="n">abs_low_pass_filter</span><span class="p">(</span><span class="n">freq_threshold</span><span class="p">)</span>
-        <span class="c1">#mesh.abs_low_pass_filter.cache_clear()</span>
+        <span class="nb">filter</span> <span class="o">=</span> <span class="n">mesh</span><span class="o">.</span><span class="n">abs_low_pass_filter</span><span class="p">(</span><span class="n">freq_threshold</span><span class="p">)</span>
+        <span class="c1"># mesh.abs_low_pass_filter.cache_clear()</span>
 
-    <span class="k">return</span> <span class="n">truncated_fourier_series_customed_filter</span><span class="p">(</span>
+    <span class="k">return</span> <span class="n">truncated_fourier_series_custom_filter</span><span class="p">(</span>
         <span class="n">mesh</span><span class="o">=</span><span class="n">mesh</span><span class="p">,</span>
         <span class="n">low_pass_filter</span><span class="o">=</span><span class="nb">filter</span><span class="p">,</span>
-        <span class="n">amplitude_range</span><span class="o">=</span><span class="n">amplitude_range</span><span class="p">,</span>
-        <span class="n">angle_range</span><span class="o">=</span><span class="n">angle_range</span><span class="p">,</span>
         <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">,</span>
         <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">,</span>
-        <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span>  
+        <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span>
         <span class="n">n_channel</span><span class="o">=</span><span class="n">n_channel</span><span class="p">,</span>
         <span class="n">normalize_mode</span><span class="o">=</span><span class="n">normalize_mode</span><span class="p">,</span>
+        <span class="n">noise_type</span><span class="o">=</span><span class="n">noise_type</span><span class="p">,</span>
     <span class="p">)</span>
 </code></pre></div></td></tr></table></div>
             </details>
@@ -3307,16 +3506,21 @@ If the domain length is 1, setting this to True or False will not make a differe
     <span class="p">],</span>
     <span class="n">min_freq</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
     <span class="n">max_freq</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
-    <span class="n">amplitude_range</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span>
-    <span class="n">angle_range</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">pi</span><span class="p">),</span>
     <span class="n">device</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">device</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">dtype</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">dtype</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">batch_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
     <span class="n">n_channel</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
     <span class="n">normalize_mode</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span>
-        <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;normal_distribution&quot;</span><span class="p">,</span> <span class="s2">&quot;-1_1&quot;</span><span class="p">,</span> <span class="s2">&quot;0_1&quot;</span><span class="p">]</span>
+        <span class="n">Union</span><span class="p">[</span>
+            <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;normal_distribution&quot;</span><span class="p">,</span> <span class="s2">&quot;-1_1&quot;</span><span class="p">,</span> <span class="s2">&quot;0_1&quot;</span><span class="p">],</span>
+            <span class="n">Tuple</span><span class="p">[</span>
+                <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]],</span>
+                <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]],</span>
+            <span class="p">],</span>
+        <span class="p">]</span>
     <span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">normalized_freq</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">noise_type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;normal&quot;</span><span class="p">,</span> <span class="s2">&quot;uniform&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;normal&quot;</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]</span>
 </code></pre></div>
 
@@ -3341,7 +3545,7 @@ If the domain length is 1, setting this to True or False will not make a differe
                 <code>mesh</code>
             </td>
             <td>
-                  <code><span title="typing.Union">Union</span>[<span title="typing.Sequence">Sequence</span>[<span title="tuple">tuple</span>[<span title="float">float</span>, <span title="float">float</span>, <span title="int">int</span>]], <span title="torchfsm.mesh.MeshGrid">MeshGrid</span>, <span title="torchfsm.mesh.FourierMesh">FourierMesh</span>]</code>
+                  <code><span title="typing.Union">Union</span>[<span title="typing.Sequence">Sequence</span>[<span title="tuple">tuple</span>[<span title="float">float</span>, <span title="float">float</span>, <span title="int">int</span>]], <a class="autorefs autorefs-internal" title="            torchfsm.mesh.MeshGrid" href="../mesh/#torchfsm.mesh.MeshGrid">MeshGrid</a>, <a class="autorefs autorefs-internal" title="            torchfsm.mesh.FourierMesh" href="../mesh/#torchfsm.mesh.FourierMesh">FourierMesh</a>]</code>
             </td>
             <td>
               <div class="doc-md-description">
@@ -3354,50 +3558,34 @@ If the domain length is 1, setting this to True or False will not make a differe
           </tr>
           <tr class="doc-section-item">
             <td>
-                <code>freq_threshold</code>
+                <code>min_freq</code>
             </td>
             <td>
                   <code><span title="int">int</span></code>
             </td>
             <td>
               <div class="doc-md-description">
-                <p>The frequency threshold for truncation.</p>
+                <p>The minimum frequency threshold for truncation.</p>
               </div>
             </td>
             <td>
-                <em>required</em>
+                  <code>2</code>
             </td>
           </tr>
           <tr class="doc-section-item">
             <td>
-                <code>amplitude_range</code>
+                <code>max_freq</code>
             </td>
             <td>
-                  <code><span title="tuple">tuple</span>[<span title="int">int</span>, <span title="int">int</span>]</code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>The range of amplitudes for the noise.</p>
-              </div>
-            </td>
-            <td>
-                  <code>(-1.0, 1.0)</code>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>angle_range</code>
-            </td>
-            <td>
-                  <code><span title="tuple">tuple</span>[<span title="int">int</span>, <span title="int">int</span>]</code>
+                  <code><span title="int">int</span></code>
             </td>
             <td>
               <div class="doc-md-description">
-                <p>The range of angles for the noise.</p>
+                <p>The maximum frequency threshold for truncation.</p>
               </div>
             </td>
             <td>
-                  <code>(0.0, 2.0 * <span title="torch.pi">pi</span>)</code>
+                  <code>5</code>
             </td>
           </tr>
           <tr class="doc-section-item">
@@ -3469,11 +3657,11 @@ If the domain length is 1, setting this to True or False will not make a differe
                 <code>normalize_mode</code>
             </td>
             <td>
-                  <code><span title="typing.Optional">Optional</span>[<span title="typing.Literal">Literal</span>[&#39;normal_distribution&#39;, &#39;-1_1&#39;, &#39;0_1&#39;]]</code>
+                  <code><span title="typing.Optional">Optional</span>[<span title="typing.Union">Union</span>[<span title="typing.Literal">Literal</span>[&#39;normal_distribution&#39;, &#39;-1_1&#39;, &#39;0_1&#39;], <span title="typing.Tuple">Tuple</span>[<span title="typing.Union">Union</span>[<span title="float">float</span>, <span title="typing.Tuple">Tuple</span>[<span title="float">float</span>, <span title="float">float</span>]], <span title="typing.Union">Union</span>[<span title="float">float</span>, <span title="typing.Tuple">Tuple</span>[<span title="float">float</span>, <span title="float">float</span>]]]]]</code>
             </td>
             <td>
               <div class="doc-md-description">
-                <p>The normalization mode for the generated noise.
+                <p>The normalization mode for the generated noise. See <code>torchfsm.field.normalize</code> for details.
 If None, no normalization is applied. Default is None.</p>
               </div>
             </td>
@@ -3491,11 +3679,27 @@ If None, no normalization is applied. Default is None.</p>
             <td>
               <div class="doc-md-description">
                 <p>If True, wheather to set the frequency threshold as a normalized value.
-If the domain length is 1, setting this to True or False will not make a difference. </p>
+If the domain length is 1, setting this to True or False will not make a difference.</p>
               </div>
             </td>
             <td>
                   <code>True</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>noise_type</code>
+            </td>
+            <td>
+                  <code><span title="typing.Literal">Literal</span>[&#39;normal&#39;, &#39;uniform&#39;]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The type of noise to generate in the Fourier domain.</p>
+              </div>
+            </td>
+            <td>
+                  <code>&#39;normal&#39;</code>
             </td>
           </tr>
       </tbody>
@@ -3527,21 +3731,7 @@ If the domain length is 1, setting this to True or False will not make a differe
 
             <details class="quote">
               <summary>Source code in <code>torchfsm/field/_truncated_fourier.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">123</span>
-<span class="normal">124</span>
-<span class="normal">125</span>
-<span class="normal">126</span>
-<span class="normal">127</span>
-<span class="normal">128</span>
-<span class="normal">129</span>
-<span class="normal">130</span>
-<span class="normal">131</span>
-<span class="normal">132</span>
-<span class="normal">133</span>
-<span class="normal">134</span>
-<span class="normal">135</span>
-<span class="normal">136</span>
-<span class="normal">137</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">137</span>
 <span class="normal">138</span>
 <span class="normal">139</span>
 <span class="normal">140</span>
@@ -3585,35 +3775,64 @@ If the domain length is 1, setting this to True or False will not make a differe
 <span class="normal">178</span>
 <span class="normal">179</span>
 <span class="normal">180</span>
-<span class="normal">181</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">random_truncated_fourier_series</span><span class="p">(</span>
+<span class="normal">181</span>
+<span class="normal">182</span>
+<span class="normal">183</span>
+<span class="normal">184</span>
+<span class="normal">185</span>
+<span class="normal">186</span>
+<span class="normal">187</span>
+<span class="normal">188</span>
+<span class="normal">189</span>
+<span class="normal">190</span>
+<span class="normal">191</span>
+<span class="normal">192</span>
+<span class="normal">193</span>
+<span class="normal">194</span>
+<span class="normal">195</span>
+<span class="normal">196</span>
+<span class="normal">197</span>
+<span class="normal">198</span>
+<span class="normal">199</span>
+<span class="normal">200</span>
+<span class="normal">201</span>
+<span class="normal">202</span>
+<span class="normal">203</span>
+<span class="normal">204</span>
+<span class="normal">205</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">random_truncated_fourier_series</span><span class="p">(</span>
     <span class="n">mesh</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">]],</span> <span class="n">MeshGrid</span><span class="p">,</span> <span class="n">FourierMesh</span><span class="p">],</span>
     <span class="n">min_freq</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
     <span class="n">max_freq</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
-    <span class="n">amplitude_range</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span>
-    <span class="n">angle_range</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">pi</span><span class="p">),</span>
     <span class="n">device</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">dtype</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">dtype</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">batch_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
     <span class="n">n_channel</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
-    <span class="n">normalize_mode</span><span class="p">:</span><span class="n">Optional</span><span class="p">[</span><span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;normal_distribution&quot;</span><span class="p">,</span><span class="s2">&quot;-1_1&quot;</span><span class="p">,</span><span class="s2">&quot;0_1&quot;</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-    <span class="n">normalized_freq</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">normalize_mode</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span>
+        <span class="n">Union</span><span class="p">[</span>
+            <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;normal_distribution&quot;</span><span class="p">,</span> <span class="s2">&quot;-1_1&quot;</span><span class="p">,</span> <span class="s2">&quot;0_1&quot;</span><span class="p">],</span>
+            <span class="n">Tuple</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]],</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]],</span>
+        <span class="p">]</span>
+    <span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">normalized_freq</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">noise_type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;normal&quot;</span><span class="p">,</span> <span class="s2">&quot;uniform&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;normal&quot;</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]:</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Generate a truncated Fourier series noise field on a given mesh.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        mesh (Union[Sequence[tuple[float, float, int]], MeshGrid, FourierMesh]): The mesh on which to generate the noise.</span>
-<span class="sd">        freq_threshold (int): The frequency threshold for truncation.</span>
-<span class="sd">        amplitude_range (tuple[int, int]): The range of amplitudes for the noise.</span>
-<span class="sd">        angle_range (tuple[int, int]): The range of angles for the noise.</span>
+<span class="sd">        min_freq (int): The minimum frequency threshold for truncation.</span>
+<span class="sd">        max_freq (int): The maximum frequency threshold for truncation.</span>
 <span class="sd">        device (Optional[torch.device]): The device on which to create the tensor.</span>
 <span class="sd">        dtype (Optional[torch.dtype]): The data type of the tensor.</span>
 <span class="sd">        batch_size (int): The number of batches.</span>
 <span class="sd">        n_channel (int): The number of channels.</span>
-<span class="sd">        normalize_mode (Optional[Literal[&quot;normal_distribution&quot;,&quot;-1_1&quot;,&quot;0_1&quot;]]): The normalization mode for the generated noise.</span>
+<span class="sd">        normalize_mode (Optional[Union[Literal[&quot;normal_distribution&quot;, &quot;-1_1&quot;, &quot;0_1&quot;],Tuple[Union[float, Tuple[float, float]], Union[float, Tuple[float, float]]],]]):</span>
+<span class="sd">            The normalization mode for the generated noise. See `torchfsm.field.normalize` for details.</span>
 <span class="sd">            If None, no normalization is applied. Default is None.</span>
 <span class="sd">        normalized_freq (bool): If True, wheather to set the frequency threshold as a normalized value.</span>
-<span class="sd">            If the domain length is 1, setting this to True or False will not make a difference. </span>
+<span class="sd">            If the domain length is 1, setting this to True or False will not make a difference.</span>
+<span class="sd">        noise_type (Literal[&quot;normal&quot;,&quot;uniform&quot;]): The type of noise to generate in the Fourier domain.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        SpatialTensor[&quot;B C H ...&quot;]: The generated noise field.</span>
@@ -3621,28 +3840,33 @@ If the domain length is 1, setting this to True or False will not make a differe
     <span class="n">mesh</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="n">dtype</span> <span class="o">=</span> <span class="n">_get_mesh_device_and_dtype</span><span class="p">(</span><span class="n">mesh</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="n">dtype</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">normalized_freq</span><span class="p">:</span>
-        <span class="nb">filter</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">([</span>
-            <span class="n">mesh</span><span class="o">.</span><span class="n">normalized_low_pass_filter</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="n">min_freq</span><span class="p">,</span> <span class="n">max_freq</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
-            <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">batch_size</span><span class="p">)</span>
-        <span class="p">],</span> <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-        <span class="c1">#mesh.normalized_low_pass_filter.cache_clear()</span>
+        <span class="nb">filter</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">(</span>
+            <span class="p">[</span>
+                <span class="n">mesh</span><span class="o">.</span><span class="n">normalized_low_pass_filter</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="n">min_freq</span><span class="p">,</span> <span class="n">max_freq</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+                <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">batch_size</span><span class="p">)</span>
+            <span class="p">],</span>
+            <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="c1"># mesh.normalized_low_pass_filter.cache_clear()</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="nb">filter</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">([</span>
-            <span class="n">mesh</span><span class="o">.</span><span class="n">abs_low_pass_filter</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="n">min_freq</span><span class="p">,</span> <span class="n">max_freq</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
-            <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">batch_size</span><span class="p">)</span>
-        <span class="p">],</span> <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-        <span class="c1">#mesh.abs_low_pass_filter.cache_clear()</span>
+        <span class="nb">filter</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">(</span>
+            <span class="p">[</span>
+                <span class="n">mesh</span><span class="o">.</span><span class="n">abs_low_pass_filter</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="n">min_freq</span><span class="p">,</span> <span class="n">max_freq</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+                <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">batch_size</span><span class="p">)</span>
+            <span class="p">],</span>
+            <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="c1"># mesh.abs_low_pass_filter.cache_clear()</span>
 
-    <span class="k">return</span> <span class="n">truncated_fourier_series_customed_filter</span><span class="p">(</span>
+    <span class="k">return</span> <span class="n">truncated_fourier_series_custom_filter</span><span class="p">(</span>
         <span class="n">mesh</span><span class="o">=</span><span class="n">mesh</span><span class="p">,</span>
         <span class="n">low_pass_filter</span><span class="o">=</span><span class="nb">filter</span><span class="p">,</span>
-        <span class="n">amplitude_range</span><span class="o">=</span><span class="n">amplitude_range</span><span class="p">,</span>
-        <span class="n">angle_range</span><span class="o">=</span><span class="n">angle_range</span><span class="p">,</span>
         <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">,</span>
         <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">,</span>
-        <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span>  
+        <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span>
         <span class="n">n_channel</span><span class="o">=</span><span class="n">n_channel</span><span class="p">,</span>
         <span class="n">normalize_mode</span><span class="o">=</span><span class="n">normalize_mode</span><span class="p">,</span>
+        <span class="n">noise_type</span><span class="o">=</span><span class="n">noise_type</span><span class="p">,</span>
     <span class="p">)</span>
 </code></pre></div></td></tr></table></div>
             </details>
@@ -3654,27 +3878,32 @@ If the domain length is 1, setting this to True or False will not make a differe
 <div class="doc doc-object doc-function">
 
 
-<h4 id="torchfsm.field.truncated_fourier_series_customed_filter" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">torchfsm.field.truncated_fourier_series_customed_filter</span>
+<h4 id="torchfsm.field.truncated_fourier_series_custom_filter" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">torchfsm.field.truncated_fourier_series_custom_filter</span>
 
 
-<a href="#torchfsm.field.truncated_fourier_series_customed_filter" class="headerlink" title="Permanent link">¤</a></h4>
-<div class="doc-signature highlight"><pre><span></span><code><span class="nf">truncated_fourier_series_customed_filter</span><span class="p">(</span>
+<a href="#torchfsm.field.truncated_fourier_series_custom_filter" class="headerlink" title="Permanent link">¤</a></h4>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">truncated_fourier_series_custom_filter</span><span class="p">(</span>
     <span class="n">mesh</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span>
         <span class="n">Sequence</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">]],</span>
         <span class="n">MeshGrid</span><span class="p">,</span>
         <span class="n">FourierMesh</span><span class="p">,</span>
     <span class="p">],</span>
     <span class="n">low_pass_filter</span><span class="p">:</span> <span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">],</span>
-    <span class="n">amplitude_range</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span>
-    <span class="n">angle_range</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">pi</span><span class="p">),</span>
     <span class="n">device</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">device</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">dtype</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">dtype</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">batch_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
     <span class="n">n_channel</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
     <span class="n">normalize_mode</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span>
-        <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;normal_distribution&quot;</span><span class="p">,</span> <span class="s2">&quot;-1_1&quot;</span><span class="p">,</span> <span class="s2">&quot;0_1&quot;</span><span class="p">]</span>
+        <span class="n">Union</span><span class="p">[</span>
+            <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;normal_distribution&quot;</span><span class="p">,</span> <span class="s2">&quot;-1_1&quot;</span><span class="p">,</span> <span class="s2">&quot;0_1&quot;</span><span class="p">],</span>
+            <span class="n">Tuple</span><span class="p">[</span>
+                <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]],</span>
+                <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]],</span>
+            <span class="p">],</span>
+        <span class="p">]</span>
     <span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">noise_type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;normal&quot;</span><span class="p">,</span> <span class="s2">&quot;uniform&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;normal&quot;</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]</span>
 </code></pre></div>
 
@@ -3699,7 +3928,7 @@ If the domain length is 1, setting this to True or False will not make a differe
                 <code>mesh</code>
             </td>
             <td>
-                  <code><span title="typing.Union">Union</span>[<span title="typing.Sequence">Sequence</span>[<span title="tuple">tuple</span>[<span title="float">float</span>, <span title="float">float</span>, <span title="int">int</span>]], <span title="torchfsm.mesh.MeshGrid">MeshGrid</span>, <span title="torchfsm.mesh.FourierMesh">FourierMesh</span>]</code>
+                  <code><span title="typing.Union">Union</span>[<span title="typing.Sequence">Sequence</span>[<span title="tuple">tuple</span>[<span title="float">float</span>, <span title="float">float</span>, <span title="int">int</span>]], <a class="autorefs autorefs-internal" title="            torchfsm.mesh.MeshGrid" href="../mesh/#torchfsm.mesh.MeshGrid">MeshGrid</a>, <a class="autorefs autorefs-internal" title="            torchfsm.mesh.FourierMesh" href="../mesh/#torchfsm.mesh.FourierMesh">FourierMesh</a>]</code>
             </td>
             <td>
               <div class="doc-md-description">
@@ -3724,38 +3953,6 @@ If the domain length is 1, setting this to True or False will not make a differe
             </td>
             <td>
                 <em>required</em>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>amplitude_range</code>
-            </td>
-            <td>
-                  <code><span title="tuple">tuple</span>[<span title="int">int</span>, <span title="int">int</span>]</code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>The range of amplitudes for the noise.</p>
-              </div>
-            </td>
-            <td>
-                  <code>(-1.0, 1.0)</code>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>angle_range</code>
-            </td>
-            <td>
-                  <code><span title="tuple">tuple</span>[<span title="int">int</span>, <span title="int">int</span>]</code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>The range of angles for the noise.</p>
-              </div>
-            </td>
-            <td>
-                  <code>(0.0, 2.0 * <span title="torch.pi">pi</span>)</code>
             </td>
           </tr>
           <tr class="doc-section-item">
@@ -3827,16 +4024,32 @@ If the domain length is 1, setting this to True or False will not make a differe
                 <code>normalize_mode</code>
             </td>
             <td>
-                  <code><span title="typing.Optional">Optional</span>[<span title="typing.Literal">Literal</span>[&#39;normal_distribution&#39;, &#39;-1_1&#39;, &#39;0_1&#39;]]</code>
+                  <code><span title="typing.Optional">Optional</span>[<span title="typing.Union">Union</span>[<span title="typing.Literal">Literal</span>[&#39;normal_distribution&#39;, &#39;-1_1&#39;, &#39;0_1&#39;], <span title="typing.Tuple">Tuple</span>[<span title="typing.Union">Union</span>[<span title="float">float</span>, <span title="typing.Tuple">Tuple</span>[<span title="float">float</span>, <span title="float">float</span>]], <span title="typing.Union">Union</span>[<span title="float">float</span>, <span title="typing.Tuple">Tuple</span>[<span title="float">float</span>, <span title="float">float</span>]]]]]</code>
             </td>
             <td>
               <div class="doc-md-description">
-                <p>The normalization mode for the generated noise.
+                <p>The normalization mode for the generated noise. See <code>torchfsm.field.normalize</code> for details.
 If None, no normalization is applied. Default is None.</p>
               </div>
             </td>
             <td>
                   <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>noise_type</code>
+            </td>
+            <td>
+                  <code><span title="typing.Literal">Literal</span>[&#39;normal&#39;, &#39;uniform&#39;]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The type of noise to generate in the Fourier domain.</p>
+              </div>
+            </td>
+            <td>
+                  <code>&#39;normal&#39;</code>
             </td>
           </tr>
       </tbody>
@@ -3868,9 +4081,7 @@ If None, no normalization is applied. Default is None.</p>
 
             <details class="quote">
               <summary>Source code in <code>torchfsm/field/_truncated_fourier.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">20</span>
-<span class="normal">21</span>
-<span class="normal">22</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">22</span>
 <span class="normal">23</span>
 <span class="normal">24</span>
 <span class="normal">25</span>
@@ -3915,17 +4126,30 @@ If None, no normalization is applied. Default is None.</p>
 <span class="normal">64</span>
 <span class="normal">65</span>
 <span class="normal">66</span>
-<span class="normal">67</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">truncated_fourier_series_customed_filter</span><span class="p">(</span>
+<span class="normal">67</span>
+<span class="normal">68</span>
+<span class="normal">69</span>
+<span class="normal">70</span>
+<span class="normal">71</span>
+<span class="normal">72</span>
+<span class="normal">73</span>
+<span class="normal">74</span>
+<span class="normal">75</span>
+<span class="normal">76</span>
+<span class="normal">77</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">truncated_fourier_series_custom_filter</span><span class="p">(</span>
     <span class="n">mesh</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">]],</span> <span class="n">MeshGrid</span><span class="p">,</span> <span class="n">FourierMesh</span><span class="p">],</span>
     <span class="n">low_pass_filter</span><span class="p">:</span> <span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">],</span>
-    <span class="n">amplitude_range</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span>
-    <span class="n">angle_range</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">pi</span><span class="p">),</span>
     <span class="n">device</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">dtype</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">dtype</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">batch_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
     <span class="n">n_channel</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
-    <span class="n">normalize_mode</span><span class="p">:</span><span class="n">Optional</span><span class="p">[</span><span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;normal_distribution&quot;</span><span class="p">,</span><span class="s2">&quot;-1_1&quot;</span><span class="p">,</span><span class="s2">&quot;0_1&quot;</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-
+    <span class="n">normalize_mode</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span>
+        <span class="n">Union</span><span class="p">[</span>
+            <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;normal_distribution&quot;</span><span class="p">,</span> <span class="s2">&quot;-1_1&quot;</span><span class="p">,</span> <span class="s2">&quot;0_1&quot;</span><span class="p">],</span>
+            <span class="n">Tuple</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]],</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]],</span>
+        <span class="p">]</span>
+    <span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">noise_type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;normal&quot;</span><span class="p">,</span> <span class="s2">&quot;uniform&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;normal&quot;</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]:</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Generate a truncated Fourier series noise field on a given mesh.</span>
@@ -3933,36 +4157,684 @@ If None, no normalization is applied. Default is None.</p>
 <span class="sd">    Args:</span>
 <span class="sd">        mesh (Union[Sequence[tuple[float, float, int]], MeshGrid, FourierMesh]): The mesh on which to generate the noise.</span>
 <span class="sd">        low_pass_filter (SpatialTensor[&quot;B C H ...&quot;]): The custom low-pass filter to apply to the Fourier noise.</span>
-<span class="sd">        amplitude_range (tuple[int, int]): The range of amplitudes for the noise.</span>
-<span class="sd">        angle_range (tuple[int, int]): The range of angles for the noise.</span>
 <span class="sd">        device (Optional[torch.device]): The device on which to create the tensor.</span>
 <span class="sd">        dtype (Optional[torch.dtype]): The data type of the tensor.</span>
 <span class="sd">        batch_size (int): The number of batches.</span>
 <span class="sd">        n_channel (int): The number of channels.</span>
-<span class="sd">        normalize_mode (Optional[Literal[&quot;normal_distribution&quot;,&quot;-1_1&quot;,&quot;0_1&quot;]]): The normalization mode for the generated noise.</span>
+<span class="sd">        normalize_mode (Optional[Union[Literal[&quot;normal_distribution&quot;, &quot;-1_1&quot;, &quot;0_1&quot;],Tuple[Union[float, Tuple[float, float]], Union[float, Tuple[float, float]]],]]):</span>
+<span class="sd">            The normalization mode for the generated noise. See `torchfsm.field.normalize` for details.</span>
 <span class="sd">            If None, no normalization is applied. Default is None.</span>
+<span class="sd">        noise_type (Literal[&quot;normal&quot;,&quot;uniform&quot;]): The type of noise to generate in the Fourier domain.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        SpatialTensor[&quot;B C H ...&quot;]: The generated noise field.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">mesh</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="n">dtype</span> <span class="o">=</span> <span class="n">_get_mesh_device_and_dtype</span><span class="p">(</span><span class="n">mesh</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="n">dtype</span><span class="p">)</span>
-
-    <span class="n">magnitude</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span>
-        <span class="o">*</span><span class="n">mesh_shape</span><span class="p">(</span><span class="n">mesh</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">n_channel</span><span class="o">=</span><span class="n">n_channel</span><span class="p">),</span>
-        <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">,</span>
-        <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span>
-    <span class="p">)</span><span class="o">*</span> <span class="p">(</span><span class="n">amplitude_range</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">amplitude_range</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">+</span> <span class="n">amplitude_range</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>   
-    <span class="n">angle</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span>
-        <span class="o">*</span><span class="n">mesh_shape</span><span class="p">(</span><span class="n">mesh</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">n_channel</span><span class="o">=</span><span class="n">n_channel</span><span class="p">),</span>
-        <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">,</span>
-        <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span>
-    <span class="p">)</span><span class="o">*</span> <span class="p">(</span><span class="n">angle_range</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">angle_range</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">+</span> <span class="n">angle_range</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="n">fourier_noise</span> <span class="o">=</span> <span class="n">magnitude</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">angle</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">noise_type</span> <span class="o">==</span> <span class="s2">&quot;uniform&quot;</span><span class="p">:</span>
+        <span class="n">fourier_noise</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span>
+            <span class="o">*</span><span class="n">mesh_shape</span><span class="p">(</span><span class="n">mesh</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">n_channel</span><span class="o">=</span><span class="n">n_channel</span><span class="p">),</span>
+            <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">,</span>
+            <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">,</span>
+        <span class="p">)</span>
+    <span class="k">elif</span> <span class="n">noise_type</span> <span class="o">==</span> <span class="s2">&quot;normal&quot;</span><span class="p">:</span>
+        <span class="n">fourier_noise</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span>
+            <span class="o">*</span><span class="n">mesh_shape</span><span class="p">(</span><span class="n">mesh</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">n_channel</span><span class="o">=</span><span class="n">n_channel</span><span class="p">),</span>
+            <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">,</span>
+            <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">,</span>
+        <span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Unsupported noise_type: </span><span class="si">{</span><span class="n">noise_type</span><span class="si">}</span><span class="s2">. Supported types are &#39;normal&#39; and &#39;uniform&#39;.&quot;</span>
+        <span class="p">)</span>
+    <span class="n">fourier_noise</span> <span class="o">=</span> <span class="n">mesh</span><span class="o">.</span><span class="n">fft</span><span class="p">(</span><span class="n">fourier_noise</span><span class="p">)</span>
     <span class="n">fourier_noise</span> <span class="o">=</span> <span class="n">fourier_noise</span> <span class="o">*</span> <span class="n">low_pass_filter</span>
     <span class="n">fourier_noise</span> <span class="o">=</span> <span class="n">mesh</span><span class="o">.</span><span class="n">ifft</span><span class="p">(</span><span class="n">fourier_noise</span><span class="p">)</span><span class="o">.</span><span class="n">real</span>
     <span class="k">if</span> <span class="n">normalize_mode</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">fourier_noise</span> <span class="o">=</span> <span class="n">normalize</span><span class="p">(</span><span class="n">fourier_noise</span><span class="p">,</span> <span class="n">normalize_mode</span><span class="o">=</span><span class="n">normalize_mode</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">fourier_noise</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div><hr />
+
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="torchfsm.field.functional_energy_spectrum" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">torchfsm.field.functional_energy_spectrum</span>
+
+
+<a href="#torchfsm.field.functional_energy_spectrum" class="headerlink" title="Permanent link">¤</a></h4>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">functional_energy_spectrum</span><span class="p">(</span>
+    <span class="n">mesh</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span>
+        <span class="n">Sequence</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">]],</span>
+        <span class="n">MeshGrid</span><span class="p">,</span>
+        <span class="n">FourierMesh</span><span class="p">,</span>
+    <span class="p">],</span>
+    <span class="n">spectrum_func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Tensor</span><span class="p">],</span> <span class="n">Tensor</span><span class="p">],</span>
+    <span class="n">batch_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="n">n_channel</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="n">normalize_mode</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span>
+        <span class="n">Union</span><span class="p">[</span>
+            <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;normal_distribution&quot;</span><span class="p">,</span> <span class="s2">&quot;-1_1&quot;</span><span class="p">,</span> <span class="s2">&quot;0_1&quot;</span><span class="p">],</span>
+            <span class="n">Tuple</span><span class="p">[</span>
+                <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]],</span>
+                <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]],</span>
+            <span class="p">],</span>
+        <span class="p">]</span>
+    <span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]</span>
+</code></pre></div>
+
+    <div class="doc doc-contents first">
+
+        <p>Generate an field <span class="arithmatex">\(\mathbf{u}\)</span> based on a given energy spectrum function <span class="arithmatex">\(E(k)\)</span> which statisfies$rac{1}{2}\oiint_{A(K)}\hat{\mathbf{u}}(\mathbf{k})\hat{\mathbf{u}}^*(\mathbf{k})dA(k)=E(k)$
+where <span class="arithmatex">\(\hat{\mathbf{u}}\)</span> is the Fourier transform of <span class="arithmatex">\(\mathbf{u}\)</span> and <span class="arithmatex">\(\mathbf{u}^*\)</span> is the corresponding complex conjugate.
+How it works:
+If <span class="arithmatex">\(\hat{\mathbf{u}}\)</span> is independent of the direction of <span class="arithmatex">\(\mathbf{k}\)</span>, i.e., <span class="arithmatex">\(\hat{\mathbf{u}}(\mathbf{k})=\hat{\mathbf{u}}(k)\)</span>, then the above equation can be simplified as$rac{4\pi k^2}{2}|\hat{\mathbf{u}}(k)|^2=E(k)$.
+Therefore, we can derive that <span class="arithmatex">\(|\hat{\mathbf{u}}(k)|=\sqrt{rac{E(k)}{2\pi k^2}}\)</span>.
+You can use <code>torchfsm.utils.collect_energy_spectrum</code> to verify the energy spectrum of the generated field.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>mesh</code>
+            </td>
+            <td>
+                  <code><span title="typing.Union">Union</span>[<span title="typing.Sequence">Sequence</span>[<span title="tuple">tuple</span>[<span title="float">float</span>, <span title="float">float</span>, <span title="int">int</span>]], <a class="autorefs autorefs-internal" title="            torchfsm.mesh.MeshGrid" href="../mesh/#torchfsm.mesh.MeshGrid">MeshGrid</a>, <a class="autorefs autorefs-internal" title="            torchfsm.mesh.FourierMesh" href="../mesh/#torchfsm.mesh.FourierMesh">FourierMesh</a>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The mesh or grid on which to generate the initial field.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>spectrum_func</code>
+            </td>
+            <td>
+                  <code><span title="typing.Callable">Callable</span>[[<span title="torch.Tensor">Tensor</span>], <span title="torch.Tensor">Tensor</span>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>A function that takes a tensor of wave numbers (SpatialTensor["B C H ..."]) and returns the corresponding energy spectrum values, e.g., lambda k: 0.327<em>k</em>*(-5/3).</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>batch_size</code>
+            </td>
+            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The number of batches. Default is 1.</p>
+              </div>
+            </td>
+            <td>
+                  <code>1</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>n_channel</code>
+            </td>
+            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The number of channels. Note that if multiple channels are used, each channel will be treated as a component of the vector field ans the energy is equally distributed among all channels. Default is 1.</p>
+              </div>
+            </td>
+            <td>
+                  <code>1</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>normalize_mode</code>
+            </td>
+            <td>
+                  <code><span title="typing.Optional">Optional</span>[<span title="typing.Union">Union</span>[<span title="typing.Literal">Literal</span>[&#39;normal_distribution&#39;, &#39;-1_1&#39;, &#39;0_1&#39;], <span title="typing.Tuple">Tuple</span>[<span title="typing.Union">Union</span>[<span title="float">float</span>, <span title="typing.Tuple">Tuple</span>[<span title="float">float</span>, <span title="float">float</span>]], <span title="typing.Union">Union</span>[<span title="float">float</span>, <span title="typing.Tuple">Tuple</span>[<span title="float">float</span>, <span title="float">float</span>]]]]]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The normalization mode for the generated noise. See <code>torchfsm.field.normalize</code> for details.
+Note that the normalization will change the energy spectrum of the final generated field.
+If None, no normalization is applied. Default is None.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="torchfsm._type.SpatialTensor">SpatialTensor</span>[&#39;B C H ...&#39;]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>SpatialTensor["B C H ..."]: The generated initial field with shape (batch_size, n_channel, H, W, D, ...). The device and dtype are inherited from the input mesh.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+            <details class="quote">
+              <summary>Source code in <code>torchfsm/field/_energy_spectrum.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span>
+<span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span>
+<span class="normal">58</span>
+<span class="normal">59</span>
+<span class="normal">60</span>
+<span class="normal">61</span>
+<span class="normal">62</span>
+<span class="normal">63</span>
+<span class="normal">64</span>
+<span class="normal">65</span>
+<span class="normal">66</span>
+<span class="normal">67</span>
+<span class="normal">68</span>
+<span class="normal">69</span>
+<span class="normal">70</span>
+<span class="normal">71</span>
+<span class="normal">72</span>
+<span class="normal">73</span>
+<span class="normal">74</span>
+<span class="normal">75</span>
+<span class="normal">76</span>
+<span class="normal">77</span>
+<span class="normal">78</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">functional_energy_spectrum</span><span class="p">(</span>
+    <span class="n">mesh</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">]],</span> <span class="n">MeshGrid</span><span class="p">,</span> <span class="n">FourierMesh</span><span class="p">],</span>
+    <span class="n">spectrum_func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">],</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">],</span>
+    <span class="n">batch_size</span><span class="p">:</span> <span class="nb">int</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">n_channel</span><span class="p">:</span> <span class="nb">int</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">normalize_mode</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span>
+        <span class="n">Union</span><span class="p">[</span>
+            <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;normal_distribution&quot;</span><span class="p">,</span> <span class="s2">&quot;-1_1&quot;</span><span class="p">,</span> <span class="s2">&quot;0_1&quot;</span><span class="p">],</span>
+            <span class="n">Tuple</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]],</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]],</span>
+        <span class="p">]</span>
+    <span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generate an field $\mathbf{u}$ based on a given energy spectrum function $E(k)$ which statisfies$\frac{1}{2}\oiint_{A(K)}\hat{\mathbf{u}}(\mathbf{k})\hat{\mathbf{u}}^*(\mathbf{k})dA(k)=E(k)$</span>
+<span class="sd">    where $\hat{\mathbf{u}}$ is the Fourier transform of $\mathbf{u}$ and $\mathbf{u}^*$ is the corresponding complex conjugate.</span>
+<span class="sd">    How it works:</span>
+<span class="sd">    If $\hat{\mathbf{u}}$ is independent of the direction of $\mathbf{k}$, i.e., $\hat{\mathbf{u}}(\mathbf{k})=\hat{\mathbf{u}}(k)$, then the above equation can be simplified as$\frac{4\pi k^2}{2}|\hat{\mathbf{u}}(k)|^2=E(k)$.</span>
+<span class="sd">    Therefore, we can derive that $|\hat{\mathbf{u}}(k)|=\sqrt{\frac{E(k)}{2\pi k^2}}$.</span>
+<span class="sd">    You can use `torchfsm.utils.collect_energy_spectrum` to verify the energy spectrum of the generated field.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        mesh (Union[Sequence[tuple[float, float, int]], MeshGrid, FourierMesh]): The mesh or grid on which to generate the initial field.</span>
+<span class="sd">        spectrum_func (Callable[[torch.Tensor], torch.Tensor]): A function that takes a tensor of wave numbers (SpatialTensor[&quot;B C H ...&quot;]) and returns the corresponding energy spectrum values, e.g., lambda k: 0.327*k**(-5/3).</span>
+<span class="sd">        batch_size (int): The number of batches. Default is 1.</span>
+<span class="sd">        n_channel (int): The number of channels. Note that if multiple channels are used, each channel will be treated as a component of the vector field ans the energy is equally distributed among all channels. Default is 1.</span>
+<span class="sd">        normalize_mode (Optional[Union[Literal[&quot;normal_distribution&quot;, &quot;-1_1&quot;, &quot;0_1&quot;],Tuple[Union[float, Tuple[float, float]], Union[float, Tuple[float, float]]],]]): </span>
+<span class="sd">            The normalization mode for the generated noise. See `torchfsm.field.normalize` for details.</span>
+<span class="sd">            Note that the normalization will change the energy spectrum of the final generated field.</span>
+<span class="sd">            If None, no normalization is applied. Default is None.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        SpatialTensor[&quot;B C H ...&quot;]: The generated initial field with shape (batch_size, n_channel, H, W, D, ...). The device and dtype are inherited from the input mesh.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">f_mesh</span> <span class="o">=</span> <span class="n">FourierMesh</span><span class="p">(</span><span class="n">mesh</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">mesh</span><span class="p">,</span> <span class="n">FourierMesh</span><span class="p">)</span> <span class="k">else</span> <span class="n">mesh</span>
+    <span class="n">k_vec</span> <span class="o">=</span> <span class="n">f_mesh</span><span class="o">.</span><span class="n">bf_vector</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
+    <span class="n">norm_k</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">k_vec</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdim</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">norm_k</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">repeat_interleave</span><span class="p">(</span><span class="n">norm_k</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">norm_k</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">repeat_interleave</span><span class="p">(</span><span class="n">norm_k</span><span class="p">,</span> <span class="n">n_channel</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">spectral_magnitude</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nan_to_num</span><span class="p">(</span>
+        <span class="n">spectrum_func</span><span class="p">(</span><span class="n">norm_k</span><span class="p">)</span> <span class="o">/</span> <span class="n">n_channel</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">norm_k</span><span class="o">**</span><span class="mi">2</span><span class="p">),</span>
+        <span class="n">nan</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
+        <span class="n">posinf</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
+        <span class="n">neginf</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">spectral_magnitude</span> <span class="o">=</span> <span class="n">random_hermitian_field</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">spectral_magnitude</span><span class="p">))</span>
+    <span class="n">u_0</span> <span class="o">=</span> <span class="n">f_mesh</span><span class="o">.</span><span class="n">ifft</span><span class="p">(</span><span class="n">spectral_magnitude</span><span class="p">)</span><span class="o">.</span><span class="n">real</span><span class="o">.</span><span class="n">view</span><span class="p">(</span>
+        <span class="n">batch_size</span><span class="p">,</span> <span class="n">n_channel</span><span class="p">,</span> <span class="o">*</span><span class="n">k_vec</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">:]</span>
+    <span class="p">)</span>
+    <span class="k">if</span> <span class="n">normalize_mode</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">u_0</span> <span class="o">=</span> <span class="n">normalize</span><span class="p">(</span><span class="n">u_0</span><span class="p">,</span> <span class="n">normalize_mode</span><span class="o">=</span><span class="n">normalize_mode</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">u_0</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div><hr />
+
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="torchfsm.field.random_power_law_energy_spectrum" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">torchfsm.field.random_power_law_energy_spectrum</span>
+
+
+<a href="#torchfsm.field.random_power_law_energy_spectrum" class="headerlink" title="Permanent link">¤</a></h4>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">random_power_law_energy_spectrum</span><span class="p">(</span>
+    <span class="n">mesh</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span>
+        <span class="n">Sequence</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">]],</span>
+        <span class="n">MeshGrid</span><span class="p">,</span>
+        <span class="n">FourierMesh</span><span class="p">,</span>
+    <span class="p">],</span>
+    <span class="n">min_power</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="o">-</span><span class="mf">5.0</span><span class="p">,</span>
+    <span class="n">max_power</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="o">-</span><span class="mf">2.0</span><span class="p">,</span>
+    <span class="n">batch_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="n">n_channel</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="n">normalize_mode</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span>
+        <span class="n">Union</span><span class="p">[</span>
+            <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;normal_distribution&quot;</span><span class="p">,</span> <span class="s2">&quot;-1_1&quot;</span><span class="p">,</span> <span class="s2">&quot;0_1&quot;</span><span class="p">],</span>
+            <span class="n">Tuple</span><span class="p">[</span>
+                <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]],</span>
+                <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]],</span>
+            <span class="p">],</span>
+        <span class="p">]</span>
+    <span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]</span>
+</code></pre></div>
+
+    <div class="doc doc-contents first">
+
+        <p>Generate a random field with a power-law energy spectrum on a given mesh, i.e., <span class="arithmatex">\(E(k)=k^p\)</span></p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>mesh</code>
+            </td>
+            <td>
+                  <code><span title="typing.Union">Union</span>[<span title="typing.Sequence">Sequence</span>[<span title="tuple">tuple</span>[<span title="float">float</span>, <span title="float">float</span>, <span title="int">int</span>]], <a class="autorefs autorefs-internal" title="            torchfsm.mesh.MeshGrid" href="../mesh/#torchfsm.mesh.MeshGrid">MeshGrid</a>, <a class="autorefs autorefs-internal" title="            torchfsm.mesh.FourierMesh" href="../mesh/#torchfsm.mesh.FourierMesh">FourierMesh</a>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The mesh or grid on which to generate the initial field.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>min_power</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The minimum power-law exponent.</p>
+              </div>
+            </td>
+            <td>
+                  <code>-5.0</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>max_power</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The maximum power-law exponent.</p>
+              </div>
+            </td>
+            <td>
+                  <code>-2.0</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>batch_size</code>
+            </td>
+            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The number of batches. Default is 1.</p>
+              </div>
+            </td>
+            <td>
+                  <code>1</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>n_channel</code>
+            </td>
+            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The number of channels. Default is 1.</p>
+              </div>
+            </td>
+            <td>
+                  <code>1</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>normalize_mode</code>
+            </td>
+            <td>
+                  <code><span title="typing.Optional">Optional</span>[<span title="typing.Union">Union</span>[<span title="typing.Literal">Literal</span>[&#39;normal_distribution&#39;, &#39;-1_1&#39;, &#39;0_1&#39;], <span title="typing.Tuple">Tuple</span>[<span title="typing.Union">Union</span>[<span title="float">float</span>, <span title="typing.Tuple">Tuple</span>[<span title="float">float</span>, <span title="float">float</span>]], <span title="typing.Union">Union</span>[<span title="float">float</span>, <span title="typing.Tuple">Tuple</span>[<span title="float">float</span>, <span title="float">float</span>]]]]]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The normalization mode for the generated noise. See <code>torchfsm.field.normalize</code> for details.
+Note that the normalization will change the energy spectrum of the final generated field.
+If None, no normalization is applied. Default is None.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="torchfsm._type.SpatialTensor">SpatialTensor</span>[&#39;B C H ...&#39;]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>SpatialTensor["B C H ..."]: The generated initial field with shape (batch_size, n_channel, H, W, D, ...). The device and dtype are inherited from the input mesh.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+            <details class="quote">
+              <summary>Source code in <code>torchfsm/field/_energy_spectrum.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 80</span>
+<span class="normal"> 81</span>
+<span class="normal"> 82</span>
+<span class="normal"> 83</span>
+<span class="normal"> 84</span>
+<span class="normal"> 85</span>
+<span class="normal"> 86</span>
+<span class="normal"> 87</span>
+<span class="normal"> 88</span>
+<span class="normal"> 89</span>
+<span class="normal"> 90</span>
+<span class="normal"> 91</span>
+<span class="normal"> 92</span>
+<span class="normal"> 93</span>
+<span class="normal"> 94</span>
+<span class="normal"> 95</span>
+<span class="normal"> 96</span>
+<span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span>
+<span class="normal">110</span>
+<span class="normal">111</span>
+<span class="normal">112</span>
+<span class="normal">113</span>
+<span class="normal">114</span>
+<span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">random_power_law_energy_spectrum</span><span class="p">(</span>
+    <span class="n">mesh</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">]],</span> <span class="n">MeshGrid</span><span class="p">,</span> <span class="n">FourierMesh</span><span class="p">],</span>
+    <span class="n">min_power</span><span class="p">:</span> <span class="nb">float</span><span class="o">=-</span><span class="mf">5.0</span><span class="p">,</span>
+    <span class="n">max_power</span><span class="p">:</span> <span class="nb">float</span><span class="o">=-</span><span class="mf">2.0</span><span class="p">,</span>
+    <span class="n">batch_size</span><span class="p">:</span> <span class="nb">int</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">n_channel</span><span class="p">:</span> <span class="nb">int</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">normalize_mode</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span>
+        <span class="n">Union</span><span class="p">[</span>
+            <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;normal_distribution&quot;</span><span class="p">,</span> <span class="s2">&quot;-1_1&quot;</span><span class="p">,</span> <span class="s2">&quot;0_1&quot;</span><span class="p">],</span>
+            <span class="n">Tuple</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]],</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]],</span>
+        <span class="p">]</span>
+    <span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generate a random field with a power-law energy spectrum on a given mesh, i.e., $E(k)=k^p$</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        mesh (Union[Sequence[tuple[float, float, int]], MeshGrid, FourierMesh]): The mesh or grid on which to generate the initial field.</span>
+<span class="sd">        min_power (float): The minimum power-law exponent.</span>
+<span class="sd">        max_power (float): The maximum power-law exponent.</span>
+<span class="sd">        batch_size (int): The number of batches. Default is 1.</span>
+<span class="sd">        n_channel (int): The number of channels. Default is 1.</span>
+<span class="sd">        normalize_mode (Optional[Union[Literal[&quot;normal_distribution&quot;, &quot;-1_1&quot;, &quot;0_1&quot;],Tuple[Union[float, Tuple[float, float]], Union[float, Tuple[float, float]]],]]): </span>
+<span class="sd">            The normalization mode for the generated noise. See `torchfsm.field.normalize` for details.</span>
+<span class="sd">            Note that the normalization will change the energy spectrum of the final generated field.</span>
+<span class="sd">            If None, no normalization is applied. Default is None.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        SpatialTensor[&quot;B C H ...&quot;]: The generated initial field with shape (batch_size, n_channel, H, W, D, ...). The device and dtype are inherited from the input mesh.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">mesh</span><span class="o">=</span><span class="n">FourierMesh</span><span class="p">(</span><span class="n">mesh</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">mesh</span><span class="p">,</span><span class="n">FourierMesh</span><span class="p">)</span> <span class="k">else</span> <span class="n">mesh</span>
+    <span class="n">powers</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="o">*</span><span class="nb">tuple</span><span class="p">([</span><span class="mi">1</span><span class="p">,]</span><span class="o">*</span><span class="n">mesh</span><span class="o">.</span><span class="n">n_dim</span><span class="p">),</span><span class="n">device</span><span class="o">=</span><span class="n">mesh</span><span class="o">.</span><span class="n">device</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">max_power</span><span class="o">-</span><span class="n">min_power</span><span class="p">)</span><span class="o">+</span><span class="n">min_power</span>
+    <span class="k">return</span> <span class="n">functional_energy_spectrum</span><span class="p">(</span>
+        <span class="n">mesh</span><span class="o">=</span><span class="n">mesh</span><span class="p">,</span>
+        <span class="n">spectrum_func</span><span class="o">=</span><span class="k">lambda</span> <span class="n">k</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="n">powers</span><span class="p">),</span>
+        <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span>
+        <span class="n">n_channel</span><span class="o">=</span><span class="n">n_channel</span><span class="p">,</span>
+        <span class="n">normalize_mode</span><span class="o">=</span><span class="n">normalize_mode</span><span class="p">,</span>
+    <span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div><hr />
+
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="torchfsm.field.random_hermitian_field" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">torchfsm.field.random_hermitian_field</span>
+
+
+<a href="#torchfsm.field.random_hermitian_field" class="headerlink" title="Permanent link">¤</a></h4>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">random_hermitian_field</span><span class="p">(</span>
+    <span class="n">magnitude</span><span class="p">:</span> <span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">],</span>
+<span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents first">
+
+        <p>Generate a random Hermitian field in Fourier space with a given magnitude.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>magnitude</code>
+            </td>
+            <td>
+                  <code><span title="torchfsm._type.SpatialTensor">SpatialTensor</span>[&#39;B C H ...&#39;]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The desired magnitude of the Fourier field</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>SpatialTensor["B C H ..."]: A random Hermitian field in Fourier space with the specified magnitude.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+            <details class="quote">
+              <summary>Source code in <code>torchfsm/field/_energy_spectrum.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">random_hermitian_field</span><span class="p">(</span><span class="n">magnitude</span><span class="p">:</span> <span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generate a random Hermitian field in Fourier space with a given magnitude.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        magnitude (SpatialTensor[&quot;B C H ...&quot;]): The desired magnitude of the Fourier field</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        SpatialTensor[&quot;B C H ...&quot;]: A random Hermitian field in Fourier space with the specified magnitude.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">real_field</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn_like</span><span class="p">(</span><span class="n">magnitude</span><span class="p">)</span>
+    <span class="n">dims</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="mi">2</span> <span class="o">+</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">magnitude</span><span class="o">.</span><span class="n">ndim</span> <span class="o">-</span> <span class="mi">2</span><span class="p">))</span>
+    <span class="n">fft_field</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fftn</span><span class="p">(</span><span class="n">real_field</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="n">dims</span><span class="p">)</span>
+    <span class="n">current_magnitude</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">fft_field</span><span class="p">)</span>
+    <span class="n">current_magnitude</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">current_magnitude</span> <span class="o">&gt;</span> <span class="mf">1e-12</span><span class="p">,</span> <span class="n">current_magnitude</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">magnitude</span> <span class="o">*</span> <span class="p">(</span><span class="n">fft_field</span> <span class="o">/</span> <span class="n">current_magnitude</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
             </details>
     </div>

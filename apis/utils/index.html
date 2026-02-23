@@ -85,7 +85,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#torchfsm.utils.default" class="md-skip">
+        <a href="#torchfsm.utils.clean_up_memory" class="md-skip">
           Skip to content
         </a>
       
@@ -748,6 +748,8 @@
       
         
       
+        
+      
     
     
     
@@ -781,6 +783,29 @@
             3.2.1 Simple PDEs
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials/simulation/gallery/advection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Advection
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
             
               
                 
@@ -1712,6 +1737,60 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#torchfsm.utils.clean_up_memory" class="md-nav__link">
+    <span class="md-ellipsis">
+      clean_up_memory
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#torchfsm.utils.print_gpu_memory" class="md-nav__link">
+    <span class="md-ellipsis">
+      print_gpu_memory
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#torchfsm.utils.statistics_traj" class="md-nav__link">
+    <span class="md-ellipsis">
+      statistics_traj
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#torchfsm.utils.randomly_clip_traj" class="md-nav__link">
+    <span class="md-ellipsis">
+      randomly_clip_traj
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#torchfsm.utils.randomly_select_frames" class="md-nav__link">
+    <span class="md-ellipsis">
+      randomly_select_frames
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#torchfsm.utils.uniformly_select_frames" class="md-nav__link">
+    <span class="md-ellipsis">
+      uniformly_select_frames
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#torchfsm.utils.default" class="md-nav__link">
     <span class="md-ellipsis">
       default
@@ -1730,36 +1809,36 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#torchfsm.utils.statistics_traj" class="md-nav__link">
+  <a href="#torchfsm.utils.traj_slices" class="md-nav__link">
     <span class="md-ellipsis">
-      statistics_traj
+      traj_slices
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#torchfsm.utils.random_clip_traj" class="md-nav__link">
+  <a href="#torchfsm.utils.field_slices" class="md-nav__link">
     <span class="md-ellipsis">
-      random_clip_traj
+      field_slices
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#torchfsm.utils.random_select_frames" class="md-nav__link">
+  <a href="#torchfsm.utils.test_sim_dt" class="md-nav__link">
     <span class="md-ellipsis">
-      random_select_frames
+      test_sim_dt
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#torchfsm.utils.uniformly_select_frames" class="md-nav__link">
+  <a href="#torchfsm.utils.collect_energy_spectrum" class="md-nav__link">
     <span class="md-ellipsis">
-      uniformly_select_frames
+      collect_energy_spectrum
     </span>
   </a>
   
@@ -1926,111 +2005,32 @@
 <div class="doc doc-object doc-function">
 
 
-<h4 id="torchfsm.utils.default" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">torchfsm.utils.default</span>
+<h4 id="torchfsm.utils.clean_up_memory" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">torchfsm.utils.clean_up_memory</span>
 
 
-<a href="#torchfsm.utils.default" class="headerlink" title="Permanent link">¤</a></h4>
-<div class="doc-signature highlight"><pre><span></span><code><span class="nf">default</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">default</span><span class="p">)</span>
+<a href="#torchfsm.utils.clean_up_memory" class="headerlink" title="Permanent link">¤</a></h4>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">clean_up_memory</span><span class="p">()</span>
 </code></pre></div>
 
     <div class="doc doc-contents first">
 
-        <p>Return the default value if the value is None.</p>
-
-
-<p><span class="doc-section-title">Parameters:</span></p>
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Type</th>
-          <th>Description</th>
-          <th>Default</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr class="doc-section-item">
-            <td>
-                <code>value</code>
-            </td>
-            <td>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>The value to check.</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>default</code>
-            </td>
-            <td>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>The default value to return if value is None.</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-      </tbody>
-    </table>
-
-
-    <p><span class="doc-section-title">Returns:</span></p>
-    <table>
-      <thead>
-        <tr>
-          <th>Type</th>
-          <th>Description</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr class="doc-section-item">
-            <td>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>The value if it is not None, otherwise the default value.</p>
-              </div>
-            </td>
-          </tr>
-      </tbody>
-    </table>
+        <p>Clean up the memory by calling garbage collector and emptying the cache.</p>
 
 
             <details class="quote">
-              <summary>Source code in <code>torchfsm/utils.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 7</span>
-<span class="normal"> 8</span>
-<span class="normal"> 9</span>
-<span class="normal">10</span>
-<span class="normal">11</span>
-<span class="normal">12</span>
-<span class="normal">13</span>
-<span class="normal">14</span>
-<span class="normal">15</span>
-<span class="normal">16</span>
-<span class="normal">17</span>
-<span class="normal">18</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">default</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">default</span><span class="p">):</span>
+              <summary>Source code in <code>torchfsm/_utils.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">clean_up_memory</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Return the default value if the value is None.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        value: The value to check.</span>
-<span class="sd">        default: The default value to return if value is None.</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        The value if it is not None, otherwise the default value.</span>
+<span class="sd">    Clean up the memory by calling garbage collector and emptying the cache.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">value</span> <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">default</span>
+    <span class="n">gc</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>
+    <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">empty_cache</span><span class="p">()</span>
 </code></pre></div></td></tr></table></div>
             </details>
     </div>
@@ -2041,137 +2041,26 @@
 <div class="doc doc-object doc-function">
 
 
-<h4 id="torchfsm.utils.format_device_dtype" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">torchfsm.utils.format_device_dtype</span>
+<h4 id="torchfsm.utils.print_gpu_memory" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">torchfsm.utils.print_gpu_memory</span>
 
 
-<a href="#torchfsm.utils.format_device_dtype" class="headerlink" title="Permanent link">¤</a></h4>
-<div class="doc-signature highlight"><pre><span></span><code><span class="nf">format_device_dtype</span><span class="p">(</span>
-    <span class="n">device</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">device</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">dtype</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">dtype</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">dtype</span><span class="p">]</span>
+<a href="#torchfsm.utils.print_gpu_memory" class="headerlink" title="Permanent link">¤</a></h4>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">print_gpu_memory</span><span class="p">(</span><span class="n">prefix</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="s1">&#39;cuda:1&#39;</span><span class="p">)</span>
 </code></pre></div>
 
     <div class="doc doc-contents first">
 
-        <p>Format the device and dtype for PyTorch.</p>
-
-
-<p><span class="doc-section-title">Parameters:</span></p>
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Type</th>
-          <th>Description</th>
-          <th>Default</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr class="doc-section-item">
-            <td>
-                <code>device</code>
-            </td>
-            <td>
-                  <code><span title="typing.Optional">Optional</span>[<span title="typing.Union">Union</span>[<span title="torch.device">device</span>, <span title="str">str</span>]]</code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>The device to use. If None, defaults to CPU.</p>
-              </div>
-            </td>
-            <td>
-                  <code>None</code>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>dtype</code>
-            </td>
-            <td>
-                  <code><span title="typing.Optional">Optional</span>[<span title="torch.dtype">dtype</span>]</code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>The data type to use. If None, defaults to float32.</p>
-              </div>
-            </td>
-            <td>
-                  <code>None</code>
-            </td>
-          </tr>
-      </tbody>
-    </table>
-
-
-    <p><span class="doc-section-title">Returns:</span></p>
-    <table>
-      <thead>
-        <tr>
-          <th>Type</th>
-          <th>Description</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr class="doc-section-item">
-            <td>
-                  <code><span title="typing.Tuple">Tuple</span>[<span title="torch.device">device</span>, <span title="torch.dtype">dtype</span>]</code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>tuple[torch.device, torch.dtype]: The formatted device and dtype.</p>
-              </div>
-            </td>
-          </tr>
-      </tbody>
-    </table>
-
 
             <details class="quote">
-              <summary>Source code in <code>torchfsm/utils.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">20</span>
-<span class="normal">21</span>
-<span class="normal">22</span>
-<span class="normal">23</span>
-<span class="normal">24</span>
-<span class="normal">25</span>
-<span class="normal">26</span>
-<span class="normal">27</span>
-<span class="normal">28</span>
-<span class="normal">29</span>
-<span class="normal">30</span>
-<span class="normal">31</span>
-<span class="normal">32</span>
-<span class="normal">33</span>
-<span class="normal">34</span>
-<span class="normal">35</span>
-<span class="normal">36</span>
-<span class="normal">37</span>
-<span class="normal">38</span>
-<span class="normal">39</span>
-<span class="normal">40</span>
-<span class="normal">41</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">format_device_dtype</span><span class="p">(</span>
-    <span class="n">device</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">dtype</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">dtype</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-<span class="p">)</span><span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">dtype</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Format the device and dtype for PyTorch.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        device (Optional[Union[torch.device, str]]): The device to use. If None, defaults to CPU.</span>
-<span class="sd">        dtype (Optional[torch.dtype]): The data type to use. If None, defaults to float32.</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        tuple[torch.device, torch.dtype]: The formatted device and dtype.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">device</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s2">&quot;cpu&quot;</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">device</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-        <span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">device</span><span class="o">.</span><span class="n">index</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">device</span><span class="o">.</span><span class="n">type</span> <span class="o">!=</span> <span class="s2">&quot;cpu&quot;</span><span class="p">:</span>
-            <span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="n">device</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-    <span class="n">dtype</span> <span class="o">=</span> <span class="n">default</span><span class="p">(</span><span class="n">dtype</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">device</span><span class="p">,</span> <span class="n">dtype</span>
+              <summary>Source code in <code>torchfsm/_utils.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">print_gpu_memory</span><span class="p">(</span><span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="n">device</span><span class="o">=</span><span class="s2">&quot;cuda:1&quot;</span><span class="p">):</span>
+    <span class="n">allocated</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">memory_allocated</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+    <span class="n">reserved</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">memory_reserved</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">prefix</span><span class="si">}</span><span class="s2">Allocated: </span><span class="si">{</span><span class="n">allocated</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">1024</span><span class="o">**</span><span class="mi">2</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> MB, Reserved: </span><span class="si">{</span><span class="n">reserved</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">1024</span><span class="o">**</span><span class="mi">2</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> MB&quot;</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
             </details>
     </div>
@@ -2254,33 +2143,33 @@ The mean, std, min, and max are computed along the first dimension of the trajec
 
 
             <details class="quote">
-              <summary>Source code in <code>torchfsm/utils.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">44</span>
-<span class="normal">45</span>
-<span class="normal">46</span>
-<span class="normal">47</span>
-<span class="normal">48</span>
-<span class="normal">49</span>
-<span class="normal">50</span>
-<span class="normal">51</span>
-<span class="normal">52</span>
-<span class="normal">53</span>
-<span class="normal">54</span>
-<span class="normal">55</span>
-<span class="normal">56</span>
-<span class="normal">57</span>
-<span class="normal">58</span>
-<span class="normal">59</span>
-<span class="normal">60</span>
-<span class="normal">61</span>
-<span class="normal">62</span>
-<span class="normal">63</span>
-<span class="normal">64</span>
-<span class="normal">65</span>
-<span class="normal">66</span>
-<span class="normal">67</span>
-<span class="normal">68</span>
-<span class="normal">69</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">statistics_traj</span><span class="p">(</span><span class="n">traj</span><span class="p">:</span> <span class="n">ValueList</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]])</span><span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
+              <summary>Source code in <code>torchfsm/utils/traj_manipulate.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">statistics_traj</span><span class="p">(</span><span class="n">traj</span><span class="p">:</span> <span class="n">ValueList</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]])</span><span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Compute the mean, std, min, and max of a trajectory.</span>
 
@@ -2316,12 +2205,12 @@ The mean, std, min, and max are computed along the first dimension of the trajec
 <div class="doc doc-object doc-function">
 
 
-<h4 id="torchfsm.utils.random_clip_traj" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">torchfsm.utils.random_clip_traj</span>
+<h4 id="torchfsm.utils.randomly_clip_traj" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">torchfsm.utils.randomly_clip_traj</span>
 
 
-<a href="#torchfsm.utils.random_clip_traj" class="headerlink" title="Permanent link">¤</a></h4>
-<div class="doc-signature highlight"><pre><span></span><code><span class="nf">random_clip_traj</span><span class="p">(</span>
+<a href="#torchfsm.utils.randomly_clip_traj" class="headerlink" title="Permanent link">¤</a></h4>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">randomly_clip_traj</span><span class="p">(</span>
     <span class="n">traj</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span>
         <span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B T C H ...&quot;</span><span class="p">],</span>
         <span class="n">SpatialArray</span><span class="p">[</span><span class="s2">&quot;B T C H ...&quot;</span><span class="p">],</span>
@@ -2416,46 +2305,46 @@ The clipped trajectory has shape [B, length, C, H, ...].</p>
 
 
             <details class="quote">
-              <summary>Source code in <code>torchfsm/utils.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 72</span>
-<span class="normal"> 73</span>
-<span class="normal"> 74</span>
-<span class="normal"> 75</span>
-<span class="normal"> 76</span>
-<span class="normal"> 77</span>
-<span class="normal"> 78</span>
-<span class="normal"> 79</span>
-<span class="normal"> 80</span>
-<span class="normal"> 81</span>
-<span class="normal"> 82</span>
-<span class="normal"> 83</span>
-<span class="normal"> 84</span>
-<span class="normal"> 85</span>
-<span class="normal"> 86</span>
-<span class="normal"> 87</span>
-<span class="normal"> 88</span>
-<span class="normal"> 89</span>
-<span class="normal"> 90</span>
-<span class="normal"> 91</span>
-<span class="normal"> 92</span>
-<span class="normal"> 93</span>
-<span class="normal"> 94</span>
-<span class="normal"> 95</span>
-<span class="normal"> 96</span>
-<span class="normal"> 97</span>
-<span class="normal"> 98</span>
-<span class="normal"> 99</span>
-<span class="normal">100</span>
-<span class="normal">101</span>
-<span class="normal">102</span>
-<span class="normal">103</span>
-<span class="normal">104</span>
-<span class="normal">105</span>
-<span class="normal">106</span>
-<span class="normal">107</span>
-<span class="normal">108</span>
-<span class="normal">109</span>
-<span class="normal">110</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">random_clip_traj</span><span class="p">(</span>
+              <summary>Source code in <code>torchfsm/utils/traj_manipulate.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span>
+<span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span>
+<span class="normal">58</span>
+<span class="normal">59</span>
+<span class="normal">60</span>
+<span class="normal">61</span>
+<span class="normal">62</span>
+<span class="normal">63</span>
+<span class="normal">64</span>
+<span class="normal">65</span>
+<span class="normal">66</span>
+<span class="normal">67</span>
+<span class="normal">68</span>
+<span class="normal">69</span>
+<span class="normal">70</span>
+<span class="normal">71</span>
+<span class="normal">72</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">randomly_clip_traj</span><span class="p">(</span>
     <span class="n">traj</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span>
         <span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B T C H ...&quot;</span><span class="p">],</span>
         <span class="n">SpatialArray</span><span class="p">[</span><span class="s2">&quot;B T C H ...&quot;</span><span class="p">],</span>
@@ -2504,12 +2393,12 @@ The clipped trajectory has shape [B, length, C, H, ...].</p>
 <div class="doc doc-object doc-function">
 
 
-<h4 id="torchfsm.utils.random_select_frames" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">torchfsm.utils.random_select_frames</span>
+<h4 id="torchfsm.utils.randomly_select_frames" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">torchfsm.utils.randomly_select_frames</span>
 
 
-<a href="#torchfsm.utils.random_select_frames" class="headerlink" title="Permanent link">¤</a></h4>
-<div class="doc-signature highlight"><pre><span></span><code><span class="nf">random_select_frames</span><span class="p">(</span>
+<a href="#torchfsm.utils.randomly_select_frames" class="headerlink" title="Permanent link">¤</a></h4>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">randomly_select_frames</span><span class="p">(</span>
     <span class="n">traj</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span>
         <span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B T C H ...&quot;</span><span class="p">],</span>
         <span class="n">SpatialArray</span><span class="p">[</span><span class="s2">&quot;B T C H ...&quot;</span><span class="p">],</span>
@@ -2605,44 +2494,44 @@ The selected frames have shape [B, n_frames, C, H, ...].</p>
 
 
             <details class="quote">
-              <summary>Source code in <code>torchfsm/utils.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">112</span>
-<span class="normal">113</span>
-<span class="normal">114</span>
-<span class="normal">115</span>
-<span class="normal">116</span>
-<span class="normal">117</span>
-<span class="normal">118</span>
-<span class="normal">119</span>
-<span class="normal">120</span>
-<span class="normal">121</span>
-<span class="normal">122</span>
-<span class="normal">123</span>
-<span class="normal">124</span>
-<span class="normal">125</span>
-<span class="normal">126</span>
-<span class="normal">127</span>
-<span class="normal">128</span>
-<span class="normal">129</span>
-<span class="normal">130</span>
-<span class="normal">131</span>
-<span class="normal">132</span>
-<span class="normal">133</span>
-<span class="normal">134</span>
-<span class="normal">135</span>
-<span class="normal">136</span>
-<span class="normal">137</span>
-<span class="normal">138</span>
-<span class="normal">139</span>
-<span class="normal">140</span>
-<span class="normal">141</span>
-<span class="normal">142</span>
-<span class="normal">143</span>
-<span class="normal">144</span>
-<span class="normal">145</span>
-<span class="normal">146</span>
-<span class="normal">147</span>
-<span class="normal">148</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">random_select_frames</span><span class="p">(</span>
+              <summary>Source code in <code>torchfsm/utils/traj_manipulate.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 74</span>
+<span class="normal"> 75</span>
+<span class="normal"> 76</span>
+<span class="normal"> 77</span>
+<span class="normal"> 78</span>
+<span class="normal"> 79</span>
+<span class="normal"> 80</span>
+<span class="normal"> 81</span>
+<span class="normal"> 82</span>
+<span class="normal"> 83</span>
+<span class="normal"> 84</span>
+<span class="normal"> 85</span>
+<span class="normal"> 86</span>
+<span class="normal"> 87</span>
+<span class="normal"> 88</span>
+<span class="normal"> 89</span>
+<span class="normal"> 90</span>
+<span class="normal"> 91</span>
+<span class="normal"> 92</span>
+<span class="normal"> 93</span>
+<span class="normal"> 94</span>
+<span class="normal"> 95</span>
+<span class="normal"> 96</span>
+<span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span>
+<span class="normal">110</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">randomly_select_frames</span><span class="p">(</span>
     <span class="n">traj</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span>
         <span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B T C H ...&quot;</span><span class="p">],</span>
         <span class="n">SpatialArray</span><span class="p">[</span><span class="s2">&quot;B T C H ...&quot;</span><span class="p">],</span>
@@ -2790,44 +2679,44 @@ The selected frames have shape [B, n_frames, C, H, ...].</p>
 
 
             <details class="quote">
-              <summary>Source code in <code>torchfsm/utils.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">150</span>
-<span class="normal">151</span>
-<span class="normal">152</span>
-<span class="normal">153</span>
-<span class="normal">154</span>
-<span class="normal">155</span>
-<span class="normal">156</span>
-<span class="normal">157</span>
-<span class="normal">158</span>
-<span class="normal">159</span>
-<span class="normal">160</span>
-<span class="normal">161</span>
-<span class="normal">162</span>
-<span class="normal">163</span>
-<span class="normal">164</span>
-<span class="normal">165</span>
-<span class="normal">166</span>
-<span class="normal">167</span>
-<span class="normal">168</span>
-<span class="normal">169</span>
-<span class="normal">170</span>
-<span class="normal">171</span>
-<span class="normal">172</span>
-<span class="normal">173</span>
-<span class="normal">174</span>
-<span class="normal">175</span>
-<span class="normal">176</span>
-<span class="normal">177</span>
-<span class="normal">178</span>
-<span class="normal">179</span>
-<span class="normal">180</span>
-<span class="normal">181</span>
-<span class="normal">182</span>
-<span class="normal">183</span>
-<span class="normal">184</span>
-<span class="normal">185</span>
-<span class="normal">186</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">uniformly_select_frames</span><span class="p">(</span>
+              <summary>Source code in <code>torchfsm/utils/traj_manipulate.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">112</span>
+<span class="normal">113</span>
+<span class="normal">114</span>
+<span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span>
+<span class="normal">120</span>
+<span class="normal">121</span>
+<span class="normal">122</span>
+<span class="normal">123</span>
+<span class="normal">124</span>
+<span class="normal">125</span>
+<span class="normal">126</span>
+<span class="normal">127</span>
+<span class="normal">128</span>
+<span class="normal">129</span>
+<span class="normal">130</span>
+<span class="normal">131</span>
+<span class="normal">132</span>
+<span class="normal">133</span>
+<span class="normal">134</span>
+<span class="normal">135</span>
+<span class="normal">136</span>
+<span class="normal">137</span>
+<span class="normal">138</span>
+<span class="normal">139</span>
+<span class="normal">140</span>
+<span class="normal">141</span>
+<span class="normal">142</span>
+<span class="normal">143</span>
+<span class="normal">144</span>
+<span class="normal">145</span>
+<span class="normal">146</span>
+<span class="normal">147</span>
+<span class="normal">148</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">uniformly_select_frames</span><span class="p">(</span>
     <span class="n">traj</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span>
         <span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B T C H ...&quot;</span><span class="p">],</span>
         <span class="n">SpatialArray</span><span class="p">[</span><span class="s2">&quot;B T C H ...&quot;</span><span class="p">],</span>
@@ -2869,6 +2758,1230 @@ The selected frames have shape [B, n_frames, C, H, ...].</p>
     </div>
 
 </div><hr />
+
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="torchfsm.utils.default" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">torchfsm.utils.default</span>
+
+
+<a href="#torchfsm.utils.default" class="headerlink" title="Permanent link">¤</a></h4>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">default</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">default</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents first">
+
+        <p>Return the default value if the value is None.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>value</code>
+            </td>
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The value to check.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>default</code>
+            </td>
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The default value to return if value is None.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The value if it is not None, otherwise the default value.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+            <details class="quote">
+              <summary>Source code in <code>torchfsm/_utils.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">default</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">default</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return the default value if the value is None.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        value: The value to check.</span>
+<span class="sd">        default: The default value to return if value is None.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        The value if it is not None, otherwise the default value.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">value</span> <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">default</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div><hr />
+
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="torchfsm.utils.format_device_dtype" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">torchfsm.utils.format_device_dtype</span>
+
+
+<a href="#torchfsm.utils.format_device_dtype" class="headerlink" title="Permanent link">¤</a></h4>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">format_device_dtype</span><span class="p">(</span>
+    <span class="n">device</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">device</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">dtype</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">dtype</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">dtype</span><span class="p">]</span>
+</code></pre></div>
+
+    <div class="doc doc-contents first">
+
+        <p>Format the device and dtype for PyTorch.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>device</code>
+            </td>
+            <td>
+                  <code><span title="typing.Optional">Optional</span>[<span title="typing.Union">Union</span>[<span title="torch.device">device</span>, <span title="str">str</span>]]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The device to use. If None, defaults to CPU.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>dtype</code>
+            </td>
+            <td>
+                  <code><span title="typing.Optional">Optional</span>[<span title="torch.dtype">dtype</span>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The data type to use. If None, defaults to float32.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="typing.Tuple">Tuple</span>[<span title="torch.device">device</span>, <span title="torch.dtype">dtype</span>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>tuple[torch.device, torch.dtype]: The formatted device and dtype.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+            <details class="quote">
+              <summary>Source code in <code>torchfsm/_utils.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">format_device_dtype</span><span class="p">(</span>
+    <span class="n">device</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">dtype</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">dtype</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span><span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">dtype</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Format the device and dtype for PyTorch.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        device (Optional[Union[torch.device, str]]): The device to use. If None, defaults to CPU.</span>
+<span class="sd">        dtype (Optional[torch.dtype]): The data type to use. If None, defaults to float32.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        tuple[torch.device, torch.dtype]: The formatted device and dtype.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">device</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s2">&quot;cpu&quot;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">device</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">device</span><span class="o">.</span><span class="n">index</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">device</span><span class="o">.</span><span class="n">type</span> <span class="o">!=</span> <span class="s2">&quot;cpu&quot;</span><span class="p">:</span>
+            <span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="n">device</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">dtype</span> <span class="o">=</span> <span class="n">default</span><span class="p">(</span><span class="n">dtype</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">device</span><span class="p">,</span> <span class="n">dtype</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div><hr />
+
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="torchfsm.utils.traj_slices" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">torchfsm.utils.traj_slices</span>
+
+
+<a href="#torchfsm.utils.traj_slices" class="headerlink" title="Permanent link">¤</a></h4>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">traj_slices</span><span class="p">(</span>
+    <span class="n">traj</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span>
+        <span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B T C H ...&quot;</span><span class="p">],</span>
+        <span class="n">SpatialArray</span><span class="p">[</span><span class="s2">&quot;B T C H ...&quot;</span><span class="p">],</span>
+    <span class="p">],</span>
+    <span class="n">slice_control</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]],</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Sequence</span><span class="p">[</span>
+    <span class="n">Union</span><span class="p">[</span>
+        <span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B T C H ...&quot;</span><span class="p">],</span>
+        <span class="n">SpatialArray</span><span class="p">[</span><span class="s2">&quot;B T C H ...&quot;</span><span class="p">],</span>
+    <span class="p">]</span>
+<span class="p">]</span>
+</code></pre></div>
+
+    <div class="doc doc-contents first">
+
+        <p>Slice a trajectory along specified dimensions.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>traj</code>
+            </td>
+            <td>
+                  <code><span title="typing.Union">Union</span>[<span title="torchfsm._type.SpatialTensor">SpatialTensor</span>[&#39;B T C H ...&#39;], <span title="torchfsm._type.SpatialArray">SpatialArray</span>[&#39;B T C H ...&#39;]]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The trajectory to slice.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>slice_control</code>
+            </td>
+            <td>
+                  <code><span title="typing.Sequence">Sequence</span>[<span title="typing.Optional">Optional</span>[<span title="typing.Union">Union</span>[<span title="int">int</span>, <span title="float">float</span>]]]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>A sequence of slice values for each dimension.
+If a value is None, that dimension will not be sliced.
+If a value is negative, it will slice from the end of that dimension.
+If a value is positive, it will slice from the start of that dimension.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="typing.Sequence">Sequence</span>[<span title="typing.Union">Union</span>[<span title="torchfsm._type.SpatialTensor">SpatialTensor</span>[&#39;B T C H ...&#39;], <span title="torchfsm._type.SpatialArray">SpatialArray</span>[&#39;B T C H ...&#39;]]]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Union[Sequence[SpatialTensor["B T C H ..."], SpatialArray["B T C H ..."]]]:
+A sequence of sliced trajectories. Each element corresponds to a slice along one dimension.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+            <details class="quote">
+              <summary>Source code in <code>torchfsm/utils/slice.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">traj_slices</span><span class="p">(</span>
+    <span class="n">traj</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B T C H ...&quot;</span><span class="p">],</span> <span class="n">SpatialArray</span><span class="p">[</span><span class="s2">&quot;B T C H ...&quot;</span><span class="p">]],</span>
+    <span class="n">slice_control</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]],</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B T C H ...&quot;</span><span class="p">],</span> <span class="n">SpatialArray</span><span class="p">[</span><span class="s2">&quot;B T C H ...&quot;</span><span class="p">]]]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Slice a trajectory along specified dimensions.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        traj (Union[SpatialTensor[&quot;B T C H ...&quot;], SpatialArray[&quot;B T C H ...&quot;]]): The trajectory to slice.</span>
+<span class="sd">        slice_control (Sequence[Optional[Union[int,float]]]): A sequence of slice values for each dimension.</span>
+<span class="sd">            If a value is None, that dimension will not be sliced.</span>
+<span class="sd">            If a value is negative, it will slice from the end of that dimension.</span>
+<span class="sd">            If a value is positive, it will slice from the start of that dimension.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Union[Sequence[SpatialTensor[&quot;B T C H ...&quot;], SpatialArray[&quot;B T C H ...&quot;]]]:</span>
+<span class="sd">            A sequence of sliced trajectories. Each element corresponds to a slice along one dimension.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">n_dim</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">traj</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">-</span> <span class="mi">3</span>
+    <span class="k">if</span> <span class="n">n_dim</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">slice_control</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;The number of slice control values </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">slice_control</span><span class="p">)</span><span class="si">}</span><span class="s2"> should be equal to the number of dimensions </span><span class="si">{</span><span class="n">n_dim</span><span class="si">}</span><span class="s2"> in the input trajectory.&quot;</span>
+        <span class="p">)</span>
+    <span class="k">if</span> <span class="n">n_dim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Cannot slice 1D trajectory.&quot;</span><span class="p">)</span>
+    <span class="n">re</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">slice_control</span><span class="p">)</span> <span class="o">!=</span> <span class="n">n_dim</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;The number of slice control values </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">slice_control</span><span class="p">)</span><span class="si">}</span><span class="s2"> should be equal to the number of dimensions </span><span class="si">{</span><span class="n">n_dim</span><span class="si">}</span><span class="s2"> in the input trajectory.&quot;</span>
+        <span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">slice_value</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">slice_control</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">slice_value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="k">if</span> <span class="n">slice_value</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">slice_value</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">traj</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">3</span><span class="p">]</span> <span class="o">*</span> <span class="n">slice_value</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">slice_value</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">slice_value</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">re</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">traj</span><span class="p">[:,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="n">slice_value</span><span class="p">,</span> <span class="o">...</span><span class="p">])</span>
+        <span class="k">elif</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">re</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">traj</span><span class="p">[:,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="n">slice_value</span><span class="p">,</span> <span class="o">...</span><span class="p">])</span>
+        <span class="k">elif</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">re</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">traj</span><span class="p">[:,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="n">slice_value</span><span class="p">])</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">re</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;No slice value provided.&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">re</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div><hr />
+
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="torchfsm.utils.field_slices" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">torchfsm.utils.field_slices</span>
+
+
+<a href="#torchfsm.utils.field_slices" class="headerlink" title="Permanent link">¤</a></h4>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">field_slices</span><span class="p">(</span>
+    <span class="n">field</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span>
+        <span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">],</span>
+        <span class="n">SpatialArray</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">],</span>
+    <span class="p">],</span>
+    <span class="n">slice_control</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]],</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Sequence</span><span class="p">[</span>
+    <span class="n">Union</span><span class="p">[</span>
+        <span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">],</span>
+        <span class="n">SpatialArray</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">],</span>
+    <span class="p">]</span>
+<span class="p">]</span>
+</code></pre></div>
+
+    <div class="doc doc-contents first">
+
+        <p>Slice a field along specified dimensions.
+Args:
+    field (Union[SpatialTensor["B C H ..."], SpatialArray["B C H ..."]]): The field to slice.
+    slice_control (Sequence[Optional[Union[int,float]]]): A sequence of slice values for each dimension.
+        If a value is None, that dimension will not be sliced.
+        If a value is negative, it will slice from the end of that dimension.
+        If a value is positive, it will slice from the start of that dimension.
+Returns:
+    Union[Sequence[SpatialTensor["B C H ..."], SpatialArray["B C H ..."]]]:
+        A sequence of sliced fields. Each element corresponds to a slice along one dimension.</p>
+
+
+            <details class="quote">
+              <summary>Source code in <code>torchfsm/utils/slice.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">54</span>
+<span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span>
+<span class="normal">58</span>
+<span class="normal">59</span>
+<span class="normal">60</span>
+<span class="normal">61</span>
+<span class="normal">62</span>
+<span class="normal">63</span>
+<span class="normal">64</span>
+<span class="normal">65</span>
+<span class="normal">66</span>
+<span class="normal">67</span>
+<span class="normal">68</span>
+<span class="normal">69</span>
+<span class="normal">70</span>
+<span class="normal">71</span>
+<span class="normal">72</span>
+<span class="normal">73</span>
+<span class="normal">74</span>
+<span class="normal">75</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">field_slices</span><span class="p">(</span>
+    <span class="n">field</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">],</span> <span class="n">SpatialArray</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]],</span>
+    <span class="n">slice_control</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]],</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">],</span> <span class="n">SpatialArray</span><span class="p">[</span><span class="s2">&quot;B C H ...&quot;</span><span class="p">]]]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Slice a field along specified dimensions.</span>
+<span class="sd">    Args:</span>
+<span class="sd">        field (Union[SpatialTensor[&quot;B C H ...&quot;], SpatialArray[&quot;B C H ...&quot;]]): The field to slice.</span>
+<span class="sd">        slice_control (Sequence[Optional[Union[int,float]]]): A sequence of slice values for each dimension.</span>
+<span class="sd">            If a value is None, that dimension will not be sliced.</span>
+<span class="sd">            If a value is negative, it will slice from the end of that dimension.</span>
+<span class="sd">            If a value is positive, it will slice from the start of that dimension.</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        Union[Sequence[SpatialTensor[&quot;B C H ...&quot;], SpatialArray[&quot;B C H ...&quot;]]]:</span>
+<span class="sd">            A sequence of sliced fields. Each element corresponds to a slice along one dimension.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">traj</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">):</span>
+        <span class="n">traj</span> <span class="o">=</span> <span class="n">field</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">traj</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+        <span class="n">traj</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">traj_slices</span><span class="p">(</span><span class="n">traj</span><span class="o">=</span><span class="n">traj</span><span class="p">,</span> <span class="n">slice_control</span><span class="o">=</span><span class="n">slice_control</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div><hr />
+
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="torchfsm.utils.test_sim_dt" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">torchfsm.utils.test_sim_dt</span>
+
+
+<a href="#torchfsm.utils.test_sim_dt" class="headerlink" title="Permanent link">¤</a></h4>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">test_sim_dt</span><span class="p">(</span>
+    <span class="n">operator</span><span class="p">:</span> <span class="n">Operator</span><span class="p">,</span>
+    <span class="n">u_0</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span>
+    <span class="n">max_sim_dt</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">min_sim_dt</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">mesh</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span>
+        <span class="n">Union</span><span class="p">[</span>
+            <span class="n">Sequence</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">]],</span>
+            <span class="n">MeshGrid</span><span class="p">,</span>
+            <span class="n">FourierMesh</span><span class="p">,</span>
+        <span class="p">]</span>
+    <span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">stop_criteria</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">initial_step</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="n">dt_decrement</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">kwargs</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">dict</span><span class="p">,</span> <span class="nb">dict</span><span class="p">,</span> <span class="nb">dict</span><span class="p">]</span>
+</code></pre></div>
+
+    <div class="doc doc-contents first">
+
+        <p>Test the simulation with varying time steps.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>operator</code>
+            </td>
+            <td>
+                  <code><a class="autorefs autorefs-internal" title="            torchfsm.operator.Operator" href="../operator_base/#torchfsm.operator.Operator">Operator</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The operator to be tested.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>u_0</code>
+            </td>
+            <td>
+                  <code><span title="torch.Tensor">Tensor</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Initial condition tensor.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>max_sim_dt</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Maximum simulation time step.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>min_sim_dt</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Minimum simulation time step.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>mesh</code>
+            </td>
+            <td>
+                  <code><span title="typing.Optional">Optional</span>[<span title="typing.Union">Union</span>[<span title="typing.Sequence">Sequence</span>[<span title="tuple">tuple</span>[<span title="float">float</span>, <span title="float">float</span>, <span title="int">int</span>]], <a class="autorefs autorefs-internal" title="            torchfsm.mesh.MeshGrid" href="../mesh/#torchfsm.mesh.MeshGrid">MeshGrid</a>, <a class="autorefs autorefs-internal" title="            torchfsm.mesh.FourierMesh" href="../mesh/#torchfsm.mesh.FourierMesh">FourierMesh</a>]]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Mesh information or mesh object.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>stop_criteria</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Criteria to stop the simulation if reached.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>initial_step</code>
+            </td>
+            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Initial step size for the simulation.</p>
+              </div>
+            </td>
+            <td>
+                  <code>1</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>dt_decrement</code>
+            </td>
+            <td>
+                  <code><span title="float">float</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Factor by which to reduce the time step on failure.</p>
+              </div>
+            </td>
+            <td>
+                  <code>0.5</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>**kwargs</code>
+            </td>
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Additional keyword arguments for the operator's integrate method.</p>
+              </div>
+            </td>
+            <td>
+                  <code>{}</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="tuple">tuple</span>[<span title="dict">dict</span>, <span title="dict">dict</span>, <span title="dict">dict</span>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>tuple[dict, dict, dict]: A tuple containing:
+- errors: Dictionary of errors for each time step.
+- mean_differences: Mean differences between frames for each time step.
+- std_differences: Standard deviations of differences for each time step.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+            <details class="quote">
+              <summary>Source code in <code>torchfsm/utils/test.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 34</span>
+<span class="normal"> 35</span>
+<span class="normal"> 36</span>
+<span class="normal"> 37</span>
+<span class="normal"> 38</span>
+<span class="normal"> 39</span>
+<span class="normal"> 40</span>
+<span class="normal"> 41</span>
+<span class="normal"> 42</span>
+<span class="normal"> 43</span>
+<span class="normal"> 44</span>
+<span class="normal"> 45</span>
+<span class="normal"> 46</span>
+<span class="normal"> 47</span>
+<span class="normal"> 48</span>
+<span class="normal"> 49</span>
+<span class="normal"> 50</span>
+<span class="normal"> 51</span>
+<span class="normal"> 52</span>
+<span class="normal"> 53</span>
+<span class="normal"> 54</span>
+<span class="normal"> 55</span>
+<span class="normal"> 56</span>
+<span class="normal"> 57</span>
+<span class="normal"> 58</span>
+<span class="normal"> 59</span>
+<span class="normal"> 60</span>
+<span class="normal"> 61</span>
+<span class="normal"> 62</span>
+<span class="normal"> 63</span>
+<span class="normal"> 64</span>
+<span class="normal"> 65</span>
+<span class="normal"> 66</span>
+<span class="normal"> 67</span>
+<span class="normal"> 68</span>
+<span class="normal"> 69</span>
+<span class="normal"> 70</span>
+<span class="normal"> 71</span>
+<span class="normal"> 72</span>
+<span class="normal"> 73</span>
+<span class="normal"> 74</span>
+<span class="normal"> 75</span>
+<span class="normal"> 76</span>
+<span class="normal"> 77</span>
+<span class="normal"> 78</span>
+<span class="normal"> 79</span>
+<span class="normal"> 80</span>
+<span class="normal"> 81</span>
+<span class="normal"> 82</span>
+<span class="normal"> 83</span>
+<span class="normal"> 84</span>
+<span class="normal"> 85</span>
+<span class="normal"> 86</span>
+<span class="normal"> 87</span>
+<span class="normal"> 88</span>
+<span class="normal"> 89</span>
+<span class="normal"> 90</span>
+<span class="normal"> 91</span>
+<span class="normal"> 92</span>
+<span class="normal"> 93</span>
+<span class="normal"> 94</span>
+<span class="normal"> 95</span>
+<span class="normal"> 96</span>
+<span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span>
+<span class="normal">110</span>
+<span class="normal">111</span>
+<span class="normal">112</span>
+<span class="normal">113</span>
+<span class="normal">114</span>
+<span class="normal">115</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">test_sim_dt</span><span class="p">(</span>
+    <span class="n">operator</span><span class="p">:</span> <span class="n">Operator</span><span class="p">,</span>
+    <span class="n">u_0</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span>
+    <span class="n">max_sim_dt</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">min_sim_dt</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">mesh</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span>
+            <span class="n">Union</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">]],</span> <span class="n">MeshGrid</span><span class="p">,</span> <span class="n">FourierMesh</span><span class="p">]</span>
+        <span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">stop_criteria</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">initial_step</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="n">dt_decrement</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">kwargs</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">dict</span><span class="p">,</span> <span class="nb">dict</span><span class="p">,</span> <span class="nb">dict</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Test the simulation with varying time steps.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        operator (Operator): The operator to be tested.</span>
+<span class="sd">        u_0 (torch.Tensor): Initial condition tensor.</span>
+<span class="sd">        max_sim_dt (float): Maximum simulation time step.</span>
+<span class="sd">        min_sim_dt (float): Minimum simulation time step.</span>
+<span class="sd">        mesh (Optional[Union[Sequence[tuple[float, float, int]], MeshGrid, FourierMesh]]): Mesh information or mesh object.</span>
+<span class="sd">        stop_criteria (float, optional): Criteria to stop the simulation if reached.</span>
+<span class="sd">        initial_step (int, optional): Initial step size for the simulation.</span>
+<span class="sd">        dt_decrement (float, optional): Factor by which to reduce the time step on failure.</span>
+<span class="sd">        **kwargs: Additional keyword arguments for the operator&#39;s integrate method.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        tuple[dict, dict, dict]: A tuple containing:</span>
+<span class="sd">            - errors: Dictionary of errors for each time step.</span>
+<span class="sd">            - mean_differences: Mean differences between frames for each time step.</span>
+<span class="sd">            - std_differences: Standard deviations of differences for each time step.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+
+    <span class="n">current_dt</span> <span class="o">=</span> <span class="n">max_sim_dt</span>
+    <span class="n">recorder</span><span class="o">=</span><span class="n">_DtTestRecorder</span><span class="p">()</span>
+    <span class="n">current_frame</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">previous_frame</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">errors</span><span class="o">=</span><span class="p">{}</span>
+    <span class="n">mean_differences</span><span class="o">=</span><span class="p">{}</span>
+    <span class="n">std_differences</span><span class="o">=</span><span class="p">{}</span>
+    <span class="k">while</span> <span class="n">current_dt</span> <span class="o">&gt;</span> <span class="n">min_sim_dt</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Testing with dt=</span><span class="si">{</span><span class="n">current_dt</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">operator</span><span class="o">.</span><span class="n">integrate</span><span class="p">(</span>
+                <span class="n">u_0</span><span class="o">=</span> <span class="n">u_0</span><span class="p">,</span>
+                <span class="n">trajectory_recorder</span><span class="o">=</span><span class="n">recorder</span><span class="p">,</span>
+                <span class="n">mesh</span><span class="o">=</span><span class="n">mesh</span><span class="p">,</span>
+                <span class="n">dt</span><span class="o">=</span><span class="n">current_dt</span><span class="p">,</span>
+                <span class="n">step</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">max_sim_dt</span> <span class="o">//</span> <span class="n">current_dt</span> <span class="o">*</span> <span class="n">initial_step</span><span class="p">),</span>
+                <span class="n">nan_check</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="n">progressive</span><span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+                <span class="o">**</span><span class="n">kwargs</span>
+            <span class="p">)</span>
+        <span class="k">except</span> <span class="n">NanSimulationError</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Simulation failed with dt=</span><span class="si">{</span><span class="n">current_dt</span><span class="si">}</span><span class="s2">, reducing dt.&quot;</span><span class="p">)</span>
+            <span class="n">current_dt</span> <span class="o">*=</span> <span class="n">dt_decrement</span>
+            <span class="n">recorder</span><span class="o">.</span><span class="n">teardown</span><span class="p">()</span>
+            <span class="k">continue</span>
+        <span class="n">mean_dif</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">recorder</span><span class="o">.</span><span class="n">differences</span><span class="p">)</span>
+        <span class="n">std_dif</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">recorder</span><span class="o">.</span><span class="n">differences</span><span class="p">)</span>
+        <span class="n">mean_differences</span><span class="p">[</span><span class="n">current_dt</span><span class="p">]</span> <span class="o">=</span> <span class="n">mean_dif</span>
+        <span class="n">std_differences</span><span class="p">[</span><span class="n">current_dt</span><span class="p">]</span> <span class="o">=</span> <span class="n">std_dif</span>
+        <span class="n">current_frame</span> <span class="o">=</span> <span class="n">recorder</span><span class="o">.</span><span class="n">trajectory</span>
+        <span class="n">current_error</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">previous_frame</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">current_error</span> <span class="o">=</span> <span class="p">(</span><span class="n">current_frame</span> <span class="o">-</span> <span class="n">previous_frame</span><span class="p">)</span><span class="o">.</span><span class="n">abs</span><span class="p">()</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+            <span class="n">errors</span><span class="p">[</span><span class="n">current_dt</span><span class="p">]</span> <span class="o">=</span> <span class="n">current_error</span>
+            <span class="k">if</span> <span class="n">stop_criteria</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">current_error</span> <span class="o">&lt;</span> <span class="n">stop_criteria</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Simulation converged with dt=</span><span class="si">{</span><span class="n">current_dt</span><span class="si">}</span><span class="s2">, error=</span><span class="si">{</span><span class="n">current_error</span><span class="si">:</span><span class="s2">.3e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="k">break</span>
+        <span class="n">previous_frame</span> <span class="o">=</span> <span class="n">current_frame</span>
+        <span class="n">current_dt</span> <span class="o">/=</span> <span class="mi">2</span>
+        <span class="n">recorder</span><span class="o">.</span><span class="n">teardown</span><span class="p">()</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">current_error</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;Error of the last frame: </span><span class="si">{</span><span class="n">current_error</span><span class="si">:</span><span class="s2">.3e</span><span class="si">}</span><span class="s2">; &quot;</span>
+        <span class="n">msg</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;Difference between frames: </span><span class="si">{</span><span class="n">mean_dif</span><span class="si">:</span><span class="s2">.3e</span><span class="si">}</span><span class="s2">±</span><span class="si">{</span><span class="n">std_dif</span><span class="si">:</span><span class="s2">.3e</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Reach minimum dt:&quot;</span><span class="p">,</span> <span class="n">current_dt</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">errors</span><span class="p">,</span> <span class="n">mean_differences</span><span class="p">,</span> <span class="n">std_differences</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div><hr />
+
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="torchfsm.utils.collect_energy_spectrum" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">torchfsm.utils.collect_energy_spectrum</span>
+
+
+<a href="#torchfsm.utils.collect_energy_spectrum" class="headerlink" title="Permanent link">¤</a></h4>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">collect_energy_spectrum</span><span class="p">(</span>
+    <span class="n">u</span><span class="p">:</span> <span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;1 C H ...&quot;</span><span class="p">],</span>
+    <span class="n">mesh</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span>
+        <span class="n">Union</span><span class="p">[</span>
+            <span class="n">Sequence</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">]],</span>
+            <span class="n">MeshGrid</span><span class="p">,</span>
+            <span class="n">FourierMesh</span><span class="p">,</span>
+        <span class="p">]</span>
+    <span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">progressive</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">exact</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">n_bins</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents first">
+
+        <p>Collect the energy spectrum from a spatial tensor with batch size 1.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>u</code>
+            </td>
+            <td>
+                  <code><span title="torchfsm._type.SpatialTensor">SpatialTensor</span>[&#39;1 C H ...&#39;]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The input spatial tensor with batch size 1.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>mesh</code>
+            </td>
+            <td>
+                  <code><span title="typing.Optional">Optional</span>[<span title="typing.Union">Union</span>[<span title="typing.Sequence">Sequence</span>[<span title="tuple">tuple</span>[<span title="float">float</span>, <span title="float">float</span>, <span title="int">int</span>]], <a class="autorefs autorefs-internal" title="            torchfsm.mesh.MeshGrid" href="../mesh/#torchfsm.mesh.MeshGrid">MeshGrid</a>, <a class="autorefs autorefs-internal" title="            torchfsm.mesh.FourierMesh" href="../mesh/#torchfsm.mesh.FourierMesh">FourierMesh</a>]]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The mesh grid or Fourier mesh to use for FFT. If None, a default mesh is created based on the shape of u. Default is None.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>progressive</code>
+            </td>
+            <td>
+                  <code><span title="bool">bool</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Whether to show a progress bar during computation.  Default is False.</p>
+              </div>
+            </td>
+            <td>
+                  <code>False</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>exact</code>
+            </td>
+            <td>
+                  <code><span title="bool">bool</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Whether to compute the exact energy spectrum without binning. Default is False.</p>
+              </div>
+            </td>
+            <td>
+                  <code>False</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>n_bins</code>
+            </td>
+            <td>
+                  <code><span title="typing.Optional">Optional</span>[<span title="int">int</span>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Number of bins to smooth the spectrum if exact is False. If None, it defaults to min(50, u.shape[-1] // 2). Default is None.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Tuple[List[float], List[float]]: Two lists containing the wave numbers and their corresponding energy spectrum values.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+            <details class="quote">
+              <summary>Source code in <code>torchfsm/utils/spectrum.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span>
+<span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span>
+<span class="normal">58</span>
+<span class="normal">59</span>
+<span class="normal">60</span>
+<span class="normal">61</span>
+<span class="normal">62</span>
+<span class="normal">63</span>
+<span class="normal">64</span>
+<span class="normal">65</span>
+<span class="normal">66</span>
+<span class="normal">67</span>
+<span class="normal">68</span>
+<span class="normal">69</span>
+<span class="normal">70</span>
+<span class="normal">71</span>
+<span class="normal">72</span>
+<span class="normal">73</span>
+<span class="normal">74</span>
+<span class="normal">75</span>
+<span class="normal">76</span>
+<span class="normal">77</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">collect_energy_spectrum</span><span class="p">(</span>
+    <span class="n">u</span><span class="p">:</span> <span class="n">SpatialTensor</span><span class="p">[</span><span class="s2">&quot;1 C H ...&quot;</span><span class="p">],</span>
+    <span class="n">mesh</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span>
+        <span class="n">Union</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">]],</span> <span class="n">MeshGrid</span><span class="p">,</span> <span class="n">FourierMesh</span><span class="p">]</span>
+    <span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">progressive</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">exact</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">n_bins</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Collect the energy spectrum from a spatial tensor with batch size 1.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        u (SpatialTensor[&quot;1 C H ...&quot;]): The input spatial tensor with batch size 1.</span>
+<span class="sd">        mesh (Optional[Union[Sequence[tuple[float, float, int]], MeshGrid, FourierMesh]]): The mesh grid or Fourier mesh to use for FFT. If None, a default mesh is created based on the shape of u. Default is None.</span>
+<span class="sd">        progressive (bool): Whether to show a progress bar during computation.  Default is False.</span>
+<span class="sd">        exact (bool): Whether to compute the exact energy spectrum without binning. Default is False.</span>
+<span class="sd">        n_bins (Optional[int]): Number of bins to smooth the spectrum if exact is False. If None, it defaults to min(50, u.shape[-1] // 2). Default is None.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Tuple[List[float], List[float]]: Two lists containing the wave numbers and their corresponding energy spectrum values.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">u</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Batch size of u must be 1 for collecting energy spectrum.&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">mesh</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">mesh</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">size_i</span><span class="p">)</span> <span class="k">for</span> <span class="n">size_i</span> <span class="ow">in</span> <span class="n">u</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">:]]</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">mesh</span><span class="p">,</span> <span class="n">FourierMesh</span><span class="p">):</span>
+        <span class="n">f_mesh</span> <span class="o">=</span> <span class="n">FourierMesh</span><span class="p">(</span><span class="n">mesh</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">u</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">f_mesh</span> <span class="o">=</span> <span class="n">mesh</span>
+    <span class="n">u_fft</span> <span class="o">=</span> <span class="n">f_mesh</span><span class="o">.</span><span class="n">fft</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>
+    <span class="n">k_vec_norm</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">f_mesh</span><span class="o">.</span><span class="n">bf_vector</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdim</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">energy_fft</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="mf">0.5</span>
+        <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">u_fft</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdim</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="o">*</span> <span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">k_vec_norm</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">exact</span><span class="p">:</span>
+        <span class="n">k_max</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">k_vec_norm</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">n_bins</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">n_bins</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="n">u</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">//</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="n">k_bins</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">k_max</span><span class="p">,</span> <span class="n">n_bins</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">k_centers</span> <span class="o">=</span> <span class="p">(</span><span class="n">k_bins</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">+</span> <span class="n">k_bins</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="o">/</span> <span class="mi">2</span>
+        <span class="n">radial</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">k_centers</span><span class="p">),</span> <span class="n">device</span><span class="o">=</span><span class="n">k_vec_norm</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">k_centers</span><span class="p">)):</span>
+            <span class="n">mask</span> <span class="o">=</span> <span class="p">(</span><span class="n">k_vec_norm</span> <span class="o">&gt;=</span> <span class="n">k_bins</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">k_vec_norm</span> <span class="o">&lt;</span> <span class="n">k_bins</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">mask</span><span class="p">):</span>
+                <span class="n">radial</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">energy_fft</span><span class="p">[</span><span class="n">mask</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">k_centers</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span> <span class="n">radial</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">re</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">progressive</span><span class="p">:</span>
+            <span class="n">iterator</span> <span class="o">=</span> <span class="n">tqdm</span><span class="p">(</span>
+                <span class="nb">zip</span><span class="p">(</span><span class="n">k_vec_norm</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="n">energy_fft</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)),</span> <span class="n">total</span><span class="o">=</span><span class="n">k_vec_norm</span><span class="o">.</span><span class="n">numel</span><span class="p">()</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">iterator</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="n">k_vec_norm</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="n">energy_fft</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">iterator</span><span class="p">:</span>
+            <span class="n">re</span><span class="p">[</span><span class="n">k</span><span class="o">.</span><span class="n">item</span><span class="p">()]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">item</span><span class="p">())</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">re</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">k</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">re</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>  <span class="c1"># Avoid division by zero for k=0</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">re</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+        <span class="n">sorted_k</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+        <span class="n">sorted_e</span> <span class="o">=</span> <span class="p">[</span><span class="n">re</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">sorted_k</span><span class="p">]</span>
+        <span class="n">sorted_k</span> <span class="o">=</span> <span class="n">sorted_k</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+        <span class="n">sorted_e</span> <span class="o">=</span> <span class="n">sorted_e</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+    <span class="k">return</span> <span class="n">sorted_k</span><span class="p">,</span> <span class="n">sorted_e</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
 
 
 
