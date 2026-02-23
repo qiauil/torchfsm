@@ -35,7 +35,7 @@ theme:
         - search.suggest              # Display likeliest completion for the last queried word
     palette:
         - scheme: default
-          primary: deep purple
+          primary: indigo
           accent: amber
           toggle:
              icon: material/weather-night

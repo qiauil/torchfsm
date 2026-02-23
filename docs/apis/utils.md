@@ -1,24 +1,23 @@
-::: torchfsm.tool.utils.default
+::: torchfsm.utils.clean_up_memory
 ---
-::: torchfsm.tool.utils.format_device_dtype
+::: torchfsm.utils.print_gpu_memory
 ---
-::: torchfsm.utils.traj_manipulate.statistics_traj
+::: torchfsm.utils.statistics_traj
 ---
 ::: torchfsm.utils.randomly_clip_traj
 ---
-::: torchfsm.utils.traj_manipulate.randomly_select_frames
+::: torchfsm.utils.randomly_select_frames
 ---
-::: torchfsm.utils.traj_manipulate.uniformly_select_frames
+::: torchfsm.utils.uniformly_select_frames
 ---
-::: torchfsm.utils.slice.traj_slices
+::: torchfsm.utils.default
 ---
-::: torchfsm.utils.slice.field_slices
+::: torchfsm.utils.format_device_dtype
 ---
-::: torchfsm.utils.memory.clean_up_memory
+::: torchfsm.utils.traj_slices
 ---
-::: torchfsm.utils.memory.print_gpu_memory
+::: torchfsm.utils.field_slices
 ---
-::: torchfsm.utils.spectrum.collect_energy_spectrum
+::: torchfsm.utils.test_sim_dt
 ---
-::: torchfsm.utils.test.test_sim_dt
----
+::: torchfsm.utils.collect_energy_spectrum

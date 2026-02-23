@@ -47,7 +47,7 @@ traj=burgers.integrate(u_0=u_0,mesh=mesh,
     dt=0.01,step=200,
     trajectory_recorder=AutoRecorder(),
 )
-plot_traj(traj,animation=False,cmap="managua")
+plot_traj(traj,animation=False)
 ```
 ![Burgers 1D](../../assets/pics/readme/burgers_1d.png)
 
@@ -64,7 +64,7 @@ traj=burgers.integrate(u_0=u_0,mesh=mesh,
     trajectory_recorder=AutoRecorder(),
 )
 
-plot_traj(traj,animation=False,cmap="managua")
+plot_traj(traj,animation=False)
 ```
 ![Burgers 1D](../../assets/pics/readme/burgers_2d.png)
 ## Feature
