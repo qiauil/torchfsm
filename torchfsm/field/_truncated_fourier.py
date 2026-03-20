@@ -72,8 +72,7 @@ def truncated_fourier_series_custom_filter(
     fourier_noise = mesh.fft(fourier_noise)
     fourier_noise = fourier_noise * low_pass_filter
     fourier_noise = mesh.ifft(fourier_noise).real
-    if normalize_mode is not None:
-        fourier_noise = normalize(fourier_noise, normalize_mode=normalize_mode)
+    fourier_noise = normalize(fourier_noise, normalize_mode=normalize_mode)
     return fourier_noise
 
 

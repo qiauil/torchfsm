@@ -5,17 +5,17 @@ from typing import Union, Literal, Optional, Tuple
 
 def normalize(
     u: SpatialTensor["B C H ..."],
-    normalize_mode: Union[
+    normalize_mode: Optional[Union[
         Literal["normal_distribution", "-1_1", "0_1"],
         Tuple[Union[float, Tuple[float, float]], Union[float, Tuple[float, float]]],
-    ],
+    ]]=None,
 ) -> SpatialTensor["B C H ..."]:
     """
     Normalize a spatial tensor according to the specified normalization mode.
 
     Args:
         u (SpatialTensor["B C H ..."]): The input spatial tensor to be normalized. Note that the normalization is performed independently for each batch.
-        normalize_mode (Union[Literal["normal_distribution","-1_1","0_1"],
+        normalize_mode (Optional[Union[Literal["normal_distribution","-1_1","0_1"],
                               Tuple[Union[float, Tuple[float, float]],Union[float, Tuple[float, float]]]]):
             The normalization mode to apply. It can be one of the following:
             - "normal_distribution": Normalize to have zero mean and unit standard deviation.
@@ -24,10 +24,12 @@ def normalize(
             - "min_max": Normalize to the specified min and max values.
             - (mins, maxs): A tuple specifying the min and max values for normalization.
               mins and maxs can be either floats or tuples of floats specifying ranges.
+            - None: No normalization is applied.
     Returns:
         SpatialTensor["B C H ..."]: The normalized spatial tensor.
     """
-
+    if normalize_mode is None:
+        return u
     if normalize_mode not in ["normal_distribution", "-1_1", "0_1"]:
         if isinstance(normalize_mode, str):
             raise ValueError(

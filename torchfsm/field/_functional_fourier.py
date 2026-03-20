@@ -48,6 +48,5 @@ def functional_fourier_series(
     if phi.shape != mag.shape:
         raise ValueError(f"phi shape {phi.shape} does not match mag shape {mag.shape}")
     fourier_noise = mesh.ifft(mag * torch.exp(1j * phi)).real
-    if normalize_mode is not None:
-        fourier_noise = normalize(fourier_noise, normalize_mode=normalize_mode)
+    fourier_noise = normalize(fourier_noise, normalize_mode=normalize_mode)
     return fourier_noise

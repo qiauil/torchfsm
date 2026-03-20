@@ -55,8 +55,7 @@ def diffused_noise(
     u_0 = diffusion.integrate(u_0, dt=1, step=1, mesh=mesh)
     del diffusion
     clean_up_memory()
-    if normalize_mode is not None:
-        u_0 = normalize(u_0, normalize_mode=normalize_mode)
+    u_0 = normalize(u_0, normalize_mode=normalize_mode)
     return u_0
 
 

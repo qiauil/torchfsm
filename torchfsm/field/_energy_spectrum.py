@@ -73,8 +73,7 @@ def functional_energy_spectrum(
     u_0 = f_mesh.ifft(spectral_magnitude).real.view(
         batch_size, n_channel, *k_vec.shape[2:]
     )
-    if normalize_mode is not None:
-        u_0 = normalize(u_0, normalize_mode=normalize_mode)
+    u_0 = normalize(u_0, normalize_mode=normalize_mode)
     return u_0
 
 def random_power_law_energy_spectrum(
