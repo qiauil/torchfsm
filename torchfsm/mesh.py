@@ -527,8 +527,8 @@ class FourierMesh:
         """
         Move the mesh to a different device and dtype.
         """
-        """
         self.__init__(self.mesh_info, device=device, dtype=dtype)
+        """
         self.grad.cache_clear()
         self.laplacian.cache_clear()
         self.invert_laplacian.cache_clear()
