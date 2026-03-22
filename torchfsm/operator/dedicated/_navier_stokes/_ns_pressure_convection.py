@@ -9,6 +9,7 @@ from typing import Optional
 from ...._type import FourierTensor, SpatialTensor
 from ...generic._convection import _ConvectionCore
 from ...._type import FourierTensor, SpatialTensor
+from ..._base import ExplicitSource
 
 # Velocity Convection
 class _NSPressureConvectionCore(NonlinearFunc):
@@ -21,6 +22,16 @@ class _NSPressureConvectionCore(NonlinearFunc):
         self.external_force = external_force
         self._convection = _ConvectionCore()
 
+    def _get_force(self,u_fft, mesh):
+        if isinstance(self.external_force, ExplicitSource):
+            # If the external force is an explicit source, we directly get the force value.
+            # This provide better performance since directly calling the operator requires fft for the velocity field.
+            return self.external_force.operator_cores[0](u_fft=None,f_mesh=mesh)
+        else:
+            return self.external_force(
+                u_fft=u_fft, mesh=mesh, return_in_fourier=True
+            )
+
     def __call__(
         self,
         u_fft: FourierTensor["B C H ..."],
@@ -28,8 +39,8 @@ class _NSPressureConvectionCore(NonlinearFunc):
         u: Optional[SpatialTensor["B C H ..."]] = None,
     ) -> torch.Tensor:
         if self.external_force is not None:  # u_fft is original version
-            force = self.external_force(
-                u_fft=u_fft, mesh=f_mesh, return_in_fourier=True
+            force = self._get_force(
+                u_fft=u_fft, mesh=f_mesh
             )
             u_fft *= f_mesh.low_pass_filter()
             u = f_mesh.ifft(u_fft).real
