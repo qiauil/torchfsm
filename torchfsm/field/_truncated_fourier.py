@@ -10,12 +10,17 @@ def _get_mesh_device_and_dtype(
     device: Optional[torch.device] = None,
     dtype: Optional[torch.dtype] = None,
 ) -> tuple[torch.device, torch.dtype]:
-    if device is None and (isinstance(mesh, FourierMesh) or isinstance(mesh, MeshGrid)):
-        device = mesh.device
-    if dtype is None and (isinstance(mesh, FourierMesh) or isinstance(mesh, MeshGrid)):
-        dtype = mesh.dtype
+    if isinstance(mesh, FourierMesh) or isinstance(mesh, MeshGrid):
+        if device is None:
+            device = mesh.device
+        if dtype is None:
+            dtype = mesh.dtype
+        assert device == mesh.device, f"Device mismatch: mesh is on {mesh.device} but got device={device}"
+        assert dtype == mesh.dtype, f"Dtype mismatch: mesh has dtype {mesh.dtype} but got dtype={dtype}"
     if not isinstance(mesh, FourierMesh):
         mesh = FourierMesh(mesh, device=device, dtype=dtype)
+    device=mesh.device
+    dtype=mesh.dtype
     return mesh, device, dtype
 
 
