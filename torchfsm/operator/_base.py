@@ -580,6 +580,26 @@ class OperatorLike(_MutableMixIn):
             len(value_shape) - 2, mesh.n_dim
         ), "Value and mesh do not match the requirement"
         return mesh, n_channel
+    
+    def _is_registered_mesh(self,new_mesh:Union[Sequence[tuple[float, float, int]], MeshGrid, FourierMesh]):
+        if self._state_dict["f_mesh"] is None:
+            return False
+        else:
+            ori_mesh_info = self._state_dict["f_mesh"].mesh_info
+            if not isinstance(new_mesh, FourierMesh) and not isinstance(new_mesh, MeshGrid):
+                new_mesh_info = new_mesh
+            else:
+                new_mesh_info = new_mesh.mesh_info
+            if len(ori_mesh_info) != len(new_mesh_info):
+                return False
+            for ori_dim, new_dim in zip(ori_mesh_info, new_mesh_info):
+                if ori_dim[0] != new_dim[0]:
+                    return False
+                if ori_dim[1] != new_dim[1]:
+                    return False
+                if ori_dim[2] != new_dim[2]:
+                    return False
+            return True
 
     def register_mesh(
         self,
@@ -816,8 +836,9 @@ class OperatorLike(_MutableMixIn):
         Returns:
             Union[SpatialTensor["B C H ..."], FourierTensor["B C H ..."]]: Result of the operator in spatial or Fourier domain.
         """
-
-        if self._state_dict["f_mesh"] is None or mesh is not None:
+        if self._state_dict["f_mesh"] is None and mesh is None:
+            raise ValueError("Mesh should be given when calling the operator for the first time or specified through `register_mesh` function.")
+        if mesh is not None and not self._is_registered_mesh(mesh):
             mesh, n_channel = self._pre_check(u, u_fft, mesh)
             self.register_mesh(mesh, n_channel)
         else:
