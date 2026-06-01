@@ -77,7 +77,7 @@ markdown_extensions:
 
 extra_javascript:
     - https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS_CHTML
-    - https://polyfill.io/v3/polyfill.min.js?features=es6
+    #- https://polyfill.io/v3/polyfill.min.js?features=es6
     #- https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
     #- https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS_CHTML-full,Safe
 
