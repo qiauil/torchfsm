@@ -11,7 +11,7 @@ We would like to thank Felix Koehler (https://github.com/Ceyron) for his contrib
 
 import torch
 from enum import Enum
-from typing import Callable, Union
+from typing import Callable, Optional, Union
 from ._cached import CachedSETDRK1, CachedSETDRK2, CachedSETDRK3, CachedSETDRK4
 from ._uncached import (
     UnCachedSETDRK1,
@@ -21,75 +21,83 @@ from ._uncached import (
 )
 
 class SETDRK1Wrapper:
-    
+
     def __call__(self,
                  dt: float,
                 linear_coef: torch.Tensor,
                 nonlinear_func: Callable[[torch.Tensor], torch.Tensor],
                 n_integration_points: int = 16,
                 integration_radius: float = 1.0,
-                cpu_cached: bool = False,):
+                cpu_cached: bool = False,
+                integration_chunk_size: Optional[int] = 1,):
         if cpu_cached:
             return CachedSETDRK1(
                 dt, linear_coef, nonlinear_func, n_integration_points, integration_radius
             )
         else:
             return UnCachedSETDRK1(
-                dt, linear_coef, nonlinear_func, n_integration_points, integration_radius
+                dt, linear_coef, nonlinear_func, n_integration_points, integration_radius,
+                integration_chunk_size,
             )
 
 class SETDRK2Wrapper:
-    
+
     def __call__(self,
                  dt: float,
                 linear_coef: torch.Tensor,
                 nonlinear_func: Callable[[torch.Tensor], torch.Tensor],
                 n_integration_points: int = 16,
                 integration_radius: float = 1.0,
-                cpu_cached: bool = False,):
+                cpu_cached: bool = False,
+                integration_chunk_size: Optional[int] = 1,):
         if cpu_cached:
             return CachedSETDRK2(
                 dt, linear_coef, nonlinear_func, n_integration_points, integration_radius
             )
         else:
             return UnCachedSETDRK2(
-                dt, linear_coef, nonlinear_func, n_integration_points, integration_radius
+                dt, linear_coef, nonlinear_func, n_integration_points, integration_radius,
+                integration_chunk_size,
             )
 
 class SETDRK3Wrapper:
-    
+
     def __call__(self,
                  dt: float,
                 linear_coef: torch.Tensor,
                 nonlinear_func: Callable[[torch.Tensor], torch.Tensor],
                 n_integration_points: int = 16,
                 integration_radius: float = 1.0,
-                cpu_cached: bool = False,):
+                cpu_cached: bool = False,
+                integration_chunk_size: Optional[int] = 1,):
         if cpu_cached:
             return CachedSETDRK3(
                 dt, linear_coef, nonlinear_func, n_integration_points, integration_radius
             )
         else:
             return UnCachedSETDRK3(
-                dt, linear_coef, nonlinear_func, n_integration_points, integration_radius
+                dt, linear_coef, nonlinear_func, n_integration_points, integration_radius,
+                integration_chunk_size,
             )
 
 class SETDRK4Wrapper:
-    
+
     def __call__(self,
                  dt: float,
                 linear_coef: torch.Tensor,
                 nonlinear_func: Callable[[torch.Tensor], torch.Tensor],
                 n_integration_points: int = 16,
                 integration_radius: float = 1.0,
-                cpu_cached: bool = False,):
+                cpu_cached: bool = False,
+                integration_chunk_size: Optional[int] = 1,):
         if cpu_cached:
             return CachedSETDRK4(
                 dt, linear_coef, nonlinear_func, n_integration_points, integration_radius
             )
         else:
             return UnCachedSETDRK4(
-                dt, linear_coef, nonlinear_func, n_integration_points, integration_radius
+                dt, linear_coef, nonlinear_func, n_integration_points, integration_radius,
+                integration_chunk_size,
             )
 
 

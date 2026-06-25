@@ -1,12 +1,20 @@
 import torch
+import warnings
 from abc import ABC, abstractmethod
 from typing import Callable
-from enum import Enum
 from ._uncached import roots_of_unity
 from ._setdrk_step import setdrk1_step, setdrk2_step, setdrk3_step, setdrk4_step
 
 
 class _CachedSETDRKBase(ABC):
+    """
+    .. deprecated::
+        The CPU-cached SETDRK integrators are deprecated. The uncached
+        integrators now bound their peak GPU memory via ``integration_chunk_size``
+        (see :mod:`._uncached`), which avoids the OOM these classes worked around
+        without the CPU round-trip and its slowdown. Use the uncached variants
+        (``cpu_cached=False``, the default) instead.
+    """
 
     def __init__(
         self,
@@ -16,6 +24,15 @@ class _CachedSETDRKBase(ABC):
         n_integration_points: int = 16,
         integration_radius: float = 1.0,
     ):
+        warnings.warn(
+            "The CPU-cached SETDRK integrators (`cpu_cached=True`) are deprecated "
+            "and will be removed in a future release. The uncached integrators now "
+            "bound peak GPU memory via `integration_chunk_size`, which avoids the "
+            "OOM without the CPU round-trip. Use `cpu_cached=False` (the default) "
+            "and lower `integration_chunk_size` if you need less peak memory.",
+            DeprecationWarning,
+            stacklevel=2,
+        )
         self.dt = dt
         self._nonlinear_func = nonlinear_func
         self._exp_term = torch.exp(self.dt * linear_coef)

@@ -515,10 +515,10 @@ class OperatorLike(_MutableMixIn):
                     "Since you are using SETDRKIntegrator, there are some options to reduce the memory usage:"
                 )
                 error_msg.append(
-                    "1. set the `cpu_cached` to True when call `Operator.set_integrator(). This will slow down the integrator building speed but not effect the integration speed. However, it will increase the CPU memory usage when building the solver."
+                    "1. if you raised `integration_chunk_size` above its default of 1 when call `Operator.set_integrator()`, lower it again when call `Operator.set_integrator()`. Smaller values bound the GPU memory used while building the coefficients (at the cost of a slightly slower one-time build); 1 is the most memory-efficient setting."
                 )
                 error_msg.append(
-                    "2. set the `n_integration_points` to a smaller number when call `Operator.set_integrator(). This will effect the stability of the integrator."
+                    "2. if you do need to set `integration_chunk_size` above 1 set the `n_integration_points` to a smaller number when call `Operator.set_integrator()`. This will effect the stability of the integrator."
                 )
                 error_msg.append(
                     "3. Use other integrators, such as ETDRKIntegrator or RKIntegrator or low-order SETDRK. They are more memory efficient but may not be as accurate as SETDRKIntegrator."
