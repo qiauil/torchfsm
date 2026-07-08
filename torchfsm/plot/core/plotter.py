@@ -748,6 +748,7 @@ class ChannelWisedPlotter:
         save_name: Optional[str] = None,
         show_plot: bool = True,
         show_3d_coordinates: bool = True,
+        show_colorbar: bool = True,
         **kwargs,
     ) -> Optional[FuncAnimation]:
         """
@@ -792,6 +793,7 @@ class ChannelWisedPlotter:
             save_name (Optional[str], optional): The name of the file to save the plot. Defaults to None.
             show_plot (bool, optional): Whether to show the plot. Defaults to True.
             show_3d_coordinates (bool, optional): Whether to show 3D coordinates for 3D plots. Defaults to True.
+            show_colorbar (bool, optional): Whether to show the colorbar. Defaults to True.
             **kwargs: Additional keyword arguments to pass to the plotting functions.
         Returns:
             Optional[FuncAnimation]: If `animation` is True and not show_in_notebook, returns a `FuncAnimation` object.
@@ -832,6 +834,8 @@ class ChannelWisedPlotter:
             warn("Ticks are not supported for 3D trajectories.")
         if not animation:
             show_time_index = False
+        if not show_colorbar:
+            cbar_mode = None
         space_x, space_y, cbar_pad = self.setup_pad_size(space_x, space_y, cbar_pad)
         total_width, total_height, c_bar_size = self.plot_size(
             subfig_size,
@@ -888,7 +892,7 @@ class ChannelWisedPlotter:
             ctick_format=ctick_format,
             num_colorbar_value=num_colorbar_value,
             c_bar_labels=c_bar_labels,
-        )
+        ) if show_colorbar else lambda: None
         title_t = partial(
             self.title_t,
             title=title,

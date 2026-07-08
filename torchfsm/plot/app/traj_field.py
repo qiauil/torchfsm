@@ -51,6 +51,7 @@ def plot_traj(
     animation_engine: Literal["jshtml", "html5"] = "html5",
     save_name: Optional[str] = None,
     show_3d_coordinates: bool = True,
+    show_colorbar: bool = True,
     **kwargs,
 ) -> Optional[FuncAnimation]:
     """
@@ -92,6 +93,7 @@ def plot_traj(
         animation_engine (Literal["jshtml", "html5"], optional): The engine to use for the animation. Defaults to "html5".
         save_name (Optional[str], optional): The name of the file to save the plot. Defaults to None.
         show_3d_coordinates (bool, optional): Whether to show 3D coordinate axes when plotting 3D data. Defaults to True.
+        show_colorbar (bool, optional): Whether to show the colorbar. Defaults to True.
         **kwargs: Additional keyword arguments for the plot.
 
     Returns:
@@ -131,6 +133,7 @@ def plot_traj(
         width_correction=width_correction,
         height_correction=height_correction,
         show_3d_coordinates=show_3d_coordinates,
+        show_colorbar=show_colorbar,
         **kwargs,
     )
 
@@ -172,6 +175,7 @@ def plot_field(
     show_ticks: Union[Literal["auto"], bool] = "auto",
     save_name: Optional[str] = None,
     show_3d_coordinates: bool = True,
+    show_colorbar: bool = True,
     **kwargs,
 ):
     """
@@ -207,6 +211,8 @@ def plot_field(
         show_ticks (Union[Literal["auto"], bool], optional): Whether to show ticks. Defaults to "auto".
         save_name (Optional[str], optional): The name of the file to save the plot. Defaults to None.
         show_3d_coordinates (bool, optional): Whether to show 3D coordinate axes when plotting 3D data. Defaults to True.
+        show_colorbar (bool, optional): Whether to show the colorbar. Defaults to True.
+    
     """
 
     if isinstance(field, torch.Tensor):
@@ -242,5 +248,6 @@ def plot_field(
         label_y=label_y,
         label_t=label_t,
         show_3d_coordinates=show_3d_coordinates,
+        show_colorbar=show_colorbar,
         **kwargs,
     )

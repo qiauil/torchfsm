@@ -71,6 +71,7 @@ def compare_error_traj_frame(
     save_name: Optional[str] = None,
     frame_start_index: int = 0,
     show_3d_coordinates: bool = True,
+    show_colorbar: bool = True,
     **kwargs,
 ):
     """
@@ -138,6 +139,8 @@ def compare_error_traj_frame(
             If not provided, the plot will not be saved.
         frame_start_index (int, optional): The starting index for the frames to be compared. Defaults to 0.
         show_3d_coordinates (bool, optional): Whether to show 3D coordinates for 3D plots. Defaults to True.
+        show_colorbar (bool, optional): Whether to show the colorbar. Defaults to True.
+        **kwargs: Additional keyword arguments for the plot.
     """
     (
         traj,
@@ -201,5 +204,6 @@ def compare_error_traj_frame(
         ctick_format=ctick_format,
         cbar_pad=cbar_pad,
         show_3d_coordinates=show_3d_coordinates,
+        show_colorbar=show_colorbar,
         **kwargs,
     )
