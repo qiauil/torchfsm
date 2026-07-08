@@ -159,6 +159,7 @@ def _plot_3D_field(
     arrow_length_ratio:float=0.25,
     arrow_linewidth:int=1,
     rasterized: bool = True,
+    **kwargs
 ):
     """
     Plot a 3D field.
