@@ -190,6 +190,7 @@ def _plot_3D_field(
     im = ax.imshow(img, aspect=aspect,rasterized=rasterized)
     ax.set_xticks([])
     ax.set_yticks([])
+    ax.set_axis_off()
     if bottom_label is not None:
         ax.set_xlabel(bottom_label)
     if left_label is not None:
