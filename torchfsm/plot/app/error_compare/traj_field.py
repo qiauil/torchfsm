@@ -169,6 +169,7 @@ def compare_error_traj(
     animation_engine: Literal["jshtml", "html5"] = "html5",
     save_name: Optional[str] = None,
     show_3d_coordinates: bool = True,
+    show_colorbar: bool = True,
     **kwargs,
 ) -> Optional[FuncAnimation]:
     """
@@ -245,6 +246,7 @@ def compare_error_traj(
             If provided, the plot will be saved to the specified file.
             If not provided, the plot will not be saved.
         show_3d_coordinates (bool, optional): Whether to show 3D coordinates for 3D plots. Defaults to True.
+        show_colorbar (bool, optional): Whether to show the colorbar. Defaults to True.
     """
     (
         traj,
@@ -313,6 +315,7 @@ def compare_error_traj(
         label_y=label_y,
         label_t=label_t,
         show_3d_coordinates=show_3d_coordinates,
+        show_colorbar=show_colorbar,
         **kwargs,
     )
 
@@ -386,8 +389,83 @@ def compare_error_field(
     animation_engine: Literal["jshtml", "html5"] = "html5",
     save_name: Optional[str] = None,
     show_3d_coordinates: bool = True,
+    show_colorbar: bool = True,
     **kwargs,
 ):
+    """
+    Compare two fields and plot the error between them.
+    
+    Args:
+        field_1 (Union[SpatialTensor["1 C H ..."], SpatialArray["1 C H ..."]]): The first field to compare.
+        field_2 (Union[SpatialTensor["1 C H ..."], SpatialArray["1 C H ..."]]): The second field to compare.
+        error_func (Optional[Callable[[Union[SpatialTensor["1 C H ..."], SpatialArray["1 C H ..."]], Union[SpatialTensor["1 C H ..."], SpatialArray["1 C H ..."]]], Union[SpatialTensor["1 C H ..."], SpatialArray["1 C H ..."]]]], optional): The function to compute the error between the two fields.
+            If None, it will use the absolute difference.
+        name_field_1 (str, optional): The name of the first field. Defaults to "field 1".
+        name_field_2 (str, optional): The name of the second field. Defaults to "field 2".
+        error_name (str, optional): The name for the error field. Defaults to "error".
+        channel_names (Optional[Sequence[str]], optional): The names of the channels. Defaults to None.
+            If None, it will use default channel names like "channel 0", "channel 1", etc.
+        title (Optional[str], optional): The title of the plot. Defaults to None.
+        vmin_field (Optional[Union[float, Sequence[float]]], optional): The minimum value for the color scale of the fields. Defaults to None.
+            If a sequence is provided, it should have the same length as the number of channels.
+        vmax_field (Optional[Union[float, Sequence[float]]], optional): The maximum value for the color scale of the fields. Defaults to None.
+            If a sequence is provided, it should have the same length as the number of channels.
+        vmin_error (Optional[Union[float, Sequence[float]]], optional): The minimum value for the color scale of the error. Defaults to None.
+            If a sequence is provided, it should have the same length as the number of channels.
+        vmax_error (Optional[Union[float, Sequence[float]], optional): The maximum value for the color scale of the error. Defaults to None.
+            If a sequence is provided, it should have the same length as the number of channels.
+        cmap_field (Union[str, Colormap], optional): The colormap to use for the fields. Defaults to "twilight".
+        cmap_error (Union[str, Colormap], optional): The colormap to use for the error. Defaults to "Reds".
+        use_sym_colormap_field (bool, optional): Whether to use a symmetric colormap for the fields. Defaults to False.
+        use_sym_colormap_error (bool, optional): Whether to use a symmetric colormap for the error. Defaults to False.
+        alpha_func_field (Union[Literal["zigzag","central_peak","central_valley","linear_increase","linear_decrease",],AlphaFunction,], optional): The alpha function for the colormap of the fields. Defaults to "zigzag".
+        alpha_func_error (Union[Literal["zigzag","central_peak","central_valley","linear_increase","linear_decrease",],AlphaFunction,], optional): The alpha function for the colormap of the error. Defaults to "linear_increase".
+        num_colorbar_value (int, optional): The number of values for the colorbar. Defaults to 4.
+        c_bar_labels_field (Optional[Sequence[str]], optional): The labels for the colorbar of the fields. Defaults to None.
+            If provided, it should have the same length as the number of channels.
+            If not provided, the colorbar will not have labels.
+        c_bar_labels_error (Optional[Sequence[str]], optional): The labels for the colorbar of the error. Defaults to None.
+            If provided, it should have the same length as the number of channels.
+            If not provided, the colorbar will not have labels.
+        cbar_pad (Optional[float], optional): The padding for the colorbar. Defaults to 0.1.
+        ctick_format (Optional[str], optional): The format for the colorbar ticks. Defaults to "%.1f".
+        subfig_size (float, optional): The size of the subfigures. Defaults to 2.5.
+        real_size_ratio (bool, optional): Whether to use the real size ratio for the subfigures. Defaults to False.
+        width_correction (float, optional): The correction factor for the width of the subfigures. Defaults to 1.0.
+        height_correction (float, optional): The correction factor for the height of the subfigures. Defaults to 1.0.
+        space_x (Optional[float], optional): The space between subfigures in the x direction. Defaults to 0.7.
+        space_y (Optional[float], optional): The space between subfigures in the y direction. Defaults to 0.1.
+        label_x (Optional[str], optional): The label for the x-axis. Defaults to "x".
+        label_y (Optional[str], optional): The label for the y-axis. Defaults to "y".
+        label_t (Optional[str], optional): The label for the time index. Defaults to "t".
+        ticks_t (Tuple[Sequence[float], Sequence[str]], optional): Custom ticks for the time index. Defaults to None.
+            If provided, it should be a tuple of two sequences:
+            - The first sequence contains the tick positions.
+            - The second sequence contains the tick labels.
+        ticks_x (Tuple[Sequence[float], Sequence[str]], optional): Custom ticks for the x-axis. Defaults to None.
+            If provided, it should be a tuple of two sequences:
+            - The first sequence contains the tick positions.
+            - The second sequence contains the tick labels.
+        ticks_y (Tuple[Sequence[float], Sequence[str]], optional): Custom ticks for the y-axis. Defaults to None.
+            If provided, it should be a tuple of two sequences:
+            - The first sequence contains the tick positions.
+            - The second sequence contains the tick labels.
+        show_ticks (Union[Literal["auto"], bool], optional): Whether to show ticks. Defaults to "auto".
+            If "auto", ticks will be shown if the number of channels is greater than 1.
+            If True, ticks will always be shown.
+            If False, ticks will never be shown.
+        animation (bool, optional): Whether to create an animation of the plot. Defaults to True.
+        fps (int, optional): The frames per second for the animation. Defaults to 30.
+        show_in_notebook (bool, optional): Whether to show the plot in a Jupyter notebook. Defaults to True.
+        animation_engine (Literal["jshtml", "html5"], optional): The engine to use for the animation. Defaults to "html5".
+            - "jshtml": Uses JavaScript HTML for rendering the animation.
+            - "html5": Uses HTML5 for rendering the animation.
+        save_name (Optional[str], optional): The name of the file to save the plot. Defaults to None.
+            If provided, the plot will be saved to the specified file.
+            If not provided, the plot will not be saved.
+        show_3d_coordinates (bool, optional): Whether to show 3D coordinates for 3D plots. Defaults to True.
+        show_colorbar (bool, optional): Whether to show the colorbar. Defaults to True.
+    """
     if error_func is not None:
 
         def real_error_func(x, y):
@@ -453,6 +531,7 @@ def compare_error_field(
         animation_engine=animation_engine,
         save_name=save_name,
         show_3d_coordinates=show_3d_coordinates,
+        show_colorbar=show_colorbar,
         **kwargs,
     )
 
