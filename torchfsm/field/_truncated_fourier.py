@@ -1,5 +1,6 @@
 from ..mesh import FourierMesh, MeshGrid, mesh_shape
 from .._type import SpatialTensor
+from .._utils import format_device_dtype
 from ._normalize import normalize
 import torch, random
 from typing import Union, Sequence, Optional, Literal, Tuple
@@ -15,6 +16,7 @@ def _get_mesh_device_and_dtype(
             device = mesh.device
         if dtype is None:
             dtype = mesh.dtype
+        device,dtype = format_device_dtype(device=device,dtype=dtype)
         assert device == mesh.device, f"Device mismatch: mesh is on {mesh.device} but got device={device}"
         assert dtype == mesh.dtype, f"Dtype mismatch: mesh has dtype {mesh.dtype} but got dtype={dtype}"
     if not isinstance(mesh, FourierMesh):
