@@ -612,6 +612,26 @@ class OperatorLike(_MutableMixIn):
                     return False
             return True
 
+    def _receiving_new_mesh(self, mesh, u_0, u_0_fft):
+        data_shape = u_0.shape if u_0 is not None else u_0_fft.shape
+        if mesh is not None:
+            if self._state_dict["f_mesh"] is None:
+                mesh, n_channel = self._pre_check(u=u_0, u_fft=u_0_fft, mesh=mesh)
+                self.register_mesh(mesh, n_channel)
+            elif (not self._is_registered_mesh(mesh)) or self._state_dict["n_channel"] != data_shape[1]:
+                mesh, n_channel = self._pre_check(u=u_0, u_fft=u_0_fft, mesh=mesh)
+                self.register_mesh(mesh, n_channel)
+        else:
+            if self._state_dict["f_mesh"] is None:
+                mesh = [(0, 1, data_shape[i + 2]) for i in range(len(data_shape) - 2)
+                ]
+                mesh, n_channel = self._pre_check(u=u_0, u_fft=u_0_fft, mesh=mesh)
+                self.register_mesh(mesh, n_channel)
+            else:
+                mesh ,n_channel = self._pre_check(u=u_0, u_fft=u_0_fft, mesh=self._state_dict["f_mesh"])
+                if n_channel != self._state_dict["n_channel"]:
+                    self.register_mesh(mesh, n_channel)
+
     def register_mesh(
         self,
         mesh: Union[Sequence[tuple[float, float, int]], MeshGrid, FourierMesh],
@@ -662,6 +682,13 @@ class OperatorLike(_MutableMixIn):
         clean_up_memory()
         self._build_linear_coefs(linear_coefs)
         self._build_nonlinear_funcs(nonlinear_funcs)
+
+    def clean_mesh(self):
+        r"""
+        Clean the registered mesh and number of channels. This will reset the operator state.
+        """
+        for key in self._state_dict:
+            self._state_dict[key] = None
 
     def register_additional_check(self, func: Callable[[int, int], bool]):
         r"""
@@ -769,7 +796,10 @@ class OperatorLike(_MutableMixIn):
             dt (float): Time step for the integrator. Default is 1.
             step (int): Number of time steps to integrate. Default is 1.
             mesh (Optional[Union[Sequence[tuple[float, float, int]], MeshGrid, FourierMesh]]): Mesh information or mesh object. Default is None.
-                If None, the mesh registered in the operator will be used. You can use `register_mesh` to register a mesh before integration. Please note that the mesh registration could be time-consuming, and repeating providing the mesh for each integration step is not recommended.
+                If None and no mesh is registered, a default mesh with the same dimensions as the input tensor will be registered.
+                If None and a mesh is already registered, will use the registered mesh. 
+                If a mesh is provided and it is different from the registered mesh, will register the new mesh.
+                You can use `register_mesh` to register a mesh before integration or `clean_mesh` to reset the operator state.
             progressive (bool): If True, show a progress bar during integration. Default is False.
             trajectory_recorder (Optional[_TrajRecorder]): Trajectory recorder for recording the trajectory during integration. Default is None.
                 If None, no trajectory will be recorded. The function will only return the final frame.
@@ -782,11 +812,11 @@ class OperatorLike(_MutableMixIn):
                 If return_in_fourier is True, the result will be in Fourier domain. Otherwise, it will be in spatial domain.
 
         """
-        if self._state_dict["f_mesh"] is None or mesh is not None:
-            mesh, n_channel = self._pre_check(u=u_0, u_fft=u_0_fft, mesh=mesh)
-            self.register_mesh(mesh, n_channel)
-        else:
-            self._pre_check(u=u_0, u_fft=u_0_fft, mesh=self._state_dict["f_mesh"])
+        if u_0 is None and u_0_fft is None:
+            raise ValueError("Either u_0 or u_0_fft should be given")
+        if u_0 is not None and u_0_fft is not None:
+            raise ValueError("Only one of u_0 or u_0_fft should be given")
+        self._receiving_new_mesh(mesh, u_0, u_0_fft)
         if self._state_dict["integrator"] is None:
             self._build_integrator(dt)
         elif self._is_etdrk_integrator:
@@ -831,6 +861,9 @@ class OperatorLike(_MutableMixIn):
         u_0: Optional[torch.Tensor] = None,
         u_0_fft: Optional[torch.Tensor] = None,
         dt: float = 1,
+        mesh: Optional[
+            Union[Sequence[tuple[float, float, int]], MeshGrid, FourierMesh]
+        ] = None,
         return_in_fourier: bool = False,
     ) -> Union[
         SpatialTensor["B C H ..."],
@@ -844,16 +877,22 @@ class OperatorLike(_MutableMixIn):
             u_0_fft (Optional[torch.Tensor]): Initial condition in Fourier domain. Default is None.
                 At least one of u_0 or u_0_fft should be provided.
             dt (float): Time step for the integrator. Default is 1.
+            mesh (Optional[Union[Sequence[tuple[float, float, int]], MeshGrid, FourierMesh]]): Mesh information or mesh object. Default is None.
+                If None and no mesh is registered, a default mesh with the same dimensions as the input tensor will be registered.
+                If None and a mesh is already registered, will use the registered mesh. 
+                If a mesh is provided and it is different from the registered mesh, will register the new mesh.
+                You can use `register_mesh` to register a mesh before integration or `clean_mesh` to reset the operator state.
             return_in_fourier (bool): If True, return the result in Fourier domain. If False, return the result in spatial domain. Default is False.
 
         Returns:
             Union[SpatialTensor["B C H ..."], FourierTensor["B C H ..."]]: Integrated result in spatial or Fourier domain.
 
         """
-        if self._state_dict["f_mesh"] is None:
-            raise ValueError(
-                "No mesh is registered in the operator. Please use `.register_mesh_function` to register a mesh before calling `integration_step`."
-            )
+        if u_0 is None and u_0_fft is None:
+            raise ValueError("Either u_0 or u_0_fft should be given")
+        if u_0 is not None and u_0_fft is not None:
+            raise ValueError("Only one of u_0 or u_0_fft should be given")
+        self._receiving_new_mesh(mesh, u_0, u_0_fft)
         if self._state_dict["integrator"] is None:
             self._build_integrator(dt)
         elif self._is_etdrk_integrator:
@@ -893,21 +932,20 @@ class OperatorLike(_MutableMixIn):
             u_fft (Optional[FourierTensor]): Input tensor in Fourier domain. Default is None.
                 At least one of u or u_fft should be provided.
             mesh (Optional[Union[Sequence[tuple[float, float, int]], MeshGrid, FourierMesh]]): Mesh information or mesh object. Default is None.
-                If None, the mesh registered in the operator will be used. You can use `register_mesh` to register a mesh before calling the operator.
+                If None and no mesh is registered, a default mesh with the same dimensions as the input tensor will be registered.
+                If None and a mesh is already registered, will use the registered mesh. 
+                If a mesh is provided and it is different from the registered mesh, will register the new mesh.
+                You can use `register_mesh` to register a mesh before integration or `clean_mesh` to reset the operator state.
             return_in_fourier (bool): If True, return the result in Fourier domain. If False, return the result in spatial domain. Default is False.
 
         Returns:
             Union[SpatialTensor["B C H ..."], FourierTensor["B C H ..."]]: Result of the operator in spatial or Fourier domain.
         """
-        if self._state_dict["f_mesh"] is None and mesh is None:
-            raise ValueError(
-                "Mesh should be given when calling the operator for the first time or specified through `register_mesh` function."
-            )
-        if mesh is not None and not self._is_registered_mesh(mesh):
-            mesh, n_channel = self._pre_check(u, u_fft, mesh)
-            self.register_mesh(mesh, n_channel)
-        else:
-            self._pre_check(u=u, u_fft=u_fft, mesh=self._state_dict["f_mesh"])
+        if u is None and u_fft is None:
+            raise ValueError("Either u or u_fft should be given")
+        if u is not None and u_fft is not None:
+            raise ValueError("Only one of u or u_fft should be given")
+        self._receiving_new_mesh(mesh, u, u_fft)
         if self._state_dict["operator"] is None:
             self._build_operator()
         if u_fft is None:
