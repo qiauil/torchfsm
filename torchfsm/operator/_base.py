@@ -317,6 +317,12 @@ class OperatorLike(_MutableMixIn):
             "integrator": None,
             "invert_linear_coef": None,
         }
+        # dependency:
+        # linear_coef: depends on f_mesh and n_channel
+        # nonlinear_func: depends on f_mesh and n_channel
+        # operator: depends on linear_coef and nonlinear_func
+        # integrator: depends on linear_coef and nonlinear_func
+        # invert_linear_coef: depends on linear_coef
         self._de_aliasing_rate = 2 / 3
         self._value_mesh_check_func = lambda dim_value, dim_mesh: True
         self._integrator = "auto"
@@ -656,6 +662,7 @@ class OperatorLike(_MutableMixIn):
             f_mesh = FourierMesh(mesh, device=device, dtype=dtype)
         for key in self._state_dict:
             self._state_dict[key] = None
+        self.clean_mesh() # if mesh changes, all values in the state_dict also need to be updated.
         self._state_dict.update(
             {
                 "f_mesh": f_mesh,
@@ -687,7 +694,7 @@ class OperatorLike(_MutableMixIn):
         r"""
         Clean the registered mesh and number of channels. This will reset the operator state.
         """
-        for key in self._state_dict:
+        for key in self._state_dict.keys():
             self._state_dict[key] = None
 
     def register_additional_check(self, func: Callable[[int, int], bool]):
@@ -709,6 +716,7 @@ class OperatorLike(_MutableMixIn):
         """
         self.operator_cores.append(core)
         self.coefs.append(coef)
+        self.clean_mesh()  # if a new core is added, all values in the state_dict also need to be updated.
 
     def set_integrator(
         self,
