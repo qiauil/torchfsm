@@ -68,8 +68,8 @@ def field_slices(
             A sequence of sliced fields. Each element corresponds to a slice along one dimension.
     """
 
-    if isinstance(traj, torch.Tensor):
+    if isinstance(field, torch.Tensor):
         traj = field.unsqueeze(1)
-    if isinstance(traj, np.ndarray):
+    if isinstance(field, np.ndarray):
         traj = np.expand_dims(field, axis=1)
     return traj_slices(traj=traj, slice_control=slice_control)
