@@ -72,4 +72,4 @@ def field_slices(
         traj = field.unsqueeze(1)
     if isinstance(field, np.ndarray):
         traj = np.expand_dims(field, axis=1)
-    return traj_slices(traj=traj, slice_control=slice_control)
+    return [slice_i[:,0,...] for slice_i in traj_slices(traj=traj, slice_control=slice_control)]
